@@ -124,6 +124,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AdviceReport.aspx" />
+    <Content Include="AlertTimeSetting.aspx" />
     <Content Include="AnecdoteCase.aspx" />
     <Content Include="AnecdoteCaseDetail.aspx" />
     <Content Include="AnecdoteCaseHistory.aspx" />
@@ -743,6 +744,13 @@
     </Compile>
     <Compile Include="AdviceReport.aspx.designer.cs">
       <DependentUpon>AdviceReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AlertTimeSetting.aspx.cs">
+      <DependentUpon>AlertTimeSetting.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AlertTimeSetting.aspx.designer.cs">
+      <DependentUpon>AlertTimeSetting.aspx</DependentUpon>
     </Compile>
     <Compile Include="AnecdoteCase.aspx.cs">
       <DependentUpon>AnecdoteCase.aspx</DependentUpon>
