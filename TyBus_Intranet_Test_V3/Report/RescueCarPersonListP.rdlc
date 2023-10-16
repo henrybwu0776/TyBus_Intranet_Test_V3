@@ -1323,41 +1323,9 @@ Right("00" + CStr(Day(Fields!CaseDate.Value)), 2)</Value>
               </Paragraphs>
               <rd:DefaultName>Textbox29</rd:DefaultName>
               <Top>0.14111cm</Top>
+              <Left>5cm</Left>
               <Height>1.31438cm</Height>
               <Width>1.66942cm</Width>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-            <Textbox Name="Textbox30">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>主任：</Value>
-                      <Style>
-                        <FontFamily>標楷體</FontFamily>
-                        <FontSize>12pt</FontSize>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style />
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox29</rd:DefaultName>
-              <Top>0.14111cm</Top>
-              <Left>10.66146cm</Left>
-              <Height>1.31438cm</Height>
-              <Width>1.66942cm</Width>
-              <ZIndex>1</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1387,10 +1355,10 @@ Right("00" + CStr(Day(Fields!CaseDate.Value)), 2)</Value>
               </Paragraphs>
               <rd:DefaultName>Textbox29</rd:DefaultName>
               <Top>0.14111cm</Top>
-              <Left>5.33073cm</Left>
+              <Left>10cm</Left>
               <Height>1.31438cm</Height>
               <Width>1.66942cm</Width>
-              <ZIndex>2</ZIndex>
+              <ZIndex>1</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1423,7 +1391,7 @@ Right("00" + CStr(Day(Fields!CaseDate.Value)), 2)</Value>
               <Left>15.99219cm</Left>
               <Height>1.31438cm</Height>
               <Width>1.66942cm</Width>
-              <ZIndex>3</ZIndex>
+              <ZIndex>2</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1456,7 +1424,7 @@ Right("00" + CStr(Day(Fields!CaseDate.Value)), 2)</Value>
               <Left>21.32292cm</Left>
               <Height>1.31438cm</Height>
               <Width>1.66942cm</Width>
-              <ZIndex>4</ZIndex>
+              <ZIndex>3</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
