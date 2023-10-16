@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="CarFixWorkHistory" targetNamespace="http://tempuri.org/CarFixWorkHistory.xsd" xmlns:mstns="http://tempuri.org/CarFixWorkHistory.xsd" xmlns="http://tempuri.org/CarFixWorkHistory.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="DetailDataTableAdapter" GeneratorDataComponentClassName="DetailDataTableAdapter" Name="DetailData" UserDataComponentName="DetailDataTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="ERPBUS_TEST.dbo.FixworkA" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          WorkNo, CAR_ID, BUDATE, BUMAN,
+                                (SELECT          NAME
+                                  FROM               EMPLOYEE
+                                  WHERE           (EMPNO = a.BUMAN)) AS BuMan_C,
+                                (SELECT          CompanyNo
+                                  FROM               Car_infoA
+                                  WHERE           (Car_ID = a.CAR_ID)) AS CompanyNo,
+                                (SELECT          NAME
+                                  FROM               DEPARTMENT
+                                  WHERE           (DEPNO =
+                                                                  (SELECT          CompanyNo
+                                                                    FROM               Car_infoA AS Car_InfoA_1
+                                                                    WHERE           (Car_ID = a.CAR_ID)))) AS CompanyNo_C, DEPNO,
+                                (SELECT          NAME
+                                  FROM               DEPARTMENT AS Department_1
+                                  WHERE           (DEPNO = a.DEPNO)) AS DepNo_C, service,
+                                (SELECT          DESCRIPTION
+                                  FROM               DBDICB
+                                  WHERE           (CLASSNO = a.service) AND (FKEY = '工作單A         FixworkA        SERVICE')) AS Service_C, DRIVER,
+                                (SELECT          NAME
+                                  FROM               EMPLOYEE AS EMployee_1
+                                  WHERE           (EMPNO = a.DRIVER)) AS Driver_C, REMARK, cast('' as varchar) FixManList
+FROM              FixworkA AS a
+WHERE          (1 &lt;&gt; 1)</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="CAR_ID" DataSetColumn="CAR_ID" />
+              <Mapping SourceColumn="BUDATE" DataSetColumn="BUDATE" />
+              <Mapping SourceColumn="BUMAN" DataSetColumn="BUMAN" />
+              <Mapping SourceColumn="BuMan_C" DataSetColumn="BuMan_C" />
+              <Mapping SourceColumn="CompanyNo" DataSetColumn="CompanyNo" />
+              <Mapping SourceColumn="CompanyNo_C" DataSetColumn="CompanyNo_C" />
+              <Mapping SourceColumn="DEPNO" DataSetColumn="DEPNO" />
+              <Mapping SourceColumn="DepNo_C" DataSetColumn="DepNo_C" />
+              <Mapping SourceColumn="service" DataSetColumn="service" />
+              <Mapping SourceColumn="Service_C" DataSetColumn="Service_C" />
+              <Mapping SourceColumn="DRIVER" DataSetColumn="DRIVER" />
+              <Mapping SourceColumn="Driver_C" DataSetColumn="Driver_C" />
+              <Mapping SourceColumn="REMARK" DataSetColumn="REMARK" />
+              <Mapping SourceColumn="WorkNo" DataSetColumn="WorkNo" />
+              <Mapping SourceColumn="FixManList" DataSetColumn="FixManList" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="CarFixWorkHistory" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="CarFixWorkHistory" msprop:Generator_UserDSName="CarFixWorkHistory">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="DetailData" msprop:Generator_TableClassName="DetailDataDataTable" msprop:Generator_TableVarName="tableDetailData" msprop:Generator_RowChangedName="DetailDataRowChanged" msprop:Generator_TablePropName="DetailData" msprop:Generator_RowDeletingName="DetailDataRowDeleting" msprop:Generator_RowChangingName="DetailDataRowChanging" msprop:Generator_RowEvHandlerName="DetailDataRowChangeEventHandler" msprop:Generator_RowDeletedName="DetailDataRowDeleted" msprop:Generator_RowClassName="DetailDataRow" msprop:Generator_UserTableName="DetailData" msprop:Generator_RowEvArgName="DetailDataRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CAR_ID" msprop:Generator_ColumnVarNameInTable="columnCAR_ID" msprop:Generator_ColumnPropNameInRow="CAR_ID" msprop:Generator_ColumnPropNameInTable="CAR_IDColumn" msprop:Generator_UserColumnName="CAR_ID" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BUDATE" msprop:Generator_ColumnVarNameInTable="columnBUDATE" msprop:Generator_ColumnPropNameInRow="BUDATE" msprop:Generator_ColumnPropNameInTable="BUDATEColumn" msprop:Generator_UserColumnName="BUDATE" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="BUMAN" msprop:Generator_ColumnVarNameInTable="columnBUMAN" msprop:Generator_ColumnPropNameInRow="BUMAN" msprop:Generator_ColumnPropNameInTable="BUMANColumn" msprop:Generator_UserColumnName="BUMAN" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BuMan_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBuMan_C" msprop:Generator_ColumnPropNameInRow="BuMan_C" msprop:Generator_ColumnPropNameInTable="BuMan_CColumn" msprop:Generator_UserColumnName="BuMan_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CompanyNo" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnCompanyNo" msprop:Generator_ColumnPropNameInRow="CompanyNo" msprop:Generator_ColumnPropNameInTable="CompanyNoColumn" msprop:Generator_UserColumnName="CompanyNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CompanyNo_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnCompanyNo_C" msprop:Generator_ColumnPropNameInRow="CompanyNo_C" msprop:Generator_ColumnPropNameInTable="CompanyNo_CColumn" msprop:Generator_UserColumnName="CompanyNo_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DEPNO" msprop:Generator_ColumnVarNameInTable="columnDEPNO" msprop:Generator_ColumnPropNameInRow="DEPNO" msprop:Generator_ColumnPropNameInTable="DEPNOColumn" msprop:Generator_UserColumnName="DEPNO" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepNo_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepNo_C" msprop:Generator_ColumnPropNameInRow="DepNo_C" msprop:Generator_ColumnPropNameInTable="DepNo_CColumn" msprop:Generator_UserColumnName="DepNo_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="service" msprop:Generator_ColumnVarNameInTable="columnservice" msprop:Generator_ColumnPropNameInRow="service" msprop:Generator_ColumnPropNameInTable="serviceColumn" msprop:Generator_UserColumnName="service" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="4" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Service_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnService_C" msprop:Generator_ColumnPropNameInRow="Service_C" msprop:Generator_ColumnPropNameInTable="Service_CColumn" msprop:Generator_UserColumnName="Service_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="80" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DRIVER" msprop:Generator_ColumnVarNameInTable="columnDRIVER" msprop:Generator_ColumnPropNameInRow="DRIVER" msprop:Generator_ColumnPropNameInTable="DRIVERColumn" msprop:Generator_UserColumnName="DRIVER" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Driver_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDriver_C" msprop:Generator_ColumnPropNameInRow="Driver_C" msprop:Generator_ColumnPropNameInTable="Driver_CColumn" msprop:Generator_UserColumnName="Driver_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="REMARK" msprop:Generator_ColumnVarNameInTable="columnREMARK" msprop:Generator_ColumnPropNameInRow="REMARK" msprop:Generator_ColumnPropNameInTable="REMARKColumn" msprop:Generator_UserColumnName="REMARK" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="128" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WorkNo" msprop:Generator_ColumnVarNameInTable="columnWorkNo" msprop:Generator_ColumnPropNameInRow="WorkNo" msprop:Generator_ColumnPropNameInTable="WorkNoColumn" msprop:Generator_UserColumnName="WorkNo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FixManList" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFixManList" msprop:Generator_ColumnPropNameInRow="FixManList" msprop:Generator_ColumnPropNameInTable="FixManListColumn" msprop:Generator_UserColumnName="FixManList" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:DetailData" />
+      <xs:field xpath="mstns:WorkNo" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

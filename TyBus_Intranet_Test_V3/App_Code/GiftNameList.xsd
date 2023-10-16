@@ -1,0 +1,334 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="GiftNameList" targetNamespace="http://tempuri.org/GiftNameList.xsd" xmlns:mstns="http://tempuri.org/GiftNameList.xsd" xmlns="http://tempuri.org/GiftNameList.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="GiftNameList_GiftTableAdapter" GeneratorDataComponentClassName="GiftNameList_GiftTableAdapter" Name="GiftNameList_Gift" UserDataComponentName="GiftNameList_GiftTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="ERPBUS_TEST.dbo.EMPLOYEE" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          DEPNO,
+                                (SELECT          NAME
+                                  FROM               DEPARTMENT
+                                  WHERE           (DEPNO = e.DEPNO)) AS DepName, EMPNO, NAME, TITLE,
+                                (SELECT          CLASSTXT
+                                  FROM               DBDICB
+                                  WHERE           (CLASSNO = e.TITLE) AND (FKEY = '員工資料        EMPLOYEE        TITLE')) AS Title_C, ASSUMEDAY, 
+                            worktype, CAST('' AS nvarchar) AS GiftType, CAST('說明' AS nvarchar) AS GiftNote, CAST('' AS nvarchar) AS GiftTitle, 
+                            CAST(0 AS integer) AS FullGift, CAST(0 AS integer) AS HalfGift
+FROM              EMPLOYEE AS e
+WHERE          (1 &lt;&gt; 1)</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="DEPNO" DataSetColumn="DEPNO" />
+              <Mapping SourceColumn="DepName" DataSetColumn="DepName" />
+              <Mapping SourceColumn="EMPNO" DataSetColumn="EMPNO" />
+              <Mapping SourceColumn="NAME" DataSetColumn="NAME" />
+              <Mapping SourceColumn="TITLE" DataSetColumn="TITLE" />
+              <Mapping SourceColumn="Title_C" DataSetColumn="Title_C" />
+              <Mapping SourceColumn="ASSUMEDAY" DataSetColumn="ASSUMEDAY" />
+              <Mapping SourceColumn="GiftType" DataSetColumn="GiftType" />
+              <Mapping SourceColumn="GiftNote" DataSetColumn="GiftNote" />
+              <Mapping SourceColumn="GiftTitle" DataSetColumn="GiftTitle" />
+              <Mapping SourceColumn="FullGift" DataSetColumn="FullGift" />
+              <Mapping SourceColumn="HalfGift" DataSetColumn="HalfGift" />
+              <Mapping SourceColumn="worktype" DataSetColumn="worktype" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="GiftNameList_MoneyTableAdapter" GeneratorDataComponentClassName="GiftNameList_MoneyTableAdapter" Name="GiftNameList_Money" UserDataComponentName="GiftNameList_MoneyTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="SELECT DEPNO, EMPNO, NAME, TITLE, ASSUMEDAY FROM EMPLOYEE WHERE (1 &lt;&gt; 1) UNION ALL SELECT DEPNO, EMPNO, NAME, TITLE, ASSUMEDAY FROM EMPLOYEE AS EMPLOYEE_1 WHERE (1 &lt;&gt; 1)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT DEPNO, (SELECT NAME FROM DEPARTMENT WHERE (DEPNO = e.DEPNO)) AS DepName, EMPNO, NAME, TITLE, (SELECT CLASSTXT FROM DBDICB WHERE (CLASSNO = e.TITLE) AND (FKEY = '員工資料        EMPLOYEE        TITLE')) AS Title_C, ASSUMEDAY, CAST('' AS nvarchar) AS GiftNote, CAST(500 AS float) AS GiftPay, CAST('108 年 紅包發放名冊' AS nvarchar) AS GiftTitle, CAST('' AS nvarchar) AS StampPlace FROM (SELECT DEPNO, EMPNO, NAME, TITLE, ASSUMEDAY FROM EMPLOYEE WHERE (1 &lt;&gt; 1) UNION ALL SELECT DEPNO, EMPNO, NAME, TITLE, ASSUMEDAY FROM EMPLOYEE AS EMPLOYEE_1 WHERE (1 &lt;&gt; 1)) AS e WHERE (EMPNO &lt;&gt; 'supervisor') ORDER BY TITLE, DEPNO, EMPNO</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="DEPNO" DataSetColumn="DEPNO" />
+              <Mapping SourceColumn="DepName" DataSetColumn="DepName" />
+              <Mapping SourceColumn="EMPNO" DataSetColumn="EMPNO" />
+              <Mapping SourceColumn="NAME" DataSetColumn="NAME" />
+              <Mapping SourceColumn="TITLE" DataSetColumn="TITLE" />
+              <Mapping SourceColumn="Title_C" DataSetColumn="Title_C" />
+              <Mapping SourceColumn="ASSUMEDAY" DataSetColumn="ASSUMEDAY" />
+              <Mapping SourceColumn="GiftNote" DataSetColumn="GiftNote" />
+              <Mapping SourceColumn="GiftPay" DataSetColumn="GiftPay" />
+              <Mapping SourceColumn="GiftTitle" DataSetColumn="GiftTitle" />
+              <Mapping SourceColumn="StampPlace" DataSetColumn="StampPlace" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="GiftNameList_UniformTableAdapter" GeneratorDataComponentClassName="GiftNameList_UniformTableAdapter" Name="GiftNameList_Uniform" UserDataComponentName="GiftNameList_UniformTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="SELECT DEPNO, EMPNO, NAME, TITLE, ASSUMEDAY FROM EMPLOYEE WHERE (1 &lt;&gt; 1) UNION ALL SELECT DEPNO, EMPNO, NAME, TITLE, ASSUMEDAY FROM EMPLOYEE AS EMPLOYEE_1 WHERE (1 &lt;&gt; 1)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT DEPNO, (SELECT NAME FROM DEPARTMENT WHERE (DEPNO = e.DEPNO)) AS DepName, EMPNO, NAME, TITLE, (SELECT CLASSTXT FROM DBDICB WHERE (CLASSNO = e.TITLE) AND (FKEY = '員工資料        EMPLOYEE        TITLE')) AS Title_C, ASSUMEDAY, CAST('' AS nvarchar) AS GiftNote, CAST('108 年 制服領用發放名冊' AS nvarchar) AS GiftTitle, CAST('' AS nvarchar) AS StampPlace FROM (SELECT DEPNO, EMPNO, NAME, TITLE, ASSUMEDAY FROM EMPLOYEE WHERE (1 &lt;&gt; 1) UNION ALL SELECT DEPNO, EMPNO, NAME, TITLE, ASSUMEDAY FROM EMPLOYEE AS EMPLOYEE_1 WHERE (1 &lt;&gt; 1)) AS e WHERE (EMPNO &lt;&gt; 'supervisor') ORDER BY TITLE, DEPNO, EMPNO</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="DEPNO" DataSetColumn="DEPNO" />
+              <Mapping SourceColumn="DepName" DataSetColumn="DepName" />
+              <Mapping SourceColumn="EMPNO" DataSetColumn="EMPNO" />
+              <Mapping SourceColumn="NAME" DataSetColumn="NAME" />
+              <Mapping SourceColumn="TITLE" DataSetColumn="TITLE" />
+              <Mapping SourceColumn="Title_C" DataSetColumn="Title_C" />
+              <Mapping SourceColumn="ASSUMEDAY" DataSetColumn="ASSUMEDAY" />
+              <Mapping SourceColumn="GiftNote" DataSetColumn="GiftNote" />
+              <Mapping SourceColumn="GiftTitle" DataSetColumn="GiftTitle" />
+              <Mapping SourceColumn="StampPlace" DataSetColumn="StampPlace" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="GiftNameList" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="GiftNameList" msprop:Generator_UserDSName="GiftNameList">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="GiftNameList_Gift" msprop:Generator_TableClassName="GiftNameList_GiftDataTable" msprop:Generator_TableVarName="tableGiftNameList_Gift" msprop:Generator_RowChangedName="GiftNameList_GiftRowChanged" msprop:Generator_TablePropName="GiftNameList_Gift" msprop:Generator_RowDeletingName="GiftNameList_GiftRowDeleting" msprop:Generator_RowChangingName="GiftNameList_GiftRowChanging" msprop:Generator_RowEvHandlerName="GiftNameList_GiftRowChangeEventHandler" msprop:Generator_RowDeletedName="GiftNameList_GiftRowDeleted" msprop:Generator_RowClassName="GiftNameList_GiftRow" msprop:Generator_UserTableName="GiftNameList_Gift" msprop:Generator_RowEvArgName="GiftNameList_GiftRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DEPNO" msprop:Generator_ColumnVarNameInTable="columnDEPNO" msprop:Generator_ColumnPropNameInRow="DEPNO" msprop:Generator_ColumnPropNameInTable="DEPNOColumn" msprop:Generator_UserColumnName="DEPNO" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepName" msprop:Generator_ColumnPropNameInRow="DepName" msprop:Generator_ColumnPropNameInTable="DepNameColumn" msprop:Generator_UserColumnName="DepName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EMPNO" msprop:Generator_ColumnVarNameInTable="columnEMPNO" msprop:Generator_ColumnPropNameInRow="EMPNO" msprop:Generator_ColumnPropNameInTable="EMPNOColumn" msprop:Generator_UserColumnName="EMPNO">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="NAME" msprop:Generator_ColumnVarNameInTable="columnNAME" msprop:Generator_ColumnPropNameInRow="NAME" msprop:Generator_ColumnPropNameInTable="NAMEColumn" msprop:Generator_UserColumnName="NAME" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TITLE" msprop:Generator_ColumnVarNameInTable="columnTITLE" msprop:Generator_ColumnPropNameInRow="TITLE" msprop:Generator_ColumnPropNameInTable="TITLEColumn" msprop:Generator_UserColumnName="TITLE" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="4" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Title_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTitle_C" msprop:Generator_ColumnPropNameInRow="Title_C" msprop:Generator_ColumnPropNameInTable="Title_CColumn" msprop:Generator_UserColumnName="Title_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ASSUMEDAY" msprop:Generator_ColumnVarNameInTable="columnASSUMEDAY" msprop:Generator_ColumnPropNameInRow="ASSUMEDAY" msprop:Generator_ColumnPropNameInTable="ASSUMEDAYColumn" msprop:Generator_UserColumnName="ASSUMEDAY" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="GiftType" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnGiftType" msprop:Generator_ColumnPropNameInRow="GiftType" msprop:Generator_ColumnPropNameInTable="GiftTypeColumn" msprop:Generator_UserColumnName="GiftType" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="GiftNote" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnGiftNote" msprop:Generator_ColumnPropNameInRow="GiftNote" msprop:Generator_ColumnPropNameInTable="GiftNoteColumn" msprop:Generator_UserColumnName="GiftNote" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="GiftTitle" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnGiftTitle" msprop:Generator_ColumnPropNameInRow="GiftTitle" msprop:Generator_ColumnPropNameInTable="GiftTitleColumn" msprop:Generator_UserColumnName="GiftTitle" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FullGift" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFullGift" msprop:Generator_ColumnPropNameInRow="FullGift" msprop:Generator_ColumnPropNameInTable="FullGiftColumn" msprop:Generator_UserColumnName="FullGift" type="xs:int" minOccurs="0" />
+              <xs:element name="HalfGift" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnHalfGift" msprop:Generator_ColumnPropNameInRow="HalfGift" msprop:Generator_ColumnPropNameInTable="HalfGiftColumn" msprop:Generator_UserColumnName="HalfGift" type="xs:int" minOccurs="0" />
+              <xs:element name="worktype" msprop:Generator_ColumnVarNameInTable="columnworktype" msprop:Generator_ColumnPropNameInRow="worktype" msprop:Generator_ColumnPropNameInTable="worktypeColumn" msprop:Generator_UserColumnName="worktype" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="GiftNameList_Money" msprop:Generator_TableClassName="GiftNameList_MoneyDataTable" msprop:Generator_TableVarName="tableGiftNameList_Money" msprop:Generator_RowChangedName="GiftNameList_MoneyRowChanged" msprop:Generator_TablePropName="GiftNameList_Money" msprop:Generator_RowDeletingName="GiftNameList_MoneyRowDeleting" msprop:Generator_RowChangingName="GiftNameList_MoneyRowChanging" msprop:Generator_RowEvHandlerName="GiftNameList_MoneyRowChangeEventHandler" msprop:Generator_RowDeletedName="GiftNameList_MoneyRowDeleted" msprop:Generator_RowClassName="GiftNameList_MoneyRow" msprop:Generator_UserTableName="GiftNameList_Money" msprop:Generator_RowEvArgName="GiftNameList_MoneyRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DEPNO" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDEPNO" msprop:Generator_ColumnPropNameInRow="DEPNO" msprop:Generator_ColumnPropNameInTable="DEPNOColumn" msprop:Generator_UserColumnName="DEPNO" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepName" msprop:Generator_ColumnPropNameInRow="DepName" msprop:Generator_ColumnPropNameInTable="DepNameColumn" msprop:Generator_UserColumnName="DepName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EMPNO" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnEMPNO" msprop:Generator_ColumnPropNameInRow="EMPNO" msprop:Generator_ColumnPropNameInTable="EMPNOColumn" msprop:Generator_UserColumnName="EMPNO" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="NAME" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnNAME" msprop:Generator_ColumnPropNameInRow="NAME" msprop:Generator_ColumnPropNameInTable="NAMEColumn" msprop:Generator_UserColumnName="NAME" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TITLE" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTITLE" msprop:Generator_ColumnPropNameInRow="TITLE" msprop:Generator_ColumnPropNameInTable="TITLEColumn" msprop:Generator_UserColumnName="TITLE" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="4" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Title_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTitle_C" msprop:Generator_ColumnPropNameInRow="Title_C" msprop:Generator_ColumnPropNameInTable="Title_CColumn" msprop:Generator_UserColumnName="Title_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ASSUMEDAY" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnASSUMEDAY" msprop:Generator_ColumnPropNameInRow="ASSUMEDAY" msprop:Generator_ColumnPropNameInTable="ASSUMEDAYColumn" msprop:Generator_UserColumnName="ASSUMEDAY" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="GiftNote" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnGiftNote" msprop:Generator_ColumnPropNameInRow="GiftNote" msprop:Generator_ColumnPropNameInTable="GiftNoteColumn" msprop:Generator_UserColumnName="GiftNote" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="GiftPay" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnGiftPay" msprop:Generator_ColumnPropNameInRow="GiftPay" msprop:Generator_ColumnPropNameInTable="GiftPayColumn" msprop:Generator_UserColumnName="GiftPay" type="xs:double" minOccurs="0" />
+              <xs:element name="GiftTitle" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnGiftTitle" msprop:Generator_ColumnPropNameInRow="GiftTitle" msprop:Generator_ColumnPropNameInTable="GiftTitleColumn" msprop:Generator_UserColumnName="GiftTitle" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="StampPlace" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnStampPlace" msprop:Generator_ColumnPropNameInRow="StampPlace" msprop:Generator_ColumnPropNameInTable="StampPlaceColumn" msprop:Generator_UserColumnName="StampPlace" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="GiftNameList_Uniform" msprop:Generator_TableClassName="GiftNameList_UniformDataTable" msprop:Generator_TableVarName="tableGiftNameList_Uniform" msprop:Generator_RowChangedName="GiftNameList_UniformRowChanged" msprop:Generator_TablePropName="GiftNameList_Uniform" msprop:Generator_RowDeletingName="GiftNameList_UniformRowDeleting" msprop:Generator_RowChangingName="GiftNameList_UniformRowChanging" msprop:Generator_RowEvHandlerName="GiftNameList_UniformRowChangeEventHandler" msprop:Generator_RowDeletedName="GiftNameList_UniformRowDeleted" msprop:Generator_RowClassName="GiftNameList_UniformRow" msprop:Generator_UserTableName="GiftNameList_Uniform" msprop:Generator_RowEvArgName="GiftNameList_UniformRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DEPNO" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDEPNO" msprop:Generator_ColumnPropNameInRow="DEPNO" msprop:Generator_ColumnPropNameInTable="DEPNOColumn" msprop:Generator_UserColumnName="DEPNO" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepName" msprop:Generator_ColumnPropNameInRow="DepName" msprop:Generator_ColumnPropNameInTable="DepNameColumn" msprop:Generator_UserColumnName="DepName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EMPNO" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnEMPNO" msprop:Generator_ColumnPropNameInRow="EMPNO" msprop:Generator_ColumnPropNameInTable="EMPNOColumn" msprop:Generator_UserColumnName="EMPNO" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="NAME" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnNAME" msprop:Generator_ColumnPropNameInRow="NAME" msprop:Generator_ColumnPropNameInTable="NAMEColumn" msprop:Generator_UserColumnName="NAME" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TITLE" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTITLE" msprop:Generator_ColumnPropNameInRow="TITLE" msprop:Generator_ColumnPropNameInTable="TITLEColumn" msprop:Generator_UserColumnName="TITLE" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="4" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Title_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTitle_C" msprop:Generator_ColumnPropNameInRow="Title_C" msprop:Generator_ColumnPropNameInTable="Title_CColumn" msprop:Generator_UserColumnName="Title_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ASSUMEDAY" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnASSUMEDAY" msprop:Generator_ColumnPropNameInRow="ASSUMEDAY" msprop:Generator_ColumnPropNameInTable="ASSUMEDAYColumn" msprop:Generator_UserColumnName="ASSUMEDAY" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="GiftNote" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnGiftNote" msprop:Generator_ColumnPropNameInRow="GiftNote" msprop:Generator_ColumnPropNameInTable="GiftNoteColumn" msprop:Generator_UserColumnName="GiftNote" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="GiftTitle" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnGiftTitle" msprop:Generator_ColumnPropNameInRow="GiftTitle" msprop:Generator_ColumnPropNameInTable="GiftTitleColumn" msprop:Generator_UserColumnName="GiftTitle" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="StampPlace" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnStampPlace" msprop:Generator_ColumnPropNameInRow="StampPlace" msprop:Generator_ColumnPropNameInTable="StampPlaceColumn" msprop:Generator_UserColumnName="StampPlace" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:GiftNameList_Gift" />
+      <xs:field xpath="mstns:EMPNO" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

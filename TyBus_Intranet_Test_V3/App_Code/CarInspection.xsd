@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="CarInspection" targetNamespace="http://tempuri.org/CarInspection.xsd" xmlns:mstns="http://tempuri.org/CarInspection.xsd" xmlns="http://tempuri.org/CarInspection.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="CarInspectionPTableAdapter" GeneratorDataComponentClassName="CarInspectionPTableAdapter" Name="CarInspectionP" UserDataComponentName="CarInspectionPTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="ERPBUS_TEST.dbo.Car_infoA" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT CompanyNo, (SELECT NAME FROM DEPARTMENT WHERE (DEPNO = c.CompanyNo)) AS CompanyName, Car_ID, CONVERT (varchar(10), DATEADD(Day, - 29, nextedate), 111) AS StartDate, CONVERT (varchar(10), nextedate, 111) AS NextEDate, CONVERT (varchar(10), NCheckTerm, 111) AS NCheckTerm, CAST(NULL AS varchar) AS Remark FROM Car_infoA AS c WHERE (1 &lt;&gt; 1)</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="CompanyNo" DataSetColumn="CompanyNo" />
+              <Mapping SourceColumn="CompanyName" DataSetColumn="CompanyName" />
+              <Mapping SourceColumn="Car_ID" DataSetColumn="Car_ID" />
+              <Mapping SourceColumn="NextEDate" DataSetColumn="NextEDate" />
+              <Mapping SourceColumn="NCheckTerm" DataSetColumn="NCheckTerm" />
+              <Mapping SourceColumn="Remark" DataSetColumn="Remark" />
+              <Mapping SourceColumn="StartDate" DataSetColumn="StartDate" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="CarInspection" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="CarInspection" msprop:Generator_UserDSName="CarInspection">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="CarInspectionP" msprop:Generator_TableClassName="CarInspectionPDataTable" msprop:Generator_TableVarName="tableCarInspectionP" msprop:Generator_TablePropName="CarInspectionP" msprop:Generator_RowDeletingName="CarInspectionPRowDeleting" msprop:Generator_RowChangingName="CarInspectionPRowChanging" msprop:Generator_RowEvHandlerName="CarInspectionPRowChangeEventHandler" msprop:Generator_RowDeletedName="CarInspectionPRowDeleted" msprop:Generator_UserTableName="CarInspectionP" msprop:Generator_RowChangedName="CarInspectionPRowChanged" msprop:Generator_RowEvArgName="CarInspectionPRowChangeEvent" msprop:Generator_RowClassName="CarInspectionPRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CompanyNo" msprop:Generator_ColumnVarNameInTable="columnCompanyNo" msprop:Generator_ColumnPropNameInRow="CompanyNo" msprop:Generator_ColumnPropNameInTable="CompanyNoColumn" msprop:Generator_UserColumnName="CompanyNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CompanyName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnCompanyName" msprop:Generator_ColumnPropNameInRow="CompanyName" msprop:Generator_ColumnPropNameInTable="CompanyNameColumn" msprop:Generator_UserColumnName="CompanyName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Car_ID" msprop:Generator_ColumnVarNameInTable="columnCar_ID" msprop:Generator_ColumnPropNameInRow="Car_ID" msprop:Generator_ColumnPropNameInTable="Car_IDColumn" msprop:Generator_UserColumnName="Car_ID">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="NextEDate" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnNextEDate" msprop:Generator_ColumnPropNameInRow="NextEDate" msprop:Generator_ColumnPropNameInTable="NextEDateColumn" msprop:Generator_UserColumnName="NextEDate" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="NCheckTerm" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnNCheckTerm" msprop:Generator_ColumnPropNameInRow="NCheckTerm" msprop:Generator_ColumnPropNameInTable="NCheckTermColumn" msprop:Generator_UserColumnName="NCheckTerm" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Remark" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRemark" msprop:Generator_ColumnPropNameInRow="Remark" msprop:Generator_ColumnPropNameInTable="RemarkColumn" msprop:Generator_UserColumnName="Remark" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="StartDate" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnStartDate" msprop:Generator_ColumnPropNameInRow="StartDate" msprop:Generator_ColumnPropNameInTable="StartDateColumn" msprop:Generator_UserColumnName="StartDate" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

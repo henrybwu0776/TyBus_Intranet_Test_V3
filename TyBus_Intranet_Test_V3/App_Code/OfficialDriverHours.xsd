@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="OfficialDriverHours" targetNamespace="http://tempuri.org/OfficialDriverHours.xsd" xmlns:mstns="http://tempuri.org/OfficialDriverHours.xsd" xmlns="http://tempuri.org/OfficialDriverHours.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="OfficialDriverHoursPTableAdapter" GeneratorDataComponentClassName="OfficialDriverHoursPTableAdapter" Name="OfficialDriverHoursP" UserDataComponentName="OfficialDriverHoursPTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="ERPBUS_TEST.dbo.OfficialDriverHours" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT CAST('' AS varchar) AS PrintYear, CAST('' AS varchar) AS PrintMonth, Driver, (SELECT NAME FROM EMPLOYEE WHERE (EMPNO = a.Driver)) AS Driver_Name, CalDate, WorkHours, WorkMins, Extra100, Extra133, Extra166, Extra266, WorkState, (SELECT CLASSTXT FROM DBDICB WHERE (CLASSNO = a.WorkState)) AS WorkState_C FROM OfficialDriverHours AS a WHERE (1 &lt;&gt; 1)</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="PrintYear" DataSetColumn="PrintYear" />
+              <Mapping SourceColumn="PrintMonth" DataSetColumn="PrintMonth" />
+              <Mapping SourceColumn="Driver" DataSetColumn="Driver" />
+              <Mapping SourceColumn="Driver_Name" DataSetColumn="Driver_Name" />
+              <Mapping SourceColumn="CalDate" DataSetColumn="CalDate" />
+              <Mapping SourceColumn="WorkHours" DataSetColumn="WorkHours" />
+              <Mapping SourceColumn="WorkMins" DataSetColumn="WorkMins" />
+              <Mapping SourceColumn="Extra100" DataSetColumn="Extra100" />
+              <Mapping SourceColumn="Extra133" DataSetColumn="Extra133" />
+              <Mapping SourceColumn="Extra166" DataSetColumn="Extra166" />
+              <Mapping SourceColumn="Extra266" DataSetColumn="Extra266" />
+              <Mapping SourceColumn="WorkState" DataSetColumn="WorkState" />
+              <Mapping SourceColumn="WorkState_C" DataSetColumn="WorkState_C" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="OfficialDriverHours" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="OfficialDriverHours" msprop:Generator_UserDSName="OfficialDriverHours">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="OfficialDriverHoursP" msprop:Generator_TableClassName="OfficialDriverHoursPDataTable" msprop:Generator_TableVarName="tableOfficialDriverHoursP" msprop:Generator_TablePropName="OfficialDriverHoursP" msprop:Generator_RowDeletingName="OfficialDriverHoursPRowDeleting" msprop:Generator_RowChangingName="OfficialDriverHoursPRowChanging" msprop:Generator_RowEvHandlerName="OfficialDriverHoursPRowChangeEventHandler" msprop:Generator_RowDeletedName="OfficialDriverHoursPRowDeleted" msprop:Generator_UserTableName="OfficialDriverHoursP" msprop:Generator_RowChangedName="OfficialDriverHoursPRowChanged" msprop:Generator_RowEvArgName="OfficialDriverHoursPRowChangeEvent" msprop:Generator_RowClassName="OfficialDriverHoursPRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="PrintYear" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnPrintYear" msprop:Generator_ColumnPropNameInRow="PrintYear" msprop:Generator_ColumnPropNameInTable="PrintYearColumn" msprop:Generator_UserColumnName="PrintYear" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PrintMonth" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnPrintMonth" msprop:Generator_ColumnPropNameInRow="PrintMonth" msprop:Generator_ColumnPropNameInTable="PrintMonthColumn" msprop:Generator_UserColumnName="PrintMonth" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Driver" msprop:Generator_ColumnVarNameInTable="columnDriver" msprop:Generator_ColumnPropNameInRow="Driver" msprop:Generator_ColumnPropNameInTable="DriverColumn" msprop:Generator_UserColumnName="Driver">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Driver_Name" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDriver_Name" msprop:Generator_ColumnPropNameInRow="Driver_Name" msprop:Generator_ColumnPropNameInTable="Driver_NameColumn" msprop:Generator_UserColumnName="Driver_Name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CalDate" msprop:Generator_ColumnVarNameInTable="columnCalDate" msprop:Generator_ColumnPropNameInRow="CalDate" msprop:Generator_ColumnPropNameInTable="CalDateColumn" msprop:Generator_UserColumnName="CalDate" type="xs:dateTime" />
+              <xs:element name="WorkHours" msprop:Generator_ColumnVarNameInTable="columnWorkHours" msprop:Generator_ColumnPropNameInRow="WorkHours" msprop:Generator_ColumnPropNameInTable="WorkHoursColumn" msprop:Generator_UserColumnName="WorkHours" type="xs:int" minOccurs="0" />
+              <xs:element name="WorkMins" msprop:Generator_ColumnVarNameInTable="columnWorkMins" msprop:Generator_ColumnPropNameInRow="WorkMins" msprop:Generator_ColumnPropNameInTable="WorkMinsColumn" msprop:Generator_UserColumnName="WorkMins" type="xs:int" minOccurs="0" />
+              <xs:element name="Extra100" msprop:Generator_ColumnVarNameInTable="columnExtra100" msprop:Generator_ColumnPropNameInRow="Extra100" msprop:Generator_ColumnPropNameInTable="Extra100Column" msprop:Generator_UserColumnName="Extra100" type="xs:double" minOccurs="0" />
+              <xs:element name="Extra133" msprop:Generator_ColumnVarNameInTable="columnExtra133" msprop:Generator_ColumnPropNameInRow="Extra133" msprop:Generator_ColumnPropNameInTable="Extra133Column" msprop:Generator_UserColumnName="Extra133" type="xs:double" minOccurs="0" />
+              <xs:element name="Extra166" msprop:Generator_ColumnVarNameInTable="columnExtra166" msprop:Generator_ColumnPropNameInRow="Extra166" msprop:Generator_ColumnPropNameInTable="Extra166Column" msprop:Generator_UserColumnName="Extra166" type="xs:double" minOccurs="0" />
+              <xs:element name="Extra266" msprop:Generator_ColumnVarNameInTable="columnExtra266" msprop:Generator_ColumnPropNameInRow="Extra266" msprop:Generator_ColumnPropNameInTable="Extra266Column" msprop:Generator_UserColumnName="Extra266" type="xs:double" minOccurs="0" />
+              <xs:element name="WorkState" msprop:Generator_ColumnVarNameInTable="columnWorkState" msprop:Generator_ColumnPropNameInRow="WorkState" msprop:Generator_ColumnPropNameInTable="WorkStateColumn" msprop:Generator_UserColumnName="WorkState" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="4" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WorkState_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWorkState_C" msprop:Generator_ColumnPropNameInRow="WorkState_C" msprop:Generator_ColumnPropNameInTable="WorkState_CColumn" msprop:Generator_UserColumnName="WorkState_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

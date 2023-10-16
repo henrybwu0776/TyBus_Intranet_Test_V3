@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="CarModifyListP" targetNamespace="http://tempuri.org/CarModifyListP.xsd" xmlns:mstns="http://tempuri.org/CarModifyListP.xsd" xmlns="http://tempuri.org/CarModifyListP.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="1" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+          <Connection ConnectionStringObject="Data Source=DBSERVER;Initial Catalog=ERPBUS;User ID=sa;Password=tovosaryli" IsAppSettingsProperty="false" Modifier="Assembly" Name="connERPSQL (TYBUS_Webset_New)" ParameterPrefix="@" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="CarModifyListPTableAdapter" GeneratorDataComponentClassName="CarModifyListPTableAdapter" Name="CarModifyListP" UserDataComponentName="CarModifyListPTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (TYBUS_Webset_New)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT e.CAR_ID AS CarID, (SELECT CLASSTXT FROM DBDICB WHERE (FKEY = '車輛資料作業    Car_infoA       CAR_CLASS') AND (CLASSNO = a.Car_Class)) AS Car_Class_C, CONVERT (nvarchar(10), a.ProdDate, 111) AS ProdDate, a.sitqty AS SiteQty, CONVERT (nvarchar(10), e.TRANDATE, 111) AS TranDate, (SELECT NAME FROM DEPARTMENT WHERE (DEPNO = e.depno_O)) AS DepNo_O_C, CASE WHEN e.Tran_Type &lt;&gt; '1' THEN NULL ELSE (SELECT [Name] FROM Department WHERE DepNo = e.DepNo) END AS DepNo_C, e.Tran_Type, (CASE WHEN e.Tran_Type = '1' AND e.DepNo_O = e.DepNo AND (SELECT COUNT(CarTranNo) FROM Car_InfoE WHERE Car_ID = e.Car_ID) = 1 THEN '新進車輛' WHEN e.Tran_Type = '1' AND (SELECT COUNT(CarTranNo) FROM Car_InfoE WHERE Car_ID = e.Car_ID) &lt;&gt; 1 THEN '調站' ELSE (SELECT ClassTxt FROM DBDICB WHERE FKey = '車輛異動        Car_infoE       TRANTYPE' AND ClassNo = e.Tran_Type) END) AS Tran_Type_C, e.REMARK FROM Car_infoE AS e LEFT OUTER JOIN Car_infoA AS a ON a.Car_ID = e.CAR_ID WHERE (1 &lt;&gt; 1)</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="Car_Class_C" DataSetColumn="Car_Class_C" />
+              <Mapping SourceColumn="ProdDate" DataSetColumn="ProdDate" />
+              <Mapping SourceColumn="TranDate" DataSetColumn="TranDate" />
+              <Mapping SourceColumn="DepNo_O_C" DataSetColumn="DepNo_O_C" />
+              <Mapping SourceColumn="DepNo_C" DataSetColumn="DepNo_C" />
+              <Mapping SourceColumn="Tran_Type" DataSetColumn="Tran_Type" />
+              <Mapping SourceColumn="Tran_Type_C" DataSetColumn="Tran_Type_C" />
+              <Mapping SourceColumn="CarID" DataSetColumn="CarID" />
+              <Mapping SourceColumn="SiteQty" DataSetColumn="SiteQty" />
+              <Mapping SourceColumn="REMARK" DataSetColumn="REMARK" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="CarModifyListP" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="CarModifyListP" msprop:Generator_UserDSName="CarModifyListP">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="CarModifyListP" msprop:Generator_TableClassName="CarModifyListPDataTable" msprop:Generator_TableVarName="tableCarModifyListP" msprop:Generator_RowChangedName="CarModifyListPRowChanged" msprop:Generator_TablePropName="_CarModifyListP" msprop:Generator_RowDeletingName="CarModifyListPRowDeleting" msprop:Generator_RowChangingName="CarModifyListPRowChanging" msprop:Generator_RowEvHandlerName="CarModifyListPRowChangeEventHandler" msprop:Generator_RowDeletedName="CarModifyListPRowDeleted" msprop:Generator_RowClassName="CarModifyListPRow" msprop:Generator_UserTableName="CarModifyListP" msprop:Generator_RowEvArgName="CarModifyListPRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Car_Class_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnCar_Class_C" msprop:Generator_ColumnPropNameInRow="Car_Class_C" msprop:Generator_ColumnPropNameInTable="Car_Class_CColumn" msprop:Generator_UserColumnName="Car_Class_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ProdDate" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnProdDate" msprop:Generator_ColumnPropNameInRow="ProdDate" msprop:Generator_ColumnPropNameInTable="ProdDateColumn" msprop:Generator_UserColumnName="ProdDate" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TranDate" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTranDate" msprop:Generator_ColumnPropNameInRow="TranDate" msprop:Generator_ColumnPropNameInTable="TranDateColumn" msprop:Generator_UserColumnName="TranDate" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepNo_O_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepNo_O_C" msprop:Generator_ColumnPropNameInRow="DepNo_O_C" msprop:Generator_ColumnPropNameInTable="DepNo_O_CColumn" msprop:Generator_UserColumnName="DepNo_O_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepNo_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepNo_C" msprop:Generator_ColumnPropNameInRow="DepNo_C" msprop:Generator_ColumnPropNameInTable="DepNo_CColumn" msprop:Generator_UserColumnName="DepNo_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Tran_Type" msprop:Generator_ColumnVarNameInTable="columnTran_Type" msprop:Generator_ColumnPropNameInRow="Tran_Type" msprop:Generator_ColumnPropNameInTable="Tran_TypeColumn" msprop:Generator_UserColumnName="Tran_Type" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="5" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Tran_Type_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTran_Type_C" msprop:Generator_ColumnPropNameInRow="Tran_Type_C" msprop:Generator_ColumnPropNameInTable="Tran_Type_CColumn" msprop:Generator_UserColumnName="Tran_Type_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CarID" msprop:Generator_ColumnVarNameInTable="columnCarID" msprop:Generator_ColumnPropNameInRow="CarID" msprop:Generator_ColumnPropNameInTable="CarIDColumn" msprop:Generator_UserColumnName="CarID" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="SiteQty" msprop:Generator_ColumnVarNameInTable="columnSiteQty" msprop:Generator_ColumnPropNameInRow="SiteQty" msprop:Generator_ColumnPropNameInTable="SiteQtyColumn" msprop:Generator_UserColumnName="SiteQty" type="xs:double" minOccurs="0" />
+              <xs:element name="REMARK" msprop:Generator_ColumnVarNameInTable="columnREMARK" msprop:Generator_ColumnPropNameInRow="REMARK" msprop:Generator_ColumnPropNameInTable="REMARKColumn" msprop:Generator_UserColumnName="REMARK" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="70" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

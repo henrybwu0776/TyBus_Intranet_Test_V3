@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DriverRegularTraining" targetNamespace="http://tempuri.org/DriverRegularTraining.xsd" xmlns:mstns="http://tempuri.org/DriverRegularTraining.xsd" xmlns="http://tempuri.org/DriverRegularTraining.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="DriverRegularTrainingPTableAdapter" GeneratorDataComponentClassName="DriverRegularTrainingPTableAdapter" Name="DriverRegularTrainingP" UserDataComponentName="DriverRegularTrainingPTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="ERPBUS_TEST.dbo.EMPLOYEE" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT DEPNO, (SELECT NAME FROM DEPARTMENT WHERE (DEPNO = e.DEPNO)) AS DepName, EMPNO, NAME, LicenceType, (SELECT CLASSTXT FROM DBDICB WHERE (FKEY = '人事資料檔      Employee        LicenceType') AND (CLASSNO = e.LicenceType)) AS LicenceType_C, LicencingDay, LicenceCheck, DATEADD(day, - 15, driverlicense) AS DriverLicenceLimitDate, TRATOOL, (SELECT CLASSTXT FROM DBDICB AS DBDICB_1 WHERE (FKEY = '人事資料檔      EMPLOYEE        TRATOOL') AND (CLASSNO = e.TRATOOL)) AS TraTool_C, AUTONO AS TrainingGetDate, BBCALL AS TrainingStopDate, DATEADD(day, - 15, BBCALL) AS TrainingLimitDate FROM EMPLOYEE AS e WHERE (1 &lt;&gt; 1)</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="DEPNO" DataSetColumn="DEPNO" />
+              <Mapping SourceColumn="DepName" DataSetColumn="DepName" />
+              <Mapping SourceColumn="EMPNO" DataSetColumn="EMPNO" />
+              <Mapping SourceColumn="NAME" DataSetColumn="NAME" />
+              <Mapping SourceColumn="LicenceType" DataSetColumn="LicenceType" />
+              <Mapping SourceColumn="LicenceType_C" DataSetColumn="LicenceType_C" />
+              <Mapping SourceColumn="LicencingDay" DataSetColumn="LicencingDay" />
+              <Mapping SourceColumn="DriverLicenceLimitDate" DataSetColumn="DriverLicenceLimitDate" />
+              <Mapping SourceColumn="TRATOOL" DataSetColumn="TRATOOL" />
+              <Mapping SourceColumn="TraTool_C" DataSetColumn="TraTool_C" />
+              <Mapping SourceColumn="TrainingGetDate" DataSetColumn="TrainingGetDate" />
+              <Mapping SourceColumn="TrainingStopDate" DataSetColumn="TrainingStopDate" />
+              <Mapping SourceColumn="TrainingLimitDate" DataSetColumn="TrainingLimitDate" />
+              <Mapping SourceColumn="LicenceCheck" DataSetColumn="LicenceCheck" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DriverRegularTraining" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DriverRegularTraining" msprop:Generator_UserDSName="DriverRegularTraining">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="DriverRegularTrainingP" msprop:Generator_TableClassName="DriverRegularTrainingPDataTable" msprop:Generator_TableVarName="tableDriverRegularTrainingP" msprop:Generator_RowChangedName="DriverRegularTrainingPRowChanged" msprop:Generator_TablePropName="DriverRegularTrainingP" msprop:Generator_RowDeletingName="DriverRegularTrainingPRowDeleting" msprop:Generator_RowChangingName="DriverRegularTrainingPRowChanging" msprop:Generator_RowEvHandlerName="DriverRegularTrainingPRowChangeEventHandler" msprop:Generator_RowDeletedName="DriverRegularTrainingPRowDeleted" msprop:Generator_RowClassName="DriverRegularTrainingPRow" msprop:Generator_UserTableName="DriverRegularTrainingP" msprop:Generator_RowEvArgName="DriverRegularTrainingPRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DEPNO" msprop:Generator_ColumnVarNameInTable="columnDEPNO" msprop:Generator_ColumnPropNameInRow="DEPNO" msprop:Generator_ColumnPropNameInTable="DEPNOColumn" msprop:Generator_UserColumnName="DEPNO" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepName" msprop:Generator_ColumnPropNameInRow="DepName" msprop:Generator_ColumnPropNameInTable="DepNameColumn" msprop:Generator_UserColumnName="DepName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EMPNO" msprop:Generator_ColumnVarNameInTable="columnEMPNO" msprop:Generator_ColumnPropNameInRow="EMPNO" msprop:Generator_ColumnPropNameInTable="EMPNOColumn" msprop:Generator_UserColumnName="EMPNO">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="NAME" msprop:Generator_ColumnVarNameInTable="columnNAME" msprop:Generator_ColumnPropNameInRow="NAME" msprop:Generator_ColumnPropNameInTable="NAMEColumn" msprop:Generator_UserColumnName="NAME" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="LicenceType" msprop:Generator_ColumnVarNameInTable="columnLicenceType" msprop:Generator_ColumnPropNameInRow="LicenceType" msprop:Generator_ColumnPropNameInTable="LicenceTypeColumn" msprop:Generator_UserColumnName="LicenceType" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="LicenceType_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnLicenceType_C" msprop:Generator_ColumnPropNameInRow="LicenceType_C" msprop:Generator_ColumnPropNameInTable="LicenceType_CColumn" msprop:Generator_UserColumnName="LicenceType_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="LicencingDay" msprop:Generator_ColumnVarNameInTable="columnLicencingDay" msprop:Generator_ColumnPropNameInRow="LicencingDay" msprop:Generator_ColumnPropNameInTable="LicencingDayColumn" msprop:Generator_UserColumnName="LicencingDay" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="DriverLicenceLimitDate" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDriverLicenceLimitDate" msprop:Generator_ColumnPropNameInRow="DriverLicenceLimitDate" msprop:Generator_ColumnPropNameInTable="DriverLicenceLimitDateColumn" msprop:Generator_UserColumnName="DriverLicenceLimitDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="TRATOOL" msprop:Generator_ColumnVarNameInTable="columnTRATOOL" msprop:Generator_ColumnPropNameInRow="TRATOOL" msprop:Generator_ColumnPropNameInTable="TRATOOLColumn" msprop:Generator_UserColumnName="TRATOOL" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="4" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TraTool_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTraTool_C" msprop:Generator_ColumnPropNameInRow="TraTool_C" msprop:Generator_ColumnPropNameInTable="TraTool_CColumn" msprop:Generator_UserColumnName="TraTool_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TrainingGetDate" msprop:Generator_ColumnVarNameInTable="columnTrainingGetDate" msprop:Generator_ColumnPropNameInRow="TrainingGetDate" msprop:Generator_ColumnPropNameInTable="TrainingGetDateColumn" msprop:Generator_UserColumnName="TrainingGetDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="TrainingStopDate" msprop:Generator_ColumnVarNameInTable="columnTrainingStopDate" msprop:Generator_ColumnPropNameInRow="TrainingStopDate" msprop:Generator_ColumnPropNameInTable="TrainingStopDateColumn" msprop:Generator_UserColumnName="TrainingStopDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="TrainingLimitDate" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTrainingLimitDate" msprop:Generator_ColumnPropNameInRow="TrainingLimitDate" msprop:Generator_ColumnPropNameInTable="TrainingLimitDateColumn" msprop:Generator_UserColumnName="TrainingLimitDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="LicenceCheck" msprop:Generator_ColumnVarNameInTable="columnLicenceCheck" msprop:Generator_ColumnPropNameInRow="LicenceCheck" msprop:Generator_ColumnPropNameInTable="LicenceCheckColumn" msprop:Generator_UserColumnName="LicenceCheck" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:DriverRegularTrainingP" />
+      <xs:field xpath="mstns:EMPNO" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

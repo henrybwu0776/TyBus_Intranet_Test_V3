@@ -1,0 +1,444 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="IAConsumablesP" targetNamespace="http://tempuri.org/IAConsumablesP.xsd" xmlns:mstns="http://tempuri.org/IAConsumablesP.xsd" xmlns="http://tempuri.org/IAConsumablesP.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="IAConsumablesPTableAdapter" GeneratorDataComponentClassName="IAConsumablesPTableAdapter" Name="IAConsumablesP" UserDataComponentName="IAConsumablesPTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="ERPBUS_TEST.dbo.IAConsumables" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT IA.ConsNo, (select ClassTxt from DBDICB where FKey = '電腦課耗材管理  fmIAConsumables Systematics' and ClassNo = IA.Systematics) as Systematics_C, 
+       (select ClassTxt from DBDICB where FKey = '電腦課耗材管理  fmIAConsumables Brand' and ClassNo = IA.Brand) as Brand_C, 
+       IA.ConsName, IA.OriModelNo, IA.Quantity, 
+       (select ClassTxt from DBDICB where FKey = '電腦課耗材管理  fmIAConsumables Unit' and ClassNo = IA.Unit) as Unit_C, 
+       IA.SaveQty, IA.Position, IA.Spec_Color, IA.Spec_Other, IA.CorrespondModel, IA.LastIndate, IA.LastInQty, 
+	   case when isnull(IA.IsInorder, 0) = 1 then 'V' else 'X' end IsInorder, 
+	   case when isnull(IA.IsStopUse, 0) = 1 then 'V' else 'X' end IsStopUse,
+	   IA.Remark, IA.BuMan, (select [Name] from Employee where EmpNo = IA.BuMan) as BuManName, IA.BuDate, 
+       IA.ModifyMan, (select [Name] from Employee where EmpNo = IA.ModifyMan) as ModifyManName, IA.ModifyDate 
+  FROM IAConsumables as IA  
+ WHERE isnull(IA.ConsNo, '') = '' </CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="ConsNo" DataSetColumn="ConsNo" />
+              <Mapping SourceColumn="Systematics_C" DataSetColumn="Systematics_C" />
+              <Mapping SourceColumn="Brand_C" DataSetColumn="Brand_C" />
+              <Mapping SourceColumn="ConsName" DataSetColumn="ConsName" />
+              <Mapping SourceColumn="OriModelNo" DataSetColumn="OriModelNo" />
+              <Mapping SourceColumn="Quantity" DataSetColumn="Quantity" />
+              <Mapping SourceColumn="Unit_C" DataSetColumn="Unit_C" />
+              <Mapping SourceColumn="SaveQty" DataSetColumn="SaveQty" />
+              <Mapping SourceColumn="Position" DataSetColumn="Position" />
+              <Mapping SourceColumn="Spec_Color" DataSetColumn="Spec_Color" />
+              <Mapping SourceColumn="Spec_Other" DataSetColumn="Spec_Other" />
+              <Mapping SourceColumn="CorrespondModel" DataSetColumn="CorrespondModel" />
+              <Mapping SourceColumn="LastIndate" DataSetColumn="LastIndate" />
+              <Mapping SourceColumn="LastInQty" DataSetColumn="LastInQty" />
+              <Mapping SourceColumn="IsInorder" DataSetColumn="IsInorder" />
+              <Mapping SourceColumn="IsStopUse" DataSetColumn="IsStopUse" />
+              <Mapping SourceColumn="Remark" DataSetColumn="Remark" />
+              <Mapping SourceColumn="BuMan" DataSetColumn="BuMan" />
+              <Mapping SourceColumn="BuManName" DataSetColumn="BuManName" />
+              <Mapping SourceColumn="BuDate" DataSetColumn="BuDate" />
+              <Mapping SourceColumn="ModifyMan" DataSetColumn="ModifyMan" />
+              <Mapping SourceColumn="ModifyManName" DataSetColumn="ModifyManName" />
+              <Mapping SourceColumn="ModifyDate" DataSetColumn="ModifyDate" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="IAConsumablesP04TableAdapter" GeneratorDataComponentClassName="IAConsumablesP04TableAdapter" Name="IAConsumablesP04" UserDataComponentName="IAConsumablesP04TableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>select tB.ConsNo, tC.ConsName, tC.Brand, tC.OriModelNo, tC.Spec_Color, tC.CorrespondModel, tC.Quantity, tC.LastIndate, sum(tB.Quantity) as InQty 
+  from IASheetB as tB left join IASheetA as tA on tA.SheetNo = tB.SheetNo 
+                      left join IAConsumables as tC on tC.ConsNo = tB.ConsNo 
+ where 1 &lt;&gt; 1
+ group by tB.ConsNo, tC.ConsName, tC.Brand, tC.OriModelNo, tC.Spec_Color, tC.CorrespondModel, tC.Quantity, tC.LastIndate 
+ order by tB.ConsNo</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="ConsNo" DataSetColumn="ConsNo" />
+              <Mapping SourceColumn="ConsName" DataSetColumn="ConsName" />
+              <Mapping SourceColumn="Brand" DataSetColumn="Brand" />
+              <Mapping SourceColumn="OriModelNo" DataSetColumn="OriModelNo" />
+              <Mapping SourceColumn="Spec_Color" DataSetColumn="Spec_Color" />
+              <Mapping SourceColumn="CorrespondModel" DataSetColumn="CorrespondModel" />
+              <Mapping SourceColumn="Quantity" DataSetColumn="Quantity" />
+              <Mapping SourceColumn="LastIndate" DataSetColumn="LastIndate" />
+              <Mapping SourceColumn="InQty" DataSetColumn="InQty" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="IAConsumablesP03TableAdapter" GeneratorDataComponentClassName="IAConsumablesP03TableAdapter" Name="IAConsumablesP03" UserDataComponentName="IAConsumablesP03TableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>select tB.ConsNo, tC.ConsName, tC.Brand, tC.OriModelNo, tC.Spec_Color, tC.CorrespondModel, tC.Quantity, max(tA.BuDate) LastOutDate, sum(tB.Quantity) as OutQty 
+  from IASheetB as tB left join IASheetA as tA on tA.SheetNo = tB.SheetNo 
+                      left join IAConsumables as tC on tC.ConsNo = tB.ConsNo 
+ where 1 &lt;&gt; 1
+ group by tB.ConsNo, tC.ConsName, tC.Brand, tC.OriModelNo, tC.Spec_Color, tC.CorrespondModel, tC.Quantity 
+ order by tB.ConsNo</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="ConsNo" DataSetColumn="ConsNo" />
+              <Mapping SourceColumn="ConsName" DataSetColumn="ConsName" />
+              <Mapping SourceColumn="Brand" DataSetColumn="Brand" />
+              <Mapping SourceColumn="OriModelNo" DataSetColumn="OriModelNo" />
+              <Mapping SourceColumn="Spec_Color" DataSetColumn="Spec_Color" />
+              <Mapping SourceColumn="CorrespondModel" DataSetColumn="CorrespondModel" />
+              <Mapping SourceColumn="Quantity" DataSetColumn="Quantity" />
+              <Mapping SourceColumn="LastOutDate" DataSetColumn="LastOutDate" />
+              <Mapping SourceColumn="OutQty" DataSetColumn="OutQty" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="IAConsumablesP02TableAdapter" GeneratorDataComponentClassName="IAConsumablesP02TableAdapter" Name="IAConsumablesP02" UserDataComponentName="IAConsumablesP02TableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>select tB.ConsNo, tC.ConsName, tC.Brand, tC.OriModelNo, tC.Spec_Color, tC.CorrespondModel, tC.Quantity, max(tA.BuDate) LastInDate, sum(tB.Quantity) as OutQty 
+  from IASheetB as tB left join IASheetA as tA on tA.SheetNo = tB.SheetNo 
+                      left join IAConsumables as tC on tC.ConsNo = tB.ConsNo 
+ where 1 &lt;&gt; 1
+ group by tB.ConsNo, tC.ConsName, tC.Brand, tC.OriModelNo, tC.Spec_Color, tC.CorrespondModel, tC.Quantity 
+ order by tB.ConsNo</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="ConsNo" DataSetColumn="ConsNo" />
+              <Mapping SourceColumn="ConsName" DataSetColumn="ConsName" />
+              <Mapping SourceColumn="Brand" DataSetColumn="Brand" />
+              <Mapping SourceColumn="OriModelNo" DataSetColumn="OriModelNo" />
+              <Mapping SourceColumn="Spec_Color" DataSetColumn="Spec_Color" />
+              <Mapping SourceColumn="CorrespondModel" DataSetColumn="CorrespondModel" />
+              <Mapping SourceColumn="Quantity" DataSetColumn="Quantity" />
+              <Mapping SourceColumn="LastInDate" DataSetColumn="LastInDate" />
+              <Mapping SourceColumn="OutQty" DataSetColumn="OutQty" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="IAConsumablesP" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="IAConsumablesP" msprop:Generator_UserDSName="IAConsumablesP">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="IAConsumablesP" msprop:Generator_TableClassName="IAConsumablesPDataTable" msprop:Generator_TableVarName="tableIAConsumablesP" msprop:Generator_TablePropName="_IAConsumablesP" msprop:Generator_RowDeletingName="IAConsumablesPRowDeleting" msprop:Generator_RowChangingName="IAConsumablesPRowChanging" msprop:Generator_RowEvHandlerName="IAConsumablesPRowChangeEventHandler" msprop:Generator_RowDeletedName="IAConsumablesPRowDeleted" msprop:Generator_UserTableName="IAConsumablesP" msprop:Generator_RowChangedName="IAConsumablesPRowChanged" msprop:Generator_RowEvArgName="IAConsumablesPRowChangeEvent" msprop:Generator_RowClassName="IAConsumablesPRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ConsNo" msprop:Generator_ColumnVarNameInTable="columnConsNo" msprop:Generator_ColumnPropNameInRow="ConsNo" msprop:Generator_ColumnPropNameInTable="ConsNoColumn" msprop:Generator_UserColumnName="ConsNo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="24" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Systematics_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnSystematics_C" msprop:Generator_ColumnPropNameInRow="Systematics_C" msprop:Generator_ColumnPropNameInTable="Systematics_CColumn" msprop:Generator_UserColumnName="Systematics_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Brand_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBrand_C" msprop:Generator_ColumnPropNameInRow="Brand_C" msprop:Generator_ColumnPropNameInTable="Brand_CColumn" msprop:Generator_UserColumnName="Brand_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ConsName" msprop:Generator_ColumnVarNameInTable="columnConsName" msprop:Generator_ColumnPropNameInRow="ConsName" msprop:Generator_ColumnPropNameInTable="ConsNameColumn" msprop:Generator_UserColumnName="ConsName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="OriModelNo" msprop:Generator_ColumnVarNameInTable="columnOriModelNo" msprop:Generator_ColumnPropNameInRow="OriModelNo" msprop:Generator_ColumnPropNameInTable="OriModelNoColumn" msprop:Generator_UserColumnName="OriModelNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Quantity" msprop:Generator_ColumnVarNameInTable="columnQuantity" msprop:Generator_ColumnPropNameInRow="Quantity" msprop:Generator_ColumnPropNameInTable="QuantityColumn" msprop:Generator_UserColumnName="Quantity" type="xs:int" minOccurs="0" />
+              <xs:element name="Unit_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnUnit_C" msprop:Generator_ColumnPropNameInRow="Unit_C" msprop:Generator_ColumnPropNameInTable="Unit_CColumn" msprop:Generator_UserColumnName="Unit_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="SaveQty" msprop:Generator_ColumnVarNameInTable="columnSaveQty" msprop:Generator_ColumnPropNameInRow="SaveQty" msprop:Generator_ColumnPropNameInTable="SaveQtyColumn" msprop:Generator_UserColumnName="SaveQty" type="xs:int" minOccurs="0" />
+              <xs:element name="Position" msprop:Generator_ColumnVarNameInTable="columnPosition" msprop:Generator_ColumnPropNameInRow="Position" msprop:Generator_ColumnPropNameInTable="PositionColumn" msprop:Generator_UserColumnName="Position" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Spec_Color" msprop:Generator_ColumnVarNameInTable="columnSpec_Color" msprop:Generator_ColumnPropNameInRow="Spec_Color" msprop:Generator_ColumnPropNameInTable="Spec_ColorColumn" msprop:Generator_UserColumnName="Spec_Color" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Spec_Other" msprop:Generator_ColumnVarNameInTable="columnSpec_Other" msprop:Generator_ColumnPropNameInRow="Spec_Other" msprop:Generator_ColumnPropNameInTable="Spec_OtherColumn" msprop:Generator_UserColumnName="Spec_Other" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CorrespondModel" msprop:Generator_ColumnVarNameInTable="columnCorrespondModel" msprop:Generator_ColumnPropNameInRow="CorrespondModel" msprop:Generator_ColumnPropNameInTable="CorrespondModelColumn" msprop:Generator_UserColumnName="CorrespondModel" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="LastIndate" msprop:Generator_ColumnVarNameInTable="columnLastIndate" msprop:Generator_ColumnPropNameInRow="LastIndate" msprop:Generator_ColumnPropNameInTable="LastIndateColumn" msprop:Generator_UserColumnName="LastIndate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="LastInQty" msprop:Generator_ColumnVarNameInTable="columnLastInQty" msprop:Generator_ColumnPropNameInRow="LastInQty" msprop:Generator_ColumnPropNameInTable="LastInQtyColumn" msprop:Generator_UserColumnName="LastInQty" type="xs:int" minOccurs="0" />
+              <xs:element name="IsInorder" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnIsInorder" msprop:Generator_ColumnPropNameInRow="IsInorder" msprop:Generator_ColumnPropNameInTable="IsInorderColumn" msprop:Generator_UserColumnName="IsInorder" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IsStopUse" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnIsStopUse" msprop:Generator_ColumnPropNameInRow="IsStopUse" msprop:Generator_ColumnPropNameInTable="IsStopUseColumn" msprop:Generator_UserColumnName="IsStopUse" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Remark" msprop:Generator_ColumnVarNameInTable="columnRemark" msprop:Generator_ColumnPropNameInRow="Remark" msprop:Generator_ColumnPropNameInTable="RemarkColumn" msprop:Generator_UserColumnName="Remark" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BuMan" msprop:Generator_ColumnVarNameInTable="columnBuMan" msprop:Generator_ColumnPropNameInRow="BuMan" msprop:Generator_ColumnPropNameInTable="BuManColumn" msprop:Generator_UserColumnName="BuMan">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BuManName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBuManName" msprop:Generator_ColumnPropNameInRow="BuManName" msprop:Generator_ColumnPropNameInTable="BuManNameColumn" msprop:Generator_UserColumnName="BuManName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BuDate" msprop:Generator_ColumnVarNameInTable="columnBuDate" msprop:Generator_ColumnPropNameInRow="BuDate" msprop:Generator_ColumnPropNameInTable="BuDateColumn" msprop:Generator_UserColumnName="BuDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="ModifyMan" msprop:Generator_ColumnVarNameInTable="columnModifyMan" msprop:Generator_ColumnPropNameInRow="ModifyMan" msprop:Generator_ColumnPropNameInTable="ModifyManColumn" msprop:Generator_UserColumnName="ModifyMan" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ModifyManName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnModifyManName" msprop:Generator_ColumnPropNameInRow="ModifyManName" msprop:Generator_ColumnPropNameInTable="ModifyManNameColumn" msprop:Generator_UserColumnName="ModifyManName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ModifyDate" msprop:Generator_ColumnVarNameInTable="columnModifyDate" msprop:Generator_ColumnPropNameInRow="ModifyDate" msprop:Generator_ColumnPropNameInTable="ModifyDateColumn" msprop:Generator_UserColumnName="ModifyDate" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="IAConsumablesP04" msprop:Generator_TableClassName="IAConsumablesP04DataTable" msprop:Generator_TableVarName="tableIAConsumablesP04" msprop:Generator_RowChangedName="IAConsumablesP04RowChanged" msprop:Generator_TablePropName="IAConsumablesP04" msprop:Generator_RowDeletingName="IAConsumablesP04RowDeleting" msprop:Generator_RowChangingName="IAConsumablesP04RowChanging" msprop:Generator_RowEvHandlerName="IAConsumablesP04RowChangeEventHandler" msprop:Generator_RowDeletedName="IAConsumablesP04RowDeleted" msprop:Generator_RowClassName="IAConsumablesP04Row" msprop:Generator_UserTableName="IAConsumablesP04" msprop:Generator_RowEvArgName="IAConsumablesP04RowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ConsNo" msprop:Generator_ColumnVarNameInTable="columnConsNo" msprop:Generator_ColumnPropNameInRow="ConsNo" msprop:Generator_ColumnPropNameInTable="ConsNoColumn" msprop:Generator_UserColumnName="ConsNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="24" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ConsName" msprop:Generator_ColumnVarNameInTable="columnConsName" msprop:Generator_ColumnPropNameInRow="ConsName" msprop:Generator_ColumnPropNameInTable="ConsNameColumn" msprop:Generator_UserColumnName="ConsName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Brand" msprop:Generator_ColumnVarNameInTable="columnBrand" msprop:Generator_ColumnPropNameInRow="Brand" msprop:Generator_ColumnPropNameInTable="BrandColumn" msprop:Generator_UserColumnName="Brand" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="OriModelNo" msprop:Generator_ColumnVarNameInTable="columnOriModelNo" msprop:Generator_ColumnPropNameInRow="OriModelNo" msprop:Generator_ColumnPropNameInTable="OriModelNoColumn" msprop:Generator_UserColumnName="OriModelNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Spec_Color" msprop:Generator_ColumnVarNameInTable="columnSpec_Color" msprop:Generator_ColumnPropNameInRow="Spec_Color" msprop:Generator_ColumnPropNameInTable="Spec_ColorColumn" msprop:Generator_UserColumnName="Spec_Color" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CorrespondModel" msprop:Generator_ColumnVarNameInTable="columnCorrespondModel" msprop:Generator_ColumnPropNameInRow="CorrespondModel" msprop:Generator_ColumnPropNameInTable="CorrespondModelColumn" msprop:Generator_UserColumnName="CorrespondModel" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Quantity" msprop:Generator_ColumnVarNameInTable="columnQuantity" msprop:Generator_ColumnPropNameInRow="Quantity" msprop:Generator_ColumnPropNameInTable="QuantityColumn" msprop:Generator_UserColumnName="Quantity" type="xs:int" minOccurs="0" />
+              <xs:element name="LastIndate" msprop:Generator_ColumnVarNameInTable="columnLastIndate" msprop:Generator_ColumnPropNameInRow="LastIndate" msprop:Generator_ColumnPropNameInTable="LastIndateColumn" msprop:Generator_UserColumnName="LastIndate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="InQty" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnInQty" msprop:Generator_ColumnPropNameInRow="InQty" msprop:Generator_ColumnPropNameInTable="InQtyColumn" msprop:Generator_UserColumnName="InQty" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="IAConsumablesP03" msprop:Generator_TableClassName="IAConsumablesP03DataTable" msprop:Generator_TableVarName="tableIAConsumablesP03" msprop:Generator_RowChangedName="IAConsumablesP03RowChanged" msprop:Generator_TablePropName="IAConsumablesP03" msprop:Generator_RowDeletingName="IAConsumablesP03RowDeleting" msprop:Generator_RowChangingName="IAConsumablesP03RowChanging" msprop:Generator_RowEvHandlerName="IAConsumablesP03RowChangeEventHandler" msprop:Generator_RowDeletedName="IAConsumablesP03RowDeleted" msprop:Generator_RowClassName="IAConsumablesP03Row" msprop:Generator_UserTableName="IAConsumablesP03" msprop:Generator_RowEvArgName="IAConsumablesP03RowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ConsNo" msprop:Generator_ColumnVarNameInTable="columnConsNo" msprop:Generator_ColumnPropNameInRow="ConsNo" msprop:Generator_ColumnPropNameInTable="ConsNoColumn" msprop:Generator_UserColumnName="ConsNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="24" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ConsName" msprop:Generator_ColumnVarNameInTable="columnConsName" msprop:Generator_ColumnPropNameInRow="ConsName" msprop:Generator_ColumnPropNameInTable="ConsNameColumn" msprop:Generator_UserColumnName="ConsName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Brand" msprop:Generator_ColumnVarNameInTable="columnBrand" msprop:Generator_ColumnPropNameInRow="Brand" msprop:Generator_ColumnPropNameInTable="BrandColumn" msprop:Generator_UserColumnName="Brand" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="OriModelNo" msprop:Generator_ColumnVarNameInTable="columnOriModelNo" msprop:Generator_ColumnPropNameInRow="OriModelNo" msprop:Generator_ColumnPropNameInTable="OriModelNoColumn" msprop:Generator_UserColumnName="OriModelNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Spec_Color" msprop:Generator_ColumnVarNameInTable="columnSpec_Color" msprop:Generator_ColumnPropNameInRow="Spec_Color" msprop:Generator_ColumnPropNameInTable="Spec_ColorColumn" msprop:Generator_UserColumnName="Spec_Color" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CorrespondModel" msprop:Generator_ColumnVarNameInTable="columnCorrespondModel" msprop:Generator_ColumnPropNameInRow="CorrespondModel" msprop:Generator_ColumnPropNameInTable="CorrespondModelColumn" msprop:Generator_UserColumnName="CorrespondModel" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Quantity" msprop:Generator_ColumnVarNameInTable="columnQuantity" msprop:Generator_ColumnPropNameInRow="Quantity" msprop:Generator_ColumnPropNameInTable="QuantityColumn" msprop:Generator_UserColumnName="Quantity" type="xs:int" minOccurs="0" />
+              <xs:element name="LastOutDate" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnLastOutDate" msprop:Generator_ColumnPropNameInRow="LastOutDate" msprop:Generator_ColumnPropNameInTable="LastOutDateColumn" msprop:Generator_UserColumnName="LastOutDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="OutQty" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnOutQty" msprop:Generator_ColumnPropNameInRow="OutQty" msprop:Generator_ColumnPropNameInTable="OutQtyColumn" msprop:Generator_UserColumnName="OutQty" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="IAConsumablesP02" msprop:Generator_TableClassName="IAConsumablesP02DataTable" msprop:Generator_TableVarName="tableIAConsumablesP02" msprop:Generator_RowChangedName="IAConsumablesP02RowChanged" msprop:Generator_TablePropName="IAConsumablesP02" msprop:Generator_RowDeletingName="IAConsumablesP02RowDeleting" msprop:Generator_RowChangingName="IAConsumablesP02RowChanging" msprop:Generator_RowEvHandlerName="IAConsumablesP02RowChangeEventHandler" msprop:Generator_RowDeletedName="IAConsumablesP02RowDeleted" msprop:Generator_RowClassName="IAConsumablesP02Row" msprop:Generator_UserTableName="IAConsumablesP02" msprop:Generator_RowEvArgName="IAConsumablesP02RowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ConsNo" msprop:Generator_ColumnVarNameInTable="columnConsNo" msprop:Generator_ColumnPropNameInRow="ConsNo" msprop:Generator_ColumnPropNameInTable="ConsNoColumn" msprop:Generator_UserColumnName="ConsNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="24" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ConsName" msprop:Generator_ColumnVarNameInTable="columnConsName" msprop:Generator_ColumnPropNameInRow="ConsName" msprop:Generator_ColumnPropNameInTable="ConsNameColumn" msprop:Generator_UserColumnName="ConsName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Brand" msprop:Generator_ColumnVarNameInTable="columnBrand" msprop:Generator_ColumnPropNameInRow="Brand" msprop:Generator_ColumnPropNameInTable="BrandColumn" msprop:Generator_UserColumnName="Brand" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="OriModelNo" msprop:Generator_ColumnVarNameInTable="columnOriModelNo" msprop:Generator_ColumnPropNameInRow="OriModelNo" msprop:Generator_ColumnPropNameInTable="OriModelNoColumn" msprop:Generator_UserColumnName="OriModelNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Spec_Color" msprop:Generator_ColumnVarNameInTable="columnSpec_Color" msprop:Generator_ColumnPropNameInRow="Spec_Color" msprop:Generator_ColumnPropNameInTable="Spec_ColorColumn" msprop:Generator_UserColumnName="Spec_Color" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CorrespondModel" msprop:Generator_ColumnVarNameInTable="columnCorrespondModel" msprop:Generator_ColumnPropNameInRow="CorrespondModel" msprop:Generator_ColumnPropNameInTable="CorrespondModelColumn" msprop:Generator_UserColumnName="CorrespondModel" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Quantity" msprop:Generator_ColumnVarNameInTable="columnQuantity" msprop:Generator_ColumnPropNameInRow="Quantity" msprop:Generator_ColumnPropNameInTable="QuantityColumn" msprop:Generator_UserColumnName="Quantity" type="xs:int" minOccurs="0" />
+              <xs:element name="LastInDate" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnLastInDate" msprop:Generator_ColumnPropNameInRow="LastInDate" msprop:Generator_ColumnPropNameInTable="LastInDateColumn" msprop:Generator_UserColumnName="LastInDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="OutQty" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnOutQty" msprop:Generator_ColumnPropNameInRow="OutQty" msprop:Generator_ColumnPropNameInTable="OutQtyColumn" msprop:Generator_UserColumnName="OutQty" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:IAConsumablesP" />
+      <xs:field xpath="mstns:ConsNo" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

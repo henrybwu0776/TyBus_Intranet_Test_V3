@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DriverWorkOver7DaysP" targetNamespace="http://tempuri.org/DriverWorkOver7DaysP.xsd" xmlns:mstns="http://tempuri.org/DriverWorkOver7DaysP.xsd" xmlns="http://tempuri.org/DriverWorkOver7DaysP.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="DriverWorkOver7DaysPTableAdapter" GeneratorDataComponentClassName="DriverWorkOver7DaysPTableAdapter" Name="DriverWorkOver7DaysP" UserDataComponentName="DriverWorkOver7DaysPTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="ERPBUS_TEST.dbo.EMPLOYEE" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          DEPNO,
+                                (SELECT          NAME
+                                  FROM               DEPARTMENT
+                                  WHERE           (DEPNO = e.DEPNO)) AS DepName, EMPNO, NAME AS EmpName,
+                                (SELECT          COUNT(DRIVER) AS Expr1
+                                  FROM               RUNSHEETA AS a
+                                  WHERE           (DRIVER = e.EMPNO) AND (BUDATE BETWEEN DATEADD(day, - 5, '2020/03/01') AND '2020/03/01')) 
+                            AS WorkDaysNear6Day, CAST(0 AS int) AS OverDays
+FROM              EMPLOYEE AS e
+WHERE          (1 &lt;&gt; 1)</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="DEPNO" DataSetColumn="DEPNO" />
+              <Mapping SourceColumn="DepName" DataSetColumn="DepName" />
+              <Mapping SourceColumn="EMPNO" DataSetColumn="EMPNO" />
+              <Mapping SourceColumn="EmpName" DataSetColumn="EmpName" />
+              <Mapping SourceColumn="WorkDaysNear6Day" DataSetColumn="WorkDaysNear6Day" />
+              <Mapping SourceColumn="OverDays" DataSetColumn="OverDays" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DriverWorkOver7DaysP" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DriverWorkOver7DaysP" msprop:Generator_UserDSName="DriverWorkOver7DaysP">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="DriverWorkOver7DaysP" msprop:Generator_TableClassName="DriverWorkOver7DaysPDataTable" msprop:Generator_TableVarName="tableDriverWorkOver7DaysP" msprop:Generator_TablePropName="_DriverWorkOver7DaysP" msprop:Generator_RowDeletingName="DriverWorkOver7DaysPRowDeleting" msprop:Generator_RowChangingName="DriverWorkOver7DaysPRowChanging" msprop:Generator_RowEvHandlerName="DriverWorkOver7DaysPRowChangeEventHandler" msprop:Generator_RowDeletedName="DriverWorkOver7DaysPRowDeleted" msprop:Generator_UserTableName="DriverWorkOver7DaysP" msprop:Generator_RowChangedName="DriverWorkOver7DaysPRowChanged" msprop:Generator_RowEvArgName="DriverWorkOver7DaysPRowChangeEvent" msprop:Generator_RowClassName="DriverWorkOver7DaysPRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DEPNO" msprop:Generator_ColumnVarNameInTable="columnDEPNO" msprop:Generator_ColumnPropNameInRow="DEPNO" msprop:Generator_ColumnPropNameInTable="DEPNOColumn" msprop:Generator_UserColumnName="DEPNO" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepName" msprop:Generator_ColumnPropNameInRow="DepName" msprop:Generator_ColumnPropNameInTable="DepNameColumn" msprop:Generator_UserColumnName="DepName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EMPNO" msprop:Generator_ColumnVarNameInTable="columnEMPNO" msprop:Generator_ColumnPropNameInRow="EMPNO" msprop:Generator_ColumnPropNameInTable="EMPNOColumn" msprop:Generator_UserColumnName="EMPNO">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EmpName" msprop:Generator_ColumnVarNameInTable="columnEmpName" msprop:Generator_ColumnPropNameInRow="EmpName" msprop:Generator_ColumnPropNameInTable="EmpNameColumn" msprop:Generator_UserColumnName="EmpName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WorkDaysNear6Day" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWorkDaysNear6Day" msprop:Generator_ColumnPropNameInRow="WorkDaysNear6Day" msprop:Generator_ColumnPropNameInTable="WorkDaysNear6DayColumn" msprop:Generator_UserColumnName="WorkDaysNear6Day" type="xs:int" minOccurs="0" />
+              <xs:element name="OverDays" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnOverDays" msprop:Generator_ColumnPropNameInRow="OverDays" msprop:Generator_ColumnPropNameInTable="OverDaysColumn" msprop:Generator_UserColumnName="OverDays" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:DriverWorkOver7DaysP" />
+      <xs:field xpath="mstns:EMPNO" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

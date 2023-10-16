@@ -1,0 +1,962 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="FixRequest" targetNamespace="http://tempuri.org/FixRequest.xsd" xmlns:mstns="http://tempuri.org/FixRequest.xsd" xmlns="http://tempuri.org/FixRequest.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="FixRequestSheetPTableAdapter" GeneratorDataComponentClassName="FixRequestSheetPTableAdapter" Name="FixRequestSheetP" UserDataComponentName="FixRequestSheetPTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="ERPBUS_TEST.dbo.SHEETA" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT sheetno AS SheetNo, CONVERT (varchar, day, 111) AS Day, (SELECT NAME FROM DEPARTMENT WHERE (DEPNO = s.depno)) AS DepName, (SELECT NAME FROM EMPLOYEE WHERE (EMPNO = s.buman)) AS BuManName, CASE WHEN isnull(FixType , '01') = '01' THEN '軟體' WHEN isnull(FixType , '01') = '02' THEN '硬體' ELSE '資訊評估' END AS FixType_C, CASE WHEN isnull(aboutReport , 'X') = 'V' THEN '列印報表' ELSE '' END + CASE WHEN isnull(aboutDataModify , 'X') = 'V' THEN '資料修改' ELSE '' END + CASE WHEN isnull(aboutDesign , 'X') = 'V' THEN '設計資料或表單' ELSE '' END + CASE WHEN isnull(aboutHardDriver , 'X') = 'V' THEN '電腦故障' ELSE '' END + CASE WHEN isnull(aboutSetting , 'X') = 'V' THEN '安裝或設定' ELSE '' END + CASE WHEN isnull(aboutSurver , 'X') = 'V' THEN '偵測或補發' ELSE '' END + CASE WHEN isnull(aboutPurchase , 'X') = 'V' THEN '購置' ELSE '' END + CASE WHEN isnull(aboutOthers , 'X') = 'V' THEN '其他' ELSE '' END AS FixItems, FixRemark, (SELECT NAME FROM EMPLOYEE AS EMPLOYEE_1 WHERE (EMPNO = s.Handler)) AS HandlerName, CONVERT (varchar, AssignDate, 111) AS AssignDate, CASE WHEN isnull(Disposal , '01') = '01' THEN '未派工' WHEN isnull(Disposal , '01') = '02' THEN '施工中' ELSE '已完工' END AS Disposal_C, CONVERT (varchar, FixFinishDate, 111) AS FixFinishDate, ChiefNote, WorkReport FROM SHEETA AS s WHERE (1 &lt;&gt; 1)</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="SheetNo" DataSetColumn="SheetNo" />
+              <Mapping SourceColumn="Day" DataSetColumn="Day" />
+              <Mapping SourceColumn="DepName" DataSetColumn="DepName" />
+              <Mapping SourceColumn="BuManName" DataSetColumn="BuManName" />
+              <Mapping SourceColumn="FixType_C" DataSetColumn="FixType_C" />
+              <Mapping SourceColumn="FixItems" DataSetColumn="FixItems" />
+              <Mapping SourceColumn="FixRemark" DataSetColumn="FixRemark" />
+              <Mapping SourceColumn="HandlerName" DataSetColumn="HandlerName" />
+              <Mapping SourceColumn="AssignDate" DataSetColumn="AssignDate" />
+              <Mapping SourceColumn="Disposal_C" DataSetColumn="Disposal_C" />
+              <Mapping SourceColumn="FixFinishDate" DataSetColumn="FixFinishDate" />
+              <Mapping SourceColumn="ChiefNote" DataSetColumn="ChiefNote" />
+              <Mapping SourceColumn="WorkReport" DataSetColumn="WorkReport" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="FixSheetPTableAdapter" GeneratorDataComponentClassName="FixSheetPTableAdapter" Name="FixSheetP" UserDataComponentName="FixSheetPTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="ERPBUS_TEST.dbo.SHEETA" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT sheetno, CONVERT (varchar, day, 111) AS Day, depno, (SELECT NAME FROM DEPARTMENT WHERE (DEPNO = s.depno)) AS DepName, buman, (SELECT NAME FROM EMPLOYEE WHERE (EMPNO = s.buman)) AS BuManName, CASE WHEN isnull(FixType , '01') = '01' THEN '軟體' WHEN isnull(FixType , '01') = '02' THEN '硬體' ELSE '資訊評估' END AS FixType_C, FixType, CASE WHEN isnull(aboutReport , 'X') = 'V' THEN '列印報表' ELSE '' END + CASE WHEN isnull(aboutDataModify , 'X') = 'V' THEN '資料修改' ELSE '' END + CASE WHEN isnull(aboutDesign , 'X') = 'V' THEN '設計資料或表單' ELSE '' END + CASE WHEN isnull(aboutHardDriver , 'X') = 'V' THEN '電腦故障' ELSE '' END + CASE WHEN isnull(aboutSetting , 'X') = 'V' THEN '安裝或設定' ELSE '' END + CASE WHEN isnull(aboutSurver , 'X') = 'V' THEN '偵測或補發' ELSE '' END + CASE WHEN isnull(aboutPurchase , 'X') = 'V' THEN '購置' ELSE '' END + CASE WHEN isnull(aboutOthers , 'X') = 'V' THEN '其他' ELSE '' END AS FixNote, FixRemark, Handler, (SELECT NAME FROM EMPLOYEE AS EMPLOYEE_1 WHERE (EMPNO = s.Handler)) AS HandlerName, CONVERT (varchar, AssignDate, 111) AS AssignDate, CASE WHEN isnull(Disposal , '01') = '01' THEN '未派工' WHEN isnull(Disposal , '01') = '02' THEN '施工中' ELSE '已完工' END AS Disposal_C, Disposal, CONVERT (varchar, FixFinishDate, 111) AS FixFinishDate, WorkReport FROM SHEETA AS s WHERE (1 &lt;&gt; 1)</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="sheetno" DataSetColumn="sheetno" />
+              <Mapping SourceColumn="Day" DataSetColumn="Day" />
+              <Mapping SourceColumn="depno" DataSetColumn="depno" />
+              <Mapping SourceColumn="DepName" DataSetColumn="DepName" />
+              <Mapping SourceColumn="buman" DataSetColumn="buman" />
+              <Mapping SourceColumn="BuManName" DataSetColumn="BuManName" />
+              <Mapping SourceColumn="FixType_C" DataSetColumn="FixType_C" />
+              <Mapping SourceColumn="FixType" DataSetColumn="FixType" />
+              <Mapping SourceColumn="FixNote" DataSetColumn="FixNote" />
+              <Mapping SourceColumn="FixRemark" DataSetColumn="FixRemark" />
+              <Mapping SourceColumn="Handler" DataSetColumn="Handler" />
+              <Mapping SourceColumn="HandlerName" DataSetColumn="HandlerName" />
+              <Mapping SourceColumn="AssignDate" DataSetColumn="AssignDate" />
+              <Mapping SourceColumn="Disposal_C" DataSetColumn="Disposal_C" />
+              <Mapping SourceColumn="Disposal" DataSetColumn="Disposal" />
+              <Mapping SourceColumn="FixFinishDate" DataSetColumn="FixFinishDate" />
+              <Mapping SourceColumn="WorkReport" DataSetColumn="WorkReport" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="SheetNoneGroupingTableAdapter" GeneratorDataComponentClassName="SheetNoneGroupingTableAdapter" Name="SheetNoneGrouping" UserDataComponentName="SheetNoneGroupingTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="ERPBUS_TEST.dbo.SHEETA" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          sheetno,
+                                (SELECT          NAME
+                                  FROM               DEPARTMENT
+                                  WHERE           (DEPNO = s.depno)) AS DepName, buman,
+                                (SELECT          NAME
+                                  FROM               EMPLOYEE
+                                  WHERE           (EMPNO = s.buman)) AS BuMan_C, CASE WHEN isnull(FixType, '01') 
+                            = '01' THEN '軟體' WHEN isnull(FixType, '01') = '02' THEN '硬體' ELSE '資訊評估' END AS FixType, 
+                            CASE WHEN isnull(aboutReport, 'X') = 'V' THEN '列印報表' ELSE '' END + CASE WHEN isnull(aboutDataModify, 'X') 
+                            = 'V' THEN '資料修改' ELSE '' END + CASE WHEN isnull(aboutDesign, 'X') 
+                            = 'V' THEN '設計資料或表單' ELSE '' END + CASE WHEN isnull(aboutHardDriver, 'X') 
+                            = 'V' THEN '電腦故障' ELSE '' END + CASE WHEN isnull(aboutSetting, 'X') 
+                            = 'V' THEN '安裝或設定' ELSE '' END + CASE WHEN isnull(aboutSurver, 'X') 
+                            = 'V' THEN '偵測或補發' ELSE '' END + CASE WHEN isnull(aboutPurchase, 'X') 
+                            = 'V' THEN '購置' ELSE '' END + CASE WHEN isnull(aboutOthers, 'X') = 'V' THEN '其他' ELSE '' END AS FixNote, 
+                            FixRemark, AssignDate,
+                                (SELECT          NAME
+                                  FROM               EMPLOYEE AS EMPLOYEE_1
+                                  WHERE           (EMPNO = s.Handler)) AS Handler_C, CASE WHEN isnull(Disposal, '01') 
+                            = '01' THEN '未派工' WHEN isnull(Disposal, '01') = '02' THEN '施工中' ELSE '已完工' END AS Disposal_C, 
+                            FixFinishDate
+FROM              SHEETA AS s
+WHERE          (1 &lt;&gt; 1)
+ORDER BY   sheetno</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="sheetno" DataSetColumn="sheetno" />
+              <Mapping SourceColumn="DepName" DataSetColumn="DepName" />
+              <Mapping SourceColumn="buman" DataSetColumn="buman" />
+              <Mapping SourceColumn="BuMan_C" DataSetColumn="BuMan_C" />
+              <Mapping SourceColumn="FixType" DataSetColumn="FixType" />
+              <Mapping SourceColumn="FixNote" DataSetColumn="FixNote" />
+              <Mapping SourceColumn="FixRemark" DataSetColumn="FixRemark" />
+              <Mapping SourceColumn="AssignDate" DataSetColumn="AssignDate" />
+              <Mapping SourceColumn="Handler_C" DataSetColumn="Handler_C" />
+              <Mapping SourceColumn="Disposal_C" DataSetColumn="Disposal_C" />
+              <Mapping SourceColumn="FixFinishDate" DataSetColumn="FixFinishDate" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="SheetGroupByBuManTableAdapter" GeneratorDataComponentClassName="SheetGroupByBuManTableAdapter" Name="SheetGroupByBuMan" UserDataComponentName="SheetGroupByBuManTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="SELECT sheetno, buman, CASE WHEN isnull(FixType, '01') = '01' THEN '軟體' WHEN isnull(FixType, '01') = '02' THEN '硬體' ELSE '資訊評估' END AS FixType, CASE WHEN isnull(aboutReport, 'X') = 'V' THEN '列印報表' ELSE '' END + CASE WHEN isnull(aboutDataModify, 'X') = 'V' THEN '資料修改' ELSE '' END + CASE WHEN isnull(aboutDesign, 'X') = 'V' THEN '設計資料或表單' ELSE '' END + CASE WHEN isnull(aboutHardDriver, 'X') = 'V' THEN '電腦故障' ELSE '' END + CASE WHEN isnull(aboutSetting, 'X') = 'V' THEN '安裝或設定' ELSE '' END + CASE WHEN isnull(aboutSurver, 'X') = 'V' THEN '偵測或補發' ELSE '' END + CASE WHEN isnull(aboutPurchase, 'X') = 'V' THEN '購置' ELSE '' END + CASE WHEN isnull(aboutOthers, 'X') = 'V' THEN '其他' ELSE '' END AS FixNote, AssignDate, (SELECT NAME FROM EMPLOYEE AS EMPLOYEE_1 WHERE (EMPNO = SHEETA.Handler)) AS Handler, CASE WHEN isnull(Disposal, '01') = '01' THEN '未派工' WHEN isnull(Disposal, '01') = '02' THEN '施工中' ELSE '已完工' END AS Disposal, FixFinishDate FROM SHEETA WHERE (1 &lt;&gt; 1)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          COUNT(sheetno) AS RCount,
+                                (SELECT          NAME
+                                  FROM               EMPLOYEE
+                                  WHERE           (EMPNO = s.buman)) AS BuMan_C, FixType, FixNote, AssignDate, Handler, Disposal, 
+                            FixFinishDate
+FROM              (SELECT          sheetno, buman, CASE WHEN isnull(FixType, '01') = '01' THEN '軟體' WHEN isnull(FixType, '01') 
+                                                        = '02' THEN '硬體' ELSE '資訊評估' END AS FixType, CASE WHEN isnull(aboutReport, 'X') 
+                                                        = 'V' THEN '列印報表' ELSE '' END + CASE WHEN isnull(aboutDataModify, 'X') 
+                                                        = 'V' THEN '資料修改' ELSE '' END + CASE WHEN isnull(aboutDesign, 'X') 
+                                                        = 'V' THEN '設計資料或表單' ELSE '' END + CASE WHEN isnull(aboutHardDriver, 'X') 
+                                                        = 'V' THEN '電腦故障' ELSE '' END + CASE WHEN isnull(aboutSetting, 'X') 
+                                                        = 'V' THEN '安裝或設定' ELSE '' END + CASE WHEN isnull(aboutSurver, 'X') 
+                                                        = 'V' THEN '偵測或補發' ELSE '' END + CASE WHEN isnull(aboutPurchase, 'X') 
+                                                        = 'V' THEN '購置' ELSE '' END + CASE WHEN isnull(aboutOthers, 'X') 
+                                                        = 'V' THEN '其他' ELSE '' END AS FixNote, AssignDate,
+                                                            (SELECT          NAME
+                                                              FROM               EMPLOYEE AS EMPLOYEE_1
+                                                              WHERE           (EMPNO = SHEETA.Handler)) AS Handler, CASE WHEN isnull(Disposal, '01') 
+                                                        = '01' THEN '未派工' WHEN isnull(Disposal, '01') = '02' THEN '施工中' ELSE '已完工' END AS Disposal, 
+                                                        FixFinishDate
+                            FROM               SHEETA
+                            WHERE           (1 &lt;&gt; 1)) AS s
+GROUP BY   buman, FixType, FixNote, AssignDate, Handler, Disposal, FixFinishDate</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="RCount" DataSetColumn="RCount" />
+              <Mapping SourceColumn="BuMan_C" DataSetColumn="BuMan_C" />
+              <Mapping SourceColumn="FixType" DataSetColumn="FixType" />
+              <Mapping SourceColumn="FixNote" DataSetColumn="FixNote" />
+              <Mapping SourceColumn="AssignDate" DataSetColumn="AssignDate" />
+              <Mapping SourceColumn="Handler" DataSetColumn="Handler" />
+              <Mapping SourceColumn="Disposal" DataSetColumn="Disposal" />
+              <Mapping SourceColumn="FixFinishDate" DataSetColumn="FixFinishDate" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="SheetGroupByDepNoTableAdapter" GeneratorDataComponentClassName="SheetGroupByDepNoTableAdapter" Name="SheetGroupByDepNo" UserDataComponentName="SheetGroupByDepNoTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="SELECT sheetno, depno, CASE WHEN isnull(FixType, '01') = '01' THEN '軟體' WHEN isnull(FixType, '01') = '02' THEN '硬體' ELSE '資訊評估' END AS FixType, CASE WHEN isnull(aboutReport, 'X') = 'V' THEN '列印報表' ELSE '' END + CASE WHEN isnull(aboutDataModify, 'X') = 'V' THEN '資料修改' ELSE '' END + CASE WHEN isnull(aboutDesign, 'X') = 'V' THEN '設計資料或表單' ELSE '' END + CASE WHEN isnull(aboutHardDriver, 'X') = 'V' THEN '電腦故障' ELSE '' END + CASE WHEN isnull(aboutSetting, 'X') = 'V' THEN '安裝或設定' ELSE '' END + CASE WHEN isnull(aboutSurver, 'X') = 'V' THEN '偵測或補發' ELSE '' END + CASE WHEN isnull(aboutPurchase, 'X') = 'V' THEN '購置' ELSE '' END + CASE WHEN isnull(aboutOthers, 'X') = 'V' THEN '其他' ELSE '' END AS FixNote, AssignDate, (SELECT NAME FROM EMPLOYEE WHERE (EMPNO = SHEETA.Handler)) AS Handler, CASE WHEN isnull(Disposal, '01') = '01' THEN '未派工' WHEN isnull(Disposal, '01') = '02' THEN '施工中' ELSE '已完工' END AS Disposal, FixFinishDate FROM SHEETA WHERE (1 &lt;&gt; 1)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          COUNT(sheetno) AS RCount,
+                                (SELECT          NAME
+                                  FROM               DEPARTMENT
+                                  WHERE           (DEPNO = s.depno)) AS DepName, FixType, FixNote, AssignDate, Handler, Disposal, 
+                            FixFinishDate
+FROM              (SELECT          sheetno, depno, CASE WHEN isnull(FixType, '01') = '01' THEN '軟體' WHEN isnull(FixType, '01') 
+                                                        = '02' THEN '硬體' ELSE '資訊評估' END AS FixType, CASE WHEN isnull(aboutReport, 'X') 
+                                                        = 'V' THEN '列印報表' ELSE '' END + CASE WHEN isnull(aboutDataModify, 'X') 
+                                                        = 'V' THEN '資料修改' ELSE '' END + CASE WHEN isnull(aboutDesign, 'X') 
+                                                        = 'V' THEN '設計資料或表單' ELSE '' END + CASE WHEN isnull(aboutHardDriver, 'X') 
+                                                        = 'V' THEN '電腦故障' ELSE '' END + CASE WHEN isnull(aboutSetting, 'X') 
+                                                        = 'V' THEN '安裝或設定' ELSE '' END + CASE WHEN isnull(aboutSurver, 'X') 
+                                                        = 'V' THEN '偵測或補發' ELSE '' END + CASE WHEN isnull(aboutPurchase, 'X') 
+                                                        = 'V' THEN '購置' ELSE '' END + CASE WHEN isnull(aboutOthers, 'X') 
+                                                        = 'V' THEN '其他' ELSE '' END AS FixNote, AssignDate,
+                                                            (SELECT          NAME
+                                                              FROM               EMPLOYEE
+                                                              WHERE           (EMPNO = SHEETA.Handler)) AS Handler, CASE WHEN isnull(Disposal, '01') 
+                                                        = '01' THEN '未派工' WHEN isnull(Disposal, '01') = '02' THEN '施工中' ELSE '已完工' END AS Disposal, 
+                                                        FixFinishDate
+                            FROM               SHEETA
+                            WHERE           (1 &lt;&gt; 1)) AS s
+GROUP BY   depno, FixType, FixNote, AssignDate, Handler, Disposal, FixFinishDate</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="RCount" DataSetColumn="RCount" />
+              <Mapping SourceColumn="DepName" DataSetColumn="DepName" />
+              <Mapping SourceColumn="FixType" DataSetColumn="FixType" />
+              <Mapping SourceColumn="FixNote" DataSetColumn="FixNote" />
+              <Mapping SourceColumn="AssignDate" DataSetColumn="AssignDate" />
+              <Mapping SourceColumn="Handler" DataSetColumn="Handler" />
+              <Mapping SourceColumn="Disposal" DataSetColumn="Disposal" />
+              <Mapping SourceColumn="FixFinishDate" DataSetColumn="FixFinishDate" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="SheetGroupByDateTableAdapter" GeneratorDataComponentClassName="SheetGroupByDateTableAdapter" Name="SheetGroupByDate" UserDataComponentName="SheetGroupByDateTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="SELECT sheetno, day, CASE WHEN isnull(FixType, '01') = '01' THEN '軟體' WHEN isnull(FixType, '01') = '02' THEN '硬體' ELSE '資訊評估' END AS FixType, CASE WHEN isnull(aboutReport, 'X') = 'V' THEN '列印報表' ELSE '' END + CASE WHEN isnull(aboutDataModify, 'X') = 'V' THEN '資料修改' ELSE '' END + CASE WHEN isnull(aboutDesign, 'X') = 'V' THEN '設計資料或表單' ELSE '' END + CASE WHEN isnull(aboutHardDriver, 'X') = 'V' THEN '電腦故障' ELSE '' END + CASE WHEN isnull(aboutSetting, 'X') = 'V' THEN '安裝或設定' ELSE '' END + CASE WHEN isnull(aboutSurver, 'X') = 'V' THEN '偵測或補發' ELSE '' END + CASE WHEN isnull(aboutPurchase, 'X') = 'V' THEN '購置' ELSE '' END + CASE WHEN isnull(aboutOthers, 'X') = 'V' THEN '其他' ELSE '' END AS FixNote, AssignDate, (SELECT NAME FROM EMPLOYEE WHERE (EMPNO = SHEETA.Handler)) AS Handler, CASE WHEN isnull(Disposal, '01') = '01' THEN '未派工' WHEN isnull(Disposal, '01') = '02' THEN '施工中' ELSE '已完工' END AS Disposal, FixFinishDate FROM SHEETA WHERE (1 &lt;&gt; 1)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          COUNT(sheetno) AS RCount, day, FixType, FixNote, AssignDate, Handler, Disposal, FixFinishDate
+FROM              (SELECT          sheetno, day, CASE WHEN isnull(FixType, '01') = '01' THEN '軟體' WHEN isnull(FixType, '01') 
+                                                        = '02' THEN '硬體' ELSE '資訊評估' END AS FixType, CASE WHEN isnull(aboutReport, 'X') 
+                                                        = 'V' THEN '列印報表' ELSE '' END + CASE WHEN isnull(aboutDataModify, 'X') 
+                                                        = 'V' THEN '資料修改' ELSE '' END + CASE WHEN isnull(aboutDesign, 'X') 
+                                                        = 'V' THEN '設計資料或表單' ELSE '' END + CASE WHEN isnull(aboutHardDriver, 'X') 
+                                                        = 'V' THEN '電腦故障' ELSE '' END + CASE WHEN isnull(aboutSetting, 'X') 
+                                                        = 'V' THEN '安裝或設定' ELSE '' END + CASE WHEN isnull(aboutSurver, 'X') 
+                                                        = 'V' THEN '偵測或補發' ELSE '' END + CASE WHEN isnull(aboutPurchase, 'X') 
+                                                        = 'V' THEN '購置' ELSE '' END + CASE WHEN isnull(aboutOthers, 'X') 
+                                                        = 'V' THEN '其他' ELSE '' END AS FixNote, AssignDate,
+                                                            (SELECT          NAME
+                                                              FROM               EMPLOYEE
+                                                              WHERE           (EMPNO = SHEETA.Handler)) AS Handler, CASE WHEN isnull(Disposal, '01') 
+                                                        = '01' THEN '未派工' WHEN isnull(Disposal, '01') = '02' THEN '施工中' ELSE '已完工' END AS Disposal, 
+                                                        FixFinishDate
+                            FROM               SHEETA
+                            WHERE           (1 &lt;&gt; 1)) AS s
+GROUP BY   day, FixType, FixNote, AssignDate, Handler, Disposal, FixFinishDate</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="RCount" DataSetColumn="RCount" />
+              <Mapping SourceColumn="day" DataSetColumn="day" />
+              <Mapping SourceColumn="FixType" DataSetColumn="FixType" />
+              <Mapping SourceColumn="FixNote" DataSetColumn="FixNote" />
+              <Mapping SourceColumn="AssignDate" DataSetColumn="AssignDate" />
+              <Mapping SourceColumn="Handler" DataSetColumn="Handler" />
+              <Mapping SourceColumn="Disposal" DataSetColumn="Disposal" />
+              <Mapping SourceColumn="FixFinishDate" DataSetColumn="FixFinishDate" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="SheetGroupByBuManAndDateTableAdapter" GeneratorDataComponentClassName="SheetGroupByBuManAndDateTableAdapter" Name="SheetGroupByBuManAndDate" UserDataComponentName="SheetGroupByBuManAndDateTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="SELECT sheetno, CONVERT(varchar, day, 111) AS Day, buman, CASE WHEN isnull(FixType, '01') = '01' THEN '軟體' WHEN isnull(FixType, '01') = '02' THEN '硬體' ELSE '資訊評估' END AS FixType, CASE WHEN isnull(aboutReport, 'X') = 'V' THEN '列印報表' ELSE '' END + CASE WHEN isnull(aboutDataModify, 'X') = 'V' THEN '資料修改' ELSE '' END + CASE WHEN isnull(aboutDesign, 'X') = 'V' THEN '設計資料或表單' ELSE '' END + CASE WHEN isnull(aboutHardDriver, 'X') = 'V' THEN '電腦故障' ELSE '' END + CASE WHEN isnull(aboutSetting, 'X') = 'V' THEN '安裝或設定' ELSE '' END + CASE WHEN isnull(aboutSurver, 'X') = 'V' THEN '偵測或補發' ELSE '' END + CASE WHEN isnull(aboutPurchase, 'X') = 'V' THEN '購置' ELSE '' END + CASE WHEN isnull(aboutOthers, 'X') = 'V' THEN '其他' ELSE '' END AS FixNote, AssignDate, (SELECT NAME FROM EMPLOYEE AS EMPLOYEE_1 WHERE (EMPNO = SHEETA.Handler)) AS Handler, CASE WHEN isnull(Disposal, '01') = '01' THEN '未派工' WHEN isnull(Disposal, '01') = '02' THEN '施工中' ELSE '已完工' END AS Disposal, FixFinishDate FROM SHEETA WHERE (1 &lt;&gt; 1)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          COUNT(sheetno) AS RCount, Day,
+                                (SELECT          NAME
+                                  FROM               EMPLOYEE
+                                  WHERE           (EMPNO = s.buman)) AS BuMan_C, FixType, FixNote, AssignDate, Handler, Disposal, 
+                            FixFinishDate
+FROM              (SELECT          sheetno, CONVERT(varchar, day, 111) AS Day, buman, CASE WHEN isnull(FixType, '01') 
+                                                        = '01' THEN '軟體' WHEN isnull(FixType, '01') = '02' THEN '硬體' ELSE '資訊評估' END AS FixType, 
+                                                        CASE WHEN isnull(aboutReport, 'X') 
+                                                        = 'V' THEN '列印報表' ELSE '' END + CASE WHEN isnull(aboutDataModify, 'X') 
+                                                        = 'V' THEN '資料修改' ELSE '' END + CASE WHEN isnull(aboutDesign, 'X') 
+                                                        = 'V' THEN '設計資料或表單' ELSE '' END + CASE WHEN isnull(aboutHardDriver, 'X') 
+                                                        = 'V' THEN '電腦故障' ELSE '' END + CASE WHEN isnull(aboutSetting, 'X') 
+                                                        = 'V' THEN '安裝或設定' ELSE '' END + CASE WHEN isnull(aboutSurver, 'X') 
+                                                        = 'V' THEN '偵測或補發' ELSE '' END + CASE WHEN isnull(aboutPurchase, 'X') 
+                                                        = 'V' THEN '購置' ELSE '' END + CASE WHEN isnull(aboutOthers, 'X') 
+                                                        = 'V' THEN '其他' ELSE '' END AS FixNote, AssignDate,
+                                                            (SELECT          NAME
+                                                              FROM               EMPLOYEE AS EMPLOYEE_1
+                                                              WHERE           (EMPNO = SHEETA.Handler)) AS Handler, CASE WHEN isnull(Disposal, '01') 
+                                                        = '01' THEN '未派工' WHEN isnull(Disposal, '01') = '02' THEN '施工中' ELSE '已完工' END AS Disposal, 
+                                                        FixFinishDate
+                            FROM               SHEETA
+                            WHERE           (1 &lt;&gt; 1)) AS s
+GROUP BY   Day, buman, FixType, FixNote, AssignDate, Handler, Disposal, FixFinishDate
+ORDER BY   Day, buman, FixType, FixNote, AssignDate, FixFinishDate</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="RCount" DataSetColumn="RCount" />
+              <Mapping SourceColumn="Day" DataSetColumn="Day" />
+              <Mapping SourceColumn="BuMan_C" DataSetColumn="BuMan_C" />
+              <Mapping SourceColumn="FixType" DataSetColumn="FixType" />
+              <Mapping SourceColumn="FixNote" DataSetColumn="FixNote" />
+              <Mapping SourceColumn="AssignDate" DataSetColumn="AssignDate" />
+              <Mapping SourceColumn="Handler" DataSetColumn="Handler" />
+              <Mapping SourceColumn="Disposal" DataSetColumn="Disposal" />
+              <Mapping SourceColumn="FixFinishDate" DataSetColumn="FixFinishDate" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="SheetGroupByDepNoAndDateTableAdapter" GeneratorDataComponentClassName="SheetGroupByDepNoAndDateTableAdapter" Name="SheetGroupByDepNoAndDate" UserDataComponentName="SheetGroupByDepNoAndDateTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="SELECT sheetno, CONVERT(varchar, day, 111) AS Day, depno, CASE WHEN isnull(FixType, '01') = '01' THEN '軟體' WHEN isnull(FixType, '01') = '02' THEN '硬體' ELSE '資訊評估' END AS FixType, CASE WHEN isnull(aboutReport, 'X') = 'V' THEN '列印報表' ELSE '' END + CASE WHEN isnull(aboutDataModify, 'X') = 'V' THEN '資料修改' ELSE '' END + CASE WHEN isnull(aboutDesign, 'X') = 'V' THEN '設計資料或表單' ELSE '' END + CASE WHEN isnull(aboutHardDriver, 'X') = 'V' THEN '電腦故障' ELSE '' END + CASE WHEN isnull(aboutSetting, 'X') = 'V' THEN '安裝或設定' ELSE '' END + CASE WHEN isnull(aboutSurver, 'X') = 'V' THEN '偵測或補發' ELSE '' END + CASE WHEN isnull(aboutPurchase, 'X') = 'V' THEN '購置' ELSE '' END + CASE WHEN isnull(aboutOthers, 'X') = 'V' THEN '其他' ELSE '' END AS FixNote, AssignDate, (SELECT NAME FROM EMPLOYEE WHERE (EMPNO = SHEETA.Handler)) AS Handler, CASE WHEN isnull(Disposal, '01') = '01' THEN '未派工' WHEN isnull(Disposal, '01') = '02' THEN '施工中' ELSE '已完工' END AS Disposal, FixFinishDate FROM SHEETA WHERE (1 &lt;&gt; 1)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          COUNT(sheetno) AS RCount, Day,
+                                (SELECT          NAME
+                                  FROM               DEPARTMENT
+                                  WHERE           (DEPNO = s.depno)) AS DepName, FixType, FixNote, AssignDate, Handler, Disposal, 
+                            FixFinishDate
+FROM              (SELECT          sheetno, CONVERT(varchar, day, 111) AS Day, depno, CASE WHEN isnull(FixType, '01') 
+                                                        = '01' THEN '軟體' WHEN isnull(FixType, '01') = '02' THEN '硬體' ELSE '資訊評估' END AS FixType, 
+                                                        CASE WHEN isnull(aboutReport, 'X') 
+                                                        = 'V' THEN '列印報表' ELSE '' END + CASE WHEN isnull(aboutDataModify, 'X') 
+                                                        = 'V' THEN '資料修改' ELSE '' END + CASE WHEN isnull(aboutDesign, 'X') 
+                                                        = 'V' THEN '設計資料或表單' ELSE '' END + CASE WHEN isnull(aboutHardDriver, 'X') 
+                                                        = 'V' THEN '電腦故障' ELSE '' END + CASE WHEN isnull(aboutSetting, 'X') 
+                                                        = 'V' THEN '安裝或設定' ELSE '' END + CASE WHEN isnull(aboutSurver, 'X') 
+                                                        = 'V' THEN '偵測或補發' ELSE '' END + CASE WHEN isnull(aboutPurchase, 'X') 
+                                                        = 'V' THEN '購置' ELSE '' END + CASE WHEN isnull(aboutOthers, 'X') 
+                                                        = 'V' THEN '其他' ELSE '' END AS FixNote, AssignDate,
+                                                            (SELECT          NAME
+                                                              FROM               EMPLOYEE
+                                                              WHERE           (EMPNO = SHEETA.Handler)) AS Handler, CASE WHEN isnull(Disposal, '01') 
+                                                        = '01' THEN '未派工' WHEN isnull(Disposal, '01') = '02' THEN '施工中' ELSE '已完工' END AS Disposal, 
+                                                        FixFinishDate
+                            FROM               SHEETA
+                            WHERE           (1 &lt;&gt; 1)) AS s
+GROUP BY   Day, depno, FixType, FixNote, AssignDate, Handler, Disposal, FixFinishDate
+ORDER BY   Day, depno, FixType, FixNote, AssignDate, FixFinishDate</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="RCount" DataSetColumn="RCount" />
+              <Mapping SourceColumn="Day" DataSetColumn="Day" />
+              <Mapping SourceColumn="DepName" DataSetColumn="DepName" />
+              <Mapping SourceColumn="FixType" DataSetColumn="FixType" />
+              <Mapping SourceColumn="FixNote" DataSetColumn="FixNote" />
+              <Mapping SourceColumn="AssignDate" DataSetColumn="AssignDate" />
+              <Mapping SourceColumn="Handler" DataSetColumn="Handler" />
+              <Mapping SourceColumn="Disposal" DataSetColumn="Disposal" />
+              <Mapping SourceColumn="FixFinishDate" DataSetColumn="FixFinishDate" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="SheetGroupByHandlerTableAdapter" GeneratorDataComponentClassName="SheetGroupByHandlerTableAdapter" Name="SheetGroupByHandler" UserDataComponentName="SheetGroupByHandlerTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="SELECT sheetno, CONVERT(varchar, day, 111) AS Day, depno, CASE WHEN isnull(FixType, '01') = '01' THEN '軟體' WHEN isnull(FixType, '01') = '02' THEN '硬體' ELSE '資訊評估' END AS FixType, CASE WHEN isnull(aboutReport, 'X') = 'V' THEN '列印報表' ELSE '' END + CASE WHEN isnull(aboutDataModify, 'X') = 'V' THEN '資料修改' ELSE '' END + CASE WHEN isnull(aboutDesign, 'X') = 'V' THEN '設計資料或表單' ELSE '' END + CASE WHEN isnull(aboutHardDriver, 'X') = 'V' THEN '電腦故障' ELSE '' END + CASE WHEN isnull(aboutSetting, 'X') = 'V' THEN '安裝或設定' ELSE '' END + CASE WHEN isnull(aboutSurver, 'X') = 'V' THEN '偵測或補發' ELSE '' END + CASE WHEN isnull(aboutPurchase, 'X') = 'V' THEN '購置' ELSE '' END + CASE WHEN isnull(aboutOthers, 'X') = 'V' THEN '其他' ELSE '' END AS FixNote, AssignDate, (SELECT NAME FROM EMPLOYEE WHERE (EMPNO = SHEETA.Handler)) AS Handler, CASE WHEN isnull(Disposal, '01') = '01' THEN '未派工' WHEN isnull(Disposal, '01') = '02' THEN '施工中' ELSE '已完工' END AS Disposal, FixFinishDate FROM SHEETA WHERE (1 &lt;&gt; 1)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          COUNT(sheetno) AS RCount, Day,
+                                (SELECT          NAME
+                                  FROM               DEPARTMENT
+                                  WHERE           (DEPNO = s.depno)) AS DepName, Handler, FixFinishDate
+FROM              (SELECT          sheetno, CONVERT(varchar, day, 111) AS Day, depno, CASE WHEN isnull(FixType, '01') 
+                                                        = '01' THEN '軟體' WHEN isnull(FixType, '01') = '02' THEN '硬體' ELSE '資訊評估' END AS FixType, 
+                                                        CASE WHEN isnull(aboutReport, 'X') 
+                                                        = 'V' THEN '列印報表' ELSE '' END + CASE WHEN isnull(aboutDataModify, 'X') 
+                                                        = 'V' THEN '資料修改' ELSE '' END + CASE WHEN isnull(aboutDesign, 'X') 
+                                                        = 'V' THEN '設計資料或表單' ELSE '' END + CASE WHEN isnull(aboutHardDriver, 'X') 
+                                                        = 'V' THEN '電腦故障' ELSE '' END + CASE WHEN isnull(aboutSetting, 'X') 
+                                                        = 'V' THEN '安裝或設定' ELSE '' END + CASE WHEN isnull(aboutSurver, 'X') 
+                                                        = 'V' THEN '偵測或補發' ELSE '' END + CASE WHEN isnull(aboutPurchase, 'X') 
+                                                        = 'V' THEN '購置' ELSE '' END + CASE WHEN isnull(aboutOthers, 'X') 
+                                                        = 'V' THEN '其他' ELSE '' END AS FixNote, AssignDate,
+                                                            (SELECT          NAME
+                                                              FROM               EMPLOYEE
+                                                              WHERE           (EMPNO = SHEETA.Handler)) AS Handler, CASE WHEN isnull(Disposal, '01') 
+                                                        = '01' THEN '未派工' WHEN isnull(Disposal, '01') = '02' THEN '施工中' ELSE '已完工' END AS Disposal, 
+                                                        FixFinishDate
+                            FROM               SHEETA
+                            WHERE           (1 &lt;&gt; 1)) AS s
+GROUP BY   Day, depno, FixType, FixNote, AssignDate, Handler, Disposal, FixFinishDate
+ORDER BY   Day, depno, Handler, FixType, FixNote, AssignDate, FixFinishDate</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="RCount" DataSetColumn="RCount" />
+              <Mapping SourceColumn="Day" DataSetColumn="Day" />
+              <Mapping SourceColumn="DepName" DataSetColumn="DepName" />
+              <Mapping SourceColumn="Handler" DataSetColumn="Handler" />
+              <Mapping SourceColumn="FixFinishDate" DataSetColumn="FixFinishDate" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="FixRequest" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="FixRequest" msprop:Generator_UserDSName="FixRequest">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="FixRequestSheetP" msprop:Generator_TableClassName="FixRequestSheetPDataTable" msprop:Generator_TableVarName="tableFixRequestSheetP" msprop:Generator_TablePropName="FixRequestSheetP" msprop:Generator_RowDeletingName="FixRequestSheetPRowDeleting" msprop:Generator_RowChangingName="FixRequestSheetPRowChanging" msprop:Generator_RowEvHandlerName="FixRequestSheetPRowChangeEventHandler" msprop:Generator_RowDeletedName="FixRequestSheetPRowDeleted" msprop:Generator_UserTableName="FixRequestSheetP" msprop:Generator_RowChangedName="FixRequestSheetPRowChanged" msprop:Generator_RowEvArgName="FixRequestSheetPRowChangeEvent" msprop:Generator_RowClassName="FixRequestSheetPRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SheetNo" msprop:Generator_ColumnVarNameInTable="columnSheetNo" msprop:Generator_ColumnPropNameInRow="SheetNo" msprop:Generator_ColumnPropNameInTable="SheetNoColumn" msprop:Generator_UserColumnName="SheetNo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Day" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDay" msprop:Generator_ColumnPropNameInRow="Day" msprop:Generator_ColumnPropNameInTable="DayColumn" msprop:Generator_UserColumnName="Day" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepName" msprop:Generator_ColumnPropNameInRow="DepName" msprop:Generator_ColumnPropNameInTable="DepNameColumn" msprop:Generator_UserColumnName="DepName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BuManName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBuManName" msprop:Generator_ColumnPropNameInRow="BuManName" msprop:Generator_ColumnPropNameInTable="BuManNameColumn" msprop:Generator_UserColumnName="BuManName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FixType_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFixType_C" msprop:Generator_ColumnPropNameInRow="FixType_C" msprop:Generator_ColumnPropNameInTable="FixType_CColumn" msprop:Generator_UserColumnName="FixType_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FixItems" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFixItems" msprop:Generator_ColumnPropNameInRow="FixItems" msprop:Generator_ColumnPropNameInTable="FixItemsColumn" msprop:Generator_UserColumnName="FixItems" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="66" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FixRemark" msprop:Generator_ColumnVarNameInTable="columnFixRemark" msprop:Generator_ColumnPropNameInRow="FixRemark" msprop:Generator_ColumnPropNameInTable="FixRemarkColumn" msprop:Generator_UserColumnName="FixRemark" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="HandlerName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnHandlerName" msprop:Generator_ColumnPropNameInRow="HandlerName" msprop:Generator_ColumnPropNameInTable="HandlerNameColumn" msprop:Generator_UserColumnName="HandlerName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AssignDate" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnAssignDate" msprop:Generator_ColumnPropNameInRow="AssignDate" msprop:Generator_ColumnPropNameInTable="AssignDateColumn" msprop:Generator_UserColumnName="AssignDate" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Disposal_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDisposal_C" msprop:Generator_ColumnPropNameInRow="Disposal_C" msprop:Generator_ColumnPropNameInTable="Disposal_CColumn" msprop:Generator_UserColumnName="Disposal_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="6" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FixFinishDate" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFixFinishDate" msprop:Generator_ColumnPropNameInRow="FixFinishDate" msprop:Generator_ColumnPropNameInTable="FixFinishDateColumn" msprop:Generator_UserColumnName="FixFinishDate" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ChiefNote" msprop:Generator_ColumnVarNameInTable="columnChiefNote" msprop:Generator_ColumnPropNameInRow="ChiefNote" msprop:Generator_ColumnPropNameInTable="ChiefNoteColumn" msprop:Generator_UserColumnName="ChiefNote" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WorkReport" msprop:Generator_ColumnVarNameInTable="columnWorkReport" msprop:Generator_ColumnPropNameInRow="WorkReport" msprop:Generator_ColumnPropNameInTable="WorkReportColumn" msprop:Generator_UserColumnName="WorkReport" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="FixSheetP" msprop:Generator_TableClassName="FixSheetPDataTable" msprop:Generator_TableVarName="tableFixSheetP" msprop:Generator_RowChangedName="FixSheetPRowChanged" msprop:Generator_TablePropName="FixSheetP" msprop:Generator_RowDeletingName="FixSheetPRowDeleting" msprop:Generator_RowChangingName="FixSheetPRowChanging" msprop:Generator_RowEvHandlerName="FixSheetPRowChangeEventHandler" msprop:Generator_RowDeletedName="FixSheetPRowDeleted" msprop:Generator_RowClassName="FixSheetPRow" msprop:Generator_UserTableName="FixSheetP" msprop:Generator_RowEvArgName="FixSheetPRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="sheetno" msprop:Generator_ColumnVarNameInTable="columnsheetno" msprop:Generator_ColumnPropNameInRow="sheetno" msprop:Generator_ColumnPropNameInTable="sheetnoColumn" msprop:Generator_UserColumnName="sheetno">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Day" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDay" msprop:Generator_ColumnPropNameInRow="Day" msprop:Generator_ColumnPropNameInTable="DayColumn" msprop:Generator_UserColumnName="Day" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="depno" msprop:Generator_ColumnVarNameInTable="columndepno" msprop:Generator_ColumnPropNameInRow="depno" msprop:Generator_ColumnPropNameInTable="depnoColumn" msprop:Generator_UserColumnName="depno" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepName" msprop:Generator_ColumnPropNameInRow="DepName" msprop:Generator_ColumnPropNameInTable="DepNameColumn" msprop:Generator_UserColumnName="DepName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="buman" msprop:Generator_ColumnVarNameInTable="columnbuman" msprop:Generator_ColumnPropNameInRow="buman" msprop:Generator_ColumnPropNameInTable="bumanColumn" msprop:Generator_UserColumnName="buman" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BuManName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBuManName" msprop:Generator_ColumnPropNameInRow="BuManName" msprop:Generator_ColumnPropNameInTable="BuManNameColumn" msprop:Generator_UserColumnName="BuManName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FixType_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFixType_C" msprop:Generator_ColumnPropNameInRow="FixType_C" msprop:Generator_ColumnPropNameInTable="FixType_CColumn" msprop:Generator_UserColumnName="FixType_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FixType" msprop:Generator_ColumnVarNameInTable="columnFixType" msprop:Generator_ColumnPropNameInRow="FixType" msprop:Generator_ColumnPropNameInTable="FixTypeColumn" msprop:Generator_UserColumnName="FixType" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FixNote" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFixNote" msprop:Generator_ColumnPropNameInRow="FixNote" msprop:Generator_ColumnPropNameInTable="FixNoteColumn" msprop:Generator_UserColumnName="FixNote" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="66" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FixRemark" msprop:Generator_ColumnVarNameInTable="columnFixRemark" msprop:Generator_ColumnPropNameInRow="FixRemark" msprop:Generator_ColumnPropNameInTable="FixRemarkColumn" msprop:Generator_UserColumnName="FixRemark" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Handler" msprop:Generator_ColumnVarNameInTable="columnHandler" msprop:Generator_ColumnPropNameInRow="Handler" msprop:Generator_ColumnPropNameInTable="HandlerColumn" msprop:Generator_UserColumnName="Handler" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="HandlerName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnHandlerName" msprop:Generator_ColumnPropNameInRow="HandlerName" msprop:Generator_ColumnPropNameInTable="HandlerNameColumn" msprop:Generator_UserColumnName="HandlerName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AssignDate" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnAssignDate" msprop:Generator_ColumnPropNameInRow="AssignDate" msprop:Generator_ColumnPropNameInTable="AssignDateColumn" msprop:Generator_UserColumnName="AssignDate" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Disposal_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDisposal_C" msprop:Generator_ColumnPropNameInRow="Disposal_C" msprop:Generator_ColumnPropNameInTable="Disposal_CColumn" msprop:Generator_UserColumnName="Disposal_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="6" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Disposal" msprop:Generator_ColumnVarNameInTable="columnDisposal" msprop:Generator_ColumnPropNameInRow="Disposal" msprop:Generator_ColumnPropNameInTable="DisposalColumn" msprop:Generator_UserColumnName="Disposal" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FixFinishDate" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFixFinishDate" msprop:Generator_ColumnPropNameInRow="FixFinishDate" msprop:Generator_ColumnPropNameInTable="FixFinishDateColumn" msprop:Generator_UserColumnName="FixFinishDate" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WorkReport" msprop:Generator_ColumnVarNameInTable="columnWorkReport" msprop:Generator_ColumnPropNameInRow="WorkReport" msprop:Generator_ColumnPropNameInTable="WorkReportColumn" msprop:Generator_UserColumnName="WorkReport" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="SheetNoneGrouping" msprop:Generator_TableClassName="SheetNoneGroupingDataTable" msprop:Generator_TableVarName="tableSheetNoneGrouping" msprop:Generator_TablePropName="SheetNoneGrouping" msprop:Generator_RowDeletingName="SheetNoneGroupingRowDeleting" msprop:Generator_RowChangingName="SheetNoneGroupingRowChanging" msprop:Generator_RowEvHandlerName="SheetNoneGroupingRowChangeEventHandler" msprop:Generator_RowDeletedName="SheetNoneGroupingRowDeleted" msprop:Generator_UserTableName="SheetNoneGrouping" msprop:Generator_RowChangedName="SheetNoneGroupingRowChanged" msprop:Generator_RowEvArgName="SheetNoneGroupingRowChangeEvent" msprop:Generator_RowClassName="SheetNoneGroupingRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="sheetno" msprop:Generator_ColumnVarNameInTable="columnsheetno" msprop:Generator_ColumnPropNameInRow="sheetno" msprop:Generator_ColumnPropNameInTable="sheetnoColumn" msprop:Generator_UserColumnName="sheetno">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepName" msprop:Generator_ColumnPropNameInRow="DepName" msprop:Generator_ColumnPropNameInTable="DepNameColumn" msprop:Generator_UserColumnName="DepName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="buman" msprop:Generator_ColumnVarNameInTable="columnbuman" msprop:Generator_ColumnPropNameInRow="buman" msprop:Generator_ColumnPropNameInTable="bumanColumn" msprop:Generator_UserColumnName="buman" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BuMan_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBuMan_C" msprop:Generator_ColumnPropNameInRow="BuMan_C" msprop:Generator_ColumnPropNameInTable="BuMan_CColumn" msprop:Generator_UserColumnName="BuMan_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FixType" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFixType" msprop:Generator_ColumnPropNameInRow="FixType" msprop:Generator_ColumnPropNameInTable="FixTypeColumn" msprop:Generator_UserColumnName="FixType" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FixNote" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFixNote" msprop:Generator_ColumnPropNameInRow="FixNote" msprop:Generator_ColumnPropNameInTable="FixNoteColumn" msprop:Generator_UserColumnName="FixNote" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="66" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FixRemark" msprop:Generator_ColumnVarNameInTable="columnFixRemark" msprop:Generator_ColumnPropNameInRow="FixRemark" msprop:Generator_ColumnPropNameInTable="FixRemarkColumn" msprop:Generator_UserColumnName="FixRemark" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AssignDate" msprop:Generator_ColumnVarNameInTable="columnAssignDate" msprop:Generator_ColumnPropNameInRow="AssignDate" msprop:Generator_ColumnPropNameInTable="AssignDateColumn" msprop:Generator_UserColumnName="AssignDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Handler_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnHandler_C" msprop:Generator_ColumnPropNameInRow="Handler_C" msprop:Generator_ColumnPropNameInTable="Handler_CColumn" msprop:Generator_UserColumnName="Handler_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Disposal_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDisposal_C" msprop:Generator_ColumnPropNameInRow="Disposal_C" msprop:Generator_ColumnPropNameInTable="Disposal_CColumn" msprop:Generator_UserColumnName="Disposal_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="6" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FixFinishDate" msprop:Generator_ColumnVarNameInTable="columnFixFinishDate" msprop:Generator_ColumnPropNameInRow="FixFinishDate" msprop:Generator_ColumnPropNameInTable="FixFinishDateColumn" msprop:Generator_UserColumnName="FixFinishDate" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="SheetGroupByBuMan" msprop:Generator_TableClassName="SheetGroupByBuManDataTable" msprop:Generator_TableVarName="tableSheetGroupByBuMan" msprop:Generator_TablePropName="SheetGroupByBuMan" msprop:Generator_RowDeletingName="SheetGroupByBuManRowDeleting" msprop:Generator_RowChangingName="SheetGroupByBuManRowChanging" msprop:Generator_RowEvHandlerName="SheetGroupByBuManRowChangeEventHandler" msprop:Generator_RowDeletedName="SheetGroupByBuManRowDeleted" msprop:Generator_UserTableName="SheetGroupByBuMan" msprop:Generator_RowChangedName="SheetGroupByBuManRowChanged" msprop:Generator_RowEvArgName="SheetGroupByBuManRowChangeEvent" msprop:Generator_RowClassName="SheetGroupByBuManRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="RCount" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRCount" msprop:Generator_ColumnPropNameInRow="RCount" msprop:Generator_ColumnPropNameInTable="RCountColumn" msprop:Generator_UserColumnName="RCount" type="xs:int" minOccurs="0" />
+              <xs:element name="BuMan_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBuMan_C" msprop:Generator_ColumnPropNameInRow="BuMan_C" msprop:Generator_ColumnPropNameInTable="BuMan_CColumn" msprop:Generator_UserColumnName="BuMan_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FixType" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFixType" msprop:Generator_ColumnPropNameInRow="FixType" msprop:Generator_ColumnPropNameInTable="FixTypeColumn" msprop:Generator_UserColumnName="FixType" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FixNote" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFixNote" msprop:Generator_ColumnPropNameInRow="FixNote" msprop:Generator_ColumnPropNameInTable="FixNoteColumn" msprop:Generator_UserColumnName="FixNote" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="66" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AssignDate" msprop:Generator_ColumnVarNameInTable="columnAssignDate" msprop:Generator_ColumnPropNameInRow="AssignDate" msprop:Generator_ColumnPropNameInTable="AssignDateColumn" msprop:Generator_UserColumnName="AssignDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Handler" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnHandler" msprop:Generator_ColumnPropNameInRow="Handler" msprop:Generator_ColumnPropNameInTable="HandlerColumn" msprop:Generator_UserColumnName="Handler" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Disposal" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDisposal" msprop:Generator_ColumnPropNameInRow="Disposal" msprop:Generator_ColumnPropNameInTable="DisposalColumn" msprop:Generator_UserColumnName="Disposal" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="6" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FixFinishDate" msprop:Generator_ColumnVarNameInTable="columnFixFinishDate" msprop:Generator_ColumnPropNameInRow="FixFinishDate" msprop:Generator_ColumnPropNameInTable="FixFinishDateColumn" msprop:Generator_UserColumnName="FixFinishDate" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="SheetGroupByDepNo" msprop:Generator_TableClassName="SheetGroupByDepNoDataTable" msprop:Generator_TableVarName="tableSheetGroupByDepNo" msprop:Generator_TablePropName="SheetGroupByDepNo" msprop:Generator_RowDeletingName="SheetGroupByDepNoRowDeleting" msprop:Generator_RowChangingName="SheetGroupByDepNoRowChanging" msprop:Generator_RowEvHandlerName="SheetGroupByDepNoRowChangeEventHandler" msprop:Generator_RowDeletedName="SheetGroupByDepNoRowDeleted" msprop:Generator_UserTableName="SheetGroupByDepNo" msprop:Generator_RowChangedName="SheetGroupByDepNoRowChanged" msprop:Generator_RowEvArgName="SheetGroupByDepNoRowChangeEvent" msprop:Generator_RowClassName="SheetGroupByDepNoRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="RCount" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRCount" msprop:Generator_ColumnPropNameInRow="RCount" msprop:Generator_ColumnPropNameInTable="RCountColumn" msprop:Generator_UserColumnName="RCount" type="xs:int" minOccurs="0" />
+              <xs:element name="DepName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepName" msprop:Generator_ColumnPropNameInRow="DepName" msprop:Generator_ColumnPropNameInTable="DepNameColumn" msprop:Generator_UserColumnName="DepName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FixType" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFixType" msprop:Generator_ColumnPropNameInRow="FixType" msprop:Generator_ColumnPropNameInTable="FixTypeColumn" msprop:Generator_UserColumnName="FixType" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FixNote" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFixNote" msprop:Generator_ColumnPropNameInRow="FixNote" msprop:Generator_ColumnPropNameInTable="FixNoteColumn" msprop:Generator_UserColumnName="FixNote" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="66" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AssignDate" msprop:Generator_ColumnVarNameInTable="columnAssignDate" msprop:Generator_ColumnPropNameInRow="AssignDate" msprop:Generator_ColumnPropNameInTable="AssignDateColumn" msprop:Generator_UserColumnName="AssignDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Handler" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnHandler" msprop:Generator_ColumnPropNameInRow="Handler" msprop:Generator_ColumnPropNameInTable="HandlerColumn" msprop:Generator_UserColumnName="Handler" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Disposal" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDisposal" msprop:Generator_ColumnPropNameInRow="Disposal" msprop:Generator_ColumnPropNameInTable="DisposalColumn" msprop:Generator_UserColumnName="Disposal" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="6" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FixFinishDate" msprop:Generator_ColumnVarNameInTable="columnFixFinishDate" msprop:Generator_ColumnPropNameInRow="FixFinishDate" msprop:Generator_ColumnPropNameInTable="FixFinishDateColumn" msprop:Generator_UserColumnName="FixFinishDate" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="SheetGroupByDate" msprop:Generator_TableClassName="SheetGroupByDateDataTable" msprop:Generator_TableVarName="tableSheetGroupByDate" msprop:Generator_TablePropName="SheetGroupByDate" msprop:Generator_RowDeletingName="SheetGroupByDateRowDeleting" msprop:Generator_RowChangingName="SheetGroupByDateRowChanging" msprop:Generator_RowEvHandlerName="SheetGroupByDateRowChangeEventHandler" msprop:Generator_RowDeletedName="SheetGroupByDateRowDeleted" msprop:Generator_UserTableName="SheetGroupByDate" msprop:Generator_RowChangedName="SheetGroupByDateRowChanged" msprop:Generator_RowEvArgName="SheetGroupByDateRowChangeEvent" msprop:Generator_RowClassName="SheetGroupByDateRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="RCount" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRCount" msprop:Generator_ColumnPropNameInRow="RCount" msprop:Generator_ColumnPropNameInTable="RCountColumn" msprop:Generator_UserColumnName="RCount" type="xs:int" minOccurs="0" />
+              <xs:element name="day" msprop:Generator_ColumnVarNameInTable="columnday" msprop:Generator_ColumnPropNameInRow="day" msprop:Generator_ColumnPropNameInTable="dayColumn" msprop:Generator_UserColumnName="day" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="FixType" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFixType" msprop:Generator_ColumnPropNameInRow="FixType" msprop:Generator_ColumnPropNameInTable="FixTypeColumn" msprop:Generator_UserColumnName="FixType" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FixNote" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFixNote" msprop:Generator_ColumnPropNameInRow="FixNote" msprop:Generator_ColumnPropNameInTable="FixNoteColumn" msprop:Generator_UserColumnName="FixNote" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="66" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AssignDate" msprop:Generator_ColumnVarNameInTable="columnAssignDate" msprop:Generator_ColumnPropNameInRow="AssignDate" msprop:Generator_ColumnPropNameInTable="AssignDateColumn" msprop:Generator_UserColumnName="AssignDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Handler" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnHandler" msprop:Generator_ColumnPropNameInRow="Handler" msprop:Generator_ColumnPropNameInTable="HandlerColumn" msprop:Generator_UserColumnName="Handler" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Disposal" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDisposal" msprop:Generator_ColumnPropNameInRow="Disposal" msprop:Generator_ColumnPropNameInTable="DisposalColumn" msprop:Generator_UserColumnName="Disposal" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="6" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FixFinishDate" msprop:Generator_ColumnVarNameInTable="columnFixFinishDate" msprop:Generator_ColumnPropNameInRow="FixFinishDate" msprop:Generator_ColumnPropNameInTable="FixFinishDateColumn" msprop:Generator_UserColumnName="FixFinishDate" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="SheetGroupByBuManAndDate" msprop:Generator_TableClassName="SheetGroupByBuManAndDateDataTable" msprop:Generator_TableVarName="tableSheetGroupByBuManAndDate" msprop:Generator_RowChangedName="SheetGroupByBuManAndDateRowChanged" msprop:Generator_TablePropName="SheetGroupByBuManAndDate" msprop:Generator_RowDeletingName="SheetGroupByBuManAndDateRowDeleting" msprop:Generator_RowChangingName="SheetGroupByBuManAndDateRowChanging" msprop:Generator_RowEvHandlerName="SheetGroupByBuManAndDateRowChangeEventHandler" msprop:Generator_RowDeletedName="SheetGroupByBuManAndDateRowDeleted" msprop:Generator_RowClassName="SheetGroupByBuManAndDateRow" msprop:Generator_UserTableName="SheetGroupByBuManAndDate" msprop:Generator_RowEvArgName="SheetGroupByBuManAndDateRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="RCount" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRCount" msprop:Generator_ColumnPropNameInRow="RCount" msprop:Generator_ColumnPropNameInTable="RCountColumn" msprop:Generator_UserColumnName="RCount" type="xs:int" minOccurs="0" />
+              <xs:element name="Day" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDay" msprop:Generator_ColumnPropNameInRow="Day" msprop:Generator_ColumnPropNameInTable="DayColumn" msprop:Generator_UserColumnName="Day" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BuMan_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBuMan_C" msprop:Generator_ColumnPropNameInRow="BuMan_C" msprop:Generator_ColumnPropNameInTable="BuMan_CColumn" msprop:Generator_UserColumnName="BuMan_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FixType" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFixType" msprop:Generator_ColumnPropNameInRow="FixType" msprop:Generator_ColumnPropNameInTable="FixTypeColumn" msprop:Generator_UserColumnName="FixType" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FixNote" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFixNote" msprop:Generator_ColumnPropNameInRow="FixNote" msprop:Generator_ColumnPropNameInTable="FixNoteColumn" msprop:Generator_UserColumnName="FixNote" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="66" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AssignDate" msprop:Generator_ColumnVarNameInTable="columnAssignDate" msprop:Generator_ColumnPropNameInRow="AssignDate" msprop:Generator_ColumnPropNameInTable="AssignDateColumn" msprop:Generator_UserColumnName="AssignDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Handler" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnHandler" msprop:Generator_ColumnPropNameInRow="Handler" msprop:Generator_ColumnPropNameInTable="HandlerColumn" msprop:Generator_UserColumnName="Handler" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Disposal" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDisposal" msprop:Generator_ColumnPropNameInRow="Disposal" msprop:Generator_ColumnPropNameInTable="DisposalColumn" msprop:Generator_UserColumnName="Disposal" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="6" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FixFinishDate" msprop:Generator_ColumnVarNameInTable="columnFixFinishDate" msprop:Generator_ColumnPropNameInRow="FixFinishDate" msprop:Generator_ColumnPropNameInTable="FixFinishDateColumn" msprop:Generator_UserColumnName="FixFinishDate" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="SheetGroupByDepNoAndDate" msprop:Generator_TableClassName="SheetGroupByDepNoAndDateDataTable" msprop:Generator_TableVarName="tableSheetGroupByDepNoAndDate" msprop:Generator_RowChangedName="SheetGroupByDepNoAndDateRowChanged" msprop:Generator_TablePropName="SheetGroupByDepNoAndDate" msprop:Generator_RowDeletingName="SheetGroupByDepNoAndDateRowDeleting" msprop:Generator_RowChangingName="SheetGroupByDepNoAndDateRowChanging" msprop:Generator_RowEvHandlerName="SheetGroupByDepNoAndDateRowChangeEventHandler" msprop:Generator_RowDeletedName="SheetGroupByDepNoAndDateRowDeleted" msprop:Generator_RowClassName="SheetGroupByDepNoAndDateRow" msprop:Generator_UserTableName="SheetGroupByDepNoAndDate" msprop:Generator_RowEvArgName="SheetGroupByDepNoAndDateRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="RCount" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRCount" msprop:Generator_ColumnPropNameInRow="RCount" msprop:Generator_ColumnPropNameInTable="RCountColumn" msprop:Generator_UserColumnName="RCount" type="xs:int" minOccurs="0" />
+              <xs:element name="Day" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDay" msprop:Generator_ColumnPropNameInRow="Day" msprop:Generator_ColumnPropNameInTable="DayColumn" msprop:Generator_UserColumnName="Day" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepName" msprop:Generator_ColumnPropNameInRow="DepName" msprop:Generator_ColumnPropNameInTable="DepNameColumn" msprop:Generator_UserColumnName="DepName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FixType" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFixType" msprop:Generator_ColumnPropNameInRow="FixType" msprop:Generator_ColumnPropNameInTable="FixTypeColumn" msprop:Generator_UserColumnName="FixType" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FixNote" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFixNote" msprop:Generator_ColumnPropNameInRow="FixNote" msprop:Generator_ColumnPropNameInTable="FixNoteColumn" msprop:Generator_UserColumnName="FixNote" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="66" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AssignDate" msprop:Generator_ColumnVarNameInTable="columnAssignDate" msprop:Generator_ColumnPropNameInRow="AssignDate" msprop:Generator_ColumnPropNameInTable="AssignDateColumn" msprop:Generator_UserColumnName="AssignDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Handler" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnHandler" msprop:Generator_ColumnPropNameInRow="Handler" msprop:Generator_ColumnPropNameInTable="HandlerColumn" msprop:Generator_UserColumnName="Handler" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Disposal" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDisposal" msprop:Generator_ColumnPropNameInRow="Disposal" msprop:Generator_ColumnPropNameInTable="DisposalColumn" msprop:Generator_UserColumnName="Disposal" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="6" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FixFinishDate" msprop:Generator_ColumnVarNameInTable="columnFixFinishDate" msprop:Generator_ColumnPropNameInRow="FixFinishDate" msprop:Generator_ColumnPropNameInTable="FixFinishDateColumn" msprop:Generator_UserColumnName="FixFinishDate" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="SheetGroupByHandler" msprop:Generator_TableClassName="SheetGroupByHandlerDataTable" msprop:Generator_TableVarName="tableSheetGroupByHandler" msprop:Generator_RowChangedName="SheetGroupByHandlerRowChanged" msprop:Generator_TablePropName="SheetGroupByHandler" msprop:Generator_RowDeletingName="SheetGroupByHandlerRowDeleting" msprop:Generator_RowChangingName="SheetGroupByHandlerRowChanging" msprop:Generator_RowEvHandlerName="SheetGroupByHandlerRowChangeEventHandler" msprop:Generator_RowDeletedName="SheetGroupByHandlerRowDeleted" msprop:Generator_RowClassName="SheetGroupByHandlerRow" msprop:Generator_UserTableName="SheetGroupByHandler" msprop:Generator_RowEvArgName="SheetGroupByHandlerRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="RCount" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRCount" msprop:Generator_ColumnPropNameInRow="RCount" msprop:Generator_ColumnPropNameInTable="RCountColumn" msprop:Generator_UserColumnName="RCount" type="xs:int" minOccurs="0" />
+              <xs:element name="Day" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDay" msprop:Generator_ColumnPropNameInRow="Day" msprop:Generator_ColumnPropNameInTable="DayColumn" msprop:Generator_UserColumnName="Day" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepName" msprop:Generator_ColumnPropNameInRow="DepName" msprop:Generator_ColumnPropNameInTable="DepNameColumn" msprop:Generator_UserColumnName="DepName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Handler" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnHandler" msprop:Generator_ColumnPropNameInRow="Handler" msprop:Generator_ColumnPropNameInTable="HandlerColumn" msprop:Generator_UserColumnName="Handler" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FixFinishDate" msprop:Generator_ColumnVarNameInTable="columnFixFinishDate" msprop:Generator_ColumnPropNameInRow="FixFinishDate" msprop:Generator_ColumnPropNameInTable="FixFinishDateColumn" msprop:Generator_UserColumnName="FixFinishDate" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:FixRequestSheetP" />
+      <xs:field xpath="mstns:SheetNo" />
+    </xs:unique>
+    <xs:unique name="FixSheetP_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:FixSheetP" />
+      <xs:field xpath="mstns:sheetno" />
+    </xs:unique>
+    <xs:unique name="SheetNoneGrouping_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:SheetNoneGrouping" />
+      <xs:field xpath="mstns:sheetno" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,1540 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="CustomService" targetNamespace="http://tempuri.org/CustomService.xsd" xmlns:mstns="http://tempuri.org/CustomService.xsd" xmlns="http://tempuri.org/CustomService.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="CustomServiceMainTableAdapter" GeneratorDataComponentClassName="CustomServiceMainTableAdapter" Name="CustomServiceMain" UserDataComponentName="CustomServiceMainTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="ERPBUS_TEST.dbo.CustomService" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          ServiceNo, BuildDate, BuildTime, BuildMan,
+                                (SELECT          NAME
+                                  FROM               EMPLOYEE
+                                  WHERE           (EMPNO = CustomService.BuildMan)) AS BuildManName, ServiceType,
+                                (SELECT          TypeText
+                                  FROM               CustomServiceType
+                                  WHERE           (TypeStep = '1') AND (TypeLevel1 = CustomService.ServiceType)) AS ServiceType_C, ServiceTypeB,
+                                (SELECT          TypeText
+                                  FROM               CustomServiceType AS CustomServiceType_2
+                                  WHERE           (TypeStep = '2') AND (TypeLevel1 = CustomService.ServiceType) AND 
+                                                              (TypeLevel2 = CustomService.ServiceTypeB)) AS ServiceTypeB_C, ServiceTypeC,
+                                (SELECT          TypeText
+                                  FROM               CustomServiceType AS CustomServiceType_1
+                                  WHERE           (TypeStep = '3') AND (TypeLevel1 = CustomService.ServiceType) AND 
+                                                              (TypeLevel2 = CustomService.ServiceTypeB) AND (TypeLevel3 = CustomService.ServiceTypeC)) 
+                            AS ServiceTypeC_C, LinesNo, Car_ID, Driver, DriverName, BoardTime, BoardStation, GetoffTime, GetoffStation, 
+                            ServiceNote, IsNoContect, CivicName, CivicTelNo, CivicTelExtNo, CivicCellPhone, CivicAddress, CivicEMail, 
+                            AthorityDepNo, AthorityDepNote,
+                                (SELECT          NAME
+                                  FROM               DEPARTMENT
+                                  WHERE           (DEPNO = CustomService.AthorityDepNo)) AS AthorityDepName, IsReplied, Remark, IsPending, 
+                            AssignDate, AssignMan,
+                                (SELECT          NAME
+                                  FROM               EMPLOYEE AS Employee_2
+                                  WHERE           (EMPNO = CustomService.AssignMan)) AS AssignManName, IsClosed, CloseDate, CloseMan,
+                                (SELECT          NAME
+                                  FROM               EMPLOYEE AS Employee_1
+                                  WHERE           (EMPNO = CustomService.CloseMan)) AS CloseManName, CivicTelExtNo AS Expr1, LinesNo2, 
+                            Car_ID2, Driver2, DriverName2, AthorityDepNo2,
+                                (SELECT          NAME
+                                  FROM               DEPARTMENT AS Department_1
+                                  WHERE           (DEPNO = CustomService.AthorityDepNo2)) AS AthorityDepName2, AthorityDepNote2, CaseSource,
+                                (SELECT          CLASSTXT
+                                  FROM               DBDICB
+                                  WHERE           (FKEY = '客服專線記錄表  fmCustomService CaseSource') AND 
+                                                              (CLASSNO = CustomService.CaseSource)) AS CaseSource_C, ServiceDate,  IsTrue
+FROM              CustomService
+WHERE          (1 &lt;&gt; 1)</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="ServiceNo" DataSetColumn="ServiceNo" />
+              <Mapping SourceColumn="BuildDate" DataSetColumn="BuildDate" />
+              <Mapping SourceColumn="BuildTime" DataSetColumn="BuildTime" />
+              <Mapping SourceColumn="BuildMan" DataSetColumn="BuildMan" />
+              <Mapping SourceColumn="BuildManName" DataSetColumn="BuildManName" />
+              <Mapping SourceColumn="ServiceType" DataSetColumn="ServiceType" />
+              <Mapping SourceColumn="ServiceType_C" DataSetColumn="ServiceType_C" />
+              <Mapping SourceColumn="ServiceTypeB" DataSetColumn="ServiceTypeB" />
+              <Mapping SourceColumn="ServiceTypeB_C" DataSetColumn="ServiceTypeB_C" />
+              <Mapping SourceColumn="ServiceTypeC" DataSetColumn="ServiceTypeC" />
+              <Mapping SourceColumn="ServiceTypeC_C" DataSetColumn="ServiceTypeC_C" />
+              <Mapping SourceColumn="LinesNo" DataSetColumn="LinesNo" />
+              <Mapping SourceColumn="Car_ID" DataSetColumn="Car_ID" />
+              <Mapping SourceColumn="Driver" DataSetColumn="Driver" />
+              <Mapping SourceColumn="DriverName" DataSetColumn="DriverName" />
+              <Mapping SourceColumn="BoardTime" DataSetColumn="BoardTime" />
+              <Mapping SourceColumn="BoardStation" DataSetColumn="BoardStation" />
+              <Mapping SourceColumn="GetoffTime" DataSetColumn="GetoffTime" />
+              <Mapping SourceColumn="GetoffStation" DataSetColumn="GetoffStation" />
+              <Mapping SourceColumn="ServiceNote" DataSetColumn="ServiceNote" />
+              <Mapping SourceColumn="IsNoContect" DataSetColumn="IsNoContect" />
+              <Mapping SourceColumn="CivicName" DataSetColumn="CivicName" />
+              <Mapping SourceColumn="CivicTelNo" DataSetColumn="CivicTelNo" />
+              <Mapping SourceColumn="CivicCellPhone" DataSetColumn="CivicCellPhone" />
+              <Mapping SourceColumn="CivicAddress" DataSetColumn="CivicAddress" />
+              <Mapping SourceColumn="CivicEMail" DataSetColumn="CivicEMail" />
+              <Mapping SourceColumn="AthorityDepNo" DataSetColumn="AthorityDepNo" />
+              <Mapping SourceColumn="AthorityDepNote" DataSetColumn="AthorityDepNote" />
+              <Mapping SourceColumn="AthorityDepName" DataSetColumn="AthorityDepName" />
+              <Mapping SourceColumn="IsReplied" DataSetColumn="IsReplied" />
+              <Mapping SourceColumn="Remark" DataSetColumn="Remark" />
+              <Mapping SourceColumn="IsPending" DataSetColumn="IsPending" />
+              <Mapping SourceColumn="AssignDate" DataSetColumn="AssignDate" />
+              <Mapping SourceColumn="AssignMan" DataSetColumn="AssignMan" />
+              <Mapping SourceColumn="AssignManName" DataSetColumn="AssignManName" />
+              <Mapping SourceColumn="IsClosed" DataSetColumn="IsClosed" />
+              <Mapping SourceColumn="CloseDate" DataSetColumn="CloseDate" />
+              <Mapping SourceColumn="CloseMan" DataSetColumn="CloseMan" />
+              <Mapping SourceColumn="CloseManName" DataSetColumn="CloseManName" />
+              <Mapping SourceColumn="CivicTelExtNo" DataSetColumn="CivicTelExtNo" />
+              <Mapping SourceColumn="LinesNo2" DataSetColumn="LinesNo2" />
+              <Mapping SourceColumn="Car_ID2" DataSetColumn="Car_ID2" />
+              <Mapping SourceColumn="Driver2" DataSetColumn="Driver2" />
+              <Mapping SourceColumn="DriverName2" DataSetColumn="DriverName2" />
+              <Mapping SourceColumn="AthorityDepNo2" DataSetColumn="AthorityDepNo2" />
+              <Mapping SourceColumn="AthorityDepName2" DataSetColumn="AthorityDepName2" />
+              <Mapping SourceColumn="AthorityDepNote2" DataSetColumn="AthorityDepNote2" />
+              <Mapping SourceColumn="CaseSource" DataSetColumn="CaseSource" />
+              <Mapping SourceColumn="CaseSource_C" DataSetColumn="CaseSource_C" />
+              <Mapping SourceColumn="ServiceDate" DataSetColumn="ServiceDate" />
+              <Mapping SourceColumn="IsTrue" DataSetColumn="IsTrue" />
+              <Mapping SourceColumn="Expr1" DataSetColumn="Expr1" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="CustomServiceDriverListTableAdapter" GeneratorDataComponentClassName="CustomServiceDriverListTableAdapter" Name="CustomServiceDriverList" UserDataComponentName="CustomServiceDriverListTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="ERPBUS_TEST.dbo.CustomService" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          AthorityDepNo, AthorityDepNote, Driver, DriverName, BuildDate, ServiceDate, LinesNo, ServiceType,
+                                (SELECT          TypeText
+                                  FROM               CustomServiceType
+                                  WHERE           (TypeStep = 1) AND (TypeLevel1 = a.ServiceType)) AS ServiceType_C, ServiceTypeB,
+                                (SELECT          TypeText
+                                  FROM               CustomServiceType AS CustomServiceType_2
+                                  WHERE           (TypeStep = 2) AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB)) 
+                            AS ServiceTypeB_C, ServiceTypeC,
+                                (SELECT          TypeText
+                                  FROM               CustomServiceType AS CustomServiceType_1
+                                  WHERE           (TypeStep = 3) AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB) AND 
+                                                              (TypeLevel3 = a.ServiceTypeC)) AS ServiceTypeC_C
+FROM              CustomService AS a
+WHERE          (1 &lt;&gt; 1)</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="Driver" DataSetColumn="Driver" />
+              <Mapping SourceColumn="DriverName" DataSetColumn="DriverName" />
+              <Mapping SourceColumn="BuildDate" DataSetColumn="BuildDate" />
+              <Mapping SourceColumn="ServiceType" DataSetColumn="ServiceType" />
+              <Mapping SourceColumn="ServiceType_C" DataSetColumn="ServiceType_C" />
+              <Mapping SourceColumn="ServiceTypeB" DataSetColumn="ServiceTypeB" />
+              <Mapping SourceColumn="ServiceTypeB_C" DataSetColumn="ServiceTypeB_C" />
+              <Mapping SourceColumn="ServiceTypeC" DataSetColumn="ServiceTypeC" />
+              <Mapping SourceColumn="ServiceTypeC_C" DataSetColumn="ServiceTypeC_C" />
+              <Mapping SourceColumn="AthorityDepNo" DataSetColumn="AthorityDepNo" />
+              <Mapping SourceColumn="AthorityDepNote" DataSetColumn="AthorityDepNote" />
+              <Mapping SourceColumn="ServiceDate" DataSetColumn="ServiceDate" />
+              <Mapping SourceColumn="LinesNo" DataSetColumn="LinesNo" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="CountDepNoTableAdapter" GeneratorDataComponentClassName="CountDepNoTableAdapter" Name="CountDepNo" UserDataComponentName="CountDepNoTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="SELECT ISNULL(AthorityDepNo, 'ZZ') AS AthorityDepNo, CASE WHEN AthorityDepNo = '99' THEN '其他' ELSE ISNULL(AthorityDepNote, '不分站別') END AS AthorityDepNo_C FROM CustomService AS a WHERE (1 &lt;&gt; 1) UNION ALL SELECT ISNULL(AthorityDepNo2, 'ZZ') AS AthorityDepNo, CASE WHEN AthorityDepNo2 = '99' THEN '其他' ELSE ISNULL(AthorityDepNote2, '不分站別') END AS AthorityDepNo_C FROM CustomService AS a WHERE (1 &lt;&gt; 1)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          AthorityDepNo, AthorityDepNo_C, COUNT(AthorityDepNo) AS RCount
+FROM              (SELECT          ISNULL(AthorityDepNo, 'ZZ') AS AthorityDepNo, 
+                                                        CASE WHEN AthorityDepNo = '99' THEN '其他' ELSE ISNULL(AthorityDepNote, '不分站別') 
+                                                        END AS AthorityDepNo_C
+                            FROM               CustomService AS a
+                            WHERE           (1 &lt;&gt; 1)
+                            UNION ALL
+                            SELECT          ISNULL(AthorityDepNo2, 'ZZ') AS AthorityDepNo, 
+                                                        CASE WHEN AthorityDepNo2 = '99' THEN '其他' ELSE ISNULL(AthorityDepNote2, '不分站別') 
+                                                        END AS AthorityDepNo_C
+                            FROM              CustomService AS a
+                            WHERE          (1 &lt;&gt; 1)) AS z
+GROUP BY   AthorityDepNo, AthorityDepNo_C
+ORDER BY   AthorityDepNo</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="AthorityDepNo" DataSetColumn="AthorityDepNo" />
+              <Mapping SourceColumn="AthorityDepNo_C" DataSetColumn="AthorityDepNo_C" />
+              <Mapping SourceColumn="RCount" DataSetColumn="RCount" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="CountServiceTypeTableAdapter" GeneratorDataComponentClassName="CountServiceTypeTableAdapter" Name="CountServiceType" UserDataComponentName="CountServiceTypeTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="ERPBUS_TEST.dbo.CustomService" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          ServiceType,
+                                (SELECT          TypeText
+                                  FROM               CustomServiceType
+                                  WHERE           (TypeStep = '1') AND (TypeLevel1 = CustomService.ServiceType)) AS ServiceType_C, 
+                            COUNT(ServiceNo) AS RCount
+FROM              CustomService
+WHERE          (1 &lt;&gt; 1)
+GROUP BY   ServiceType
+ORDER BY   ServiceType</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="ServiceType" DataSetColumn="ServiceType" />
+              <Mapping SourceColumn="ServiceType_C" DataSetColumn="ServiceType_C" />
+              <Mapping SourceColumn="RCount" DataSetColumn="RCount" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="CountServiceTypeBTableAdapter" GeneratorDataComponentClassName="CountServiceTypeBTableAdapter" Name="CountServiceTypeB" UserDataComponentName="CountServiceTypeBTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="SELECT ServiceNo, ServiceType + ISNULL(ServiceTypeB, '000') AS ServiceType, CASE WHEN ISNULL(ServiceTypeB, '') &lt;&gt; '' THEN (SELECT TypeText FROM CustomServiceType WHERE TypeStep = '2' AND TypeLevel1 = a.ServiceType AND TypeLevel2 = a.ServiceTypeB) ELSE (SELECT TypeText FROM CustomserviceType WHERE TypeStep = '1' AND TypeLevel1 = a.ServiceType) END AS ServiceType_C FROM CustomService AS a WHERE (1 &lt;&gt; 1)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          ServiceType, ServiceType_C, COUNT(ServiceNo) AS RCount
+FROM              (SELECT          ServiceNo, ServiceType + ISNULL(ServiceTypeB, '000') AS ServiceType, 
+                                                        CASE WHEN ISNULL(ServiceTypeB, '') &lt;&gt; '' THEN
+                                                            (SELECT          TypeText
+                                                              FROM               CustomServiceType
+                                                              WHERE           TypeStep = '2' AND TypeLevel1 = a.ServiceType AND TypeLevel2 = a.ServiceTypeB) 
+                                                        ELSE
+                                                            (SELECT          TypeText
+                                                              FROM               CustomserviceType
+                                                              WHERE           TypeStep = '1' AND TypeLevel1 = a.ServiceType) END AS ServiceType_C
+                            FROM               CustomService AS a
+                            WHERE           (1 &lt;&gt; 1)) AS z
+GROUP BY   ServiceType, ServiceType_C
+ORDER BY   ServiceType, ServiceType_C</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="ServiceType" DataSetColumn="ServiceType" />
+              <Mapping SourceColumn="ServiceType_C" DataSetColumn="ServiceType_C" />
+              <Mapping SourceColumn="RCount" DataSetColumn="RCount" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="CountServiceTypeCTableAdapter" GeneratorDataComponentClassName="CountServiceTypeCTableAdapter" Name="CountServiceTypeC" UserDataComponentName="CountServiceTypeCTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="SELECT ServiceNo, ServiceType + ISNULL(ServiceTypeB, '000') + ISNULL(ServiceTypeC, '000') AS ServiceType, (SELECT TypeText FROM CustomServiceType WHERE (TypeNo = a.ServiceType + ISNULL(a.ServiceTypeB, N'000') + ISNULL(a.ServiceTypeC, N'000'))) AS ServiceType_C FROM CustomService AS a WHERE (1 &lt;&gt; 1)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          ServiceType, ServiceType_C, COUNT(ServiceNo) AS RCount
+FROM              (SELECT          ServiceNo, ServiceType + ISNULL(ServiceTypeB, '000') + ISNULL(ServiceTypeC, '000') AS ServiceType,
+                                                            (SELECT          TypeText
+                                                              FROM               CustomServiceType
+                                                              WHERE           (TypeNo = a.ServiceType + ISNULL(a.ServiceTypeB, N'000') + ISNULL(a.ServiceTypeC, 
+                                                                                          N'000'))) AS ServiceType_C
+                            FROM               CustomService AS a
+                            WHERE           (1 &lt;&gt; 1)) AS z
+GROUP BY   ServiceType, ServiceType_C
+ORDER BY   ServiceType, ServiceType_C</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="ServiceType" DataSetColumn="ServiceType" />
+              <Mapping SourceColumn="ServiceType_C" DataSetColumn="ServiceType_C" />
+              <Mapping SourceColumn="RCount" DataSetColumn="RCount" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="CountLinesNoTableAdapter" GeneratorDataComponentClassName="CountLinesNoTableAdapter" Name="CountLinesNo" UserDataComponentName="CountLinesNoTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="SELECT ISNULL(LinesNo, '不分路線') AS LinesNo FROM CustomService AS a WHERE (1 &lt;&gt; 1) UNION ALL SELECT LinesNo2 AS LinesNo FROM CustomService AS a WHERE (1 &lt;&gt; 1)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          LinesNo, COUNT(LinesNo) AS RCount
+FROM              (SELECT          ISNULL(LinesNo, '不分路線') AS LinesNo
+                            FROM               CustomService AS a
+                            WHERE           (1 &lt;&gt; 1)
+                            UNION ALL
+                            SELECT          LinesNo2 AS LinesNo
+                            FROM              CustomService AS a
+                            WHERE          (1 &lt;&gt; 1)) AS z
+GROUP BY   LinesNo
+ORDER BY   LinesNo</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="LinesNo" DataSetColumn="LinesNo" />
+              <Mapping SourceColumn="RCount" DataSetColumn="RCount" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="CountDriverTableAdapter" GeneratorDataComponentClassName="CountDriverTableAdapter" Name="CountDriver" UserDataComponentName="CountDriverTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="SELECT ISNULL(Driver, '000000') AS Driver, ISNULL ((SELECT NAME FROM EMPLOYEE WHERE (EMPNO = a.Driver)), '不分駕駛員') AS Driver_C FROM CustomService AS a WHERE (1 &lt;&gt; 1) UNION ALL SELECT ISNULL(Driver2, '000000') AS Driver, ISNULL ((SELECT NAME FROM EMPLOYEE AS EMPLOYEE_1 WHERE (EMPNO = a.Driver2)), '不分駕駛員') AS Driver_C FROM CustomService AS a WHERE (1 &lt;&gt; 1)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          Driver, Driver_C, COUNT(Driver) AS RCount
+FROM              (SELECT          ISNULL(Driver, '000000') AS Driver, ISNULL
+                                                            ((SELECT          NAME
+                                                                FROM              EMPLOYEE
+                                                                WHERE          (EMPNO = a.Driver)), '不分駕駛員') AS Driver_C
+                            FROM               CustomService AS a
+                            WHERE           (1 &lt;&gt; 1)
+                            UNION ALL
+                            SELECT          ISNULL(Driver2, '000000') AS Driver, ISNULL
+                                                            ((SELECT          NAME
+                                                                FROM              EMPLOYEE AS EMPLOYEE_1
+                                                                WHERE          (EMPNO = a.Driver2)), '不分駕駛員') AS Driver_C
+                            FROM              CustomService AS a
+                            WHERE          (1 &lt;&gt; 1)) AS z
+GROUP BY   Driver, Driver_C
+ORDER BY   Driver</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="Driver" DataSetColumn="Driver" />
+              <Mapping SourceColumn="Driver_C" DataSetColumn="Driver_C" />
+              <Mapping SourceColumn="RCount" DataSetColumn="RCount" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="ServiceList_DepNoTableAdapter" GeneratorDataComponentClassName="ServiceList_DepNoTableAdapter" Name="ServiceList_DepNo" UserDataComponentName="ServiceList_DepNoTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="SELECT ISNULL(AthorityDepNo, '') AS 單位編號, ISNULL(AthorityDepNote, '無單位') AS 單位, ISNULL(ServiceType, '') AS 反映事項代號, (SELECT TypeText FROM CustomServiceType WHERE (TypeStep = '1') AND (TypeLevel1 = a.ServiceType)) AS 反映事項, ISNULL(ServiceTypeB, '') AS 客訴事項代號, (SELECT TypeText FROM CustomServiceType AS CustomServiceType_2 WHERE (TypeStep = '2') AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB)) AS 客訴事項, ISNULL(ServiceTypeC, '') AS 客訴類別代號, (SELECT TypeText FROM CustomServiceType AS CustomServiceType_1 WHERE (TypeStep = '3') AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB) AND (TypeLevel3 = a.ServiceTypeC)) AS 客訴類別, ISNULL(LinesNo, '無路線別') AS 路線代號, ISNULL(Driver, '') AS 駕駛員代號, (SELECT NAME FROM EMPLOYEE WHERE (EMPNO = a.Driver)) AS 駕駛員 FROM CustomService AS a WHERE (1 = 1) UNION ALL SELECT ISNULL(AthorityDepNo2, '') AS 單位編號, ISNULL(AthorityDepNote2, '無單位') AS 單位, ISNULL(ServiceType, '') AS 反映事項代號, (SELECT TypeText FROM CustomServiceType AS CustomServiceType_3 WHERE (TypeStep = '1') AND (TypeLevel1 = a.ServiceType)) AS 反映事項, ISNULL(ServiceTypeB, '') AS 客訴事項代號, (SELECT TypeText FROM CustomServiceType AS CustomServiceType_2 WHERE (TypeStep = '2') AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB)) AS 客訴事項, ISNULL(ServiceTypeC, '') AS 客訴類別代號, (SELECT TypeText FROM CustomServiceType AS CustomServiceType_1 WHERE (TypeStep = '3') AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB) AND (TypeLevel3 = a.ServiceTypeC)) AS 客訴類別, ISNULL(LinesNo2, '無路線別') AS 路線代號, ISNULL(Driver2, '') AS 駕駛員代號, (SELECT NAME FROM EMPLOYEE AS EMPLOYEE_1 WHERE (EMPNO = a.Driver2)) AS 駕駛員 FROM CustomService AS a WHERE (ISNULL(AthorityDepNo2, N'') &lt;&gt; '')" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          單位編號, 單位, 反映事項代號, 反映事項, CASE WHEN isnull(客訴事項代號, '') 
+                            = '' THEN 反映事項代號 ELSE 客訴事項代號 END AS 客訴事項代號, CASE WHEN isnull(客訴事項, '') 
+                            = '' THEN 反映事項 ELSE 客訴事項 END AS 客訴事項, CASE WHEN (isnull(客訴類別代號, '') = '') AND 
+                            (isnull(客訴事項代號, '') = '') THEN 反映事項代號 WHEN (isnull(客訴類別代號, '') = '') AND (isnull(客訴事項代號, '') 
+                            &lt;&gt; '') THEN 客訴事項代號 ELSE 客訴類別代號 END AS 客訴類別代號, CASE WHEN (isnull(客訴類別, '') = '') AND 
+                            (isnull(客訴事項, '') = '') THEN 反映事項 WHEN (isnull(客訴類別, '') = '') AND (isnull(客訴事項, '') &lt;&gt; '') 
+                            THEN 客訴事項 ELSE 客訴類別 END AS 客訴類別, 路線代號, 駕駛員代號, ISNULL(駕駛員, '不分駕駛員') AS 駕駛員, 
+                            COUNT(駕駛員) AS 筆數
+FROM              (SELECT          ISNULL(AthorityDepNo, '') AS 單位編號, ISNULL(AthorityDepNote, '無單位') AS 單位, 
+                                                        ISNULL(ServiceType, '') AS 反映事項代號,
+                                                            (SELECT          TypeText
+                                                              FROM               CustomServiceType
+                                                              WHERE           (TypeStep = '1') AND (TypeLevel1 = a.ServiceType)) AS 反映事項, ISNULL(ServiceTypeB, 
+                                                        '') AS 客訴事項代號,
+                                                            (SELECT          TypeText
+                                                              FROM               CustomServiceType AS CustomServiceType_2
+                                                              WHERE           (TypeStep = '2') AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB)) 
+                                                        AS 客訴事項, ISNULL(ServiceTypeC, '') AS 客訴類別代號,
+                                                            (SELECT          TypeText
+                                                              FROM               CustomServiceType AS CustomServiceType_1
+                                                              WHERE           (TypeStep = '3') AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB) 
+                                                                                          AND (TypeLevel3 = a.ServiceTypeC)) AS 客訴類別, ISNULL(LinesNo, '無路線別') 
+                                                        AS 路線代號, ISNULL(Driver, '') AS 駕駛員代號,
+                                                            (SELECT          NAME
+                                                              FROM               EMPLOYEE
+                                                              WHERE           (EMPNO = a.Driver)) AS 駕駛員
+                            FROM               CustomService AS a
+                            WHERE           (1 = 1)
+                            UNION ALL
+                            SELECT          ISNULL(AthorityDepNo2, '') AS 單位編號, ISNULL(AthorityDepNote2, '無單位') AS 單位, 
+                                                        ISNULL(ServiceType, '') AS 反映事項代號,
+                                                            (SELECT          TypeText
+                                                              FROM               CustomServiceType AS CustomServiceType_3
+                                                              WHERE           (TypeStep = '1') AND (TypeLevel1 = a.ServiceType)) AS 反映事項, ISNULL(ServiceTypeB, 
+                                                        '') AS 客訴事項代號,
+                                                            (SELECT          TypeText
+                                                              FROM               CustomServiceType AS CustomServiceType_2
+                                                              WHERE           (TypeStep = '2') AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB)) 
+                                                        AS 客訴事項, ISNULL(ServiceTypeC, '') AS 客訴類別代號,
+                                                            (SELECT          TypeText
+                                                              FROM               CustomServiceType AS CustomServiceType_1
+                                                              WHERE           (TypeStep = '3') AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB) 
+                                                                                          AND (TypeLevel3 = a.ServiceTypeC)) AS 客訴類別, ISNULL(LinesNo2, '無路線別') 
+                                                        AS 路線代號, ISNULL(Driver2, '') AS 駕駛員代號,
+                                                            (SELECT          NAME
+                                                              FROM               EMPLOYEE AS EMPLOYEE_1
+                                                              WHERE           (EMPNO = a.Driver2)) AS 駕駛員
+                            FROM              CustomService AS a
+                            WHERE          (ISNULL(AthorityDepNo2, N'') &lt;&gt; '')) AS f
+WHERE          (1 &lt;&gt; 1)
+GROUP BY   單位編號, 單位, 反映事項代號, 反映事項, 客訴事項代號, 客訴事項, 客訴類別代號, 客訴類別, 路線代號, 駕駛員代號, 
+                            駕駛員
+ORDER BY   單位編號, 反映事項代號, 客訴事項代號, 客訴類別代號, 路線代號, 駕駛員代號</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="單位編號" DataSetColumn="單位編號" />
+              <Mapping SourceColumn="單位" DataSetColumn="單位" />
+              <Mapping SourceColumn="反映事項代號" DataSetColumn="反映事項代號" />
+              <Mapping SourceColumn="反映事項" DataSetColumn="反映事項" />
+              <Mapping SourceColumn="客訴事項代號" DataSetColumn="客訴事項代號" />
+              <Mapping SourceColumn="客訴事項" DataSetColumn="客訴事項" />
+              <Mapping SourceColumn="客訴類別代號" DataSetColumn="客訴類別代號" />
+              <Mapping SourceColumn="客訴類別" DataSetColumn="客訴類別" />
+              <Mapping SourceColumn="路線代號" DataSetColumn="路線代號" />
+              <Mapping SourceColumn="駕駛員代號" DataSetColumn="駕駛員代號" />
+              <Mapping SourceColumn="駕駛員" DataSetColumn="駕駛員" />
+              <Mapping SourceColumn="筆數" DataSetColumn="筆數" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="ServiceList_DriverTableAdapter" GeneratorDataComponentClassName="ServiceList_DriverTableAdapter" Name="ServiceList_Driver" UserDataComponentName="ServiceList_DriverTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="SELECT ISNULL(LinesNo, '無路線別') AS LinesNo, ISNULL(AthorityDepNo, '') AS AthorityDepNo, ISNULL ((SELECT NAME FROM DEPARTMENT WHERE (DEPNO = a.AthorityDepNo)), '不分單位') AS AthorityDepNo_C, ISNULL(ServiceType, '') AS ServiceType, (SELECT TypeText FROM CustomServiceType WHERE (TypeStep = '1') AND (TypeLevel1 = a.ServiceType)) AS ServiceType_C, ISNULL(ServiceTypeB, '') AS ServiceTypeB, (SELECT TypeText FROM CustomServiceType AS CustomServiceType_5 WHERE (TypeStep = '2') AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB)) AS ServiceTypeB_C, ISNULL(ServiceTypeC, '') AS ServiceTypeC, (SELECT TypeText FROM CustomServiceType AS CustomServiceType_4 WHERE (TypeStep = '3') AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB) AND (TypeLevel3 = a.ServiceTypeC)) AS ServiceTypeC_C, ISNULL(Driver, '') AS Driver FROM CustomService AS a WHERE (1 = 1) UNION ALL SELECT ISNULL(LinesNo2, '無路線別') AS LinesNo, ISNULL(AthorityDepNo2, '') AS AthorityDepNo, ISNULL ((SELECT NAME FROM DEPARTMENT AS DEPARTMENT_1 WHERE (DEPNO = a.AthorityDepNo2)), '不分單位') AS AthorityDepNo_C, ISNULL(ServiceType, '') AS ServiceType, (SELECT TypeText FROM CustomServiceType AS CustomServiceType_3 WHERE (TypeStep = '1') AND (TypeLevel1 = a.ServiceType)) AS ServiceType_C, ISNULL(ServiceTypeB, '') AS ServiceTypeB, (SELECT TypeText FROM CustomServiceType AS CustomServiceType_2 WHERE (TypeStep = '2') AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB)) AS ServiceTypeB_C, ISNULL(ServiceTypeC, '') AS ServiceTypeC, (SELECT TypeText FROM CustomServiceType AS CustomServiceType_1 WHERE (TypeStep = '3') AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB) AND (TypeLevel3 = a.ServiceTypeC)) AS ServiceTypeC_C, ISNULL(Driver2, '') AS Driver FROM CustomService AS a WHERE (ISNULL(Driver2, N'') &lt;&gt; '')" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          Driver AS 駕駛員代號, ISNULL
+                                ((SELECT          NAME
+                                    FROM              EMPLOYEE
+                                    WHERE          (EMPNO = t.Driver) AND (LEAVEDAY IS NULL)), '不分駕駛員') AS 駕駛員, AthorityDepNo AS 單位編號, 
+                            AthorityDepNo_C AS 單位, ServiceType AS 反映事項代號, ServiceType_C AS 反映事項, 
+                            CASE WHEN isnull(ServiceTypeB, '') = '' THEN ServiceType ELSE ServiceTypeB END AS 客訴事項代號, 
+                            CASE WHEN isnull(ServiceTypeB_C, '') = '' THEN ServiceType_C ELSE ServiceTypeB_C END AS 客訴事項, 
+                            CASE WHEN (isnull(ServiceTypeC, '') = '') AND (isnull(ServiceTypeB, '') = '') 
+                            THEN ServiceType WHEN (isnull(ServiceTypeC, '') = '') AND (isnull(ServiceTypeB, '') &lt;&gt; '') 
+                            THEN ServiceTypeB ELSE ServiceTypeC END AS 客訴類別代號, CASE WHEN (isnull(ServiceTypeC_C, '') = '') AND 
+                            (isnull(ServiceTypeB_C, '') = '') THEN ServiceType_C WHEN (isnull(ServiceTypeC_C, '') = '') AND 
+                            (isnull(ServiceTypeB_C, '') &lt;&gt; '') THEN ServiceTypeB_C ELSE ServiceTypeC_C END AS 客訴類別, ISNULL(LinesNo, 
+                            '不分路線') AS 路線代號, COUNT(LinesNo) AS 筆數
+FROM              (SELECT          ISNULL(LinesNo, '無路線別') AS LinesNo, ISNULL(AthorityDepNo, '') AS AthorityDepNo, ISNULL
+                                                            ((SELECT          NAME
+                                                                FROM              DEPARTMENT
+                                                                WHERE          (DEPNO = a.AthorityDepNo)), '不分單位') AS AthorityDepNo_C, ISNULL(ServiceType, '') 
+                                                        AS ServiceType,
+                                                            (SELECT          TypeText
+                                                              FROM               CustomServiceType
+                                                              WHERE           (TypeStep = '1') AND (TypeLevel1 = a.ServiceType)) AS ServiceType_C, 
+                                                        ISNULL(ServiceTypeB, '') AS ServiceTypeB,
+                                                            (SELECT          TypeText
+                                                              FROM               CustomServiceType AS CustomServiceType_5
+                                                              WHERE           (TypeStep = '2') AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB)) 
+                                                        AS ServiceTypeB_C, ISNULL(ServiceTypeC, '') AS ServiceTypeC,
+                                                            (SELECT          TypeText
+                                                              FROM               CustomServiceType AS CustomServiceType_4
+                                                              WHERE           (TypeStep = '3') AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB) 
+                                                                                          AND (TypeLevel3 = a.ServiceTypeC)) AS ServiceTypeC_C, ISNULL(Driver, '') 
+                                                        AS Driver
+                            FROM               CustomService AS a
+                            WHERE           (1 = 1)
+                            UNION ALL
+                            SELECT          ISNULL(LinesNo2, '無路線別') AS LinesNo, ISNULL(AthorityDepNo2, '') AS AthorityDepNo, 
+                                                        ISNULL
+                                                            ((SELECT          NAME
+                                                                FROM              DEPARTMENT AS DEPARTMENT_1
+                                                                WHERE          (DEPNO = a.AthorityDepNo2)), '不分單位') AS AthorityDepNo_C, ISNULL(ServiceType, '') 
+                                                        AS ServiceType,
+                                                            (SELECT          TypeText
+                                                              FROM               CustomServiceType AS CustomServiceType_3
+                                                              WHERE           (TypeStep = '1') AND (TypeLevel1 = a.ServiceType)) AS ServiceType_C, 
+                                                        ISNULL(ServiceTypeB, '') AS ServiceTypeB,
+                                                            (SELECT          TypeText
+                                                              FROM               CustomServiceType AS CustomServiceType_2
+                                                              WHERE           (TypeStep = '2') AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB)) 
+                                                        AS ServiceTypeB_C, ISNULL(ServiceTypeC, '') AS ServiceTypeC,
+                                                            (SELECT          TypeText
+                                                              FROM               CustomServiceType AS CustomServiceType_1
+                                                              WHERE           (TypeStep = '3') AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB) 
+                                                                                          AND (TypeLevel3 = a.ServiceTypeC)) AS ServiceTypeC_C, ISNULL(Driver2, '') 
+                                                        AS Driver
+                            FROM              CustomService AS a
+                            WHERE          (ISNULL(Driver2, N'') &lt;&gt; '')) AS t
+WHERE          (1 &lt;&gt; 1)
+GROUP BY   Driver, AthorityDepNo, AthorityDepNo_C, ServiceType, ServiceType_C, ServiceTypeB, ServiceTypeB_C, 
+                            ServiceTypeC, ServiceTypeC_C, LinesNo
+ORDER BY   駕駛員代號, 單位編號, 反映事項代號, ServiceTypeB, ServiceTypeC, LinesNo</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="駕駛員代號" DataSetColumn="駕駛員代號" />
+              <Mapping SourceColumn="駕駛員" DataSetColumn="駕駛員" />
+              <Mapping SourceColumn="單位編號" DataSetColumn="單位編號" />
+              <Mapping SourceColumn="單位" DataSetColumn="單位" />
+              <Mapping SourceColumn="反映事項代號" DataSetColumn="反映事項代號" />
+              <Mapping SourceColumn="反映事項" DataSetColumn="反映事項" />
+              <Mapping SourceColumn="客訴事項代號" DataSetColumn="客訴事項代號" />
+              <Mapping SourceColumn="客訴事項" DataSetColumn="客訴事項" />
+              <Mapping SourceColumn="客訴類別代號" DataSetColumn="客訴類別代號" />
+              <Mapping SourceColumn="客訴類別" DataSetColumn="客訴類別" />
+              <Mapping SourceColumn="路線代號" DataSetColumn="路線代號" />
+              <Mapping SourceColumn="筆數" DataSetColumn="筆數" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="ServiceList_ServiceTypeTableAdapter" GeneratorDataComponentClassName="ServiceList_ServiceTypeTableAdapter" Name="ServiceList_ServiceType" UserDataComponentName="ServiceList_ServiceTypeTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="SELECT ISNULL(LinesNo, '無路線別') AS LinesNo, ISNULL(AthorityDepNo, '') AS AthorityDepNo, ISNULL ((SELECT NAME FROM DEPARTMENT WHERE (DEPNO = a.AthorityDepNo)), '不分單位') AS AthorityDepNo_C, ISNULL(ServiceType, '') AS ServiceType, (SELECT TypeText FROM CustomServiceType WHERE (TypeStep = '1') AND (TypeLevel1 = a.ServiceType)) AS ServiceType_C, ISNULL(ServiceTypeB, '') AS ServiceTypeB, (SELECT TypeText FROM CustomServiceType AS CustomServiceType_5 WHERE (TypeStep = '2') AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB)) AS ServiceTypeB_C, ISNULL(ServiceTypeC, '') AS ServiceTypeC, (SELECT TypeText FROM CustomServiceType AS CustomServiceType_4 WHERE (TypeStep = '3') AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB) AND (TypeLevel3 = a.ServiceTypeC)) AS ServiceTypeC_C, ISNULL(Driver, '') AS Driver FROM CustomService AS a WHERE (1 = 1) UNION ALL SELECT ISNULL(LinesNo2, '無路線別') AS LinesNo, ISNULL(AthorityDepNo2, '') AS AthorityDepNo, ISNULL ((SELECT NAME FROM DEPARTMENT AS DEPARTMENT_1 WHERE (DEPNO = a.AthorityDepNo2)), '不分單位') AS AthorityDepNo_C, ISNULL(ServiceType, '') AS ServiceType, (SELECT TypeText FROM CustomServiceType AS CustomServiceType_3 WHERE (TypeStep = '1') AND (TypeLevel1 = a.ServiceType)) AS ServiceType_C, ISNULL(ServiceTypeB, '') AS ServiceTypeB, (SELECT TypeText FROM CustomServiceType AS CustomServiceType_2 WHERE (TypeStep = '2') AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB)) AS ServiceTypeB_C, ISNULL(ServiceTypeC, '') AS ServiceTypeC, (SELECT TypeText FROM CustomServiceType AS CustomServiceType_1 WHERE (TypeStep = '3') AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB) AND (TypeLevel3 = a.ServiceTypeC)) AS ServiceTypeC_C, ISNULL(Driver2, '') AS Driver FROM CustomService AS a WHERE (ISNULL(Driver2, N'') &lt;&gt; '')" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          ServiceType AS 反映事項代號, ServiceType_C AS 反映事項, CASE WHEN isnull(ServiceTypeB, '') 
+                            = '' THEN ServiceType ELSE ServiceTypeB END AS 客訴事項代號, CASE WHEN isnull(ServiceTypeB_C, '') 
+                            = '' THEN ServiceType_C ELSE ServiceTypeB_C END AS 客訴事項, CASE WHEN (isnull(ServiceTypeC, '') = '') AND 
+                            (isnull(ServiceTypeB, '') = '') THEN ServiceType WHEN (isnull(ServiceTypeC, '') = '') AND (isnull(ServiceTypeB, '') 
+                            &lt;&gt; '') THEN ServiceTypeB ELSE ServiceTypeC END AS 客訴類別代號, CASE WHEN (isnull(ServiceTypeC_C, '') = '') 
+                            AND (isnull(ServiceTypeB_C, '') = '') THEN ServiceType_C WHEN (isnull(ServiceTypeC_C, '') = '') AND 
+                            (isnull(ServiceTypeB_C, '') &lt;&gt; '') THEN ServiceTypeB_C ELSE ServiceTypeC_C END AS 客訴類別, 
+                            AthorityDepNo AS 單位編號, AthorityDepNo_C AS 單位, ISNULL(LinesNo, '不分路線') AS 路線代號, 
+                            Driver AS 駕駛員代號, ISNULL
+                                ((SELECT          NAME
+                                    FROM              EMPLOYEE
+                                    WHERE          (EMPNO = t.Driver) AND (LEAVEDAY IS NULL)), '不分駕駛員') AS 駕駛員, COUNT(Driver) 
+                            AS 筆數
+FROM              (SELECT          ISNULL(LinesNo, '無路線別') AS LinesNo, ISNULL(AthorityDepNo, '') AS AthorityDepNo, ISNULL
+                                                            ((SELECT          NAME
+                                                                FROM              DEPARTMENT
+                                                                WHERE          (DEPNO = a.AthorityDepNo)), '不分單位') AS AthorityDepNo_C, ISNULL(ServiceType, '') 
+                                                        AS ServiceType,
+                                                            (SELECT          TypeText
+                                                              FROM               CustomServiceType
+                                                              WHERE           (TypeStep = '1') AND (TypeLevel1 = a.ServiceType)) AS ServiceType_C, 
+                                                        ISNULL(ServiceTypeB, '') AS ServiceTypeB,
+                                                            (SELECT          TypeText
+                                                              FROM               CustomServiceType AS CustomServiceType_5
+                                                              WHERE           (TypeStep = '2') AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB)) 
+                                                        AS ServiceTypeB_C, ISNULL(ServiceTypeC, '') AS ServiceTypeC,
+                                                            (SELECT          TypeText
+                                                              FROM               CustomServiceType AS CustomServiceType_4
+                                                              WHERE           (TypeStep = '3') AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB) 
+                                                                                          AND (TypeLevel3 = a.ServiceTypeC)) AS ServiceTypeC_C, ISNULL(Driver, '') 
+                                                        AS Driver
+                            FROM               CustomService AS a
+                            WHERE           (1 = 1)
+                            UNION ALL
+                            SELECT          ISNULL(LinesNo2, '無路線別') AS LinesNo, ISNULL(AthorityDepNo2, '') AS AthorityDepNo, 
+                                                        ISNULL
+                                                            ((SELECT          NAME
+                                                                FROM              DEPARTMENT AS DEPARTMENT_1
+                                                                WHERE          (DEPNO = a.AthorityDepNo2)), '不分單位') AS AthorityDepNo_C, ISNULL(ServiceType, '') 
+                                                        AS ServiceType,
+                                                            (SELECT          TypeText
+                                                              FROM               CustomServiceType AS CustomServiceType_3
+                                                              WHERE           (TypeStep = '1') AND (TypeLevel1 = a.ServiceType)) AS ServiceType_C, 
+                                                        ISNULL(ServiceTypeB, '') AS ServiceTypeB,
+                                                            (SELECT          TypeText
+                                                              FROM               CustomServiceType AS CustomServiceType_2
+                                                              WHERE           (TypeStep = '2') AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB)) 
+                                                        AS ServiceTypeB_C, ISNULL(ServiceTypeC, '') AS ServiceTypeC,
+                                                            (SELECT          TypeText
+                                                              FROM               CustomServiceType AS CustomServiceType_1
+                                                              WHERE           (TypeStep = '3') AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB) 
+                                                                                          AND (TypeLevel3 = a.ServiceTypeC)) AS ServiceTypeC_C, ISNULL(Driver2, '') 
+                                                        AS Driver
+                            FROM              CustomService AS a
+                            WHERE          (ISNULL(Driver2, N'') &lt;&gt; '')) AS t
+WHERE          (1 &lt;&gt; 1)
+GROUP BY   ServiceType, ServiceType_C, ServiceTypeB, ServiceTypeB_C, ServiceTypeC, ServiceTypeC_C, AthorityDepNo, 
+                            AthorityDepNo_C, LinesNo, Driver
+ORDER BY   反映事項代號, ServiceTypeB, ServiceTypeC, 單位編號, LinesNo, 駕駛員代號</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="反映事項代號" DataSetColumn="反映事項代號" />
+              <Mapping SourceColumn="反映事項" DataSetColumn="反映事項" />
+              <Mapping SourceColumn="客訴事項代號" DataSetColumn="客訴事項代號" />
+              <Mapping SourceColumn="客訴事項" DataSetColumn="客訴事項" />
+              <Mapping SourceColumn="客訴類別代號" DataSetColumn="客訴類別代號" />
+              <Mapping SourceColumn="客訴類別" DataSetColumn="客訴類別" />
+              <Mapping SourceColumn="單位編號" DataSetColumn="單位編號" />
+              <Mapping SourceColumn="單位" DataSetColumn="單位" />
+              <Mapping SourceColumn="路線代號" DataSetColumn="路線代號" />
+              <Mapping SourceColumn="駕駛員代號" DataSetColumn="駕駛員代號" />
+              <Mapping SourceColumn="駕駛員" DataSetColumn="駕駛員" />
+              <Mapping SourceColumn="筆數" DataSetColumn="筆數" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="ServiceList_LinesNoTableAdapter" GeneratorDataComponentClassName="ServiceList_LinesNoTableAdapter" Name="ServiceList_LinesNo" UserDataComponentName="ServiceList_LinesNoTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="SELECT ISNULL(LinesNo, '無路線別') AS LinesNo, ISNULL(AthorityDepNo, '') AS AthorityDepNo, ISNULL ((SELECT NAME FROM DEPARTMENT WHERE (DEPNO = a.AthorityDepNo)), '不分單位') AS AthorityDepNo_C, ISNULL(ServiceType, '') AS ServiceType, (SELECT TypeText FROM CustomServiceType WHERE (TypeStep = '1') AND (TypeLevel1 = a.ServiceType)) AS ServiceType_C, ISNULL(ServiceTypeB, '') AS ServiceTypeB, (SELECT TypeText FROM CustomServiceType AS CustomServiceType_5 WHERE (TypeStep = '2') AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB)) AS ServiceTypeB_C, ISNULL(ServiceTypeC, '') AS ServiceTypeC, (SELECT TypeText FROM CustomServiceType AS CustomServiceType_4 WHERE (TypeStep = '3') AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB) AND (TypeLevel3 = a.ServiceTypeC)) AS ServiceTypeC_C, ISNULL(Driver, '') AS Driver FROM CustomService AS a WHERE (1 = 1) UNION ALL SELECT ISNULL(LinesNo2, '無路線別') AS LinesNo, ISNULL(AthorityDepNo2, '') AS AthorityDepNo, ISNULL ((SELECT NAME FROM DEPARTMENT AS DEPARTMENT_1 WHERE (DEPNO = a.AthorityDepNo2)), '不分單位') AS AthorityDepNo_C, ISNULL(ServiceType, '') AS ServiceType, (SELECT TypeText FROM CustomServiceType AS CustomServiceType_3 WHERE (TypeStep = '1') AND (TypeLevel1 = a.ServiceType)) AS ServiceType_C, ISNULL(ServiceTypeB, '') AS ServiceTypeB, (SELECT TypeText FROM CustomServiceType AS CustomServiceType_2 WHERE (TypeStep = '2') AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB)) AS ServiceTypeB_C, ISNULL(ServiceTypeC, '') AS ServiceTypeC, (SELECT TypeText FROM CustomServiceType AS CustomServiceType_1 WHERE (TypeStep = '3') AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB) AND (TypeLevel3 = a.ServiceTypeC)) AS ServiceTypeC_C, ISNULL(Driver2, '') AS Driver FROM CustomService AS a WHERE (ISNULL(LinesNo2, N'') &lt;&gt; '')" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          ISNULL(LinesNo, '不分路線') AS 路線代號, AthorityDepNo AS 單位編號, AthorityDepNo_C AS 單位, 
+                            ServiceType AS 反映事項代號, ServiceType_C AS 反映事項, CASE WHEN isnull(ServiceTypeB, '') 
+                            = '' THEN ServiceType ELSE ServiceTypeB END AS 客訴事項代號, CASE WHEN isnull(ServiceTypeB_C, '') 
+                            = '' THEN ServiceType_C ELSE ServiceTypeB_C END AS 客訴事項, CASE WHEN (isnull(ServiceTypeC, '') = '') AND 
+                            (isnull(ServiceTypeB, '') = '') THEN ServiceType WHEN (isnull(ServiceTypeC, '') = '') AND (isnull(ServiceTypeB, '') 
+                            &lt;&gt; '') THEN ServiceTypeB ELSE ServiceTypeC END AS 客訴類別代號, CASE WHEN (isnull(ServiceTypeC_C, '') = '') 
+                            AND (isnull(ServiceTypeB_C, '') = '') THEN ServiceType_C WHEN (isnull(ServiceTypeC_C, '') = '') AND 
+                            (isnull(ServiceTypeB_C, '') &lt;&gt; '') THEN ServiceTypeB_C ELSE ServiceTypeC_C END AS 客訴類別, 
+                            Driver AS 駕駛員代號, ISNULL
+                                ((SELECT          NAME
+                                    FROM              EMPLOYEE
+                                    WHERE          (EMPNO = t.Driver) AND (LEAVEDAY IS NULL)), '不分駕駛員') AS 駕駛員, COUNT(Driver) 
+                            AS 筆數
+FROM              (SELECT          ISNULL(LinesNo, '無路線別') AS LinesNo, ISNULL(AthorityDepNo, '') AS AthorityDepNo, ISNULL
+                                                            ((SELECT          NAME
+                                                                FROM              DEPARTMENT
+                                                                WHERE          (DEPNO = a.AthorityDepNo)), '不分單位') AS AthorityDepNo_C, ISNULL(ServiceType, '') 
+                                                        AS ServiceType,
+                                                            (SELECT          TypeText
+                                                              FROM               CustomServiceType
+                                                              WHERE           (TypeStep = '1') AND (TypeLevel1 = a.ServiceType)) AS ServiceType_C, 
+                                                        ISNULL(ServiceTypeB, '') AS ServiceTypeB,
+                                                            (SELECT          TypeText
+                                                              FROM               CustomServiceType AS CustomServiceType_5
+                                                              WHERE           (TypeStep = '2') AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB)) 
+                                                        AS ServiceTypeB_C, ISNULL(ServiceTypeC, '') AS ServiceTypeC,
+                                                            (SELECT          TypeText
+                                                              FROM               CustomServiceType AS CustomServiceType_4
+                                                              WHERE           (TypeStep = '3') AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB) 
+                                                                                          AND (TypeLevel3 = a.ServiceTypeC)) AS ServiceTypeC_C, ISNULL(Driver, '') 
+                                                        AS Driver
+                            FROM               CustomService AS a
+                            WHERE           (1 = 1)
+                            UNION ALL
+                            SELECT          ISNULL(LinesNo2, '無路線別') AS LinesNo, ISNULL(AthorityDepNo2, '') AS AthorityDepNo, 
+                                                        ISNULL
+                                                            ((SELECT          NAME
+                                                                FROM              DEPARTMENT AS DEPARTMENT_1
+                                                                WHERE          (DEPNO = a.AthorityDepNo2)), '不分單位') AS AthorityDepNo_C, ISNULL(ServiceType, '') 
+                                                        AS ServiceType,
+                                                            (SELECT          TypeText
+                                                              FROM               CustomServiceType AS CustomServiceType_3
+                                                              WHERE           (TypeStep = '1') AND (TypeLevel1 = a.ServiceType)) AS ServiceType_C, 
+                                                        ISNULL(ServiceTypeB, '') AS ServiceTypeB,
+                                                            (SELECT          TypeText
+                                                              FROM               CustomServiceType AS CustomServiceType_2
+                                                              WHERE           (TypeStep = '2') AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB)) 
+                                                        AS ServiceTypeB_C, ISNULL(ServiceTypeC, '') AS ServiceTypeC,
+                                                            (SELECT          TypeText
+                                                              FROM               CustomServiceType AS CustomServiceType_1
+                                                              WHERE           (TypeStep = '3') AND (TypeLevel1 = a.ServiceType) AND (TypeLevel2 = a.ServiceTypeB) 
+                                                                                          AND (TypeLevel3 = a.ServiceTypeC)) AS ServiceTypeC_C, ISNULL(Driver2, '') 
+                                                        AS Driver
+                            FROM              CustomService AS a
+                            WHERE          (ISNULL(LinesNo2, N'') &lt;&gt; '')) AS t
+WHERE          (1 &lt;&gt; 1)
+GROUP BY   LinesNo, AthorityDepNo, AthorityDepNo_C, ServiceType, ServiceType_C, ServiceTypeB, ServiceTypeB_C, 
+                            ServiceTypeC, ServiceTypeC_C, Driver
+ORDER BY   LinesNo, 單位編號, 反映事項代號, ServiceTypeB, ServiceTypeC, 駕駛員代號</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="路線代號" DataSetColumn="路線代號" />
+              <Mapping SourceColumn="單位編號" DataSetColumn="單位編號" />
+              <Mapping SourceColumn="單位" DataSetColumn="單位" />
+              <Mapping SourceColumn="反映事項代號" DataSetColumn="反映事項代號" />
+              <Mapping SourceColumn="反映事項" DataSetColumn="反映事項" />
+              <Mapping SourceColumn="客訴事項代號" DataSetColumn="客訴事項代號" />
+              <Mapping SourceColumn="客訴事項" DataSetColumn="客訴事項" />
+              <Mapping SourceColumn="客訴類別代號" DataSetColumn="客訴類別代號" />
+              <Mapping SourceColumn="客訴類別" DataSetColumn="客訴類別" />
+              <Mapping SourceColumn="駕駛員代號" DataSetColumn="駕駛員代號" />
+              <Mapping SourceColumn="駕駛員" DataSetColumn="駕駛員" />
+              <Mapping SourceColumn="筆數" DataSetColumn="筆數" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="CustomService" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="CustomService" msprop:Generator_UserDSName="CustomService">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="CustomServiceMain" msprop:Generator_TableClassName="CustomServiceMainDataTable" msprop:Generator_TableVarName="tableCustomServiceMain" msprop:Generator_TablePropName="CustomServiceMain" msprop:Generator_RowDeletingName="CustomServiceMainRowDeleting" msprop:Generator_RowChangingName="CustomServiceMainRowChanging" msprop:Generator_RowEvHandlerName="CustomServiceMainRowChangeEventHandler" msprop:Generator_RowDeletedName="CustomServiceMainRowDeleted" msprop:Generator_UserTableName="CustomServiceMain" msprop:Generator_RowChangedName="CustomServiceMainRowChanged" msprop:Generator_RowEvArgName="CustomServiceMainRowChangeEvent" msprop:Generator_RowClassName="CustomServiceMainRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ServiceNo" msprop:Generator_ColumnVarNameInTable="columnServiceNo" msprop:Generator_ColumnPropNameInRow="ServiceNo" msprop:Generator_ColumnPropNameInTable="ServiceNoColumn" msprop:Generator_UserColumnName="ServiceNo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="14" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BuildDate" msprop:Generator_ColumnVarNameInTable="columnBuildDate" msprop:Generator_ColumnPropNameInRow="BuildDate" msprop:Generator_ColumnPropNameInTable="BuildDateColumn" msprop:Generator_UserColumnName="BuildDate" type="xs:dateTime" />
+              <xs:element name="BuildTime" msprop:Generator_ColumnVarNameInTable="columnBuildTime" msprop:Generator_ColumnPropNameInRow="BuildTime" msprop:Generator_ColumnPropNameInTable="BuildTimeColumn" msprop:Generator_UserColumnName="BuildTime" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="5" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BuildMan" msprop:Generator_ColumnVarNameInTable="columnBuildMan" msprop:Generator_ColumnPropNameInRow="BuildMan" msprop:Generator_ColumnPropNameInTable="BuildManColumn" msprop:Generator_UserColumnName="BuildMan">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BuildManName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBuildManName" msprop:Generator_ColumnPropNameInRow="BuildManName" msprop:Generator_ColumnPropNameInTable="BuildManNameColumn" msprop:Generator_UserColumnName="BuildManName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ServiceType" msprop:Generator_ColumnVarNameInTable="columnServiceType" msprop:Generator_ColumnPropNameInRow="ServiceType" msprop:Generator_ColumnPropNameInTable="ServiceTypeColumn" msprop:Generator_UserColumnName="ServiceType">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="9" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ServiceType_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnServiceType_C" msprop:Generator_ColumnPropNameInRow="ServiceType_C" msprop:Generator_ColumnPropNameInTable="ServiceType_CColumn" msprop:Generator_UserColumnName="ServiceType_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ServiceTypeB" msprop:Generator_ColumnVarNameInTable="columnServiceTypeB" msprop:Generator_ColumnPropNameInRow="ServiceTypeB" msprop:Generator_ColumnPropNameInTable="ServiceTypeBColumn" msprop:Generator_UserColumnName="ServiceTypeB" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="9" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ServiceTypeB_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnServiceTypeB_C" msprop:Generator_ColumnPropNameInRow="ServiceTypeB_C" msprop:Generator_ColumnPropNameInTable="ServiceTypeB_CColumn" msprop:Generator_UserColumnName="ServiceTypeB_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ServiceTypeC" msprop:Generator_ColumnVarNameInTable="columnServiceTypeC" msprop:Generator_ColumnPropNameInRow="ServiceTypeC" msprop:Generator_ColumnPropNameInTable="ServiceTypeCColumn" msprop:Generator_UserColumnName="ServiceTypeC" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="9" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ServiceTypeC_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnServiceTypeC_C" msprop:Generator_ColumnPropNameInRow="ServiceTypeC_C" msprop:Generator_ColumnPropNameInTable="ServiceTypeC_CColumn" msprop:Generator_UserColumnName="ServiceTypeC_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="LinesNo" msprop:Generator_ColumnVarNameInTable="columnLinesNo" msprop:Generator_ColumnPropNameInRow="LinesNo" msprop:Generator_ColumnPropNameInTable="LinesNoColumn" msprop:Generator_UserColumnName="LinesNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Car_ID" msprop:Generator_ColumnVarNameInTable="columnCar_ID" msprop:Generator_ColumnPropNameInRow="Car_ID" msprop:Generator_ColumnPropNameInTable="Car_IDColumn" msprop:Generator_UserColumnName="Car_ID" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Driver" msprop:Generator_ColumnVarNameInTable="columnDriver" msprop:Generator_ColumnPropNameInRow="Driver" msprop:Generator_ColumnPropNameInTable="DriverColumn" msprop:Generator_UserColumnName="Driver" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DriverName" msprop:Generator_ColumnVarNameInTable="columnDriverName" msprop:Generator_ColumnPropNameInRow="DriverName" msprop:Generator_ColumnPropNameInTable="DriverNameColumn" msprop:Generator_UserColumnName="DriverName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BoardTime" msprop:Generator_ColumnVarNameInTable="columnBoardTime" msprop:Generator_ColumnPropNameInRow="BoardTime" msprop:Generator_ColumnPropNameInTable="BoardTimeColumn" msprop:Generator_UserColumnName="BoardTime" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="5" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BoardStation" msprop:Generator_ColumnVarNameInTable="columnBoardStation" msprop:Generator_ColumnPropNameInRow="BoardStation" msprop:Generator_ColumnPropNameInTable="BoardStationColumn" msprop:Generator_UserColumnName="BoardStation" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="GetoffTime" msprop:Generator_ColumnVarNameInTable="columnGetoffTime" msprop:Generator_ColumnPropNameInRow="GetoffTime" msprop:Generator_ColumnPropNameInTable="GetoffTimeColumn" msprop:Generator_UserColumnName="GetoffTime" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="5" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="GetoffStation" msprop:Generator_ColumnVarNameInTable="columnGetoffStation" msprop:Generator_ColumnPropNameInRow="GetoffStation" msprop:Generator_ColumnPropNameInTable="GetoffStationColumn" msprop:Generator_UserColumnName="GetoffStation" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ServiceNote" msprop:Generator_ColumnVarNameInTable="columnServiceNote" msprop:Generator_ColumnPropNameInRow="ServiceNote" msprop:Generator_ColumnPropNameInTable="ServiceNoteColumn" msprop:Generator_UserColumnName="ServiceNote" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IsNoContect" msprop:Generator_ColumnVarNameInTable="columnIsNoContect" msprop:Generator_ColumnPropNameInRow="IsNoContect" msprop:Generator_ColumnPropNameInTable="IsNoContectColumn" msprop:Generator_UserColumnName="IsNoContect" type="xs:boolean" minOccurs="0" />
+              <xs:element name="CivicName" msprop:Generator_ColumnVarNameInTable="columnCivicName" msprop:Generator_ColumnPropNameInRow="CivicName" msprop:Generator_ColumnPropNameInTable="CivicNameColumn" msprop:Generator_UserColumnName="CivicName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CivicTelNo" msprop:Generator_ColumnVarNameInTable="columnCivicTelNo" msprop:Generator_ColumnPropNameInRow="CivicTelNo" msprop:Generator_ColumnPropNameInTable="CivicTelNoColumn" msprop:Generator_UserColumnName="CivicTelNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CivicCellPhone" msprop:Generator_ColumnVarNameInTable="columnCivicCellPhone" msprop:Generator_ColumnPropNameInRow="CivicCellPhone" msprop:Generator_ColumnPropNameInTable="CivicCellPhoneColumn" msprop:Generator_UserColumnName="CivicCellPhone" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CivicAddress" msprop:Generator_ColumnVarNameInTable="columnCivicAddress" msprop:Generator_ColumnPropNameInRow="CivicAddress" msprop:Generator_ColumnPropNameInTable="CivicAddressColumn" msprop:Generator_UserColumnName="CivicAddress" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CivicEMail" msprop:Generator_ColumnVarNameInTable="columnCivicEMail" msprop:Generator_ColumnPropNameInRow="CivicEMail" msprop:Generator_ColumnPropNameInTable="CivicEMailColumn" msprop:Generator_UserColumnName="CivicEMail" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AthorityDepNo" msprop:Generator_ColumnVarNameInTable="columnAthorityDepNo" msprop:Generator_ColumnPropNameInRow="AthorityDepNo" msprop:Generator_ColumnPropNameInTable="AthorityDepNoColumn" msprop:Generator_UserColumnName="AthorityDepNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AthorityDepNote" msprop:Generator_ColumnVarNameInTable="columnAthorityDepNote" msprop:Generator_ColumnPropNameInRow="AthorityDepNote" msprop:Generator_ColumnPropNameInTable="AthorityDepNoteColumn" msprop:Generator_UserColumnName="AthorityDepNote" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="24" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AthorityDepName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnAthorityDepName" msprop:Generator_ColumnPropNameInRow="AthorityDepName" msprop:Generator_ColumnPropNameInTable="AthorityDepNameColumn" msprop:Generator_UserColumnName="AthorityDepName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IsReplied" msprop:Generator_ColumnVarNameInTable="columnIsReplied" msprop:Generator_ColumnPropNameInRow="IsReplied" msprop:Generator_ColumnPropNameInTable="IsRepliedColumn" msprop:Generator_UserColumnName="IsReplied" type="xs:boolean" minOccurs="0" />
+              <xs:element name="Remark" msprop:Generator_ColumnVarNameInTable="columnRemark" msprop:Generator_ColumnPropNameInRow="Remark" msprop:Generator_ColumnPropNameInTable="RemarkColumn" msprop:Generator_UserColumnName="Remark" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IsPending" msprop:Generator_ColumnVarNameInTable="columnIsPending" msprop:Generator_ColumnPropNameInRow="IsPending" msprop:Generator_ColumnPropNameInTable="IsPendingColumn" msprop:Generator_UserColumnName="IsPending" type="xs:boolean" minOccurs="0" />
+              <xs:element name="AssignDate" msprop:Generator_ColumnVarNameInTable="columnAssignDate" msprop:Generator_ColumnPropNameInRow="AssignDate" msprop:Generator_ColumnPropNameInTable="AssignDateColumn" msprop:Generator_UserColumnName="AssignDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="AssignMan" msprop:Generator_ColumnVarNameInTable="columnAssignMan" msprop:Generator_ColumnPropNameInRow="AssignMan" msprop:Generator_ColumnPropNameInTable="AssignManColumn" msprop:Generator_UserColumnName="AssignMan" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AssignManName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnAssignManName" msprop:Generator_ColumnPropNameInRow="AssignManName" msprop:Generator_ColumnPropNameInTable="AssignManNameColumn" msprop:Generator_UserColumnName="AssignManName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IsClosed" msprop:Generator_ColumnVarNameInTable="columnIsClosed" msprop:Generator_ColumnPropNameInRow="IsClosed" msprop:Generator_ColumnPropNameInTable="IsClosedColumn" msprop:Generator_UserColumnName="IsClosed" type="xs:boolean" minOccurs="0" />
+              <xs:element name="CloseDate" msprop:Generator_ColumnVarNameInTable="columnCloseDate" msprop:Generator_ColumnPropNameInRow="CloseDate" msprop:Generator_ColumnPropNameInTable="CloseDateColumn" msprop:Generator_UserColumnName="CloseDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="CloseMan" msprop:Generator_ColumnVarNameInTable="columnCloseMan" msprop:Generator_ColumnPropNameInRow="CloseMan" msprop:Generator_ColumnPropNameInTable="CloseManColumn" msprop:Generator_UserColumnName="CloseMan" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CloseManName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnCloseManName" msprop:Generator_ColumnPropNameInRow="CloseManName" msprop:Generator_ColumnPropNameInTable="CloseManNameColumn" msprop:Generator_UserColumnName="CloseManName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CivicTelExtNo" msprop:Generator_ColumnVarNameInTable="columnCivicTelExtNo" msprop:Generator_ColumnPropNameInRow="CivicTelExtNo" msprop:Generator_ColumnPropNameInTable="CivicTelExtNoColumn" msprop:Generator_UserColumnName="CivicTelExtNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="LinesNo2" msprop:Generator_ColumnVarNameInTable="columnLinesNo2" msprop:Generator_ColumnPropNameInRow="LinesNo2" msprop:Generator_ColumnPropNameInTable="LinesNo2Column" msprop:Generator_UserColumnName="LinesNo2" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Car_ID2" msprop:Generator_ColumnVarNameInTable="columnCar_ID2" msprop:Generator_ColumnPropNameInRow="Car_ID2" msprop:Generator_ColumnPropNameInTable="Car_ID2Column" msprop:Generator_UserColumnName="Car_ID2" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Driver2" msprop:Generator_ColumnVarNameInTable="columnDriver2" msprop:Generator_ColumnPropNameInRow="Driver2" msprop:Generator_ColumnPropNameInTable="Driver2Column" msprop:Generator_UserColumnName="Driver2" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DriverName2" msprop:Generator_ColumnVarNameInTable="columnDriverName2" msprop:Generator_ColumnPropNameInRow="DriverName2" msprop:Generator_ColumnPropNameInTable="DriverName2Column" msprop:Generator_UserColumnName="DriverName2" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AthorityDepNo2" msprop:Generator_ColumnVarNameInTable="columnAthorityDepNo2" msprop:Generator_ColumnPropNameInRow="AthorityDepNo2" msprop:Generator_ColumnPropNameInTable="AthorityDepNo2Column" msprop:Generator_UserColumnName="AthorityDepNo2" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AthorityDepName2" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnAthorityDepName2" msprop:Generator_ColumnPropNameInRow="AthorityDepName2" msprop:Generator_ColumnPropNameInTable="AthorityDepName2Column" msprop:Generator_UserColumnName="AthorityDepName2" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AthorityDepNote2" msprop:Generator_ColumnVarNameInTable="columnAthorityDepNote2" msprop:Generator_ColumnPropNameInRow="AthorityDepNote2" msprop:Generator_ColumnPropNameInTable="AthorityDepNote2Column" msprop:Generator_UserColumnName="AthorityDepNote2" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="24" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CaseSource" msprop:Generator_ColumnVarNameInTable="columnCaseSource" msprop:Generator_ColumnPropNameInRow="CaseSource" msprop:Generator_ColumnPropNameInTable="CaseSourceColumn" msprop:Generator_UserColumnName="CaseSource" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="4" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CaseSource_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnCaseSource_C" msprop:Generator_ColumnPropNameInRow="CaseSource_C" msprop:Generator_ColumnPropNameInTable="CaseSource_CColumn" msprop:Generator_UserColumnName="CaseSource_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ServiceDate" msprop:Generator_ColumnVarNameInTable="columnServiceDate" msprop:Generator_ColumnPropNameInRow="ServiceDate" msprop:Generator_ColumnPropNameInTable="ServiceDateColumn" msprop:Generator_UserColumnName="ServiceDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="IsTrue" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnIsTrue" msprop:Generator_ColumnPropNameInRow="IsTrue" msprop:Generator_ColumnPropNameInTable="IsTrueColumn" msprop:Generator_UserColumnName="IsTrue" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Expr1" msprop:Generator_ColumnVarNameInTable="columnExpr1" msprop:Generator_ColumnPropNameInRow="Expr1" msprop:Generator_ColumnPropNameInTable="Expr1Column" msprop:Generator_UserColumnName="Expr1" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="CustomServiceDriverList" msprop:Generator_TableClassName="CustomServiceDriverListDataTable" msprop:Generator_TableVarName="tableCustomServiceDriverList" msprop:Generator_RowChangedName="CustomServiceDriverListRowChanged" msprop:Generator_TablePropName="CustomServiceDriverList" msprop:Generator_RowDeletingName="CustomServiceDriverListRowDeleting" msprop:Generator_RowChangingName="CustomServiceDriverListRowChanging" msprop:Generator_RowEvHandlerName="CustomServiceDriverListRowChangeEventHandler" msprop:Generator_RowDeletedName="CustomServiceDriverListRowDeleted" msprop:Generator_RowClassName="CustomServiceDriverListRow" msprop:Generator_UserTableName="CustomServiceDriverList" msprop:Generator_RowEvArgName="CustomServiceDriverListRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Driver" msprop:Generator_ColumnVarNameInTable="columnDriver" msprop:Generator_ColumnPropNameInRow="Driver" msprop:Generator_ColumnPropNameInTable="DriverColumn" msprop:Generator_UserColumnName="Driver" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DriverName" msprop:Generator_ColumnVarNameInTable="columnDriverName" msprop:Generator_ColumnPropNameInRow="DriverName" msprop:Generator_ColumnPropNameInTable="DriverNameColumn" msprop:Generator_UserColumnName="DriverName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BuildDate" msprop:Generator_ColumnVarNameInTable="columnBuildDate" msprop:Generator_ColumnPropNameInRow="BuildDate" msprop:Generator_ColumnPropNameInTable="BuildDateColumn" msprop:Generator_UserColumnName="BuildDate" type="xs:dateTime" />
+              <xs:element name="ServiceType" msprop:Generator_ColumnVarNameInTable="columnServiceType" msprop:Generator_ColumnPropNameInRow="ServiceType" msprop:Generator_ColumnPropNameInTable="ServiceTypeColumn" msprop:Generator_UserColumnName="ServiceType">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="9" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ServiceType_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnServiceType_C" msprop:Generator_ColumnPropNameInRow="ServiceType_C" msprop:Generator_ColumnPropNameInTable="ServiceType_CColumn" msprop:Generator_UserColumnName="ServiceType_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ServiceTypeB" msprop:Generator_ColumnVarNameInTable="columnServiceTypeB" msprop:Generator_ColumnPropNameInRow="ServiceTypeB" msprop:Generator_ColumnPropNameInTable="ServiceTypeBColumn" msprop:Generator_UserColumnName="ServiceTypeB" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="9" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ServiceTypeB_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnServiceTypeB_C" msprop:Generator_ColumnPropNameInRow="ServiceTypeB_C" msprop:Generator_ColumnPropNameInTable="ServiceTypeB_CColumn" msprop:Generator_UserColumnName="ServiceTypeB_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ServiceTypeC" msprop:Generator_ColumnVarNameInTable="columnServiceTypeC" msprop:Generator_ColumnPropNameInRow="ServiceTypeC" msprop:Generator_ColumnPropNameInTable="ServiceTypeCColumn" msprop:Generator_UserColumnName="ServiceTypeC" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="9" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ServiceTypeC_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnServiceTypeC_C" msprop:Generator_ColumnPropNameInRow="ServiceTypeC_C" msprop:Generator_ColumnPropNameInTable="ServiceTypeC_CColumn" msprop:Generator_UserColumnName="ServiceTypeC_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AthorityDepNo" msprop:Generator_ColumnVarNameInTable="columnAthorityDepNo" msprop:Generator_ColumnPropNameInRow="AthorityDepNo" msprop:Generator_ColumnPropNameInTable="AthorityDepNoColumn" msprop:Generator_UserColumnName="AthorityDepNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AthorityDepNote" msprop:Generator_ColumnVarNameInTable="columnAthorityDepNote" msprop:Generator_ColumnPropNameInRow="AthorityDepNote" msprop:Generator_ColumnPropNameInTable="AthorityDepNoteColumn" msprop:Generator_UserColumnName="AthorityDepNote" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="24" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ServiceDate" msprop:Generator_ColumnVarNameInTable="columnServiceDate" msprop:Generator_ColumnPropNameInRow="ServiceDate" msprop:Generator_ColumnPropNameInTable="ServiceDateColumn" msprop:Generator_UserColumnName="ServiceDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="LinesNo" msprop:Generator_ColumnVarNameInTable="columnLinesNo" msprop:Generator_ColumnPropNameInRow="LinesNo" msprop:Generator_ColumnPropNameInTable="LinesNoColumn" msprop:Generator_UserColumnName="LinesNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="CountDepNo" msprop:Generator_TableClassName="CountDepNoDataTable" msprop:Generator_TableVarName="tableCountDepNo" msprop:Generator_TablePropName="CountDepNo" msprop:Generator_RowDeletingName="CountDepNoRowDeleting" msprop:Generator_RowChangingName="CountDepNoRowChanging" msprop:Generator_RowEvHandlerName="CountDepNoRowChangeEventHandler" msprop:Generator_RowDeletedName="CountDepNoRowDeleted" msprop:Generator_UserTableName="CountDepNo" msprop:Generator_RowChangedName="CountDepNoRowChanged" msprop:Generator_RowEvArgName="CountDepNoRowChangeEvent" msprop:Generator_RowClassName="CountDepNoRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="AthorityDepNo" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnAthorityDepNo" msprop:Generator_ColumnPropNameInRow="AthorityDepNo" msprop:Generator_ColumnPropNameInTable="AthorityDepNoColumn" msprop:Generator_UserColumnName="AthorityDepNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AthorityDepNo_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnAthorityDepNo_C" msprop:Generator_ColumnPropNameInRow="AthorityDepNo_C" msprop:Generator_ColumnPropNameInTable="AthorityDepNo_CColumn" msprop:Generator_UserColumnName="AthorityDepNo_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="24" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="RCount" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRCount" msprop:Generator_ColumnPropNameInRow="RCount" msprop:Generator_ColumnPropNameInTable="RCountColumn" msprop:Generator_UserColumnName="RCount" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="CountServiceType" msprop:Generator_TableClassName="CountServiceTypeDataTable" msprop:Generator_TableVarName="tableCountServiceType" msprop:Generator_TablePropName="CountServiceType" msprop:Generator_RowDeletingName="CountServiceTypeRowDeleting" msprop:Generator_RowChangingName="CountServiceTypeRowChanging" msprop:Generator_RowEvHandlerName="CountServiceTypeRowChangeEventHandler" msprop:Generator_RowDeletedName="CountServiceTypeRowDeleted" msprop:Generator_UserTableName="CountServiceType" msprop:Generator_RowChangedName="CountServiceTypeRowChanged" msprop:Generator_RowEvArgName="CountServiceTypeRowChangeEvent" msprop:Generator_RowClassName="CountServiceTypeRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ServiceType" msprop:Generator_ColumnVarNameInTable="columnServiceType" msprop:Generator_ColumnPropNameInRow="ServiceType" msprop:Generator_ColumnPropNameInTable="ServiceTypeColumn" msprop:Generator_UserColumnName="ServiceType">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="9" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ServiceType_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnServiceType_C" msprop:Generator_ColumnPropNameInRow="ServiceType_C" msprop:Generator_ColumnPropNameInTable="ServiceType_CColumn" msprop:Generator_UserColumnName="ServiceType_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="RCount" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRCount" msprop:Generator_ColumnPropNameInRow="RCount" msprop:Generator_ColumnPropNameInTable="RCountColumn" msprop:Generator_UserColumnName="RCount" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="CountServiceTypeB" msprop:Generator_TableClassName="CountServiceTypeBDataTable" msprop:Generator_TableVarName="tableCountServiceTypeB" msprop:Generator_TablePropName="CountServiceTypeB" msprop:Generator_RowDeletingName="CountServiceTypeBRowDeleting" msprop:Generator_RowChangingName="CountServiceTypeBRowChanging" msprop:Generator_RowEvHandlerName="CountServiceTypeBRowChangeEventHandler" msprop:Generator_RowDeletedName="CountServiceTypeBRowDeleted" msprop:Generator_UserTableName="CountServiceTypeB" msprop:Generator_RowChangedName="CountServiceTypeBRowChanged" msprop:Generator_RowEvArgName="CountServiceTypeBRowChangeEvent" msprop:Generator_RowClassName="CountServiceTypeBRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ServiceType" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnServiceType" msprop:Generator_ColumnPropNameInRow="ServiceType" msprop:Generator_ColumnPropNameInTable="ServiceTypeColumn" msprop:Generator_UserColumnName="ServiceType" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="18" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ServiceType_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnServiceType_C" msprop:Generator_ColumnPropNameInRow="ServiceType_C" msprop:Generator_ColumnPropNameInTable="ServiceType_CColumn" msprop:Generator_UserColumnName="ServiceType_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="RCount" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRCount" msprop:Generator_ColumnPropNameInRow="RCount" msprop:Generator_ColumnPropNameInTable="RCountColumn" msprop:Generator_UserColumnName="RCount" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="CountServiceTypeC" msprop:Generator_TableClassName="CountServiceTypeCDataTable" msprop:Generator_TableVarName="tableCountServiceTypeC" msprop:Generator_TablePropName="CountServiceTypeC" msprop:Generator_RowDeletingName="CountServiceTypeCRowDeleting" msprop:Generator_RowChangingName="CountServiceTypeCRowChanging" msprop:Generator_RowEvHandlerName="CountServiceTypeCRowChangeEventHandler" msprop:Generator_RowDeletedName="CountServiceTypeCRowDeleted" msprop:Generator_UserTableName="CountServiceTypeC" msprop:Generator_RowChangedName="CountServiceTypeCRowChanged" msprop:Generator_RowEvArgName="CountServiceTypeCRowChangeEvent" msprop:Generator_RowClassName="CountServiceTypeCRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ServiceType" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnServiceType" msprop:Generator_ColumnPropNameInRow="ServiceType" msprop:Generator_ColumnPropNameInTable="ServiceTypeColumn" msprop:Generator_UserColumnName="ServiceType" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="27" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ServiceType_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnServiceType_C" msprop:Generator_ColumnPropNameInRow="ServiceType_C" msprop:Generator_ColumnPropNameInTable="ServiceType_CColumn" msprop:Generator_UserColumnName="ServiceType_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="RCount" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRCount" msprop:Generator_ColumnPropNameInRow="RCount" msprop:Generator_ColumnPropNameInTable="RCountColumn" msprop:Generator_UserColumnName="RCount" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="CountLinesNo" msprop:Generator_TableClassName="CountLinesNoDataTable" msprop:Generator_TableVarName="tableCountLinesNo" msprop:Generator_TablePropName="CountLinesNo" msprop:Generator_RowDeletingName="CountLinesNoRowDeleting" msprop:Generator_RowChangingName="CountLinesNoRowChanging" msprop:Generator_RowEvHandlerName="CountLinesNoRowChangeEventHandler" msprop:Generator_RowDeletedName="CountLinesNoRowDeleted" msprop:Generator_UserTableName="CountLinesNo" msprop:Generator_RowChangedName="CountLinesNoRowChanged" msprop:Generator_RowEvArgName="CountLinesNoRowChangeEvent" msprop:Generator_RowClassName="CountLinesNoRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="LinesNo" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnLinesNo" msprop:Generator_ColumnPropNameInRow="LinesNo" msprop:Generator_ColumnPropNameInTable="LinesNoColumn" msprop:Generator_UserColumnName="LinesNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="RCount" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRCount" msprop:Generator_ColumnPropNameInRow="RCount" msprop:Generator_ColumnPropNameInTable="RCountColumn" msprop:Generator_UserColumnName="RCount" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="CountDriver" msprop:Generator_TableClassName="CountDriverDataTable" msprop:Generator_TableVarName="tableCountDriver" msprop:Generator_TablePropName="CountDriver" msprop:Generator_RowDeletingName="CountDriverRowDeleting" msprop:Generator_RowChangingName="CountDriverRowChanging" msprop:Generator_RowEvHandlerName="CountDriverRowChangeEventHandler" msprop:Generator_RowDeletedName="CountDriverRowDeleted" msprop:Generator_UserTableName="CountDriver" msprop:Generator_RowChangedName="CountDriverRowChanged" msprop:Generator_RowEvArgName="CountDriverRowChangeEvent" msprop:Generator_RowClassName="CountDriverRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Driver" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDriver" msprop:Generator_ColumnPropNameInRow="Driver" msprop:Generator_ColumnPropNameInTable="DriverColumn" msprop:Generator_UserColumnName="Driver" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Driver_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDriver_C" msprop:Generator_ColumnPropNameInRow="Driver_C" msprop:Generator_ColumnPropNameInTable="Driver_CColumn" msprop:Generator_UserColumnName="Driver_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="RCount" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRCount" msprop:Generator_ColumnPropNameInRow="RCount" msprop:Generator_ColumnPropNameInTable="RCountColumn" msprop:Generator_UserColumnName="RCount" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ServiceList_DepNo" msprop:Generator_TableClassName="ServiceList_DepNoDataTable" msprop:Generator_TableVarName="tableServiceList_DepNo" msprop:Generator_TablePropName="ServiceList_DepNo" msprop:Generator_RowDeletingName="ServiceList_DepNoRowDeleting" msprop:Generator_RowChangingName="ServiceList_DepNoRowChanging" msprop:Generator_RowEvHandlerName="ServiceList_DepNoRowChangeEventHandler" msprop:Generator_RowDeletedName="ServiceList_DepNoRowDeleted" msprop:Generator_UserTableName="ServiceList_DepNo" msprop:Generator_RowChangedName="ServiceList_DepNoRowChanged" msprop:Generator_RowEvArgName="ServiceList_DepNoRowChangeEvent" msprop:Generator_RowClassName="ServiceList_DepNoRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="單位編號" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column單位編號" msprop:Generator_ColumnPropNameInRow="單位編號" msprop:Generator_ColumnPropNameInTable="單位編號Column" msprop:Generator_UserColumnName="單位編號" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="單位" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column單位" msprop:Generator_ColumnPropNameInRow="單位" msprop:Generator_ColumnPropNameInTable="單位Column" msprop:Generator_UserColumnName="單位" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="24" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="反映事項代號" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column反映事項代號" msprop:Generator_ColumnPropNameInRow="反映事項代號" msprop:Generator_ColumnPropNameInTable="反映事項代號Column" msprop:Generator_UserColumnName="反映事項代號" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="9" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="反映事項" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column反映事項" msprop:Generator_ColumnPropNameInRow="反映事項" msprop:Generator_ColumnPropNameInTable="反映事項Column" msprop:Generator_UserColumnName="反映事項" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="客訴事項代號" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column客訴事項代號" msprop:Generator_ColumnPropNameInRow="客訴事項代號" msprop:Generator_ColumnPropNameInTable="客訴事項代號Column" msprop:Generator_UserColumnName="客訴事項代號" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="9" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="客訴事項" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column客訴事項" msprop:Generator_ColumnPropNameInRow="客訴事項" msprop:Generator_ColumnPropNameInTable="客訴事項Column" msprop:Generator_UserColumnName="客訴事項" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="客訴類別代號" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column客訴類別代號" msprop:Generator_ColumnPropNameInRow="客訴類別代號" msprop:Generator_ColumnPropNameInTable="客訴類別代號Column" msprop:Generator_UserColumnName="客訴類別代號" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="9" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="客訴類別" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column客訴類別" msprop:Generator_ColumnPropNameInRow="客訴類別" msprop:Generator_ColumnPropNameInTable="客訴類別Column" msprop:Generator_UserColumnName="客訴類別" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="路線代號" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column路線代號" msprop:Generator_ColumnPropNameInRow="路線代號" msprop:Generator_ColumnPropNameInTable="路線代號Column" msprop:Generator_UserColumnName="路線代號" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="駕駛員代號" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column駕駛員代號" msprop:Generator_ColumnPropNameInRow="駕駛員代號" msprop:Generator_ColumnPropNameInTable="駕駛員代號Column" msprop:Generator_UserColumnName="駕駛員代號" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="駕駛員" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column駕駛員" msprop:Generator_ColumnPropNameInRow="駕駛員" msprop:Generator_ColumnPropNameInTable="駕駛員Column" msprop:Generator_UserColumnName="駕駛員" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="筆數" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column筆數" msprop:Generator_ColumnPropNameInRow="筆數" msprop:Generator_ColumnPropNameInTable="筆數Column" msprop:Generator_UserColumnName="筆數" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ServiceList_Driver" msprop:Generator_TableClassName="ServiceList_DriverDataTable" msprop:Generator_TableVarName="tableServiceList_Driver" msprop:Generator_TablePropName="ServiceList_Driver" msprop:Generator_RowDeletingName="ServiceList_DriverRowDeleting" msprop:Generator_RowChangingName="ServiceList_DriverRowChanging" msprop:Generator_RowEvHandlerName="ServiceList_DriverRowChangeEventHandler" msprop:Generator_RowDeletedName="ServiceList_DriverRowDeleted" msprop:Generator_UserTableName="ServiceList_Driver" msprop:Generator_RowChangedName="ServiceList_DriverRowChanged" msprop:Generator_RowEvArgName="ServiceList_DriverRowChangeEvent" msprop:Generator_RowClassName="ServiceList_DriverRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="駕駛員代號" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column駕駛員代號" msprop:Generator_ColumnPropNameInRow="駕駛員代號" msprop:Generator_ColumnPropNameInTable="駕駛員代號Column" msprop:Generator_UserColumnName="駕駛員代號" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="駕駛員" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column駕駛員" msprop:Generator_ColumnPropNameInRow="駕駛員" msprop:Generator_ColumnPropNameInTable="駕駛員Column" msprop:Generator_UserColumnName="駕駛員" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="單位編號" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column單位編號" msprop:Generator_ColumnPropNameInRow="單位編號" msprop:Generator_ColumnPropNameInTable="單位編號Column" msprop:Generator_UserColumnName="單位編號" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="單位" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column單位" msprop:Generator_ColumnPropNameInRow="單位" msprop:Generator_ColumnPropNameInTable="單位Column" msprop:Generator_UserColumnName="單位" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="反映事項代號" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column反映事項代號" msprop:Generator_ColumnPropNameInRow="反映事項代號" msprop:Generator_ColumnPropNameInTable="反映事項代號Column" msprop:Generator_UserColumnName="反映事項代號" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="9" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="反映事項" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column反映事項" msprop:Generator_ColumnPropNameInRow="反映事項" msprop:Generator_ColumnPropNameInTable="反映事項Column" msprop:Generator_UserColumnName="反映事項" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="客訴事項代號" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column客訴事項代號" msprop:Generator_ColumnPropNameInRow="客訴事項代號" msprop:Generator_ColumnPropNameInTable="客訴事項代號Column" msprop:Generator_UserColumnName="客訴事項代號" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="9" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="客訴事項" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column客訴事項" msprop:Generator_ColumnPropNameInRow="客訴事項" msprop:Generator_ColumnPropNameInTable="客訴事項Column" msprop:Generator_UserColumnName="客訴事項" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="客訴類別代號" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column客訴類別代號" msprop:Generator_ColumnPropNameInRow="客訴類別代號" msprop:Generator_ColumnPropNameInTable="客訴類別代號Column" msprop:Generator_UserColumnName="客訴類別代號" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="9" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="客訴類別" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column客訴類別" msprop:Generator_ColumnPropNameInRow="客訴類別" msprop:Generator_ColumnPropNameInTable="客訴類別Column" msprop:Generator_UserColumnName="客訴類別" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="路線代號" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column路線代號" msprop:Generator_ColumnPropNameInRow="路線代號" msprop:Generator_ColumnPropNameInTable="路線代號Column" msprop:Generator_UserColumnName="路線代號" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="筆數" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column筆數" msprop:Generator_ColumnPropNameInRow="筆數" msprop:Generator_ColumnPropNameInTable="筆數Column" msprop:Generator_UserColumnName="筆數" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ServiceList_ServiceType" msprop:Generator_TableClassName="ServiceList_ServiceTypeDataTable" msprop:Generator_TableVarName="tableServiceList_ServiceType" msprop:Generator_TablePropName="ServiceList_ServiceType" msprop:Generator_RowDeletingName="ServiceList_ServiceTypeRowDeleting" msprop:Generator_RowChangingName="ServiceList_ServiceTypeRowChanging" msprop:Generator_RowEvHandlerName="ServiceList_ServiceTypeRowChangeEventHandler" msprop:Generator_RowDeletedName="ServiceList_ServiceTypeRowDeleted" msprop:Generator_UserTableName="ServiceList_ServiceType" msprop:Generator_RowChangedName="ServiceList_ServiceTypeRowChanged" msprop:Generator_RowEvArgName="ServiceList_ServiceTypeRowChangeEvent" msprop:Generator_RowClassName="ServiceList_ServiceTypeRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="反映事項代號" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column反映事項代號" msprop:Generator_ColumnPropNameInRow="反映事項代號" msprop:Generator_ColumnPropNameInTable="反映事項代號Column" msprop:Generator_UserColumnName="反映事項代號" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="9" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="反映事項" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column反映事項" msprop:Generator_ColumnPropNameInRow="反映事項" msprop:Generator_ColumnPropNameInTable="反映事項Column" msprop:Generator_UserColumnName="反映事項" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="客訴事項代號" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column客訴事項代號" msprop:Generator_ColumnPropNameInRow="客訴事項代號" msprop:Generator_ColumnPropNameInTable="客訴事項代號Column" msprop:Generator_UserColumnName="客訴事項代號" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="9" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="客訴事項" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column客訴事項" msprop:Generator_ColumnPropNameInRow="客訴事項" msprop:Generator_ColumnPropNameInTable="客訴事項Column" msprop:Generator_UserColumnName="客訴事項" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="客訴類別代號" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column客訴類別代號" msprop:Generator_ColumnPropNameInRow="客訴類別代號" msprop:Generator_ColumnPropNameInTable="客訴類別代號Column" msprop:Generator_UserColumnName="客訴類別代號" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="9" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="客訴類別" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column客訴類別" msprop:Generator_ColumnPropNameInRow="客訴類別" msprop:Generator_ColumnPropNameInTable="客訴類別Column" msprop:Generator_UserColumnName="客訴類別" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="單位編號" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column單位編號" msprop:Generator_ColumnPropNameInRow="單位編號" msprop:Generator_ColumnPropNameInTable="單位編號Column" msprop:Generator_UserColumnName="單位編號" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="單位" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column單位" msprop:Generator_ColumnPropNameInRow="單位" msprop:Generator_ColumnPropNameInTable="單位Column" msprop:Generator_UserColumnName="單位" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="路線代號" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column路線代號" msprop:Generator_ColumnPropNameInRow="路線代號" msprop:Generator_ColumnPropNameInTable="路線代號Column" msprop:Generator_UserColumnName="路線代號" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="駕駛員代號" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column駕駛員代號" msprop:Generator_ColumnPropNameInRow="駕駛員代號" msprop:Generator_ColumnPropNameInTable="駕駛員代號Column" msprop:Generator_UserColumnName="駕駛員代號" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="駕駛員" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column駕駛員" msprop:Generator_ColumnPropNameInRow="駕駛員" msprop:Generator_ColumnPropNameInTable="駕駛員Column" msprop:Generator_UserColumnName="駕駛員" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="筆數" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column筆數" msprop:Generator_ColumnPropNameInRow="筆數" msprop:Generator_ColumnPropNameInTable="筆數Column" msprop:Generator_UserColumnName="筆數" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ServiceList_LinesNo" msprop:Generator_TableClassName="ServiceList_LinesNoDataTable" msprop:Generator_TableVarName="tableServiceList_LinesNo" msprop:Generator_TablePropName="ServiceList_LinesNo" msprop:Generator_RowDeletingName="ServiceList_LinesNoRowDeleting" msprop:Generator_RowChangingName="ServiceList_LinesNoRowChanging" msprop:Generator_RowEvHandlerName="ServiceList_LinesNoRowChangeEventHandler" msprop:Generator_RowDeletedName="ServiceList_LinesNoRowDeleted" msprop:Generator_UserTableName="ServiceList_LinesNo" msprop:Generator_RowChangedName="ServiceList_LinesNoRowChanged" msprop:Generator_RowEvArgName="ServiceList_LinesNoRowChangeEvent" msprop:Generator_RowClassName="ServiceList_LinesNoRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="路線代號" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column路線代號" msprop:Generator_ColumnPropNameInRow="路線代號" msprop:Generator_ColumnPropNameInTable="路線代號Column" msprop:Generator_UserColumnName="路線代號" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="單位編號" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column單位編號" msprop:Generator_ColumnPropNameInRow="單位編號" msprop:Generator_ColumnPropNameInTable="單位編號Column" msprop:Generator_UserColumnName="單位編號" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="單位" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column單位" msprop:Generator_ColumnPropNameInRow="單位" msprop:Generator_ColumnPropNameInTable="單位Column" msprop:Generator_UserColumnName="單位" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="反映事項代號" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column反映事項代號" msprop:Generator_ColumnPropNameInRow="反映事項代號" msprop:Generator_ColumnPropNameInTable="反映事項代號Column" msprop:Generator_UserColumnName="反映事項代號" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="9" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="反映事項" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column反映事項" msprop:Generator_ColumnPropNameInRow="反映事項" msprop:Generator_ColumnPropNameInTable="反映事項Column" msprop:Generator_UserColumnName="反映事項" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="客訴事項代號" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column客訴事項代號" msprop:Generator_ColumnPropNameInRow="客訴事項代號" msprop:Generator_ColumnPropNameInTable="客訴事項代號Column" msprop:Generator_UserColumnName="客訴事項代號" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="9" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="客訴事項" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column客訴事項" msprop:Generator_ColumnPropNameInRow="客訴事項" msprop:Generator_ColumnPropNameInTable="客訴事項Column" msprop:Generator_UserColumnName="客訴事項" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="客訴類別代號" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column客訴類別代號" msprop:Generator_ColumnPropNameInRow="客訴類別代號" msprop:Generator_ColumnPropNameInTable="客訴類別代號Column" msprop:Generator_UserColumnName="客訴類別代號" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="9" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="客訴類別" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column客訴類別" msprop:Generator_ColumnPropNameInRow="客訴類別" msprop:Generator_ColumnPropNameInTable="客訴類別Column" msprop:Generator_UserColumnName="客訴類別" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="駕駛員代號" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column駕駛員代號" msprop:Generator_ColumnPropNameInRow="駕駛員代號" msprop:Generator_ColumnPropNameInTable="駕駛員代號Column" msprop:Generator_UserColumnName="駕駛員代號" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="駕駛員" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column駕駛員" msprop:Generator_ColumnPropNameInRow="駕駛員" msprop:Generator_ColumnPropNameInTable="駕駛員Column" msprop:Generator_UserColumnName="駕駛員" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="筆數" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column筆數" msprop:Generator_ColumnPropNameInRow="筆數" msprop:Generator_ColumnPropNameInTable="筆數Column" msprop:Generator_UserColumnName="筆數" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:CustomServiceMain" />
+      <xs:field xpath="mstns:ServiceNo" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

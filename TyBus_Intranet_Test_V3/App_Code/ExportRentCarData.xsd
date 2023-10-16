@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="ExportRentCarData" targetNamespace="http://tempuri.org/ExportRentCarData.xsd" xmlns:mstns="http://tempuri.org/ExportRentCarData.xsd" xmlns="http://tempuri.org/ExportRentCarData.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="DataGroupByCarTableAdapter" GeneratorDataComponentClassName="DataGroupByCarTableAdapter" Name="DataGroupByCar" UserDataComponentName="DataGroupByCarTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          CAST('' AS varchar) AS Car_ID, CAST(0 AS float) AS TotalAMT_1, CAST(0 AS float) AS TotalAMT_2, CAST(0 AS float) 
+                            AS TotalAMT_3, CAST(0 AS float) AS TotalAMT_4</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="Car_ID" DataSetColumn="Car_ID" />
+              <Mapping SourceColumn="TotalAMT_1" DataSetColumn="TotalAMT_1" />
+              <Mapping SourceColumn="TotalAMT_2" DataSetColumn="TotalAMT_2" />
+              <Mapping SourceColumn="TotalAMT_3" DataSetColumn="TotalAMT_3" />
+              <Mapping SourceColumn="TotalAMT_4" DataSetColumn="TotalAMT_4" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="DataGroupByDepTableAdapter" GeneratorDataComponentClassName="DataGroupByDepTableAdapter" Name="DataGroupByDep" UserDataComponentName="DataGroupByDepTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          CAST('' AS varchar) AS DepNo, CAST('' AS varchar) AS Name, CAST(0 AS float) AS TotalAMT_1, CAST(0 AS float) 
+                            AS TotalAMT_2, CAST(0 AS float) AS TotalAMT_3, CAST(0 AS float) AS TotalAMT_4</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="DepNo" DataSetColumn="DepNo" />
+              <Mapping SourceColumn="Name" DataSetColumn="Name" />
+              <Mapping SourceColumn="TotalAMT_1" DataSetColumn="TotalAMT_1" />
+              <Mapping SourceColumn="TotalAMT_2" DataSetColumn="TotalAMT_2" />
+              <Mapping SourceColumn="TotalAMT_3" DataSetColumn="TotalAMT_3" />
+              <Mapping SourceColumn="TotalAMT_4" DataSetColumn="TotalAMT_4" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="ExportRentCarData" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="ExportRentCarData" msprop:Generator_UserDSName="ExportRentCarData">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="DataGroupByCar" msprop:Generator_TableClassName="DataGroupByCarDataTable" msprop:Generator_TableVarName="tableDataGroupByCar" msprop:Generator_TablePropName="DataGroupByCar" msprop:Generator_RowDeletingName="DataGroupByCarRowDeleting" msprop:Generator_RowChangingName="DataGroupByCarRowChanging" msprop:Generator_RowEvHandlerName="DataGroupByCarRowChangeEventHandler" msprop:Generator_RowDeletedName="DataGroupByCarRowDeleted" msprop:Generator_UserTableName="DataGroupByCar" msprop:Generator_RowChangedName="DataGroupByCarRowChanged" msprop:Generator_RowEvArgName="DataGroupByCarRowChangeEvent" msprop:Generator_RowClassName="DataGroupByCarRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Car_ID" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnCar_ID" msprop:Generator_ColumnPropNameInRow="Car_ID" msprop:Generator_ColumnPropNameInTable="Car_IDColumn" msprop:Generator_UserColumnName="Car_ID" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TotalAMT_1" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTotalAMT_1" msprop:Generator_ColumnPropNameInRow="TotalAMT_1" msprop:Generator_ColumnPropNameInTable="TotalAMT_1Column" msprop:Generator_UserColumnName="TotalAMT_1" type="xs:double" minOccurs="0" />
+              <xs:element name="TotalAMT_2" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTotalAMT_2" msprop:Generator_ColumnPropNameInRow="TotalAMT_2" msprop:Generator_ColumnPropNameInTable="TotalAMT_2Column" msprop:Generator_UserColumnName="TotalAMT_2" type="xs:double" minOccurs="0" />
+              <xs:element name="TotalAMT_3" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTotalAMT_3" msprop:Generator_ColumnPropNameInRow="TotalAMT_3" msprop:Generator_ColumnPropNameInTable="TotalAMT_3Column" msprop:Generator_UserColumnName="TotalAMT_3" type="xs:double" minOccurs="0" />
+              <xs:element name="TotalAMT_4" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTotalAMT_4" msprop:Generator_ColumnPropNameInRow="TotalAMT_4" msprop:Generator_ColumnPropNameInTable="TotalAMT_4Column" msprop:Generator_UserColumnName="TotalAMT_4" type="xs:double" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DataGroupByDep" msprop:Generator_TableClassName="DataGroupByDepDataTable" msprop:Generator_TableVarName="tableDataGroupByDep" msprop:Generator_TablePropName="DataGroupByDep" msprop:Generator_RowDeletingName="DataGroupByDepRowDeleting" msprop:Generator_RowChangingName="DataGroupByDepRowChanging" msprop:Generator_RowEvHandlerName="DataGroupByDepRowChangeEventHandler" msprop:Generator_RowDeletedName="DataGroupByDepRowDeleted" msprop:Generator_UserTableName="DataGroupByDep" msprop:Generator_RowChangedName="DataGroupByDepRowChanged" msprop:Generator_RowEvArgName="DataGroupByDepRowChangeEvent" msprop:Generator_RowClassName="DataGroupByDepRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DepNo" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepNo" msprop:Generator_ColumnPropNameInRow="DepNo" msprop:Generator_ColumnPropNameInTable="DepNoColumn" msprop:Generator_UserColumnName="DepNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Name" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnName" msprop:Generator_ColumnPropNameInRow="Name" msprop:Generator_ColumnPropNameInTable="NameColumn" msprop:Generator_UserColumnName="Name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TotalAMT_1" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTotalAMT_1" msprop:Generator_ColumnPropNameInRow="TotalAMT_1" msprop:Generator_ColumnPropNameInTable="TotalAMT_1Column" msprop:Generator_UserColumnName="TotalAMT_1" type="xs:double" minOccurs="0" />
+              <xs:element name="TotalAMT_2" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTotalAMT_2" msprop:Generator_ColumnPropNameInRow="TotalAMT_2" msprop:Generator_ColumnPropNameInTable="TotalAMT_2Column" msprop:Generator_UserColumnName="TotalAMT_2" type="xs:double" minOccurs="0" />
+              <xs:element name="TotalAMT_3" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTotalAMT_3" msprop:Generator_ColumnPropNameInRow="TotalAMT_3" msprop:Generator_ColumnPropNameInTable="TotalAMT_3Column" msprop:Generator_UserColumnName="TotalAMT_3" type="xs:double" minOccurs="0" />
+              <xs:element name="TotalAMT_4" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTotalAMT_4" msprop:Generator_ColumnPropNameInRow="TotalAMT_4" msprop:Generator_ColumnPropNameInTable="TotalAMT_4Column" msprop:Generator_UserColumnName="TotalAMT_4" type="xs:double" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="HDDCheckReportP" targetNamespace="http://tempuri.org/HDDCheckReportP.xsd" xmlns:mstns="http://tempuri.org/HDDCheckReportP.xsd" xmlns="http://tempuri.org/HDDCheckReportP.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="HDDCheckReportPTableAdapter" GeneratorDataComponentClassName="HDDCheckReportPTableAdapter" Name="HDDCheckReportP" UserDataComponentName="HDDCheckReportPTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="ERPBUS_TEST.dbo.HDDCheckReport" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          CaseNo,
+                                (SELECT          NAME
+                                  FROM               DEPARTMENT
+                                  WHERE           (DEPNO = h.DepNo)) AS DepName, Driver, DriverName, CaseDate, Car_ID, CheckNote, Remark,
+                                (SELECT          NAME
+                                  FROM               EMPLOYEE
+                                  WHERE           (EMPNO = h.Inspector)) AS InspectorName, BuDate,
+                                (SELECT          NAME
+                                  FROM               EMPLOYEE AS EMPLOYEE_2
+                                  WHERE           (EMPNO = h.BuMan)) AS BuManName, ModifyDate,
+                                (SELECT          NAME
+                                  FROM               EMPLOYEE AS EMPLOYEE_1
+                                  WHERE           (EMPNO = h.ModifyMan)) AS ModifyManName, IsPassed, AdviceReportNo, CheckDate
+FROM              HDDCheckReport AS h
+WHERE          (1 &lt;&gt; 1)</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="CaseNo" DataSetColumn="CaseNo" />
+              <Mapping SourceColumn="DepName" DataSetColumn="DepName" />
+              <Mapping SourceColumn="Driver" DataSetColumn="Driver" />
+              <Mapping SourceColumn="DriverName" DataSetColumn="DriverName" />
+              <Mapping SourceColumn="CaseDate" DataSetColumn="CaseDate" />
+              <Mapping SourceColumn="Car_ID" DataSetColumn="Car_ID" />
+              <Mapping SourceColumn="CheckNote" DataSetColumn="CheckNote" />
+              <Mapping SourceColumn="Remark" DataSetColumn="Remark" />
+              <Mapping SourceColumn="InspectorName" DataSetColumn="InspectorName" />
+              <Mapping SourceColumn="BuDate" DataSetColumn="BuDate" />
+              <Mapping SourceColumn="BuManName" DataSetColumn="BuManName" />
+              <Mapping SourceColumn="ModifyDate" DataSetColumn="ModifyDate" />
+              <Mapping SourceColumn="ModifyManName" DataSetColumn="ModifyManName" />
+              <Mapping SourceColumn="IsPassed" DataSetColumn="IsPassed" />
+              <Mapping SourceColumn="AdviceReportNo" DataSetColumn="AdviceReportNo" />
+              <Mapping SourceColumn="CheckDate" DataSetColumn="CheckDate" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="HDDCheckReportP" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="HDDCheckReportP" msprop:Generator_UserDSName="HDDCheckReportP">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="HDDCheckReportP" msprop:Generator_TableClassName="HDDCheckReportPDataTable" msprop:Generator_TableVarName="tableHDDCheckReportP" msprop:Generator_TablePropName="_HDDCheckReportP" msprop:Generator_RowDeletingName="HDDCheckReportPRowDeleting" msprop:Generator_RowChangingName="HDDCheckReportPRowChanging" msprop:Generator_RowEvHandlerName="HDDCheckReportPRowChangeEventHandler" msprop:Generator_RowDeletedName="HDDCheckReportPRowDeleted" msprop:Generator_UserTableName="HDDCheckReportP" msprop:Generator_RowChangedName="HDDCheckReportPRowChanged" msprop:Generator_RowEvArgName="HDDCheckReportPRowChangeEvent" msprop:Generator_RowClassName="HDDCheckReportPRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CaseNo" msprop:Generator_ColumnVarNameInTable="columnCaseNo" msprop:Generator_ColumnPropNameInRow="CaseNo" msprop:Generator_ColumnPropNameInTable="CaseNoColumn" msprop:Generator_UserColumnName="CaseNo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="14" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepName" msprop:Generator_ColumnPropNameInRow="DepName" msprop:Generator_ColumnPropNameInTable="DepNameColumn" msprop:Generator_UserColumnName="DepName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Driver" msprop:Generator_ColumnVarNameInTable="columnDriver" msprop:Generator_ColumnPropNameInRow="Driver" msprop:Generator_ColumnPropNameInTable="DriverColumn" msprop:Generator_UserColumnName="Driver" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DriverName" msprop:Generator_ColumnVarNameInTable="columnDriverName" msprop:Generator_ColumnPropNameInRow="DriverName" msprop:Generator_ColumnPropNameInTable="DriverNameColumn" msprop:Generator_UserColumnName="DriverName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CaseDate" msprop:Generator_ColumnVarNameInTable="columnCaseDate" msprop:Generator_ColumnPropNameInRow="CaseDate" msprop:Generator_ColumnPropNameInTable="CaseDateColumn" msprop:Generator_UserColumnName="CaseDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Car_ID" msprop:Generator_ColumnVarNameInTable="columnCar_ID" msprop:Generator_ColumnPropNameInRow="Car_ID" msprop:Generator_ColumnPropNameInTable="Car_IDColumn" msprop:Generator_UserColumnName="Car_ID" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CheckNote" msprop:Generator_ColumnVarNameInTable="columnCheckNote" msprop:Generator_ColumnPropNameInRow="CheckNote" msprop:Generator_ColumnPropNameInTable="CheckNoteColumn" msprop:Generator_UserColumnName="CheckNote" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Remark" msprop:Generator_ColumnVarNameInTable="columnRemark" msprop:Generator_ColumnPropNameInRow="Remark" msprop:Generator_ColumnPropNameInTable="RemarkColumn" msprop:Generator_UserColumnName="Remark" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="InspectorName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnInspectorName" msprop:Generator_ColumnPropNameInRow="InspectorName" msprop:Generator_ColumnPropNameInTable="InspectorNameColumn" msprop:Generator_UserColumnName="InspectorName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BuDate" msprop:Generator_ColumnVarNameInTable="columnBuDate" msprop:Generator_ColumnPropNameInRow="BuDate" msprop:Generator_ColumnPropNameInTable="BuDateColumn" msprop:Generator_UserColumnName="BuDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="BuManName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBuManName" msprop:Generator_ColumnPropNameInRow="BuManName" msprop:Generator_ColumnPropNameInTable="BuManNameColumn" msprop:Generator_UserColumnName="BuManName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ModifyDate" msprop:Generator_ColumnVarNameInTable="columnModifyDate" msprop:Generator_ColumnPropNameInRow="ModifyDate" msprop:Generator_ColumnPropNameInTable="ModifyDateColumn" msprop:Generator_UserColumnName="ModifyDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="ModifyManName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnModifyManName" msprop:Generator_ColumnPropNameInRow="ModifyManName" msprop:Generator_ColumnPropNameInTable="ModifyManNameColumn" msprop:Generator_UserColumnName="ModifyManName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IsPassed" msprop:Generator_ColumnVarNameInTable="columnIsPassed" msprop:Generator_ColumnPropNameInRow="IsPassed" msprop:Generator_ColumnPropNameInTable="IsPassedColumn" msprop:Generator_UserColumnName="IsPassed" type="xs:boolean" minOccurs="0" />
+              <xs:element name="AdviceReportNo" msprop:Generator_ColumnVarNameInTable="columnAdviceReportNo" msprop:Generator_ColumnPropNameInRow="AdviceReportNo" msprop:Generator_ColumnPropNameInTable="AdviceReportNoColumn" msprop:Generator_UserColumnName="AdviceReportNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="14" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CheckDate" msprop:Generator_ColumnVarNameInTable="columnCheckDate" msprop:Generator_ColumnPropNameInRow="CheckDate" msprop:Generator_ColumnPropNameInTable="CheckDateColumn" msprop:Generator_UserColumnName="CheckDate" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:HDDCheckReportP" />
+      <xs:field xpath="mstns:CaseNo" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

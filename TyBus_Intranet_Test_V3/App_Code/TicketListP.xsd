@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="TicketListP" targetNamespace="http://tempuri.org/TicketListP.xsd" xmlns:mstns="http://tempuri.org/TicketListP.xsd" xmlns="http://tempuri.org/TicketListP.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="TicketListPTableAdapter" GeneratorDataComponentClassName="TicketListPTableAdapter" Name="TicketListP" UserDataComponentName="TicketListPTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          tb.TICKETNO,
+                                (SELECT          TICKETNAME
+                                  FROM               TICKEDSA
+                                  WHERE           (TICKETNO = tb.TICKETNO)) AS TicketName, tc.POSITIONB, tb.LOTNO, tc.NOSTART, tc.NOEND, 
+                            ISNULL(tc.TICKETCQTY, 0) AS TicketQty
+FROM              TICKEDSB AS tb LEFT OUTER JOIN
+                            TICKEDSC AS tc ON tc.TICKETNO = tb.TICKETNO AND tc.LOTNO = tb.LOTNO
+WHERE          (1 &lt;&gt; 1)</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="TICKETNO" DataSetColumn="TICKETNO" />
+              <Mapping SourceColumn="TicketName" DataSetColumn="TicketName" />
+              <Mapping SourceColumn="POSITIONB" DataSetColumn="POSITIONB" />
+              <Mapping SourceColumn="LOTNO" DataSetColumn="LOTNO" />
+              <Mapping SourceColumn="NOSTART" DataSetColumn="NOSTART" />
+              <Mapping SourceColumn="NOEND" DataSetColumn="NOEND" />
+              <Mapping SourceColumn="TicketQty" DataSetColumn="TicketQty" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="TicketListP" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="TicketListP" msprop:Generator_UserDSName="TicketListP">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="TicketListP" msprop:Generator_TableClassName="TicketListPDataTable" msprop:Generator_TableVarName="tableTicketListP" msprop:Generator_TablePropName="_TicketListP" msprop:Generator_RowDeletingName="TicketListPRowDeleting" msprop:Generator_RowChangingName="TicketListPRowChanging" msprop:Generator_RowEvHandlerName="TicketListPRowChangeEventHandler" msprop:Generator_RowDeletedName="TicketListPRowDeleted" msprop:Generator_UserTableName="TicketListP" msprop:Generator_RowChangedName="TicketListPRowChanged" msprop:Generator_RowEvArgName="TicketListPRowChangeEvent" msprop:Generator_RowClassName="TicketListPRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="TICKETNO" msprop:Generator_ColumnVarNameInTable="columnTICKETNO" msprop:Generator_ColumnPropNameInRow="TICKETNO" msprop:Generator_ColumnPropNameInTable="TICKETNOColumn" msprop:Generator_UserColumnName="TICKETNO">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TicketName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTicketName" msprop:Generator_ColumnPropNameInRow="TicketName" msprop:Generator_ColumnPropNameInTable="TicketNameColumn" msprop:Generator_UserColumnName="TicketName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="POSITIONB" msprop:Generator_ColumnVarNameInTable="columnPOSITIONB" msprop:Generator_ColumnPropNameInRow="POSITIONB" msprop:Generator_ColumnPropNameInTable="POSITIONBColumn" msprop:Generator_UserColumnName="POSITIONB" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="LOTNO" msprop:Generator_ColumnVarNameInTable="columnLOTNO" msprop:Generator_ColumnPropNameInRow="LOTNO" msprop:Generator_ColumnPropNameInTable="LOTNOColumn" msprop:Generator_UserColumnName="LOTNO">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="NOSTART" msprop:Generator_ColumnVarNameInTable="columnNOSTART" msprop:Generator_ColumnPropNameInRow="NOSTART" msprop:Generator_ColumnPropNameInTable="NOSTARTColumn" msprop:Generator_UserColumnName="NOSTART" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="NOEND" msprop:Generator_ColumnVarNameInTable="columnNOEND" msprop:Generator_ColumnPropNameInRow="NOEND" msprop:Generator_ColumnPropNameInTable="NOENDColumn" msprop:Generator_UserColumnName="NOEND" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TicketQty" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTicketQty" msprop:Generator_ColumnPropNameInRow="TicketQty" msprop:Generator_ColumnPropNameInTable="TicketQtyColumn" msprop:Generator_UserColumnName="TicketQty" type="xs:double" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

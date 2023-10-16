@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="EmpPayRangeListP" targetNamespace="http://tempuri.org/EmpPayRangeListP.xsd" xmlns:mstns="http://tempuri.org/EmpPayRangeListP.xsd" xmlns="http://tempuri.org/EmpPayRangeListP.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="EmpPayRangeListPTableAdapter" GeneratorDataComponentClassName="EmpPayRangeListPTableAdapter" Name="EmpPayRangeListP" UserDataComponentName="EmpPayRangeListPTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="ERPBUS_TEST.dbo.PAYREC" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT title, CAST('' AS varchar) AS Title_C, CAST(0 AS int) AS TitleCount, CAST(0 AS int) AS RCount_1, CAST(0 AS int) AS RCount_2, CAST(0 AS int) AS RCount_3, CAST(0 AS int) AS RCount_4, CAST(0 AS int) AS RCount_5, CAST(0 AS int) AS RCount_6, CAST(0 AS int) AS RCount_7, CAST(0 AS int) AS RCount_8, CAST(0 AS int) AS RCount_9 FROM PAYREC AS p WHERE (1 &lt;&gt; 1)</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="title" DataSetColumn="title" />
+              <Mapping SourceColumn="TitleCount" DataSetColumn="TitleCount" />
+              <Mapping SourceColumn="RCount_1" DataSetColumn="RCount_1" />
+              <Mapping SourceColumn="RCount_2" DataSetColumn="RCount_2" />
+              <Mapping SourceColumn="RCount_3" DataSetColumn="RCount_3" />
+              <Mapping SourceColumn="RCount_4" DataSetColumn="RCount_4" />
+              <Mapping SourceColumn="RCount_5" DataSetColumn="RCount_5" />
+              <Mapping SourceColumn="RCount_6" DataSetColumn="RCount_6" />
+              <Mapping SourceColumn="RCount_7" DataSetColumn="RCount_7" />
+              <Mapping SourceColumn="RCount_8" DataSetColumn="RCount_8" />
+              <Mapping SourceColumn="RCount_9" DataSetColumn="RCount_9" />
+              <Mapping SourceColumn="Title_C" DataSetColumn="Title_C" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="DriverPayRangeListPTableAdapter" GeneratorDataComponentClassName="DriverPayRangeListPTableAdapter" Name="DriverPayRangeListP" UserDataComponentName="DriverPayRangeListPTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="ERPBUS_TEST.dbo.PAYREC" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT depno, CAST('' AS varchar) AS DepName, CAST(0 AS int) AS DepCount, CAST(0 AS int) AS RCount_1, CAST(0 AS int) AS RCount_2, CAST(0 AS int) AS RCount_3, CAST(0 AS int) AS RCount_4, CAST(0 AS int) AS RCount_5, CAST(0 AS int) AS RCount_6, CAST(0 AS int) AS RCount_7, CAST(0 AS int) AS RCount_8, CAST(0 AS int) AS RCount_9 FROM PAYREC AS p WHERE (1 &lt;&gt; 1)</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="depno" DataSetColumn="depno" />
+              <Mapping SourceColumn="DepName" DataSetColumn="DepName" />
+              <Mapping SourceColumn="DepCount" DataSetColumn="DepCount" />
+              <Mapping SourceColumn="RCount_1" DataSetColumn="RCount_1" />
+              <Mapping SourceColumn="RCount_2" DataSetColumn="RCount_2" />
+              <Mapping SourceColumn="RCount_3" DataSetColumn="RCount_3" />
+              <Mapping SourceColumn="RCount_4" DataSetColumn="RCount_4" />
+              <Mapping SourceColumn="RCount_5" DataSetColumn="RCount_5" />
+              <Mapping SourceColumn="RCount_6" DataSetColumn="RCount_6" />
+              <Mapping SourceColumn="RCount_7" DataSetColumn="RCount_7" />
+              <Mapping SourceColumn="RCount_8" DataSetColumn="RCount_8" />
+              <Mapping SourceColumn="RCount_9" DataSetColumn="RCount_9" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="EmpPayRangeListP" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="EmpPayRangeListP" msprop:Generator_UserDSName="EmpPayRangeListP">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="EmpPayRangeListP" msprop:Generator_TableClassName="EmpPayRangeListPDataTable" msprop:Generator_TableVarName="tableEmpPayRangeListP" msprop:Generator_RowChangedName="EmpPayRangeListPRowChanged" msprop:Generator_TablePropName="_EmpPayRangeListP" msprop:Generator_RowDeletingName="EmpPayRangeListPRowDeleting" msprop:Generator_RowChangingName="EmpPayRangeListPRowChanging" msprop:Generator_RowEvHandlerName="EmpPayRangeListPRowChangeEventHandler" msprop:Generator_RowDeletedName="EmpPayRangeListPRowDeleted" msprop:Generator_RowClassName="EmpPayRangeListPRow" msprop:Generator_UserTableName="EmpPayRangeListP" msprop:Generator_RowEvArgName="EmpPayRangeListPRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="title" msprop:Generator_ColumnVarNameInTable="columntitle" msprop:Generator_ColumnPropNameInRow="title" msprop:Generator_ColumnPropNameInTable="titleColumn" msprop:Generator_UserColumnName="title" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="4" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TitleCount" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTitleCount" msprop:Generator_ColumnPropNameInRow="TitleCount" msprop:Generator_ColumnPropNameInTable="TitleCountColumn" msprop:Generator_UserColumnName="TitleCount" type="xs:int" minOccurs="0" />
+              <xs:element name="RCount_1" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRCount_1" msprop:Generator_ColumnPropNameInRow="RCount_1" msprop:Generator_ColumnPropNameInTable="RCount_1Column" msprop:Generator_UserColumnName="RCount_1" type="xs:int" minOccurs="0" />
+              <xs:element name="RCount_2" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRCount_2" msprop:Generator_ColumnPropNameInRow="RCount_2" msprop:Generator_ColumnPropNameInTable="RCount_2Column" msprop:Generator_UserColumnName="RCount_2" type="xs:int" minOccurs="0" />
+              <xs:element name="RCount_3" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRCount_3" msprop:Generator_ColumnPropNameInRow="RCount_3" msprop:Generator_ColumnPropNameInTable="RCount_3Column" msprop:Generator_UserColumnName="RCount_3" type="xs:int" minOccurs="0" />
+              <xs:element name="RCount_4" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRCount_4" msprop:Generator_ColumnPropNameInRow="RCount_4" msprop:Generator_ColumnPropNameInTable="RCount_4Column" msprop:Generator_UserColumnName="RCount_4" type="xs:int" minOccurs="0" />
+              <xs:element name="RCount_5" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRCount_5" msprop:Generator_ColumnPropNameInRow="RCount_5" msprop:Generator_ColumnPropNameInTable="RCount_5Column" msprop:Generator_UserColumnName="RCount_5" type="xs:int" minOccurs="0" />
+              <xs:element name="RCount_6" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRCount_6" msprop:Generator_ColumnPropNameInRow="RCount_6" msprop:Generator_ColumnPropNameInTable="RCount_6Column" msprop:Generator_UserColumnName="RCount_6" type="xs:int" minOccurs="0" />
+              <xs:element name="RCount_7" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRCount_7" msprop:Generator_ColumnPropNameInRow="RCount_7" msprop:Generator_ColumnPropNameInTable="RCount_7Column" msprop:Generator_UserColumnName="RCount_7" type="xs:int" minOccurs="0" />
+              <xs:element name="RCount_8" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRCount_8" msprop:Generator_ColumnPropNameInRow="RCount_8" msprop:Generator_ColumnPropNameInTable="RCount_8Column" msprop:Generator_UserColumnName="RCount_8" type="xs:int" minOccurs="0" />
+              <xs:element name="RCount_9" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRCount_9" msprop:Generator_ColumnPropNameInRow="RCount_9" msprop:Generator_ColumnPropNameInTable="RCount_9Column" msprop:Generator_UserColumnName="RCount_9" type="xs:int" minOccurs="0" />
+              <xs:element name="Title_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTitle_C" msprop:Generator_ColumnPropNameInRow="Title_C" msprop:Generator_ColumnPropNameInTable="Title_CColumn" msprop:Generator_UserColumnName="Title_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DriverPayRangeListP" msprop:Generator_TableClassName="DriverPayRangeListPDataTable" msprop:Generator_TableVarName="tableDriverPayRangeListP" msprop:Generator_TablePropName="DriverPayRangeListP" msprop:Generator_RowDeletingName="DriverPayRangeListPRowDeleting" msprop:Generator_RowChangingName="DriverPayRangeListPRowChanging" msprop:Generator_RowEvHandlerName="DriverPayRangeListPRowChangeEventHandler" msprop:Generator_RowDeletedName="DriverPayRangeListPRowDeleted" msprop:Generator_UserTableName="DriverPayRangeListP" msprop:Generator_RowChangedName="DriverPayRangeListPRowChanged" msprop:Generator_RowEvArgName="DriverPayRangeListPRowChangeEvent" msprop:Generator_RowClassName="DriverPayRangeListPRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="depno" msprop:Generator_ColumnVarNameInTable="columndepno" msprop:Generator_ColumnPropNameInRow="depno" msprop:Generator_ColumnPropNameInTable="depnoColumn" msprop:Generator_UserColumnName="depno" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepName" msprop:Generator_ColumnPropNameInRow="DepName" msprop:Generator_ColumnPropNameInTable="DepNameColumn" msprop:Generator_UserColumnName="DepName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepCount" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepCount" msprop:Generator_ColumnPropNameInRow="DepCount" msprop:Generator_ColumnPropNameInTable="DepCountColumn" msprop:Generator_UserColumnName="DepCount" type="xs:int" minOccurs="0" />
+              <xs:element name="RCount_1" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRCount_1" msprop:Generator_ColumnPropNameInRow="RCount_1" msprop:Generator_ColumnPropNameInTable="RCount_1Column" msprop:Generator_UserColumnName="RCount_1" type="xs:int" minOccurs="0" />
+              <xs:element name="RCount_2" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRCount_2" msprop:Generator_ColumnPropNameInRow="RCount_2" msprop:Generator_ColumnPropNameInTable="RCount_2Column" msprop:Generator_UserColumnName="RCount_2" type="xs:int" minOccurs="0" />
+              <xs:element name="RCount_3" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRCount_3" msprop:Generator_ColumnPropNameInRow="RCount_3" msprop:Generator_ColumnPropNameInTable="RCount_3Column" msprop:Generator_UserColumnName="RCount_3" type="xs:int" minOccurs="0" />
+              <xs:element name="RCount_4" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRCount_4" msprop:Generator_ColumnPropNameInRow="RCount_4" msprop:Generator_ColumnPropNameInTable="RCount_4Column" msprop:Generator_UserColumnName="RCount_4" type="xs:int" minOccurs="0" />
+              <xs:element name="RCount_5" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRCount_5" msprop:Generator_ColumnPropNameInRow="RCount_5" msprop:Generator_ColumnPropNameInTable="RCount_5Column" msprop:Generator_UserColumnName="RCount_5" type="xs:int" minOccurs="0" />
+              <xs:element name="RCount_6" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRCount_6" msprop:Generator_ColumnPropNameInRow="RCount_6" msprop:Generator_ColumnPropNameInTable="RCount_6Column" msprop:Generator_UserColumnName="RCount_6" type="xs:int" minOccurs="0" />
+              <xs:element name="RCount_7" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRCount_7" msprop:Generator_ColumnPropNameInRow="RCount_7" msprop:Generator_ColumnPropNameInTable="RCount_7Column" msprop:Generator_UserColumnName="RCount_7" type="xs:int" minOccurs="0" />
+              <xs:element name="RCount_8" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRCount_8" msprop:Generator_ColumnPropNameInRow="RCount_8" msprop:Generator_ColumnPropNameInTable="RCount_8Column" msprop:Generator_UserColumnName="RCount_8" type="xs:int" minOccurs="0" />
+              <xs:element name="RCount_9" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRCount_9" msprop:Generator_ColumnPropNameInRow="RCount_9" msprop:Generator_ColumnPropNameInTable="RCount_9Column" msprop:Generator_UserColumnName="RCount_9" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

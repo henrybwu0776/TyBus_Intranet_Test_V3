@@ -1,0 +1,1977 @@
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FB8C5968-F3AE-406D-9C60-5F570A6D81CB}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TyBus_Intranet_Test_V3</RootNamespace>
+    <AssemblyName>TyBus_Intranet_Test_V3</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AspNet.ScriptManager.jQuery, Version=3.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AspNet.ScriptManager.jQuery.3.6.0\lib\net45\AspNet.ScriptManager.jQuery.dll</HintPath>
+    </Reference>
+    <Reference Include="BouncyCastle.Crypto, Version=1.9.0.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
+      <HintPath>..\packages\Portable.BouncyCastle.1.9.0\lib\net40\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=1.4.1.12, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.1.4.1\lib\netstandard2.0\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=3.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1537.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1537.0\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1537.0\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1537.0\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebDesign, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1537.0\lib\net40\Microsoft.ReportViewer.WebDesign.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1537.0\lib\net40\Microsoft.ReportViewer.WebForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI, Version=2.5.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.5.6\lib\net45\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML, Version=2.5.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.5.6\lib\net45\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.5.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.5.6\lib\net45\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.5.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.5.6\lib\net45\NPOI.OpenXmlFormats.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AdviceReport.aspx" />
+    <Content Include="AnecdoteCase.aspx" />
+    <Content Include="AnecdoteCaseDetail.aspx" />
+    <Content Include="AnecdoteCaseHistory.aspx" />
+    <Content Include="AnecdoteCaseP.aspx" />
+    <Content Include="AnnList.aspx" />
+    <Content Include="AnnSearch.aspx" />
+    <Content Include="App_Code\AdviceReportP.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AdviceReportP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\AdviceReportP.xsc">
+      <DependentUpon>AdviceReportP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\AdviceReportP.xss">
+      <DependentUpon>AdviceReportP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\AnecdoteCase.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AnecdoteCase.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\AnecdoteCase.xsc">
+      <DependentUpon>AnecdoteCase.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\AnecdoteCase.xss">
+      <DependentUpon>AnecdoteCase.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\CarFixWorkHistory.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CarFixWorkHistory.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\CarFixWorkHistory.xsc">
+      <DependentUpon>CarFixWorkHistory.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\CarFixWorkHistory.xss">
+      <DependentUpon>CarFixWorkHistory.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\CarInspection.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CarInspection.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\CarInspection.xsc">
+      <DependentUpon>CarInspection.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\CarInspection.xss">
+      <DependentUpon>CarInspection.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\CarModifyListP.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CarModifyListP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\CarModifyListP.xsc">
+      <DependentUpon>CarModifyListP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\CarModifyListP.xss">
+      <DependentUpon>CarModifyListP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\CustomService.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CustomService.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\CustomService.xsc">
+      <DependentUpon>CustomService.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\CustomService.xss">
+      <DependentUpon>CustomService.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\DriverNoneSafeP.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DriverNoneSafeP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\DriverNoneSafeP.xsc">
+      <DependentUpon>DriverNoneSafeP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\DriverNoneSafeP.xss">
+      <DependentUpon>DriverNoneSafeP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\DriverRegularTraining.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DriverRegularTraining.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\DriverRegularTraining.xsc">
+      <DependentUpon>DriverRegularTraining.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\DriverRegularTraining.xss">
+      <DependentUpon>DriverRegularTraining.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\DriverWorkHoursTCTP.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DriverWorkHoursTCTP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\DriverWorkHoursTCTP.xsc">
+      <DependentUpon>DriverWorkHoursTCTP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\DriverWorkHoursTCTP.xss">
+      <DependentUpon>DriverWorkHoursTCTP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\EmpDutyHoursP.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmpDutyHoursP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\EmpDutyHoursP.xsc">
+      <DependentUpon>EmpDutyHoursP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\EmpDutyHoursP.xss">
+      <DependentUpon>EmpDutyHoursP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\EmpOverList.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmpOverList.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\EmpOverList.xsc">
+      <DependentUpon>EmpOverList.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\EmpOverList.xss">
+      <DependentUpon>EmpOverList.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\ExceedSpeedReportP.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ExceedSpeedReportP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\ExceedSpeedReportP.xsc">
+      <DependentUpon>ExceedSpeedReportP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\ExceedSpeedReportP.xss">
+      <DependentUpon>ExceedSpeedReportP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\FixRequest.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FixRequest.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\FixRequest.xsc">
+      <DependentUpon>FixRequest.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\FixRequest.xss">
+      <DependentUpon>FixRequest.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\GiftNameList.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GiftNameList.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\GiftNameList.xsc">
+      <DependentUpon>GiftNameList.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\GiftNameList.xss">
+      <DependentUpon>GiftNameList.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\HDDCheckReportP.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HDDCheckReportP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\HDDCheckReportP.xsc">
+      <DependentUpon>HDDCheckReportP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\HDDCheckReportP.xss">
+      <DependentUpon>HDDCheckReportP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\LinesStatisticsP.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LinesStatisticsP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\LinesStatisticsP.xsc">
+      <DependentUpon>LinesStatisticsP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\LinesStatisticsP.xss">
+      <DependentUpon>LinesStatisticsP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\OfficialDocument.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OfficialDocument.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\OfficialDocument.xsc">
+      <DependentUpon>OfficialDocument.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\OfficialDocument.xss">
+      <DependentUpon>OfficialDocument.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\OfficialDriverHours.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OfficialDriverHours.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\OfficialDriverHours.xsc">
+      <DependentUpon>OfficialDriverHours.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\OfficialDriverHours.xss">
+      <DependentUpon>OfficialDriverHours.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\PayCash65List.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PayCash65List.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\PayCash65List.xsc">
+      <DependentUpon>PayCash65List.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\PayCash65List.xss">
+      <DependentUpon>PayCash65List.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\RescueCarAssignListP.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RescueCarAssignListP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\RescueCarAssignListP.xsc">
+      <DependentUpon>RescueCarAssignListP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\RescueCarAssignListP.xss">
+      <DependentUpon>RescueCarAssignListP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\RP_ReportP.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RP_ReportP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\RP_ReportP.xsc">
+      <DependentUpon>RP_ReportP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\RP_ReportP.xss">
+      <DependentUpon>RP_ReportP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\RunSheetCheckByStationP.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RunSheetCheckByStationP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\RunSheetCheckByStationP.xsc">
+      <DependentUpon>RunSheetCheckByStationP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\RunSheetCheckByStationP.xss">
+      <DependentUpon>RunSheetCheckByStationP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\RunsheetDailyCheckP.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RunsheetDailyCheckP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\RunsheetDailyCheckP.xsc">
+      <DependentUpon>RunsheetDailyCheckP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\RunsheetDailyCheckP.xss">
+      <DependentUpon>RunsheetDailyCheckP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\TicketCheckReportP.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TicketCheckReportP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\TicketCheckReportP.xsc">
+      <DependentUpon>TicketCheckReportP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\TicketCheckReportP.xss">
+      <DependentUpon>TicketCheckReportP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\TicketListP.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TicketListP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\TicketListP.xsc">
+      <DependentUpon>TicketListP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\TicketListP.xss">
+      <DependentUpon>TicketListP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\TimeTable.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TimeTable.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\TimeTable.xsc">
+      <DependentUpon>TimeTable.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\TimeTable.xss">
+      <DependentUpon>TimeTable.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\TourCarIncome.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TourCarIncome.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\TourCarIncome.xsc">
+      <DependentUpon>TourCarIncome.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\TourCarIncome.xss">
+      <DependentUpon>TourCarIncome.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\TowTruckAssignListP.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TowTruckAssignListP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\TowTruckAssignListP.xsc">
+      <DependentUpon>TowTruckAssignListP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\TowTruckAssignListP.xss">
+      <DependentUpon>TowTruckAssignListP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\ViolationCase.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ViolationCase.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\ViolationCase.xsc">
+      <DependentUpon>ViolationCase.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\ViolationCase.xss">
+      <DependentUpon>ViolationCase.xsd</DependentUpon>
+    </Content>
+    <Content Include="AssetReportList.aspx" />
+    <Content Include="BatchTransferList.aspx" />
+    <Content Include="CalAvgPayment.aspx" />
+    <Content Include="CalCompanyPay.aspx" />
+    <Content Include="CalDepIncomeStatement.aspx" />
+    <Content Include="CarDeviceList.aspx" />
+    <Content Include="CarEQUIPSetting.aspx" />
+    <Content Include="CarFixWorkHistoryP.aspx" />
+    <Content Include="CarFixWorkList.aspx" />
+    <Content Include="CarInfoExport.aspx" />
+    <Content Include="CarInspection.aspx" />
+    <Content Include="CarInspectionDataCheck.aspx" />
+    <Content Include="CarModifyList.aspx" />
+    <Content Include="CarServiceList.aspx" />
+    <Content Include="CashBillListP.aspx" />
+    <Content Include="ChangePWD.aspx" />
+    <Content Include="ContractManager.aspx" />
+    <Content Include="CreateNameList.aspx" />
+    <Content Include="CustomServiceDetail.aspx" />
+    <Content Include="CustomServiceDriverList.aspx" />
+    <Content Include="CustomServiceHistory.aspx" />
+    <Content Include="CustomServiceListOut.aspx" />
+    <Content Include="CustomServiceMain.aspx" />
+    <Content Include="CustomServicePrintDetail.aspx" />
+    <Content Include="CustomServiceReportList.aspx" />
+    <Content Include="CustomServiceType.aspx" />
+    <Content Include="DataImport.aspx" />
+    <Content Include="default.aspx" />
+    <Content Include="DocFirstWordPermission.aspx" />
+    <Content Include="Driver30DaysWorkList.aspx" />
+    <Content Include="DriverBoundsList.aspx" />
+    <Content Include="DriverMonthNoneWorkList.aspx" />
+    <Content Include="DriverNoneSafeP.aspx" />
+    <Content Include="DriverPayRangeList.aspx" />
+    <Content Include="DriverRegularTraining.aspx" />
+    <Content Include="DriverRiskLevel.aspx" />
+    <Content Include="DriverStatus.aspx" />
+    <Content Include="DriverWorkHourAnalysisMain.aspx" />
+    <Content Include="DriverWorkHourLevelByDep.aspx" />
+    <Content Include="DriverWorkHourLevelByMan.aspx" />
+    <Content Include="DriverWorkHoursDays.aspx" />
+    <Content Include="DriverWorkHoursStatistics.aspx" />
+    <Content Include="DriverWorkHoursTCT.aspx" />
+    <Content Include="DriverWorkHoursTotal.aspx" />
+    <Content Include="DriverWorkState.aspx" />
+    <Content Include="DriverWorkStateBatch.aspx" />
+    <Content Include="DriverWorkStateList.aspx" />
+    <Content Include="DriverYearSummary.aspx" />
+    <Content Include="EditOfficialDocument.aspx" />
+    <Content Include="EmpAltersReport.aspx" />
+    <Content Include="EmpCardIDChange.aspx" />
+    <Content Include="EmpDutyAllows.aspx" />
+    <Content Include="EmpDutyHours.aspx" />
+    <Content Include="EmpDutyHoursP.aspx" />
+    <Content Include="EmpESCList.aspx" />
+    <Content Include="EmployeeYearMerits.aspx" />
+    <Content Include="EmpMeritsPrint.aspx" />
+    <Content Include="EmpMultiDep.aspx" />
+    <Content Include="EmpOverList.aspx" />
+    <Content Include="EmpPayList.aspx" />
+    <Content Include="EmpPayRangeList.aspx" />
+    <Content Include="Error.aspx" />
+    <Content Include="ExceedSpeedReport.aspx" />
+    <Content Include="ExportRealCompanyPay.aspx" />
+    <Content Include="ExportRentCarData.aspx" />
+    <Content Include="Feedback.aspx" />
+    <Content Include="FixRequestMain.aspx" />
+    <Content Include="Global.asax" />
+    <Content Include="HDDCheckReport.aspx" />
+    <Content Include="IAConsumables.aspx" />
+    <Content Include="IAConsumablesInstore.aspx" />
+    <Content Include="IAConsumablesOutStore.aspx" />
+    <Content Include="IAConsumablesReport.aspx" />
+    <Content Include="img\service_p_15.jpg" />
+    <Content Include="img\sorry.gif" />
+    <Content Include="img\TYBUS_LOGO.png" />
+    <Content Include="ImportAccount.aspx" />
+    <Content Include="ImportCash.aspx" />
+    <Content Include="IncomeStatement2Excel.aspx" />
+    <Content Include="InputDate.aspx" />
+    <Content Include="InputDate_ChineseYears.aspx" />
+    <Content Include="Lines952List.aspx" />
+    <Content Include="LinesBounds.aspx" />
+    <Content Include="LinesData.aspx" />
+    <Content Include="LinesNoChart.aspx" />
+    <Content Include="LinesStatistics.aspx" />
+    <Content Include="MainPage.Master" />
+    <Content Include="OperateRecord.aspx" />
+    <Content Include="Over65DriverList.aspx" />
+    <Content Include="PurchaseToExcel.aspx" />
+    <Content Include="RetireFreeTicketList.aspx" />
+    <Content Include="App_Code\DriverWorkHourAnalysisP.xsc">
+      <DependentUpon>DriverWorkHourAnalysisP.xsd</DependentUpon>
+    </Content>
+    <None Include="App_Code\DriverWorkHourAnalysisP.xsd" />
+    <Content Include="App_Code\DriverWorkHourAnalysisP.xss">
+      <DependentUpon>DriverWorkHourAnalysisP.xsd</DependentUpon>
+    </Content>
+    <Content Include="Report\DriverWorkHourAnalysisMainP.rdlc" />
+    <Content Include="Report\DriverWorkHourLevelByManP.rdlc" />
+    <Content Include="Report\DriverWorkHourLevelByDepP.rdlc" />
+    <Content Include="Report\DriverPayRangeListP.rdlc" />
+    <Content Include="Report\DriverWorkHourAnalysisDetailP.rdlc" />
+    <Content Include="Report\DriverWorkHourAnalysisDetailP2.rdlc" />
+    <Content Include="Report\DriverWorkHourAnalysisMonthP.rdlc" />
+    <Content Include="Report\DriverWorkHourAnalysisStatusP.rdlc" />
+    <Content Include="App_Code\EmpMeritsPrint.xsc">
+      <DependentUpon>EmpMeritsPrint.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\EmpESCList.xsc">
+      <DependentUpon>EmpESCList.xsd</DependentUpon>
+    </Content>
+    <None Include="App_Code\EmpESCList.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>EmpESCList.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="App_Code\EmpESCList.xss">
+      <DependentUpon>EmpESCList.xsd</DependentUpon>
+    </Content>
+    <None Include="App_Code\EmpMeritsPrint.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>EmpMeritsPrint.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="App_Code\EmpMeritsPrint.xss">
+      <DependentUpon>EmpMeritsPrint.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\IAConsumablesP.xsc">
+      <DependentUpon>IAConsumablesP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\IAConsumablesOutStoreP.xsc">
+      <DependentUpon>IAConsumablesOutStoreP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\ExportRentCarData.xsc">
+      <DependentUpon>ExportRentCarData.xsd</DependentUpon>
+    </Content>
+    <None Include="App_Code\ExportRentCarData.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ExportRentCarData.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="App_Code\ExportRentCarData.xss">
+      <DependentUpon>ExportRentCarData.xsd</DependentUpon>
+    </Content>
+    <None Include="App_Code\IAConsumablesOutStoreP.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>IAConsumablesOutStoreP.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="App_Code\IAConsumablesOutStoreP.xss">
+      <DependentUpon>IAConsumablesOutStoreP.xsd</DependentUpon>
+    </Content>
+    <None Include="App_Code\IAConsumablesP.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>IAConsumablesP.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="App_Code\IAConsumablesP.xss">
+      <DependentUpon>IAConsumablesP.xsd</DependentUpon>
+    </Content>
+    <Content Include="libman.json" />
+    <Content Include="App_Code\TrialBalance.xsc">
+      <DependentUpon>TrialBalance.xsd</DependentUpon>
+    </Content>
+    <None Include="App_Code\TrialBalance.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TrialBalance.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="App_Code\TrialBalance.xss">
+      <DependentUpon>TrialBalance.xsd</DependentUpon>
+    </Content>
+    <None Include="Scripts\jquery-3.6.0.intellisense.js" />
+    <Content Include="Scripts\jquery-3.6.0.js" />
+    <Content Include="Scripts\jquery-3.6.0.min.js" />
+    <Content Include="Scripts\jquery-3.6.0.slim.js" />
+    <Content Include="Scripts\jquery-3.6.0.slim.min.js" />
+    <Content Include="SearchCust.aspx" />
+    <Content Include="SearchEmp.aspx" />
+    <Content Include="SearchProduct.aspx" />
+    <Content Include="SearchSup.aspx" />
+    <Content Include="SqlServerTypes\readme.htm" />
+    <Content Include="SqlServerTypes\x64\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="StoreOutAllList.aspx" />
+    <Content Include="TicketTrans.aspx" />
+    <Content Include="TimeTableToGov.aspx" />
+    <Content Include="WorkReportOverTimes.aspx" />
+    <Content Include="App_Code\DriverWorkOver7DaysP.xsc">
+      <DependentUpon>DriverWorkOver7DaysP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\DriverMonthNoneWorkListP.xsc">
+      <DependentUpon>DriverMonthNoneWorkListP.xsd</DependentUpon>
+    </Content>
+    <Content Include="WorkWeeklyReport.aspx" />
+    <None Include="App_Code\DriverMonthNoneWorkListP.xsd" />
+    <Content Include="App_Code\DriverMonthNoneWorkListP.xss">
+      <DependentUpon>DriverMonthNoneWorkListP.xsd</DependentUpon>
+    </Content>
+    <None Include="App_Code\DriverWorkOver7DaysP.xsd" />
+    <Content Include="App_Code\DriverWorkOver7DaysP.xss">
+      <DependentUpon>DriverWorkOver7DaysP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\DriverYearSummaryP.xsc">
+      <DependentUpon>DriverYearSummaryP.xsd</DependentUpon>
+    </Content>
+    <None Include="App_Code\DriverYearSummaryP.xsd" />
+    <Content Include="App_Code\DriverYearSummaryP.xss">
+      <DependentUpon>DriverYearSummaryP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\Over65DriverListP.xsc">
+      <DependentUpon>Over65DriverListP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\EmpPayRangeListP.xsc">
+      <DependentUpon>EmpPayRangeListP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\EmpPayListP.xsc">
+      <DependentUpon>EmpPayListP.xsd</DependentUpon>
+    </Content>
+    <None Include="App_Code\EmpPayListP.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>EmpPayListP.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="App_Code\EmpPayListP.xss">
+      <DependentUpon>EmpPayListP.xsd</DependentUpon>
+    </Content>
+    <None Include="App_Code\EmpPayRangeListP.xsd" />
+    <Content Include="App_Code\EmpPayRangeListP.xss">
+      <DependentUpon>EmpPayRangeListP.xsd</DependentUpon>
+    </Content>
+    <None Include="App_Code\Over65DriverListP.xsd" />
+    <Content Include="App_Code\Over65DriverListP.xss">
+      <DependentUpon>Over65DriverListP.xsd</DependentUpon>
+    </Content>
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Report\DriverWorkOver7DaysP.rdlc" />
+    <Content Include="Report\DriverMonthNoneWorkListP.rdlc" />
+    <Content Include="Report\DriverYearSummaryP.rdlc" />
+    <Content Include="Report\TowTruckCostListP.rdlc" />
+    <Content Include="Report\Over65DriverListP.rdlc" />
+    <Content Include="Report\EmpPayRangeListP.rdlc" />
+    <Content Include="Report\EmpPayListP.rdlc" />
+    <Content Include="OfficialDocument.aspx" />
+    <Content Include="OfficialDocumentGetIn.aspx" />
+    <Content Include="OfficialDocumentHistory.aspx" />
+    <Content Include="OfficialDocumentPrint.aspx" />
+    <Content Include="OfficialDriverHours.aspx" />
+    <Content Include="PayCash65List.aspx" />
+    <Content Include="PermissionSetting.aspx" />
+    <Content Include="PrintReport.aspx" />
+    <Content Include="RentDailyCarCount.aspx" />
+    <Content Include="RequestDriverWorkData.aspx" />
+    <Content Include="RescueCarAssignList.aspx" />
+    <Content Include="RPReport.aspx" />
+    <Content Include="RunSheetCheck.aspx" />
+    <Content Include="RunSheetCheckByStation.aspx" />
+    <Content Include="RunsheetDailyCheck.aspx" />
+    <Content Include="StockMonth.aspx" />
+    <Content Include="Style\MainStyle.css" />
+    <Content Include="TicketCheckP.aspx" />
+    <Content Include="TicketListP.aspx" />
+    <Content Include="TicketStore.aspx" />
+    <Content Include="TimeTable.aspx" />
+    <Content Include="TirePerfCal.aspx" />
+    <Content Include="TourCarIncome.aspx" />
+    <Content Include="TowTruckAssignList.aspx" />
+    <Content Include="TrialBalance.aspx" />
+    <Content Include="ViolationCase.aspx" />
+    <Content Include="ViolationCaseDetail.aspx" />
+    <Content Include="ViolationCaseHistory.aspx" />
+    <Content Include="ViolationCaseP.aspx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdviceReport.aspx.cs">
+      <DependentUpon>AdviceReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdviceReport.aspx.designer.cs">
+      <DependentUpon>AdviceReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AnecdoteCase.aspx.cs">
+      <DependentUpon>AnecdoteCase.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AnecdoteCase.aspx.designer.cs">
+      <DependentUpon>AnecdoteCase.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AnecdoteCaseDetail.aspx.cs">
+      <DependentUpon>AnecdoteCaseDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AnecdoteCaseDetail.aspx.designer.cs">
+      <DependentUpon>AnecdoteCaseDetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AnecdoteCaseHistory.aspx.cs">
+      <DependentUpon>AnecdoteCaseHistory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AnecdoteCaseHistory.aspx.designer.cs">
+      <DependentUpon>AnecdoteCaseHistory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AnecdoteCaseP.aspx.cs">
+      <DependentUpon>AnecdoteCaseP.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AnecdoteCaseP.aspx.designer.cs">
+      <DependentUpon>AnecdoteCaseP.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AnnList.aspx.cs">
+      <DependentUpon>AnnList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AnnList.aspx.designer.cs">
+      <DependentUpon>AnnList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AnnSearch.aspx.cs">
+      <DependentUpon>AnnSearch.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AnnSearch.aspx.designer.cs">
+      <DependentUpon>AnnSearch.aspx</DependentUpon>
+    </Compile>
+    <Content Include="App_Code\EmpPayListP.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmpPayListP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\EmpMeritsPrint.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmpMeritsPrint.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\EmpMeritsPrint.cs">
+      <DependentUpon>EmpMeritsPrint.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\IAConsumablesP.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IAConsumablesP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\IAConsumablesOutStoreP.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IAConsumablesOutStoreP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\IAConsumablesP.cs">
+      <DependentUpon>IAConsumablesP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\TrialBalance.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TrialBalance.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\EmpESCList.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmpESCList.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\ExportRentCarData.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ExportRentCarData.xsd</DependentUpon>
+    </Content>
+    <Compile Include="AssetReportList.aspx.cs">
+      <DependentUpon>AssetReportList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssetReportList.aspx.designer.cs">
+      <DependentUpon>AssetReportList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BatchTransferList.aspx.cs">
+      <DependentUpon>BatchTransferList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BatchTransferList.aspx.designer.cs">
+      <DependentUpon>BatchTransferList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CalAvgPayment.aspx.cs">
+      <DependentUpon>CalAvgPayment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CalAvgPayment.aspx.designer.cs">
+      <DependentUpon>CalAvgPayment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CalCompanyPay.aspx.cs">
+      <DependentUpon>CalCompanyPay.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CalCompanyPay.aspx.designer.cs">
+      <DependentUpon>CalCompanyPay.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CalDepIncomeStatement.aspx.cs">
+      <DependentUpon>CalDepIncomeStatement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CalDepIncomeStatement.aspx.designer.cs">
+      <DependentUpon>CalDepIncomeStatement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CarDeviceList.aspx.cs">
+      <DependentUpon>CarDeviceList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CarDeviceList.aspx.designer.cs">
+      <DependentUpon>CarDeviceList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CarEQUIPSetting.aspx.cs">
+      <DependentUpon>CarEQUIPSetting.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CarEQUIPSetting.aspx.designer.cs">
+      <DependentUpon>CarEQUIPSetting.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CarFixWorkHistoryP.aspx.cs">
+      <DependentUpon>CarFixWorkHistoryP.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CarFixWorkHistoryP.aspx.designer.cs">
+      <DependentUpon>CarFixWorkHistoryP.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CarFixWorkList.aspx.cs">
+      <DependentUpon>CarFixWorkList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CarFixWorkList.aspx.designer.cs">
+      <DependentUpon>CarFixWorkList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CarInfoExport.aspx.cs">
+      <DependentUpon>CarInfoExport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CarInfoExport.aspx.designer.cs">
+      <DependentUpon>CarInfoExport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CarInspection.aspx.cs">
+      <DependentUpon>CarInspection.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CarInspection.aspx.designer.cs">
+      <DependentUpon>CarInspection.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CarInspectionDataCheck.aspx.cs">
+      <DependentUpon>CarInspectionDataCheck.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CarInspectionDataCheck.aspx.designer.cs">
+      <DependentUpon>CarInspectionDataCheck.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CarModifyList.aspx.cs">
+      <DependentUpon>CarModifyList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CarModifyList.aspx.designer.cs">
+      <DependentUpon>CarModifyList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CarServiceList.aspx.cs">
+      <DependentUpon>CarServiceList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CarServiceList.aspx.designer.cs">
+      <DependentUpon>CarServiceList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CashBillListP.aspx.cs">
+      <DependentUpon>CashBillListP.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CashBillListP.aspx.designer.cs">
+      <DependentUpon>CashBillListP.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ChangePWD.aspx.cs">
+      <DependentUpon>ChangePWD.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ChangePWD.aspx.designer.cs">
+      <DependentUpon>ChangePWD.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ContractManager.aspx.cs">
+      <DependentUpon>ContractManager.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ContractManager.aspx.designer.cs">
+      <DependentUpon>ContractManager.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CreateNameList.aspx.cs">
+      <DependentUpon>CreateNameList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CreateNameList.aspx.designer.cs">
+      <DependentUpon>CreateNameList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CustomServiceDetail.aspx.cs">
+      <DependentUpon>CustomServiceDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomServiceDetail.aspx.designer.cs">
+      <DependentUpon>CustomServiceDetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CustomServiceDriverList.aspx.cs">
+      <DependentUpon>CustomServiceDriverList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomServiceDriverList.aspx.designer.cs">
+      <DependentUpon>CustomServiceDriverList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CustomServiceHistory.aspx.cs">
+      <DependentUpon>CustomServiceHistory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomServiceHistory.aspx.designer.cs">
+      <DependentUpon>CustomServiceHistory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CustomServiceListOut.aspx.cs">
+      <DependentUpon>CustomServiceListOut.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomServiceListOut.aspx.designer.cs">
+      <DependentUpon>CustomServiceListOut.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CustomServiceMain.aspx.cs">
+      <DependentUpon>CustomServiceMain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomServiceMain.aspx.designer.cs">
+      <DependentUpon>CustomServiceMain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CustomServicePrintDetail.aspx.cs">
+      <DependentUpon>CustomServicePrintDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomServicePrintDetail.aspx.designer.cs">
+      <DependentUpon>CustomServicePrintDetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CustomServiceReportList.aspx.cs">
+      <DependentUpon>CustomServiceReportList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomServiceReportList.aspx.designer.cs">
+      <DependentUpon>CustomServiceReportList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CustomServiceType.aspx.cs">
+      <DependentUpon>CustomServiceType.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomServiceType.aspx.designer.cs">
+      <DependentUpon>CustomServiceType.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DataImport.aspx.cs">
+      <DependentUpon>DataImport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DataImport.aspx.designer.cs">
+      <DependentUpon>DataImport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DocFirstWordPermission.aspx.cs">
+      <DependentUpon>DocFirstWordPermission.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DocFirstWordPermission.aspx.designer.cs">
+      <DependentUpon>DocFirstWordPermission.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Driver30DaysWorkList.aspx.cs">
+      <DependentUpon>Driver30DaysWorkList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Driver30DaysWorkList.aspx.designer.cs">
+      <DependentUpon>Driver30DaysWorkList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DriverBoundsList.aspx.cs">
+      <DependentUpon>DriverBoundsList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DriverBoundsList.aspx.designer.cs">
+      <DependentUpon>DriverBoundsList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DriverMonthNoneWorkList.aspx.cs">
+      <DependentUpon>DriverMonthNoneWorkList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DriverMonthNoneWorkList.aspx.designer.cs">
+      <DependentUpon>DriverMonthNoneWorkList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DriverNoneSafeP.aspx.cs">
+      <DependentUpon>DriverNoneSafeP.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DriverNoneSafeP.aspx.designer.cs">
+      <DependentUpon>DriverNoneSafeP.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DriverPayRangeList.aspx.cs">
+      <DependentUpon>DriverPayRangeList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DriverPayRangeList.aspx.designer.cs">
+      <DependentUpon>DriverPayRangeList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DriverRegularTraining.aspx.cs">
+      <DependentUpon>DriverRegularTraining.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DriverRegularTraining.aspx.designer.cs">
+      <DependentUpon>DriverRegularTraining.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DriverRiskLevel.aspx.cs">
+      <DependentUpon>DriverRiskLevel.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DriverRiskLevel.aspx.designer.cs">
+      <DependentUpon>DriverRiskLevel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DriverStatus.aspx.cs">
+      <DependentUpon>DriverStatus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DriverStatus.aspx.designer.cs">
+      <DependentUpon>DriverStatus.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DriverWorkHourAnalysisMain.aspx.cs">
+      <DependentUpon>DriverWorkHourAnalysisMain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DriverWorkHourAnalysisMain.aspx.designer.cs">
+      <DependentUpon>DriverWorkHourAnalysisMain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DriverWorkHourLevelByDep.aspx.cs">
+      <DependentUpon>DriverWorkHourLevelByDep.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DriverWorkHourLevelByDep.aspx.designer.cs">
+      <DependentUpon>DriverWorkHourLevelByDep.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DriverWorkHourLevelByMan.aspx.cs">
+      <DependentUpon>DriverWorkHourLevelByMan.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DriverWorkHourLevelByMan.aspx.designer.cs">
+      <DependentUpon>DriverWorkHourLevelByMan.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DriverWorkHoursDays.aspx.cs">
+      <DependentUpon>DriverWorkHoursDays.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DriverWorkHoursDays.aspx.designer.cs">
+      <DependentUpon>DriverWorkHoursDays.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DriverWorkHoursStatistics.aspx.cs">
+      <DependentUpon>DriverWorkHoursStatistics.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DriverWorkHoursStatistics.aspx.designer.cs">
+      <DependentUpon>DriverWorkHoursStatistics.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DriverWorkHoursTCT.aspx.cs">
+      <DependentUpon>DriverWorkHoursTCT.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DriverWorkHoursTCT.aspx.designer.cs">
+      <DependentUpon>DriverWorkHoursTCT.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DriverWorkHoursTotal.aspx.cs">
+      <DependentUpon>DriverWorkHoursTotal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DriverWorkHoursTotal.aspx.designer.cs">
+      <DependentUpon>DriverWorkHoursTotal.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DriverWorkState.aspx.cs">
+      <DependentUpon>DriverWorkState.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DriverWorkState.aspx.designer.cs">
+      <DependentUpon>DriverWorkState.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DriverWorkStateBatch.aspx.cs">
+      <DependentUpon>DriverWorkStateBatch.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DriverWorkStateBatch.aspx.designer.cs">
+      <DependentUpon>DriverWorkStateBatch.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DriverWorkStateList.aspx.cs">
+      <DependentUpon>DriverWorkStateList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DriverWorkStateList.aspx.designer.cs">
+      <DependentUpon>DriverWorkStateList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DriverYearSummary.aspx.cs">
+      <DependentUpon>DriverYearSummary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DriverYearSummary.aspx.designer.cs">
+      <DependentUpon>DriverYearSummary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditOfficialDocument.aspx.cs">
+      <DependentUpon>EditOfficialDocument.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditOfficialDocument.aspx.designer.cs">
+      <DependentUpon>EditOfficialDocument.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EmpAltersReport.aspx.cs">
+      <DependentUpon>EmpAltersReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EmpAltersReport.aspx.designer.cs">
+      <DependentUpon>EmpAltersReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EmpCardIDChange.aspx.cs">
+      <DependentUpon>EmpCardIDChange.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EmpCardIDChange.aspx.designer.cs">
+      <DependentUpon>EmpCardIDChange.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EmpDutyAllows.aspx.cs">
+      <DependentUpon>EmpDutyAllows.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EmpDutyAllows.aspx.designer.cs">
+      <DependentUpon>EmpDutyAllows.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EmpDutyHours.aspx.cs">
+      <DependentUpon>EmpDutyHours.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EmpDutyHours.aspx.designer.cs">
+      <DependentUpon>EmpDutyHours.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EmpDutyHoursP.aspx.cs">
+      <DependentUpon>EmpDutyHoursP.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EmpDutyHoursP.aspx.designer.cs">
+      <DependentUpon>EmpDutyHoursP.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EmpESCList.aspx.cs">
+      <DependentUpon>EmpESCList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EmpESCList.aspx.designer.cs">
+      <DependentUpon>EmpESCList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EmployeeYearMerits.aspx.cs">
+      <DependentUpon>EmployeeYearMerits.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EmployeeYearMerits.aspx.designer.cs">
+      <DependentUpon>EmployeeYearMerits.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EmpMeritsPrint.aspx.cs">
+      <DependentUpon>EmpMeritsPrint.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EmpMeritsPrint.aspx.designer.cs">
+      <DependentUpon>EmpMeritsPrint.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EmpMultiDep.aspx.cs">
+      <DependentUpon>EmpMultiDep.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EmpMultiDep.aspx.designer.cs">
+      <DependentUpon>EmpMultiDep.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EmpOverList.aspx.cs">
+      <DependentUpon>EmpOverList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EmpOverList.aspx.designer.cs">
+      <DependentUpon>EmpOverList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EmpPayList.aspx.cs">
+      <DependentUpon>EmpPayList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EmpPayList.aspx.designer.cs">
+      <DependentUpon>EmpPayList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EmpPayRangeList.aspx.cs">
+      <DependentUpon>EmpPayRangeList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EmpPayRangeList.aspx.designer.cs">
+      <DependentUpon>EmpPayRangeList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Error.aspx.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Error.aspx.designer.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ExceedSpeedReport.aspx.cs">
+      <DependentUpon>ExceedSpeedReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ExceedSpeedReport.aspx.designer.cs">
+      <DependentUpon>ExceedSpeedReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ExportRealCompanyPay.aspx.cs">
+      <DependentUpon>ExportRealCompanyPay.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ExportRealCompanyPay.aspx.designer.cs">
+      <DependentUpon>ExportRealCompanyPay.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ExportRentCarData.aspx.cs">
+      <DependentUpon>ExportRentCarData.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ExportRentCarData.aspx.designer.cs">
+      <DependentUpon>ExportRentCarData.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Feedback.aspx.cs">
+      <DependentUpon>Feedback.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Feedback.aspx.designer.cs">
+      <DependentUpon>Feedback.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FixRequestMain.aspx.cs">
+      <DependentUpon>FixRequestMain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FixRequestMain.aspx.designer.cs">
+      <DependentUpon>FixRequestMain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="HDDCheckReport.aspx.cs">
+      <DependentUpon>HDDCheckReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HDDCheckReport.aspx.designer.cs">
+      <DependentUpon>HDDCheckReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="IAConsumables.aspx.cs">
+      <DependentUpon>IAConsumables.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IAConsumables.aspx.designer.cs">
+      <DependentUpon>IAConsumables.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="IAConsumablesInstore.aspx.cs">
+      <DependentUpon>IAConsumablesInstore.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IAConsumablesInstore.aspx.designer.cs">
+      <DependentUpon>IAConsumablesInstore.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="IAConsumablesOutStore.aspx.cs">
+      <DependentUpon>IAConsumablesOutStore.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IAConsumablesOutStore.aspx.designer.cs">
+      <DependentUpon>IAConsumablesOutStore.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="IAConsumablesReport.aspx.cs">
+      <DependentUpon>IAConsumablesReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IAConsumablesReport.aspx.designer.cs">
+      <DependentUpon>IAConsumablesReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ImportAccount.aspx.cs">
+      <DependentUpon>ImportAccount.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ImportAccount.aspx.designer.cs">
+      <DependentUpon>ImportAccount.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ImportCash.aspx.cs">
+      <DependentUpon>ImportCash.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ImportCash.aspx.designer.cs">
+      <DependentUpon>ImportCash.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="IncomeStatement2Excel.aspx.cs">
+      <DependentUpon>IncomeStatement2Excel.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IncomeStatement2Excel.aspx.designer.cs">
+      <DependentUpon>IncomeStatement2Excel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="InputDate.aspx.cs">
+      <DependentUpon>InputDate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InputDate.aspx.designer.cs">
+      <DependentUpon>InputDate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="InputDate_ChineseYears.aspx.cs">
+      <DependentUpon>InputDate_ChineseYears.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InputDate_ChineseYears.aspx.designer.cs">
+      <DependentUpon>InputDate_ChineseYears.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lines952List.aspx.cs">
+      <DependentUpon>Lines952List.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lines952List.aspx.designer.cs">
+      <DependentUpon>Lines952List.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LinesBounds.aspx.cs">
+      <DependentUpon>LinesBounds.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LinesBounds.aspx.designer.cs">
+      <DependentUpon>LinesBounds.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LinesData.aspx.cs">
+      <DependentUpon>LinesData.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LinesData.aspx.designer.cs">
+      <DependentUpon>LinesData.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LinesNoChart.aspx.cs">
+      <DependentUpon>LinesNoChart.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LinesNoChart.aspx.designer.cs">
+      <DependentUpon>LinesNoChart.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LinesStatistics.aspx.cs">
+      <DependentUpon>LinesStatistics.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LinesStatistics.aspx.designer.cs">
+      <DependentUpon>LinesStatistics.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MainPage.Master.cs">
+      <DependentUpon>MainPage.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MainPage.Master.designer.cs">
+      <DependentUpon>MainPage.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PublicFunction.cs" />
+    <Compile Include="NPOIMemoryStream.cs" />
+    <Compile Include="OfficialDocument.aspx.cs">
+      <DependentUpon>OfficialDocument.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OfficialDocument.aspx.designer.cs">
+      <DependentUpon>OfficialDocument.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OfficialDocumentGetIn.aspx.cs">
+      <DependentUpon>OfficialDocumentGetIn.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OfficialDocumentGetIn.aspx.designer.cs">
+      <DependentUpon>OfficialDocumentGetIn.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OfficialDocumentHistory.aspx.cs">
+      <DependentUpon>OfficialDocumentHistory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OfficialDocumentHistory.aspx.designer.cs">
+      <DependentUpon>OfficialDocumentHistory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OfficialDocumentPrint.aspx.cs">
+      <DependentUpon>OfficialDocumentPrint.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OfficialDocumentPrint.aspx.designer.cs">
+      <DependentUpon>OfficialDocumentPrint.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OfficialDriverHours.aspx.cs">
+      <DependentUpon>OfficialDriverHours.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OfficialDriverHours.aspx.designer.cs">
+      <DependentUpon>OfficialDriverHours.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OperateRecord.aspx.cs">
+      <DependentUpon>OperateRecord.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OperateRecord.aspx.designer.cs">
+      <DependentUpon>OperateRecord.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Over65DriverList.aspx.cs">
+      <DependentUpon>Over65DriverList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Over65DriverList.aspx.designer.cs">
+      <DependentUpon>Over65DriverList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PayCash65List.aspx.cs">
+      <DependentUpon>PayCash65List.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PayCash65List.aspx.designer.cs">
+      <DependentUpon>PayCash65List.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PermissionSetting.aspx.cs">
+      <DependentUpon>PermissionSetting.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PermissionSetting.aspx.designer.cs">
+      <DependentUpon>PermissionSetting.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PrintReport.aspx.cs">
+      <DependentUpon>PrintReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PrintReport.aspx.designer.cs">
+      <DependentUpon>PrintReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PurchaseToExcel.aspx.cs">
+      <DependentUpon>PurchaseToExcel.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PurchaseToExcel.aspx.designer.cs">
+      <DependentUpon>PurchaseToExcel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RentDailyCarCount.aspx.cs">
+      <DependentUpon>RentDailyCarCount.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RentDailyCarCount.aspx.designer.cs">
+      <DependentUpon>RentDailyCarCount.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RequestDriverWorkData.aspx.cs">
+      <DependentUpon>RequestDriverWorkData.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RequestDriverWorkData.aspx.designer.cs">
+      <DependentUpon>RequestDriverWorkData.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RescueCarAssignList.aspx.cs">
+      <DependentUpon>RescueCarAssignList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RescueCarAssignList.aspx.designer.cs">
+      <DependentUpon>RescueCarAssignList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RetireFreeTicketList.aspx.cs">
+      <DependentUpon>RetireFreeTicketList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RetireFreeTicketList.aspx.designer.cs">
+      <DependentUpon>RetireFreeTicketList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RPReport.aspx.cs">
+      <DependentUpon>RPReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RPReport.aspx.designer.cs">
+      <DependentUpon>RPReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RunSheetCheck.aspx.cs">
+      <DependentUpon>RunSheetCheck.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RunSheetCheck.aspx.designer.cs">
+      <DependentUpon>RunSheetCheck.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RunSheetCheckByStation.aspx.cs">
+      <DependentUpon>RunSheetCheckByStation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RunSheetCheckByStation.aspx.designer.cs">
+      <DependentUpon>RunSheetCheckByStation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RunsheetDailyCheck.aspx.cs">
+      <DependentUpon>RunsheetDailyCheck.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RunsheetDailyCheck.aspx.designer.cs">
+      <DependentUpon>RunsheetDailyCheck.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SearchCust.aspx.cs">
+      <DependentUpon>SearchCust.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SearchCust.aspx.designer.cs">
+      <DependentUpon>SearchCust.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SearchEmp.aspx.cs">
+      <DependentUpon>SearchEmp.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SearchEmp.aspx.designer.cs">
+      <DependentUpon>SearchEmp.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SearchProduct.aspx.cs">
+      <DependentUpon>SearchProduct.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SearchProduct.aspx.designer.cs">
+      <DependentUpon>SearchProduct.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SearchSup.aspx.cs">
+      <DependentUpon>SearchSup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SearchSup.aspx.designer.cs">
+      <DependentUpon>SearchSup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="StockMonth.aspx.cs">
+      <DependentUpon>StockMonth.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StockMonth.aspx.designer.cs">
+      <DependentUpon>StockMonth.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="StoreOutAllList.aspx.cs">
+      <DependentUpon>StoreOutAllList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StoreOutAllList.aspx.designer.cs">
+      <DependentUpon>StoreOutAllList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TicketCheckP.aspx.cs">
+      <DependentUpon>TicketCheckP.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TicketCheckP.aspx.designer.cs">
+      <DependentUpon>TicketCheckP.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TicketListP.aspx.cs">
+      <DependentUpon>TicketListP.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TicketListP.aspx.designer.cs">
+      <DependentUpon>TicketListP.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TicketStore.aspx.cs">
+      <DependentUpon>TicketStore.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TicketStore.aspx.designer.cs">
+      <DependentUpon>TicketStore.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TicketTrans.aspx.cs">
+      <DependentUpon>TicketTrans.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TicketTrans.aspx.designer.cs">
+      <DependentUpon>TicketTrans.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TimeTable.aspx.cs">
+      <DependentUpon>TimeTable.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TimeTable.aspx.designer.cs">
+      <DependentUpon>TimeTable.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TimeTableToGov.aspx.cs">
+      <DependentUpon>TimeTableToGov.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TimeTableToGov.aspx.designer.cs">
+      <DependentUpon>TimeTableToGov.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TirePerfCal.aspx.cs">
+      <DependentUpon>TirePerfCal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TirePerfCal.aspx.designer.cs">
+      <DependentUpon>TirePerfCal.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TourCarIncome.aspx.cs">
+      <DependentUpon>TourCarIncome.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TourCarIncome.aspx.designer.cs">
+      <DependentUpon>TourCarIncome.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TowTruckAssignList.aspx.cs">
+      <DependentUpon>TowTruckAssignList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TowTruckAssignList.aspx.designer.cs">
+      <DependentUpon>TowTruckAssignList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TrialBalance.aspx.cs">
+      <DependentUpon>TrialBalance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TrialBalance.aspx.designer.cs">
+      <DependentUpon>TrialBalance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViolationCase.aspx.cs">
+      <DependentUpon>ViolationCase.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViolationCase.aspx.designer.cs">
+      <DependentUpon>ViolationCase.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViolationCaseDetail.aspx.cs">
+      <DependentUpon>ViolationCaseDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViolationCaseDetail.aspx.designer.cs">
+      <DependentUpon>ViolationCaseDetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViolationCaseHistory.aspx.cs">
+      <DependentUpon>ViolationCaseHistory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViolationCaseHistory.aspx.designer.cs">
+      <DependentUpon>ViolationCaseHistory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViolationCaseP.aspx.cs">
+      <DependentUpon>ViolationCaseP.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViolationCaseP.aspx.designer.cs">
+      <DependentUpon>ViolationCaseP.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WorkReportOverTimes.aspx.cs">
+      <DependentUpon>WorkReportOverTimes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WorkReportOverTimes.aspx.designer.cs">
+      <DependentUpon>WorkReportOverTimes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WorkWeeklyReport.aspx.cs">
+      <DependentUpon>WorkWeeklyReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WorkWeeklyReport.aspx.designer.cs">
+      <DependentUpon>WorkWeeklyReport.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App_Code\AdviceReportP.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>AdviceReportP.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App_Code\AnecdoteCase.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>AnecdoteCase.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App_Code\CarFixWorkHistory.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>CarFixWorkHistory.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App_Code\CarInspection.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>CarInspection.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App_Code\CarModifyListP.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>CarModifyListP.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App_Code\CustomService.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>CustomService.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App_Code\DriverNoneSafeP.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DriverNoneSafeP.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App_Code\DriverRegularTraining.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DriverRegularTraining.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App_Code\DriverWorkHoursTCTP.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DriverWorkHoursTCTP.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App_Code\EmpDutyHoursP.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>EmpDutyHoursP.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App_Code\EmpOverList.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>EmpOverList.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App_Code\ExceedSpeedReportP.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ExceedSpeedReportP.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App_Code\FixRequest.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>FixRequest.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App_Code\GiftNameList.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>GiftNameList.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App_Code\HDDCheckReportP.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>HDDCheckReportP.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App_Code\LinesStatisticsP.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>LinesStatisticsP.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App_Code\OfficialDocument.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>OfficialDocument.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App_Code\OfficialDriverHours.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>OfficialDriverHours.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App_Code\PayCash65List.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PayCash65List.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App_Code\RescueCarAssignListP.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>RescueCarAssignListP.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App_Code\RP_ReportP.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>RP_ReportP.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App_Code\RunSheetCheckByStationP.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>RunSheetCheckByStationP.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App_Code\RunsheetDailyCheckP.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>RunsheetDailyCheckP.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App_Code\TicketCheckReportP.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TicketCheckReportP.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App_Code\TicketListP.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TicketListP.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App_Code\TimeTable.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TimeTable.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App_Code\TourCarIncome.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TourCarIncome.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App_Code\TowTruckAssignListP.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TowTruckAssignListP.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App_Code\ViolationCase.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ViolationCase.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+    <Content Include="Scripts\jquery-3.6.0.slim.min.map" />
+    <Content Include="Scripts\jquery-3.6.0.min.map" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="EmpMeritsP_Detail.rdlc" />
+    <EmbeddedResource Include="Report\AdviceReportP.rdlc" />
+    <EmbeddedResource Include="Report\AnecdoteCaseP.rdlc" />
+    <EmbeddedResource Include="Report\AnecdoteCaseP_DepNo.rdlc" />
+    <EmbeddedResource Include="Report\AnecdoteCaseP_Driver.rdlc" />
+    <EmbeddedResource Include="Report\CarFixWorkHistory.rdlc" />
+    <EmbeddedResource Include="Report\CarInspection.rdlc" />
+    <EmbeddedResource Include="Report\CarModifyListP.rdlc" />
+    <EmbeddedResource Include="Report\CityAreaBusP.rdlc" />
+    <EmbeddedResource Include="Report\CustomServiceDetail.rdlc" />
+    <EmbeddedResource Include="Report\CustomServiceDriverList.rdlc" />
+    <EmbeddedResource Include="Report\DriverNoneSafeP.rdlc" />
+    <EmbeddedResource Include="Report\DriverRegularTrainingP.rdlc" />
+    <EmbeddedResource Include="Report\DriverWorkHoursTCTP_HR.rdlc" />
+    <EmbeddedResource Include="Report\DriverWorkHoursTCTP_KM.rdlc" />
+    <EmbeddedResource Include="Report\EmpDutyHoursP_DutyHours.rdlc" />
+    <EmbeddedResource Include="Report\EmpDutyHoursP_ESCHours.rdlc" />
+    <EmbeddedResource Include="Report\EmpDutyHoursP_Overdue.rdlc" />
+    <EmbeddedResource Include="Report\EmpDutyHoursP_UseableHours.rdlc" />
+    <EmbeddedResource Include="Report\EmpESCListP.rdlc" />
+    <EmbeddedResource Include="Report\EmpMeritsPrint.rdlc" />
+    <EmbeddedResource Include="Report\EmpOverListP.rdlc" />
+    <EmbeddedResource Include="Report\ExceedSpeedReportP.rdlc" />
+    <EmbeddedResource Include="Report\FixRequestP.rdlc" />
+    <EmbeddedResource Include="Report\FixSheetP.rdlc" />
+    <EmbeddedResource Include="Report\FreeBusP.rdlc" />
+    <EmbeddedResource Include="Report\GiftNameListP_Gift.rdlc" />
+    <EmbeddedResource Include="Report\GiftNameListP_Money.rdlc" />
+    <EmbeddedResource Include="Report\GiftNameListP_Uniform.rdlc" />
+    <EmbeddedResource Include="Report\HDDCheckReportP.rdlc" />
+    <EmbeddedResource Include="Report\HighwayBusP.rdlc" />
+    <EmbeddedResource Include="Report\IAConsumablesOutStoreP.rdlc" />
+    <EmbeddedResource Include="Report\IAConsumablesP.rdlc" />
+    <EmbeddedResource Include="Report\IAConsumablesP02.rdlc" />
+    <EmbeddedResource Include="Report\IAConsumablesP03.rdlc" />
+    <EmbeddedResource Include="Report\IAConsumablesP04.rdlc" />
+    <EmbeddedResource Include="Report\OfficialDocumentP.rdlc" />
+    <EmbeddedResource Include="Report\OfficialDriverHoursP.rdlc" />
+    <EmbeddedResource Include="Report\PayCash65ListP.rdlc" />
+    <EmbeddedResource Include="Report\RentDataByCarP.rdlc" />
+    <EmbeddedResource Include="Report\RentDataByDepP.rdlc" />
+    <EmbeddedResource Include="Report\RescueCarAssignSheetP.rdlc" />
+    <EmbeddedResource Include="Report\RescueCarMonthListP.rdlc" />
+    <EmbeddedResource Include="Report\RescueCarPersonListP.rdlc" />
+    <EmbeddedResource Include="Report\RP_ReportP.rdlc" />
+    <EmbeddedResource Include="Report\RunSheetCheckByStationP.rdlc" />
+    <EmbeddedResource Include="Report\RunsheetDailyCheckP.rdlc" />
+    <EmbeddedResource Include="Report\ServiceCountByDepNo.rdlc" />
+    <EmbeddedResource Include="Report\ServiceCountByDriver.rdlc" />
+    <EmbeddedResource Include="Report\ServiceCountByLinesNo.rdlc" />
+    <EmbeddedResource Include="Report\ServiceCountByServiceType.rdlc" />
+    <EmbeddedResource Include="Report\SheetGroupByBuMan.rdlc" />
+    <EmbeddedResource Include="Report\SheetGroupByBuManAndDate.rdlc" />
+    <EmbeddedResource Include="Report\SheetGroupByDate.rdlc" />
+    <EmbeddedResource Include="Report\SheetGroupByDepNo.rdlc" />
+    <EmbeddedResource Include="Report\SheetGroupByDepNoAndDate.rdlc" />
+    <EmbeddedResource Include="Report\SheetGroupByHandler.rdlc" />
+    <EmbeddedResource Include="Report\SheetNoneGrouping.rdlc" />
+    <EmbeddedResource Include="Report\TicketCheckReportP.rdlc" />
+    <EmbeddedResource Include="Report\TicketListP.rdlc" />
+    <EmbeddedResource Include="Report\TimeTableP.rdlc" />
+    <EmbeddedResource Include="Report\TourCarIncomeP.rdlc" />
+    <EmbeddedResource Include="Report\TowTruckAssignListP.rdlc" />
+    <EmbeddedResource Include="Report\TowTruckAssignRecordP.rdlc" />
+    <EmbeddedResource Include="Report\TrialBalanceP1.rdlc" />
+    <EmbeddedResource Include="Report\TrialBalanceP2.rdlc" />
+    <EmbeddedResource Include="Report\ViolationCaseP.rdlc" />
+    <EmbeddedResource Include="Report\ViolationCaseP_DepNo.rdlc" />
+    <EmbeddedResource Include="Report\ViolationCaseP_Driver.rdlc" />
+    <EmbeddedResource Include="Report\ViolationCaseP_Point.rdlc" />
+    <EmbeddedResource Include="Report\ViolationReportP.rdlc" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>50245</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:50245/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>此專案參考這部電腦上所缺少的 NuGet 套件。請啟用 NuGet 套件還原，以下載該套件。如需詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的檔案是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,236 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="OfficialDocument" targetNamespace="http://tempuri.org/OfficialDocument.xsd" xmlns:mstns="http://tempuri.org/OfficialDocument.xsd" xmlns="http://tempuri.org/OfficialDocument.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="OfficialDocument_PrintTableAdapter" GeneratorDataComponentClassName="OfficialDocument_PrintTableAdapter" Name="OfficialDocument_Print" UserDataComponentName="OfficialDocument_PrintTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="ERPBUS_TEST.dbo.OfficialDocument" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT DocIndex, DocDate, DocYears, DocDep, (SELECT NAME FROM DEPARTMENT WHERE (DEPNO = OfficialDocument.DocDep)) AS DocDep_C, DocFirstWord, (SELECT DocFirstCWord FROM DOCFirstWord WHERE (FWNo = OfficialDocument.DocFirstWord)) AS DocFirstWord_C, DocNo, DocSourceUnit, DocType, (SELECT CLASSTXT FROM DBDICB WHERE (FKEY = CAST('公文收發登記' AS char(16)) + CAST('OfficialDocument' AS char(16)) + 'DocType') AND (CLASSNO = OfficialDocument.DocType)) AS DocType_C, DocTitle, Undertaker, (SELECT NAME FROM EMPLOYEE WHERE (LEAVEDAY IS NULL) AND (EMPNO = OfficialDocument.Undertaker)) AS Undertaker_C, OutsideDocFirstWord, OutsideDocNo, Attachement, Implementation, BuildMan, (SELECT NAME FROM EMPLOYEE AS EMPLOYEE_2 WHERE (LEAVEDAY IS NULL) AND (EMPNO = OfficialDocument.BuildMan)) AS BuildMan_C, BuildDate, Remark, StoreDate, StoreMan, (SELECT NAME FROM EMPLOYEE AS EMPLOYEE_1 WHERE (LEAVEDAY IS NULL) AND (EMPNO = OfficialDocument.StoreMan)) AS StoreMan_C, Remark_Store FROM OfficialDocument WHERE (1 &lt;&gt; 1)</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="DocIndex" DataSetColumn="DocIndex" />
+              <Mapping SourceColumn="DocDate" DataSetColumn="DocDate" />
+              <Mapping SourceColumn="DocYears" DataSetColumn="DocYears" />
+              <Mapping SourceColumn="DocDep" DataSetColumn="DocDep" />
+              <Mapping SourceColumn="DocDep_C" DataSetColumn="DocDep_C" />
+              <Mapping SourceColumn="DocFirstWord" DataSetColumn="DocFirstWord" />
+              <Mapping SourceColumn="DocFirstWord_C" DataSetColumn="DocFirstWord_C" />
+              <Mapping SourceColumn="DocNo" DataSetColumn="DocNo" />
+              <Mapping SourceColumn="DocSourceUnit" DataSetColumn="DocSourceUnit" />
+              <Mapping SourceColumn="DocType" DataSetColumn="DocType" />
+              <Mapping SourceColumn="DocType_C" DataSetColumn="DocType_C" />
+              <Mapping SourceColumn="DocTitle" DataSetColumn="DocTitle" />
+              <Mapping SourceColumn="Undertaker" DataSetColumn="Undertaker" />
+              <Mapping SourceColumn="Undertaker_C" DataSetColumn="Undertaker_C" />
+              <Mapping SourceColumn="OutsideDocFirstWord" DataSetColumn="OutsideDocFirstWord" />
+              <Mapping SourceColumn="OutsideDocNo" DataSetColumn="OutsideDocNo" />
+              <Mapping SourceColumn="Attachement" DataSetColumn="Attachement" />
+              <Mapping SourceColumn="Implementation" DataSetColumn="Implementation" />
+              <Mapping SourceColumn="BuildMan" DataSetColumn="BuildMan" />
+              <Mapping SourceColumn="BuildMan_C" DataSetColumn="BuildMan_C" />
+              <Mapping SourceColumn="BuildDate" DataSetColumn="BuildDate" />
+              <Mapping SourceColumn="Remark" DataSetColumn="Remark" />
+              <Mapping SourceColumn="StoreDate" DataSetColumn="StoreDate" />
+              <Mapping SourceColumn="StoreMan" DataSetColumn="StoreMan" />
+              <Mapping SourceColumn="StoreMan_C" DataSetColumn="StoreMan_C" />
+              <Mapping SourceColumn="Remark_Store" DataSetColumn="Remark_Store" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="OfficialDocument" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="OfficialDocument" msprop:Generator_UserDSName="OfficialDocument">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="OfficialDocument_Print" msprop:Generator_TableClassName="OfficialDocument_PrintDataTable" msprop:Generator_TableVarName="tableOfficialDocument_Print" msprop:Generator_TablePropName="OfficialDocument_Print" msprop:Generator_RowDeletingName="OfficialDocument_PrintRowDeleting" msprop:Generator_RowChangingName="OfficialDocument_PrintRowChanging" msprop:Generator_RowEvHandlerName="OfficialDocument_PrintRowChangeEventHandler" msprop:Generator_RowDeletedName="OfficialDocument_PrintRowDeleted" msprop:Generator_UserTableName="OfficialDocument_Print" msprop:Generator_RowChangedName="OfficialDocument_PrintRowChanged" msprop:Generator_RowEvArgName="OfficialDocument_PrintRowChangeEvent" msprop:Generator_RowClassName="OfficialDocument_PrintRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DocIndex" msprop:Generator_ColumnVarNameInTable="columnDocIndex" msprop:Generator_ColumnPropNameInRow="DocIndex" msprop:Generator_ColumnPropNameInTable="DocIndexColumn" msprop:Generator_UserColumnName="DocIndex">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DocDate" msprop:Generator_ColumnVarNameInTable="columnDocDate" msprop:Generator_ColumnPropNameInRow="DocDate" msprop:Generator_ColumnPropNameInTable="DocDateColumn" msprop:Generator_UserColumnName="DocDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="DocYears" msprop:Generator_ColumnVarNameInTable="columnDocYears" msprop:Generator_ColumnPropNameInRow="DocYears" msprop:Generator_ColumnPropNameInTable="DocYearsColumn" msprop:Generator_UserColumnName="DocYears" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="4" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DocDep" msprop:Generator_ColumnVarNameInTable="columnDocDep" msprop:Generator_ColumnPropNameInRow="DocDep" msprop:Generator_ColumnPropNameInTable="DocDepColumn" msprop:Generator_UserColumnName="DocDep" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DocDep_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDocDep_C" msprop:Generator_ColumnPropNameInRow="DocDep_C" msprop:Generator_ColumnPropNameInTable="DocDep_CColumn" msprop:Generator_UserColumnName="DocDep_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DocFirstWord" msprop:Generator_ColumnVarNameInTable="columnDocFirstWord" msprop:Generator_ColumnPropNameInRow="DocFirstWord" msprop:Generator_ColumnPropNameInTable="DocFirstWordColumn" msprop:Generator_UserColumnName="DocFirstWord" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DocFirstWord_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDocFirstWord_C" msprop:Generator_ColumnPropNameInRow="DocFirstWord_C" msprop:Generator_ColumnPropNameInTable="DocFirstWord_CColumn" msprop:Generator_UserColumnName="DocFirstWord_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="4" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DocNo" msprop:Generator_ColumnVarNameInTable="columnDocNo" msprop:Generator_ColumnPropNameInRow="DocNo" msprop:Generator_ColumnPropNameInTable="DocNoColumn" msprop:Generator_UserColumnName="DocNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="4" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DocSourceUnit" msprop:Generator_ColumnVarNameInTable="columnDocSourceUnit" msprop:Generator_ColumnPropNameInRow="DocSourceUnit" msprop:Generator_ColumnPropNameInTable="DocSourceUnitColumn" msprop:Generator_UserColumnName="DocSourceUnit" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DocType" msprop:Generator_ColumnVarNameInTable="columnDocType" msprop:Generator_ColumnPropNameInRow="DocType" msprop:Generator_ColumnPropNameInTable="DocTypeColumn" msprop:Generator_UserColumnName="DocType" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="4" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DocType_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDocType_C" msprop:Generator_ColumnPropNameInRow="DocType_C" msprop:Generator_ColumnPropNameInTable="DocType_CColumn" msprop:Generator_UserColumnName="DocType_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DocTitle" msprop:Generator_ColumnVarNameInTable="columnDocTitle" msprop:Generator_ColumnPropNameInRow="DocTitle" msprop:Generator_ColumnPropNameInTable="DocTitleColumn" msprop:Generator_UserColumnName="DocTitle" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Undertaker" msprop:Generator_ColumnVarNameInTable="columnUndertaker" msprop:Generator_ColumnPropNameInRow="Undertaker" msprop:Generator_ColumnPropNameInTable="UndertakerColumn" msprop:Generator_UserColumnName="Undertaker" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Undertaker_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnUndertaker_C" msprop:Generator_ColumnPropNameInRow="Undertaker_C" msprop:Generator_ColumnPropNameInTable="Undertaker_CColumn" msprop:Generator_UserColumnName="Undertaker_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="OutsideDocFirstWord" msprop:Generator_ColumnVarNameInTable="columnOutsideDocFirstWord" msprop:Generator_ColumnPropNameInRow="OutsideDocFirstWord" msprop:Generator_ColumnPropNameInTable="OutsideDocFirstWordColumn" msprop:Generator_UserColumnName="OutsideDocFirstWord" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="24" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="OutsideDocNo" msprop:Generator_ColumnVarNameInTable="columnOutsideDocNo" msprop:Generator_ColumnPropNameInRow="OutsideDocNo" msprop:Generator_ColumnPropNameInTable="OutsideDocNoColumn" msprop:Generator_UserColumnName="OutsideDocNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Attachement" msprop:Generator_ColumnVarNameInTable="columnAttachement" msprop:Generator_ColumnPropNameInRow="Attachement" msprop:Generator_ColumnPropNameInTable="AttachementColumn" msprop:Generator_UserColumnName="Attachement" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Implementation" msprop:Generator_ColumnVarNameInTable="columnImplementation" msprop:Generator_ColumnPropNameInRow="Implementation" msprop:Generator_ColumnPropNameInTable="ImplementationColumn" msprop:Generator_UserColumnName="Implementation" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BuildMan" msprop:Generator_ColumnVarNameInTable="columnBuildMan" msprop:Generator_ColumnPropNameInRow="BuildMan" msprop:Generator_ColumnPropNameInTable="BuildManColumn" msprop:Generator_UserColumnName="BuildMan" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BuildMan_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBuildMan_C" msprop:Generator_ColumnPropNameInRow="BuildMan_C" msprop:Generator_ColumnPropNameInTable="BuildMan_CColumn" msprop:Generator_UserColumnName="BuildMan_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BuildDate" msprop:Generator_ColumnVarNameInTable="columnBuildDate" msprop:Generator_ColumnPropNameInRow="BuildDate" msprop:Generator_ColumnPropNameInTable="BuildDateColumn" msprop:Generator_UserColumnName="BuildDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Remark" msprop:Generator_ColumnVarNameInTable="columnRemark" msprop:Generator_ColumnPropNameInRow="Remark" msprop:Generator_ColumnPropNameInTable="RemarkColumn" msprop:Generator_UserColumnName="Remark" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="StoreDate" msprop:Generator_ColumnVarNameInTable="columnStoreDate" msprop:Generator_ColumnPropNameInRow="StoreDate" msprop:Generator_ColumnPropNameInTable="StoreDateColumn" msprop:Generator_UserColumnName="StoreDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="StoreMan" msprop:Generator_ColumnVarNameInTable="columnStoreMan" msprop:Generator_ColumnPropNameInRow="StoreMan" msprop:Generator_ColumnPropNameInTable="StoreManColumn" msprop:Generator_UserColumnName="StoreMan" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="StoreMan_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnStoreMan_C" msprop:Generator_ColumnPropNameInRow="StoreMan_C" msprop:Generator_ColumnPropNameInTable="StoreMan_CColumn" msprop:Generator_UserColumnName="StoreMan_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Remark_Store" msprop:Generator_ColumnVarNameInTable="columnRemark_Store" msprop:Generator_ColumnPropNameInRow="Remark_Store" msprop:Generator_ColumnPropNameInTable="Remark_StoreColumn" msprop:Generator_UserColumnName="Remark_Store" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:OfficialDocument_Print" />
+      <xs:field xpath="mstns:DocIndex" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

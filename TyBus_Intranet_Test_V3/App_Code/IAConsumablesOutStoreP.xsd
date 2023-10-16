@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="IAConsumablesOutStoreP" targetNamespace="http://tempuri.org/IAConsumablesOutStoreP.xsd" xmlns:mstns="http://tempuri.org/IAConsumablesOutStoreP.xsd" xmlns="http://tempuri.org/IAConsumablesOutStoreP.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="IASheetATableAdapter" GeneratorDataComponentClassName="IASheetATableAdapter" Name="IASheetA" UserDataComponentName="IASheetATableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="ERPBUS_TEST.dbo.IASheetA" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>select SheetNo, DepNo, (select [Name] from Department where DepNo = ia.DepNo) DepName
+ from IASheetA ia where isnull(SheetNo, '') = ''</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="SheetNo" DataSetColumn="SheetNo" />
+              <Mapping SourceColumn="DepNo" DataSetColumn="DepNo" />
+              <Mapping SourceColumn="DepName" DataSetColumn="DepName" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="IASheetBTableAdapter" GeneratorDataComponentClassName="IASheetBTableAdapter" Name="IASheetB" UserDataComponentName="IASheetBTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>select SheetNoItems, SheetNo, Items, ic.ConsNo, ic.ConsName, ib.Quantity, ic.OriModelNo
+from IASheetB ib left join IAConsumables ic on ic.ConsNo = ib.ConsNo
+where isnull(SheetNoItems, '') = ''</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="SheetNoItems" DataSetColumn="SheetNoItems" />
+              <Mapping SourceColumn="SheetNo" DataSetColumn="SheetNo" />
+              <Mapping SourceColumn="Items" DataSetColumn="Items" />
+              <Mapping SourceColumn="ConsNo" DataSetColumn="ConsNo" />
+              <Mapping SourceColumn="Quantity" DataSetColumn="Quantity" />
+              <Mapping SourceColumn="ConsName" DataSetColumn="ConsName" />
+              <Mapping SourceColumn="OriModelNo" DataSetColumn="OriModelNo" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="IAConsumablesOutStoreP" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="IAConsumablesOutStoreP" msprop:Generator_UserDSName="IAConsumablesOutStoreP">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="IASheetA" msprop:Generator_TableClassName="IASheetADataTable" msprop:Generator_TableVarName="tableIASheetA" msprop:Generator_RowChangedName="IASheetARowChanged" msprop:Generator_TablePropName="IASheetA" msprop:Generator_RowDeletingName="IASheetARowDeleting" msprop:Generator_RowChangingName="IASheetARowChanging" msprop:Generator_RowEvHandlerName="IASheetARowChangeEventHandler" msprop:Generator_RowDeletedName="IASheetARowDeleted" msprop:Generator_RowClassName="IASheetARow" msprop:Generator_UserTableName="IASheetA" msprop:Generator_RowEvArgName="IASheetARowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SheetNo" msprop:Generator_ColumnVarNameInTable="columnSheetNo" msprop:Generator_ColumnPropNameInRow="SheetNo" msprop:Generator_ColumnPropNameInTable="SheetNoColumn" msprop:Generator_UserColumnName="SheetNo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="16" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepNo" msprop:Generator_ColumnVarNameInTable="columnDepNo" msprop:Generator_ColumnPropNameInRow="DepNo" msprop:Generator_ColumnPropNameInTable="DepNoColumn" msprop:Generator_UserColumnName="DepNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepName" msprop:Generator_ColumnPropNameInRow="DepName" msprop:Generator_ColumnPropNameInTable="DepNameColumn" msprop:Generator_UserColumnName="DepName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="IASheetB" msprop:Generator_TableClassName="IASheetBDataTable" msprop:Generator_TableVarName="tableIASheetB" msprop:Generator_RowChangedName="IASheetBRowChanged" msprop:Generator_TablePropName="IASheetB" msprop:Generator_RowDeletingName="IASheetBRowDeleting" msprop:Generator_RowChangingName="IASheetBRowChanging" msprop:Generator_RowEvHandlerName="IASheetBRowChangeEventHandler" msprop:Generator_RowDeletedName="IASheetBRowDeleted" msprop:Generator_RowClassName="IASheetBRow" msprop:Generator_UserTableName="IASheetB" msprop:Generator_RowEvArgName="IASheetBRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SheetNoItems" msprop:Generator_ColumnVarNameInTable="columnSheetNoItems" msprop:Generator_ColumnPropNameInRow="SheetNoItems" msprop:Generator_ColumnPropNameInTable="SheetNoItemsColumn" msprop:Generator_UserColumnName="SheetNoItems">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="24" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="SheetNo" msprop:Generator_ColumnVarNameInTable="columnSheetNo" msprop:Generator_ColumnPropNameInRow="SheetNo" msprop:Generator_ColumnPropNameInTable="SheetNoColumn" msprop:Generator_UserColumnName="SheetNo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="16" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Items" msprop:Generator_ColumnVarNameInTable="columnItems" msprop:Generator_ColumnPropNameInRow="Items" msprop:Generator_ColumnPropNameInTable="ItemsColumn" msprop:Generator_UserColumnName="Items">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="4" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ConsNo" msprop:Generator_ColumnVarNameInTable="columnConsNo" msprop:Generator_ColumnPropNameInRow="ConsNo" msprop:Generator_ColumnPropNameInTable="ConsNoColumn" msprop:Generator_UserColumnName="ConsNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="24" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Quantity" msprop:Generator_ColumnVarNameInTable="columnQuantity" msprop:Generator_ColumnPropNameInRow="Quantity" msprop:Generator_ColumnPropNameInTable="QuantityColumn" msprop:Generator_UserColumnName="Quantity" type="xs:int" minOccurs="0" />
+              <xs:element name="ConsName" msprop:Generator_ColumnVarNameInTable="columnConsName" msprop:Generator_ColumnPropNameInRow="ConsName" msprop:Generator_ColumnPropNameInTable="ConsNameColumn" msprop:Generator_UserColumnName="ConsName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="OriModelNo" msprop:Generator_ColumnVarNameInTable="columnOriModelNo" msprop:Generator_ColumnPropNameInRow="OriModelNo" msprop:Generator_ColumnPropNameInTable="OriModelNoColumn" msprop:Generator_UserColumnName="OriModelNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:IASheetA" />
+      <xs:field xpath="mstns:SheetNo" />
+    </xs:unique>
+    <xs:unique name="IASheetB_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:IASheetB" />
+      <xs:field xpath="mstns:SheetNoItems" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

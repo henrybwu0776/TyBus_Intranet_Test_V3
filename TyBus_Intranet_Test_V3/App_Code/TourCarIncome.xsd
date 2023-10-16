@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="TourCarIncome" targetNamespace="http://tempuri.org/TourCarIncome.xsd" xmlns:mstns="http://tempuri.org/TourCarIncome.xsd" xmlns="http://tempuri.org/TourCarIncome.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="TourCarIncomeTableAdapter" GeneratorDataComponentClassName="TourCarIncomeTableAdapter" Name="TourCarIncome" UserDataComponentName="TourCarIncomeTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          CAST('' AS nvarchar) AS CalYM_C, CAST('' AS nvarchar) AS Items, CAST('' AS nvarchar) AS Items_C, CAST(0 AS float) 
+                            AS 金額_11, CAST(0 AS float) AS 金額_13, CAST(0 AS float) AS 金額_15, CAST(0 AS float) AS 金額_16, CAST(0 AS float) 
+                            AS 金額_17, CAST(0 AS float) AS 金額_18, CAST(0 AS float) AS 金額_19, CAST(0 AS float) AS 金額_20, CAST(0 AS float) 
+                            AS 金額_22, CAST(0 AS float) AS 金額_23, CAST(0 AS float) AS 金額_25, CAST(0 AS float) AS 金額_99, CAST(0 AS float) 
+                            AS 公里收支_11, CAST(0 AS float) AS 公里收支_13, CAST(0 AS float) AS 公里收支_15, CAST(0 AS float) 
+                            AS 公里收支_16, CAST(0 AS float) AS 公里收支_17, CAST(0 AS float) AS 公里收支_18, CAST(0 AS float) 
+                            AS 公里收支_19, CAST(0 AS float) AS 公里收支_20, CAST(0 AS float) AS 公里收支_22, CAST(0 AS float) 
+                            AS 公里收支_23, CAST(0 AS float) AS 公里收支_25, CAST(0 AS float) AS 公里收支_99</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="CalYM_C" DataSetColumn="CalYM_C" />
+              <Mapping SourceColumn="Items" DataSetColumn="Items" />
+              <Mapping SourceColumn="Items_C" DataSetColumn="Items_C" />
+              <Mapping SourceColumn="金額_11" DataSetColumn="金額_11" />
+              <Mapping SourceColumn="金額_13" DataSetColumn="金額_13" />
+              <Mapping SourceColumn="金額_15" DataSetColumn="金額_15" />
+              <Mapping SourceColumn="金額_16" DataSetColumn="金額_16" />
+              <Mapping SourceColumn="金額_17" DataSetColumn="金額_17" />
+              <Mapping SourceColumn="金額_18" DataSetColumn="金額_18" />
+              <Mapping SourceColumn="金額_19" DataSetColumn="金額_19" />
+              <Mapping SourceColumn="金額_20" DataSetColumn="金額_20" />
+              <Mapping SourceColumn="金額_22" DataSetColumn="金額_22" />
+              <Mapping SourceColumn="金額_23" DataSetColumn="金額_23" />
+              <Mapping SourceColumn="金額_25" DataSetColumn="金額_25" />
+              <Mapping SourceColumn="金額_99" DataSetColumn="金額_99" />
+              <Mapping SourceColumn="公里收支_11" DataSetColumn="公里收支_11" />
+              <Mapping SourceColumn="公里收支_13" DataSetColumn="公里收支_13" />
+              <Mapping SourceColumn="公里收支_15" DataSetColumn="公里收支_15" />
+              <Mapping SourceColumn="公里收支_16" DataSetColumn="公里收支_16" />
+              <Mapping SourceColumn="公里收支_17" DataSetColumn="公里收支_17" />
+              <Mapping SourceColumn="公里收支_18" DataSetColumn="公里收支_18" />
+              <Mapping SourceColumn="公里收支_19" DataSetColumn="公里收支_19" />
+              <Mapping SourceColumn="公里收支_20" DataSetColumn="公里收支_20" />
+              <Mapping SourceColumn="公里收支_22" DataSetColumn="公里收支_22" />
+              <Mapping SourceColumn="公里收支_23" DataSetColumn="公里收支_23" />
+              <Mapping SourceColumn="公里收支_25" DataSetColumn="公里收支_25" />
+              <Mapping SourceColumn="公里收支_99" DataSetColumn="公里收支_99" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="TourCarIncome" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="TourCarIncome" msprop:Generator_UserDSName="TourCarIncome">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="TourCarIncome" msprop:Generator_TableClassName="TourCarIncomeDataTable" msprop:Generator_TableVarName="tableTourCarIncome" msprop:Generator_TablePropName="_TourCarIncome" msprop:Generator_RowDeletingName="TourCarIncomeRowDeleting" msprop:Generator_RowChangingName="TourCarIncomeRowChanging" msprop:Generator_RowEvHandlerName="TourCarIncomeRowChangeEventHandler" msprop:Generator_RowDeletedName="TourCarIncomeRowDeleted" msprop:Generator_UserTableName="TourCarIncome" msprop:Generator_RowChangedName="TourCarIncomeRowChanged" msprop:Generator_RowEvArgName="TourCarIncomeRowChangeEvent" msprop:Generator_RowClassName="TourCarIncomeRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CalYM_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnCalYM_C" msprop:Generator_ColumnPropNameInRow="CalYM_C" msprop:Generator_ColumnPropNameInTable="CalYM_CColumn" msprop:Generator_UserColumnName="CalYM_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Items" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnItems" msprop:Generator_ColumnPropNameInRow="Items" msprop:Generator_ColumnPropNameInTable="ItemsColumn" msprop:Generator_UserColumnName="Items" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Items_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnItems_C" msprop:Generator_ColumnPropNameInRow="Items_C" msprop:Generator_ColumnPropNameInTable="Items_CColumn" msprop:Generator_UserColumnName="Items_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="金額_11" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column金額_11" msprop:Generator_ColumnPropNameInRow="金額_11" msprop:Generator_ColumnPropNameInTable="金額_11Column" msprop:Generator_UserColumnName="金額_11" type="xs:double" minOccurs="0" />
+              <xs:element name="金額_13" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column金額_13" msprop:Generator_ColumnPropNameInRow="金額_13" msprop:Generator_ColumnPropNameInTable="金額_13Column" msprop:Generator_UserColumnName="金額_13" type="xs:double" minOccurs="0" />
+              <xs:element name="金額_15" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column金額_15" msprop:Generator_ColumnPropNameInRow="金額_15" msprop:Generator_ColumnPropNameInTable="金額_15Column" msprop:Generator_UserColumnName="金額_15" type="xs:double" minOccurs="0" />
+              <xs:element name="金額_16" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column金額_16" msprop:Generator_ColumnPropNameInRow="金額_16" msprop:Generator_ColumnPropNameInTable="金額_16Column" msprop:Generator_UserColumnName="金額_16" type="xs:double" minOccurs="0" />
+              <xs:element name="金額_17" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column金額_17" msprop:Generator_ColumnPropNameInRow="金額_17" msprop:Generator_ColumnPropNameInTable="金額_17Column" msprop:Generator_UserColumnName="金額_17" type="xs:double" minOccurs="0" />
+              <xs:element name="金額_18" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column金額_18" msprop:Generator_ColumnPropNameInRow="金額_18" msprop:Generator_ColumnPropNameInTable="金額_18Column" msprop:Generator_UserColumnName="金額_18" type="xs:double" minOccurs="0" />
+              <xs:element name="金額_19" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column金額_19" msprop:Generator_ColumnPropNameInRow="金額_19" msprop:Generator_ColumnPropNameInTable="金額_19Column" msprop:Generator_UserColumnName="金額_19" type="xs:double" minOccurs="0" />
+              <xs:element name="金額_20" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column金額_20" msprop:Generator_ColumnPropNameInRow="金額_20" msprop:Generator_ColumnPropNameInTable="金額_20Column" msprop:Generator_UserColumnName="金額_20" type="xs:double" minOccurs="0" />
+              <xs:element name="金額_22" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column金額_22" msprop:Generator_ColumnPropNameInRow="金額_22" msprop:Generator_ColumnPropNameInTable="金額_22Column" msprop:Generator_UserColumnName="金額_22" type="xs:double" minOccurs="0" />
+              <xs:element name="金額_23" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column金額_23" msprop:Generator_ColumnPropNameInRow="金額_23" msprop:Generator_ColumnPropNameInTable="金額_23Column" msprop:Generator_UserColumnName="金額_23" type="xs:double" minOccurs="0" />
+              <xs:element name="金額_25" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column金額_25" msprop:Generator_ColumnPropNameInRow="金額_25" msprop:Generator_ColumnPropNameInTable="金額_25Column" msprop:Generator_UserColumnName="金額_25" type="xs:double" minOccurs="0" />
+              <xs:element name="金額_99" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column金額_99" msprop:Generator_ColumnPropNameInRow="金額_99" msprop:Generator_ColumnPropNameInTable="金額_99Column" msprop:Generator_UserColumnName="金額_99" type="xs:double" minOccurs="0" />
+              <xs:element name="公里收支_11" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column公里收支_11" msprop:Generator_ColumnPropNameInRow="公里收支_11" msprop:Generator_ColumnPropNameInTable="公里收支_11Column" msprop:Generator_UserColumnName="公里收支_11" type="xs:double" minOccurs="0" />
+              <xs:element name="公里收支_13" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column公里收支_13" msprop:Generator_ColumnPropNameInRow="公里收支_13" msprop:Generator_ColumnPropNameInTable="公里收支_13Column" msprop:Generator_UserColumnName="公里收支_13" type="xs:double" minOccurs="0" />
+              <xs:element name="公里收支_15" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column公里收支_15" msprop:Generator_ColumnPropNameInRow="公里收支_15" msprop:Generator_ColumnPropNameInTable="公里收支_15Column" msprop:Generator_UserColumnName="公里收支_15" type="xs:double" minOccurs="0" />
+              <xs:element name="公里收支_16" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column公里收支_16" msprop:Generator_ColumnPropNameInRow="公里收支_16" msprop:Generator_ColumnPropNameInTable="公里收支_16Column" msprop:Generator_UserColumnName="公里收支_16" type="xs:double" minOccurs="0" />
+              <xs:element name="公里收支_17" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column公里收支_17" msprop:Generator_ColumnPropNameInRow="公里收支_17" msprop:Generator_ColumnPropNameInTable="公里收支_17Column" msprop:Generator_UserColumnName="公里收支_17" type="xs:double" minOccurs="0" />
+              <xs:element name="公里收支_18" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column公里收支_18" msprop:Generator_ColumnPropNameInRow="公里收支_18" msprop:Generator_ColumnPropNameInTable="公里收支_18Column" msprop:Generator_UserColumnName="公里收支_18" type="xs:double" minOccurs="0" />
+              <xs:element name="公里收支_19" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column公里收支_19" msprop:Generator_ColumnPropNameInRow="公里收支_19" msprop:Generator_ColumnPropNameInTable="公里收支_19Column" msprop:Generator_UserColumnName="公里收支_19" type="xs:double" minOccurs="0" />
+              <xs:element name="公里收支_20" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column公里收支_20" msprop:Generator_ColumnPropNameInRow="公里收支_20" msprop:Generator_ColumnPropNameInTable="公里收支_20Column" msprop:Generator_UserColumnName="公里收支_20" type="xs:double" minOccurs="0" />
+              <xs:element name="公里收支_22" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column公里收支_22" msprop:Generator_ColumnPropNameInRow="公里收支_22" msprop:Generator_ColumnPropNameInTable="公里收支_22Column" msprop:Generator_UserColumnName="公里收支_22" type="xs:double" minOccurs="0" />
+              <xs:element name="公里收支_23" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column公里收支_23" msprop:Generator_ColumnPropNameInRow="公里收支_23" msprop:Generator_ColumnPropNameInTable="公里收支_23Column" msprop:Generator_UserColumnName="公里收支_23" type="xs:double" minOccurs="0" />
+              <xs:element name="公里收支_25" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column公里收支_25" msprop:Generator_ColumnPropNameInRow="公里收支_25" msprop:Generator_ColumnPropNameInTable="公里收支_25Column" msprop:Generator_UserColumnName="公里收支_25" type="xs:double" minOccurs="0" />
+              <xs:element name="公里收支_99" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column公里收支_99" msprop:Generator_ColumnPropNameInRow="公里收支_99" msprop:Generator_ColumnPropNameInTable="公里收支_99Column" msprop:Generator_UserColumnName="公里收支_99" type="xs:double" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

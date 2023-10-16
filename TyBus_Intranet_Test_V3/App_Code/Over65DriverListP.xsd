@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Over65DriverListP" targetNamespace="http://tempuri.org/Over65DriverListP.xsd" xmlns:mstns="http://tempuri.org/Over65DriverListP.xsd" xmlns="http://tempuri.org/Over65DriverListP.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="Over65DriverListPTableAdapter" GeneratorDataComponentClassName="Over65DriverListPTableAdapter" Name="Over65DriverListP" UserDataComponentName="Over65DriverListPTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="ERPBUS_TEST.dbo.EMPLOYEE" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>select DepNo, (select [Name] from Department where DepNo = e.DepNo) DepName, 
+       EmpNo, [Name],
+       STUFF(CONVERT(VARCHAR(10), Birthday, 111), 1, 4,  YEAR(Birthday)-1911) as Birthday,
+       IDCardNo,
+       STUFF(CONVERT(VARCHAR(10), LicenceCheck, 111), 1, 4,  YEAR(LicenceCheck)-1911) as LicenceCheck,
+       STUFF(CONVERT(VARCHAR(10), BBCall, 111), 1, 4,  YEAR(BBCall)-1911) as BBCall 
+  from Employee e 
+WHERE          (ISNULL(EMPNO, '') = '')</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="DepName" DataSetColumn="DepName" />
+              <Mapping SourceColumn="DepNo" DataSetColumn="DepNo" />
+              <Mapping SourceColumn="EmpNo" DataSetColumn="EmpNo" />
+              <Mapping SourceColumn="Name" DataSetColumn="Name" />
+              <Mapping SourceColumn="Birthday" DataSetColumn="Birthday" />
+              <Mapping SourceColumn="IDCardNo" DataSetColumn="IDCardNo" />
+              <Mapping SourceColumn="LicenceCheck" DataSetColumn="LicenceCheck" />
+              <Mapping SourceColumn="BBCall" DataSetColumn="BBCall" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="Over65DriverListP" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="Over65DriverListP" msprop:Generator_UserDSName="Over65DriverListP">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Over65DriverListP" msprop:Generator_TableClassName="Over65DriverListPDataTable" msprop:Generator_TableVarName="tableOver65DriverListP" msprop:Generator_RowChangedName="Over65DriverListPRowChanged" msprop:Generator_TablePropName="_Over65DriverListP" msprop:Generator_RowDeletingName="Over65DriverListPRowDeleting" msprop:Generator_RowChangingName="Over65DriverListPRowChanging" msprop:Generator_RowEvHandlerName="Over65DriverListPRowChangeEventHandler" msprop:Generator_RowDeletedName="Over65DriverListPRowDeleted" msprop:Generator_RowClassName="Over65DriverListPRow" msprop:Generator_UserTableName="Over65DriverListP" msprop:Generator_RowEvArgName="Over65DriverListPRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DepName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepName" msprop:Generator_ColumnPropNameInRow="DepName" msprop:Generator_ColumnPropNameInTable="DepNameColumn" msprop:Generator_UserColumnName="DepName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepNo" msprop:Generator_ColumnVarNameInTable="columnDepNo" msprop:Generator_ColumnPropNameInRow="DepNo" msprop:Generator_ColumnPropNameInTable="DepNoColumn" msprop:Generator_UserColumnName="DepNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EmpNo" msprop:Generator_ColumnVarNameInTable="columnEmpNo" msprop:Generator_ColumnPropNameInRow="EmpNo" msprop:Generator_ColumnPropNameInTable="EmpNoColumn" msprop:Generator_UserColumnName="EmpNo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Name" msprop:Generator_ColumnVarNameInTable="columnName" msprop:Generator_ColumnPropNameInRow="Name" msprop:Generator_ColumnPropNameInTable="NameColumn" msprop:Generator_UserColumnName="Name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Birthday" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBirthday" msprop:Generator_ColumnPropNameInRow="Birthday" msprop:Generator_ColumnPropNameInTable="BirthdayColumn" msprop:Generator_UserColumnName="Birthday" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="18" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IDCardNo" msprop:Generator_ColumnVarNameInTable="columnIDCardNo" msprop:Generator_ColumnPropNameInRow="IDCardNo" msprop:Generator_ColumnPropNameInTable="IDCardNoColumn" msprop:Generator_UserColumnName="IDCardNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="LicenceCheck" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnLicenceCheck" msprop:Generator_ColumnPropNameInRow="LicenceCheck" msprop:Generator_ColumnPropNameInTable="LicenceCheckColumn" msprop:Generator_UserColumnName="LicenceCheck" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="18" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BBCall" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBBCall" msprop:Generator_ColumnPropNameInRow="BBCall" msprop:Generator_ColumnPropNameInTable="BBCallColumn" msprop:Generator_UserColumnName="BBCall" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="18" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Over65DriverListP" />
+      <xs:field xpath="mstns:EmpNo" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

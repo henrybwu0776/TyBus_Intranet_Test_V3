@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="AdviceReportP" targetNamespace="http://tempuri.org/AdviceReportP.xsd" xmlns:mstns="http://tempuri.org/AdviceReportP.xsd" xmlns="http://tempuri.org/AdviceReportP.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="AdviceReportPTableAdapter" GeneratorDataComponentClassName="AdviceReportPTableAdapter" Name="AdviceReportP" UserDataComponentName="AdviceReportPTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="ERPBUS_TEST.dbo.AdviceReport" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT CaseNo, DepNo, (SELECT NAME FROM DEPARTMENT WHERE (DEPNO = a.DepNo)) AS DepName, EmpNo, EmpName, Title, (SELECT CLASSTXT FROM DBDICB WHERE (FKEY = '員工資料        EMPLOYEE        TITLE') AND (CLASSNO = a.Title)) AS Title_C, CaseDate, CaseTime, Position, CaseNote, Remark, DenialReason, BuDate, BuMan, (SELECT NAME FROM EMPLOYEE WHERE (EMPNO = a.BuMan)) AS BuManName, ModifyDate, ModifyMan, (SELECT NAME FROM EMPLOYEE AS EMPLOYEE_1 WHERE (EMPNO = a.ModifyMan)) AS ModifyManName, SourceType, IsClose, (SELECT CLASSTXT FROM DBDICB AS DBDICB_1 WHERE (CLASSNO = a.IsClose) AND (FKEY = '')) AS IsClose_C FROM AdviceReport AS a WHERE (1 &lt;&gt; 1)</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="CaseNo" DataSetColumn="CaseNo" />
+              <Mapping SourceColumn="DepNo" DataSetColumn="DepNo" />
+              <Mapping SourceColumn="DepName" DataSetColumn="DepName" />
+              <Mapping SourceColumn="EmpNo" DataSetColumn="EmpNo" />
+              <Mapping SourceColumn="EmpName" DataSetColumn="EmpName" />
+              <Mapping SourceColumn="Title" DataSetColumn="Title" />
+              <Mapping SourceColumn="Title_C" DataSetColumn="Title_C" />
+              <Mapping SourceColumn="CaseDate" DataSetColumn="CaseDate" />
+              <Mapping SourceColumn="CaseTime" DataSetColumn="CaseTime" />
+              <Mapping SourceColumn="Position" DataSetColumn="Position" />
+              <Mapping SourceColumn="CaseNote" DataSetColumn="CaseNote" />
+              <Mapping SourceColumn="Remark" DataSetColumn="Remark" />
+              <Mapping SourceColumn="DenialReason" DataSetColumn="DenialReason" />
+              <Mapping SourceColumn="BuDate" DataSetColumn="BuDate" />
+              <Mapping SourceColumn="BuMan" DataSetColumn="BuMan" />
+              <Mapping SourceColumn="BuManName" DataSetColumn="BuManName" />
+              <Mapping SourceColumn="ModifyDate" DataSetColumn="ModifyDate" />
+              <Mapping SourceColumn="ModifyMan" DataSetColumn="ModifyMan" />
+              <Mapping SourceColumn="ModifyManName" DataSetColumn="ModifyManName" />
+              <Mapping SourceColumn="SourceType" DataSetColumn="SourceType" />
+              <Mapping SourceColumn="IsClose" DataSetColumn="IsClose" />
+              <Mapping SourceColumn="IsClose_C" DataSetColumn="IsClose_C" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="AdviceReportP" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="AdviceReportP" msprop:Generator_UserDSName="AdviceReportP">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="AdviceReportP" msprop:Generator_TableClassName="AdviceReportPDataTable" msprop:Generator_TableVarName="tableAdviceReportP" msprop:Generator_RowChangedName="AdviceReportPRowChanged" msprop:Generator_TablePropName="_AdviceReportP" msprop:Generator_RowDeletingName="AdviceReportPRowDeleting" msprop:Generator_RowChangingName="AdviceReportPRowChanging" msprop:Generator_RowEvHandlerName="AdviceReportPRowChangeEventHandler" msprop:Generator_RowDeletedName="AdviceReportPRowDeleted" msprop:Generator_RowClassName="AdviceReportPRow" msprop:Generator_UserTableName="AdviceReportP" msprop:Generator_RowEvArgName="AdviceReportPRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CaseNo" msprop:Generator_ColumnVarNameInTable="columnCaseNo" msprop:Generator_ColumnPropNameInRow="CaseNo" msprop:Generator_ColumnPropNameInTable="CaseNoColumn" msprop:Generator_UserColumnName="CaseNo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepNo" msprop:Generator_ColumnVarNameInTable="columnDepNo" msprop:Generator_ColumnPropNameInRow="DepNo" msprop:Generator_ColumnPropNameInTable="DepNoColumn" msprop:Generator_UserColumnName="DepNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepName" msprop:Generator_ColumnPropNameInRow="DepName" msprop:Generator_ColumnPropNameInTable="DepNameColumn" msprop:Generator_UserColumnName="DepName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EmpNo" msprop:Generator_ColumnVarNameInTable="columnEmpNo" msprop:Generator_ColumnPropNameInRow="EmpNo" msprop:Generator_ColumnPropNameInTable="EmpNoColumn" msprop:Generator_UserColumnName="EmpNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EmpName" msprop:Generator_ColumnVarNameInTable="columnEmpName" msprop:Generator_ColumnPropNameInRow="EmpName" msprop:Generator_ColumnPropNameInTable="EmpNameColumn" msprop:Generator_UserColumnName="EmpName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Title" msprop:Generator_ColumnVarNameInTable="columnTitle" msprop:Generator_ColumnPropNameInRow="Title" msprop:Generator_ColumnPropNameInTable="TitleColumn" msprop:Generator_UserColumnName="Title" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="4" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Title_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTitle_C" msprop:Generator_ColumnPropNameInRow="Title_C" msprop:Generator_ColumnPropNameInTable="Title_CColumn" msprop:Generator_UserColumnName="Title_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CaseDate" msprop:Generator_ColumnVarNameInTable="columnCaseDate" msprop:Generator_ColumnPropNameInRow="CaseDate" msprop:Generator_ColumnPropNameInTable="CaseDateColumn" msprop:Generator_UserColumnName="CaseDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="CaseTime" msprop:Generator_ColumnVarNameInTable="columnCaseTime" msprop:Generator_ColumnPropNameInRow="CaseTime" msprop:Generator_ColumnPropNameInTable="CaseTimeColumn" msprop:Generator_UserColumnName="CaseTime" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="6" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Position" msprop:Generator_ColumnVarNameInTable="columnPosition" msprop:Generator_ColumnPropNameInRow="Position" msprop:Generator_ColumnPropNameInTable="PositionColumn" msprop:Generator_UserColumnName="Position" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="256" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CaseNote" msprop:Generator_ColumnVarNameInTable="columnCaseNote" msprop:Generator_ColumnPropNameInRow="CaseNote" msprop:Generator_ColumnPropNameInTable="CaseNoteColumn" msprop:Generator_UserColumnName="CaseNote" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Remark" msprop:Generator_ColumnVarNameInTable="columnRemark" msprop:Generator_ColumnPropNameInRow="Remark" msprop:Generator_ColumnPropNameInTable="RemarkColumn" msprop:Generator_UserColumnName="Remark" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DenialReason" msprop:Generator_ColumnVarNameInTable="columnDenialReason" msprop:Generator_ColumnPropNameInRow="DenialReason" msprop:Generator_ColumnPropNameInTable="DenialReasonColumn" msprop:Generator_UserColumnName="DenialReason" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BuDate" msprop:Generator_ColumnVarNameInTable="columnBuDate" msprop:Generator_ColumnPropNameInRow="BuDate" msprop:Generator_ColumnPropNameInTable="BuDateColumn" msprop:Generator_UserColumnName="BuDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="BuMan" msprop:Generator_ColumnVarNameInTable="columnBuMan" msprop:Generator_ColumnPropNameInRow="BuMan" msprop:Generator_ColumnPropNameInTable="BuManColumn" msprop:Generator_UserColumnName="BuMan" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BuManName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBuManName" msprop:Generator_ColumnPropNameInRow="BuManName" msprop:Generator_ColumnPropNameInTable="BuManNameColumn" msprop:Generator_UserColumnName="BuManName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ModifyDate" msprop:Generator_ColumnVarNameInTable="columnModifyDate" msprop:Generator_ColumnPropNameInRow="ModifyDate" msprop:Generator_ColumnPropNameInTable="ModifyDateColumn" msprop:Generator_UserColumnName="ModifyDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="ModifyMan" msprop:Generator_ColumnVarNameInTable="columnModifyMan" msprop:Generator_ColumnPropNameInRow="ModifyMan" msprop:Generator_ColumnPropNameInTable="ModifyManColumn" msprop:Generator_UserColumnName="ModifyMan" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ModifyManName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnModifyManName" msprop:Generator_ColumnPropNameInRow="ModifyManName" msprop:Generator_ColumnPropNameInTable="ModifyManNameColumn" msprop:Generator_UserColumnName="ModifyManName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="SourceType" msprop:Generator_ColumnVarNameInTable="columnSourceType" msprop:Generator_ColumnPropNameInRow="SourceType" msprop:Generator_ColumnPropNameInTable="SourceTypeColumn" msprop:Generator_UserColumnName="SourceType" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IsClose" msprop:Generator_ColumnVarNameInTable="columnIsClose" msprop:Generator_ColumnPropNameInRow="IsClose" msprop:Generator_ColumnPropNameInTable="IsCloseColumn" msprop:Generator_UserColumnName="IsClose" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="4" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IsClose_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnIsClose_C" msprop:Generator_ColumnPropNameInRow="IsClose_C" msprop:Generator_ColumnPropNameInTable="IsClose_CColumn" msprop:Generator_UserColumnName="IsClose_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:AdviceReportP" />
+      <xs:field xpath="mstns:CaseNo" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

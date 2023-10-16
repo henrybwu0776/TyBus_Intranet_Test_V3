@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="RunsheetDailyCheckP" targetNamespace="http://tempuri.org/RunsheetDailyCheckP.xsd" xmlns:mstns="http://tempuri.org/RunsheetDailyCheckP.xsd" xmlns="http://tempuri.org/RunsheetDailyCheckP.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="RunsheetDailyCheckPTableAdapter" GeneratorDataComponentClassName="RunsheetDailyCheckPTableAdapter" Name="RunsheetDailyCheckP" UserDataComponentName="RunsheetDailyCheckPTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="ERPBUS_TEST.dbo.RunsheetDailyCheck" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          CaseNo, CaseDate, DepNo,
+                                (SELECT          NAME
+                                  FROM               DEPARTMENT
+                                  WHERE           (DEPNO = r.DepNo)) AS DepName, Car_ID, Driver, DriverName, Remark, Inspector,
+                                (SELECT          NAME
+                                  FROM               EMPLOYEE
+                                  WHERE           (EMPNO = r.Inspector)) AS InspectorName, BuDate, BuMan,
+                                (SELECT          NAME
+                                  FROM               EMPLOYEE AS EMPLOYEE_2
+                                  WHERE           (EMPNO = r.BuMan)) AS BuManName, ModifyDate, ModifyMan,
+                                (SELECT          NAME
+                                  FROM               EMPLOYEE AS EMPLOYEE_1
+                                  WHERE           (EMPNO = r.ModifyMan)) AS ModifyManName
+FROM              RunsheetDailyCheck AS r
+WHERE          (1 &lt;&gt; 1)</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="CaseNo" DataSetColumn="CaseNo" />
+              <Mapping SourceColumn="CaseDate" DataSetColumn="CaseDate" />
+              <Mapping SourceColumn="DepNo" DataSetColumn="DepNo" />
+              <Mapping SourceColumn="DepName" DataSetColumn="DepName" />
+              <Mapping SourceColumn="Car_ID" DataSetColumn="Car_ID" />
+              <Mapping SourceColumn="Driver" DataSetColumn="Driver" />
+              <Mapping SourceColumn="DriverName" DataSetColumn="DriverName" />
+              <Mapping SourceColumn="Remark" DataSetColumn="Remark" />
+              <Mapping SourceColumn="Inspector" DataSetColumn="Inspector" />
+              <Mapping SourceColumn="InspectorName" DataSetColumn="InspectorName" />
+              <Mapping SourceColumn="BuDate" DataSetColumn="BuDate" />
+              <Mapping SourceColumn="BuMan" DataSetColumn="BuMan" />
+              <Mapping SourceColumn="BuManName" DataSetColumn="BuManName" />
+              <Mapping SourceColumn="ModifyDate" DataSetColumn="ModifyDate" />
+              <Mapping SourceColumn="ModifyMan" DataSetColumn="ModifyMan" />
+              <Mapping SourceColumn="ModifyManName" DataSetColumn="ModifyManName" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="RunsheetDailyCheckP" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="RunsheetDailyCheckP" msprop:Generator_UserDSName="RunsheetDailyCheckP">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="RunsheetDailyCheckP" msprop:Generator_TableClassName="RunsheetDailyCheckPDataTable" msprop:Generator_TableVarName="tableRunsheetDailyCheckP" msprop:Generator_TablePropName="_RunsheetDailyCheckP" msprop:Generator_RowDeletingName="RunsheetDailyCheckPRowDeleting" msprop:Generator_RowChangingName="RunsheetDailyCheckPRowChanging" msprop:Generator_RowEvHandlerName="RunsheetDailyCheckPRowChangeEventHandler" msprop:Generator_RowDeletedName="RunsheetDailyCheckPRowDeleted" msprop:Generator_UserTableName="RunsheetDailyCheckP" msprop:Generator_RowChangedName="RunsheetDailyCheckPRowChanged" msprop:Generator_RowEvArgName="RunsheetDailyCheckPRowChangeEvent" msprop:Generator_RowClassName="RunsheetDailyCheckPRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CaseNo" msprop:Generator_ColumnVarNameInTable="columnCaseNo" msprop:Generator_ColumnPropNameInRow="CaseNo" msprop:Generator_ColumnPropNameInTable="CaseNoColumn" msprop:Generator_UserColumnName="CaseNo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CaseDate" msprop:Generator_ColumnVarNameInTable="columnCaseDate" msprop:Generator_ColumnPropNameInRow="CaseDate" msprop:Generator_ColumnPropNameInTable="CaseDateColumn" msprop:Generator_UserColumnName="CaseDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="DepNo" msprop:Generator_ColumnVarNameInTable="columnDepNo" msprop:Generator_ColumnPropNameInRow="DepNo" msprop:Generator_ColumnPropNameInTable="DepNoColumn" msprop:Generator_UserColumnName="DepNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepName" msprop:Generator_ColumnPropNameInRow="DepName" msprop:Generator_ColumnPropNameInTable="DepNameColumn" msprop:Generator_UserColumnName="DepName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Car_ID" msprop:Generator_ColumnVarNameInTable="columnCar_ID" msprop:Generator_ColumnPropNameInRow="Car_ID" msprop:Generator_ColumnPropNameInTable="Car_IDColumn" msprop:Generator_UserColumnName="Car_ID" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Driver" msprop:Generator_ColumnVarNameInTable="columnDriver" msprop:Generator_ColumnPropNameInRow="Driver" msprop:Generator_ColumnPropNameInTable="DriverColumn" msprop:Generator_UserColumnName="Driver" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DriverName" msprop:Generator_ColumnVarNameInTable="columnDriverName" msprop:Generator_ColumnPropNameInRow="DriverName" msprop:Generator_ColumnPropNameInTable="DriverNameColumn" msprop:Generator_UserColumnName="DriverName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Remark" msprop:Generator_ColumnVarNameInTable="columnRemark" msprop:Generator_ColumnPropNameInRow="Remark" msprop:Generator_ColumnPropNameInTable="RemarkColumn" msprop:Generator_UserColumnName="Remark" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Inspector" msprop:Generator_ColumnVarNameInTable="columnInspector" msprop:Generator_ColumnPropNameInRow="Inspector" msprop:Generator_ColumnPropNameInTable="InspectorColumn" msprop:Generator_UserColumnName="Inspector" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="InspectorName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnInspectorName" msprop:Generator_ColumnPropNameInRow="InspectorName" msprop:Generator_ColumnPropNameInTable="InspectorNameColumn" msprop:Generator_UserColumnName="InspectorName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BuDate" msprop:Generator_ColumnVarNameInTable="columnBuDate" msprop:Generator_ColumnPropNameInRow="BuDate" msprop:Generator_ColumnPropNameInTable="BuDateColumn" msprop:Generator_UserColumnName="BuDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="BuMan" msprop:Generator_ColumnVarNameInTable="columnBuMan" msprop:Generator_ColumnPropNameInRow="BuMan" msprop:Generator_ColumnPropNameInTable="BuManColumn" msprop:Generator_UserColumnName="BuMan" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BuManName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBuManName" msprop:Generator_ColumnPropNameInRow="BuManName" msprop:Generator_ColumnPropNameInTable="BuManNameColumn" msprop:Generator_UserColumnName="BuManName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ModifyDate" msprop:Generator_ColumnVarNameInTable="columnModifyDate" msprop:Generator_ColumnPropNameInRow="ModifyDate" msprop:Generator_ColumnPropNameInTable="ModifyDateColumn" msprop:Generator_UserColumnName="ModifyDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="ModifyMan" msprop:Generator_ColumnVarNameInTable="columnModifyMan" msprop:Generator_ColumnPropNameInRow="ModifyMan" msprop:Generator_ColumnPropNameInTable="ModifyManColumn" msprop:Generator_UserColumnName="ModifyMan" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ModifyManName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnModifyManName" msprop:Generator_ColumnPropNameInRow="ModifyManName" msprop:Generator_ColumnPropNameInTable="ModifyManNameColumn" msprop:Generator_UserColumnName="ModifyManName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:RunsheetDailyCheckP" />
+      <xs:field xpath="mstns:CaseNo" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

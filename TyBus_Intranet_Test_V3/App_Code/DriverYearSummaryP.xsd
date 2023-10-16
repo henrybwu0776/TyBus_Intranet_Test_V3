@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DriverYearSummaryP" targetNamespace="http://tempuri.org/DriverYearSummaryP.xsd" xmlns:mstns="http://tempuri.org/DriverYearSummaryP.xsd" xmlns="http://tempuri.org/DriverYearSummaryP.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="DriverYearSummaryPTableAdapter" GeneratorDataComponentClassName="DriverYearSummaryPTableAdapter" Name="DriverYearSummaryP" UserDataComponentName="DriverYearSummaryPTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="ERPBUS_TEST.dbo.RsEmpMonth" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          empno AS driver,
+                                (SELECT          NAME
+                                  FROM               EMPLOYEE
+                                  WHERE           (EMPNO = a.empno)) AS DriverName, CAST('' AS nvarchar) AS TotalWorkHR, CAST(0 AS float) 
+                            AS ACashAMT, CAST(0 AS float) AS Aoamt, CAST(0 AS float) AS Aspiece, CAST(0 AS float) AS AunTraincome, 
+                            CAST(0 AS float) AS ARentIncomeA, CAST(0 AS float) AS ARentIncomeB, CAST(0 AS float) AS ALines, CAST(0 AS float) 
+                            AS TotalIncome, CAST(0 AS float) AS CBus1Km, CAST(0 AS float) AS CBus2Km, CAST(0 AS float) AS CRentTraKm, 
+                            CAST(0 AS float) AS CRentAKm, CAST(0 AS float) AS CRentBKm, CAST(0 AS float) AS CBus3Km, CAST(0 AS float) 
+                            AS CBus4Km, CAST(0 AS float) AS BunissKMs, CAST(0 AS float) AS CBus5Km, CAST(0 AS float) AS TotalKMs
+FROM              RsEmpMonth AS a
+WHERE          (1 &lt;&gt; 1)</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="driver" DataSetColumn="driver" />
+              <Mapping SourceColumn="Aoamt" DataSetColumn="Aoamt" />
+              <Mapping SourceColumn="Aspiece" DataSetColumn="Aspiece" />
+              <Mapping SourceColumn="AunTraincome" DataSetColumn="AunTraincome" />
+              <Mapping SourceColumn="ARentIncomeA" DataSetColumn="ARentIncomeA" />
+              <Mapping SourceColumn="ARentIncomeB" DataSetColumn="ARentIncomeB" />
+              <Mapping SourceColumn="ALines" DataSetColumn="ALines" />
+              <Mapping SourceColumn="TotalIncome" DataSetColumn="TotalIncome" />
+              <Mapping SourceColumn="CBus1Km" DataSetColumn="CBus1Km" />
+              <Mapping SourceColumn="CBus2Km" DataSetColumn="CBus2Km" />
+              <Mapping SourceColumn="CRentTraKm" DataSetColumn="CRentTraKm" />
+              <Mapping SourceColumn="CRentAKm" DataSetColumn="CRentAKm" />
+              <Mapping SourceColumn="CRentBKm" DataSetColumn="CRentBKm" />
+              <Mapping SourceColumn="CBus3Km" DataSetColumn="CBus3Km" />
+              <Mapping SourceColumn="CBus4Km" DataSetColumn="CBus4Km" />
+              <Mapping SourceColumn="CBus5Km" DataSetColumn="CBus5Km" />
+              <Mapping SourceColumn="TotalKMs" DataSetColumn="TotalKMs" />
+              <Mapping SourceColumn="TotalWorkHR" DataSetColumn="TotalWorkHR" />
+              <Mapping SourceColumn="ACashAMT" DataSetColumn="ACashAMT" />
+              <Mapping SourceColumn="DriverName" DataSetColumn="DriverName" />
+              <Mapping SourceColumn="BunissKMs" DataSetColumn="BunissKMs" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DriverYearSummaryP" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DriverYearSummaryP" msprop:Generator_UserDSName="DriverYearSummaryP">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="DriverYearSummaryP" msprop:Generator_TableClassName="DriverYearSummaryPDataTable" msprop:Generator_TableVarName="tableDriverYearSummaryP" msprop:Generator_TablePropName="_DriverYearSummaryP" msprop:Generator_RowDeletingName="DriverYearSummaryPRowDeleting" msprop:Generator_RowChangingName="DriverYearSummaryPRowChanging" msprop:Generator_RowEvHandlerName="DriverYearSummaryPRowChangeEventHandler" msprop:Generator_RowDeletedName="DriverYearSummaryPRowDeleted" msprop:Generator_UserTableName="DriverYearSummaryP" msprop:Generator_RowChangedName="DriverYearSummaryPRowChanged" msprop:Generator_RowEvArgName="DriverYearSummaryPRowChangeEvent" msprop:Generator_RowClassName="DriverYearSummaryPRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="driver" msprop:Generator_ColumnVarNameInTable="columndriver" msprop:Generator_ColumnPropNameInRow="driver" msprop:Generator_ColumnPropNameInTable="driverColumn" msprop:Generator_UserColumnName="driver" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Aoamt" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnAoamt" msprop:Generator_ColumnPropNameInRow="Aoamt" msprop:Generator_ColumnPropNameInTable="AoamtColumn" msprop:Generator_UserColumnName="Aoamt" type="xs:double" minOccurs="0" />
+              <xs:element name="Aspiece" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnAspiece" msprop:Generator_ColumnPropNameInRow="Aspiece" msprop:Generator_ColumnPropNameInTable="AspieceColumn" msprop:Generator_UserColumnName="Aspiece" type="xs:double" minOccurs="0" />
+              <xs:element name="AunTraincome" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnAunTraincome" msprop:Generator_ColumnPropNameInRow="AunTraincome" msprop:Generator_ColumnPropNameInTable="AunTraincomeColumn" msprop:Generator_UserColumnName="AunTraincome" type="xs:double" minOccurs="0" />
+              <xs:element name="ARentIncomeA" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnARentIncomeA" msprop:Generator_ColumnPropNameInRow="ARentIncomeA" msprop:Generator_ColumnPropNameInTable="ARentIncomeAColumn" msprop:Generator_UserColumnName="ARentIncomeA" type="xs:double" minOccurs="0" />
+              <xs:element name="ARentIncomeB" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnARentIncomeB" msprop:Generator_ColumnPropNameInRow="ARentIncomeB" msprop:Generator_ColumnPropNameInTable="ARentIncomeBColumn" msprop:Generator_UserColumnName="ARentIncomeB" type="xs:double" minOccurs="0" />
+              <xs:element name="ALines" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnALines" msprop:Generator_ColumnPropNameInRow="ALines" msprop:Generator_ColumnPropNameInTable="ALinesColumn" msprop:Generator_UserColumnName="ALines" type="xs:double" minOccurs="0" />
+              <xs:element name="TotalIncome" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTotalIncome" msprop:Generator_ColumnPropNameInRow="TotalIncome" msprop:Generator_ColumnPropNameInTable="TotalIncomeColumn" msprop:Generator_UserColumnName="TotalIncome" type="xs:double" minOccurs="0" />
+              <xs:element name="CBus1Km" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnCBus1Km" msprop:Generator_ColumnPropNameInRow="CBus1Km" msprop:Generator_ColumnPropNameInTable="CBus1KmColumn" msprop:Generator_UserColumnName="CBus1Km" type="xs:double" minOccurs="0" />
+              <xs:element name="CBus2Km" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnCBus2Km" msprop:Generator_ColumnPropNameInRow="CBus2Km" msprop:Generator_ColumnPropNameInTable="CBus2KmColumn" msprop:Generator_UserColumnName="CBus2Km" type="xs:double" minOccurs="0" />
+              <xs:element name="CRentTraKm" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnCRentTraKm" msprop:Generator_ColumnPropNameInRow="CRentTraKm" msprop:Generator_ColumnPropNameInTable="CRentTraKmColumn" msprop:Generator_UserColumnName="CRentTraKm" type="xs:double" minOccurs="0" />
+              <xs:element name="CRentAKm" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnCRentAKm" msprop:Generator_ColumnPropNameInRow="CRentAKm" msprop:Generator_ColumnPropNameInTable="CRentAKmColumn" msprop:Generator_UserColumnName="CRentAKm" type="xs:double" minOccurs="0" />
+              <xs:element name="CRentBKm" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnCRentBKm" msprop:Generator_ColumnPropNameInRow="CRentBKm" msprop:Generator_ColumnPropNameInTable="CRentBKmColumn" msprop:Generator_UserColumnName="CRentBKm" type="xs:double" minOccurs="0" />
+              <xs:element name="CBus3Km" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnCBus3Km" msprop:Generator_ColumnPropNameInRow="CBus3Km" msprop:Generator_ColumnPropNameInTable="CBus3KmColumn" msprop:Generator_UserColumnName="CBus3Km" type="xs:double" minOccurs="0" />
+              <xs:element name="CBus4Km" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnCBus4Km" msprop:Generator_ColumnPropNameInRow="CBus4Km" msprop:Generator_ColumnPropNameInTable="CBus4KmColumn" msprop:Generator_UserColumnName="CBus4Km" type="xs:double" minOccurs="0" />
+              <xs:element name="CBus5Km" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnCBus5Km" msprop:Generator_ColumnPropNameInRow="CBus5Km" msprop:Generator_ColumnPropNameInTable="CBus5KmColumn" msprop:Generator_UserColumnName="CBus5Km" type="xs:double" minOccurs="0" />
+              <xs:element name="TotalKMs" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTotalKMs" msprop:Generator_ColumnPropNameInRow="TotalKMs" msprop:Generator_ColumnPropNameInTable="TotalKMsColumn" msprop:Generator_UserColumnName="TotalKMs" type="xs:double" minOccurs="0" />
+              <xs:element name="TotalWorkHR" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTotalWorkHR" msprop:Generator_ColumnPropNameInRow="TotalWorkHR" msprop:Generator_ColumnPropNameInTable="TotalWorkHRColumn" msprop:Generator_UserColumnName="TotalWorkHR" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ACashAMT" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnACashAMT" msprop:Generator_ColumnPropNameInRow="ACashAMT" msprop:Generator_ColumnPropNameInTable="ACashAMTColumn" msprop:Generator_UserColumnName="ACashAMT" type="xs:double" minOccurs="0" />
+              <xs:element name="DriverName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDriverName" msprop:Generator_ColumnPropNameInRow="DriverName" msprop:Generator_ColumnPropNameInTable="DriverNameColumn" msprop:Generator_UserColumnName="DriverName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BunissKMs" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBunissKMs" msprop:Generator_ColumnPropNameInRow="BunissKMs" msprop:Generator_ColumnPropNameInTable="BunissKMsColumn" msprop:Generator_UserColumnName="BunissKMs" type="xs:double" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

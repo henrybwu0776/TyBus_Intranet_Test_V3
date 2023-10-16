@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="EmpMeritsPrint" targetNamespace="http://tempuri.org/EmpMeritsPrint.xsd" xmlns:mstns="http://tempuri.org/EmpMeritsPrint.xsd" xmlns="http://tempuri.org/EmpMeritsPrint.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="EmpMeritsPrintTableAdapter" GeneratorDataComponentClassName="EmpMeritsPrintTableAdapter" Name="EmpMeritsPrint" UserDataComponentName="EmpMeritsPrintTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          CAST(NULL AS varchar) AS FNO, CAST(NULL AS datetime) AS FDate, CAST(NULL AS varchar) AS DepNo, CAST(NULL 
+                            AS varchar) AS DepNo_C, CAST(NULL AS varchar) AS EmpNo, CAST(NULL AS varchar) AS Title_C, CAST(NULL 
+                            AS varchar) AS Name, CAST(NULL AS datetime) AS BDate, CAST(NULL AS varchar) AS BFact1, CAST(NULL AS float) 
+                            AS Merit1, CAST(NULL AS float) AS Merit2, CAST(NULL AS float) AS Merit3, CAST(NULL AS float) AS Demerit1, 
+                            CAST(NULL AS float) AS Demerit2, CAST(NULL AS float) AS Demerit3, CAST(NULL AS float) AS Warning, CAST(NULL 
+                            AS float) AS Alart, CAST(NULL AS float) AS WRIWarning, CAST(NULL AS varchar) AS Fcomment</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="FNO" DataSetColumn="FNO" />
+              <Mapping SourceColumn="DepNo" DataSetColumn="DepNo" />
+              <Mapping SourceColumn="EmpNo" DataSetColumn="EmpNo" />
+              <Mapping SourceColumn="Title_C" DataSetColumn="Title_C" />
+              <Mapping SourceColumn="Name" DataSetColumn="Name" />
+              <Mapping SourceColumn="BDate" DataSetColumn="BDate" />
+              <Mapping SourceColumn="BFact1" DataSetColumn="BFact1" />
+              <Mapping SourceColumn="Merit1" DataSetColumn="Merit1" />
+              <Mapping SourceColumn="Merit2" DataSetColumn="Merit2" />
+              <Mapping SourceColumn="Merit3" DataSetColumn="Merit3" />
+              <Mapping SourceColumn="Demerit1" DataSetColumn="Demerit1" />
+              <Mapping SourceColumn="Demerit2" DataSetColumn="Demerit2" />
+              <Mapping SourceColumn="Demerit3" DataSetColumn="Demerit3" />
+              <Mapping SourceColumn="Warning" DataSetColumn="Warning" />
+              <Mapping SourceColumn="Alart" DataSetColumn="Alart" />
+              <Mapping SourceColumn="WRIWarning" DataSetColumn="WRIWarning" />
+              <Mapping SourceColumn="Fcomment" DataSetColumn="Fcomment" />
+              <Mapping SourceColumn="DepNo_C" DataSetColumn="DepNo_C" />
+              <Mapping SourceColumn="FDate" DataSetColumn="FDate" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="EmpMeritsP_MainTableAdapter" GeneratorDataComponentClassName="EmpMeritsP_MainTableAdapter" Name="EmpMeritsP_Main" UserDataComponentName="EmpMeritsP_MainTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          CAST(NULL AS varchar) AS FNo, CAST(NULL AS varchar) AS DepNo, CAST(NULL AS varchar) AS DepNo_C, CAST(NULL 
+                            AS datetime) AS FDate</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="FNo" DataSetColumn="FNo" />
+              <Mapping SourceColumn="DepNo" DataSetColumn="DepNo" />
+              <Mapping SourceColumn="DepNo_C" DataSetColumn="DepNo_C" />
+              <Mapping SourceColumn="FDate" DataSetColumn="FDate" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="EmpMeritsPrint" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="EmpMeritsPrint" msprop:Generator_UserDSName="EmpMeritsPrint">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="EmpMeritsPrint" msprop:Generator_TableClassName="EmpMeritsPrintDataTable" msprop:Generator_TableVarName="tableEmpMeritsPrint" msprop:Generator_RowChangedName="EmpMeritsPrintRowChanged" msprop:Generator_TablePropName="_EmpMeritsPrint" msprop:Generator_RowDeletingName="EmpMeritsPrintRowDeleting" msprop:Generator_RowChangingName="EmpMeritsPrintRowChanging" msprop:Generator_RowEvHandlerName="EmpMeritsPrintRowChangeEventHandler" msprop:Generator_RowDeletedName="EmpMeritsPrintRowDeleted" msprop:Generator_RowClassName="EmpMeritsPrintRow" msprop:Generator_UserTableName="EmpMeritsPrint" msprop:Generator_RowEvArgName="EmpMeritsPrintRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="FNO" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFNO" msprop:Generator_ColumnPropNameInRow="FNO" msprop:Generator_ColumnPropNameInTable="FNOColumn" msprop:Generator_UserColumnName="FNO" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepNo" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepNo" msprop:Generator_ColumnPropNameInRow="DepNo" msprop:Generator_ColumnPropNameInTable="DepNoColumn" msprop:Generator_UserColumnName="DepNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EmpNo" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnEmpNo" msprop:Generator_ColumnPropNameInRow="EmpNo" msprop:Generator_ColumnPropNameInTable="EmpNoColumn" msprop:Generator_UserColumnName="EmpNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Title_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTitle_C" msprop:Generator_ColumnPropNameInRow="Title_C" msprop:Generator_ColumnPropNameInTable="Title_CColumn" msprop:Generator_UserColumnName="Title_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Name" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnName" msprop:Generator_ColumnPropNameInRow="Name" msprop:Generator_ColumnPropNameInTable="NameColumn" msprop:Generator_UserColumnName="Name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BDate" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBDate" msprop:Generator_ColumnPropNameInRow="BDate" msprop:Generator_ColumnPropNameInTable="BDateColumn" msprop:Generator_UserColumnName="BDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="BFact1" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBFact1" msprop:Generator_ColumnPropNameInRow="BFact1" msprop:Generator_ColumnPropNameInTable="BFact1Column" msprop:Generator_UserColumnName="BFact1" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Merit1" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnMerit1" msprop:Generator_ColumnPropNameInRow="Merit1" msprop:Generator_ColumnPropNameInTable="Merit1Column" msprop:Generator_UserColumnName="Merit1" type="xs:double" minOccurs="0" />
+              <xs:element name="Merit2" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnMerit2" msprop:Generator_ColumnPropNameInRow="Merit2" msprop:Generator_ColumnPropNameInTable="Merit2Column" msprop:Generator_UserColumnName="Merit2" type="xs:double" minOccurs="0" />
+              <xs:element name="Merit3" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnMerit3" msprop:Generator_ColumnPropNameInRow="Merit3" msprop:Generator_ColumnPropNameInTable="Merit3Column" msprop:Generator_UserColumnName="Merit3" type="xs:double" minOccurs="0" />
+              <xs:element name="Demerit1" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDemerit1" msprop:Generator_ColumnPropNameInRow="Demerit1" msprop:Generator_ColumnPropNameInTable="Demerit1Column" msprop:Generator_UserColumnName="Demerit1" type="xs:double" minOccurs="0" />
+              <xs:element name="Demerit2" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDemerit2" msprop:Generator_ColumnPropNameInRow="Demerit2" msprop:Generator_ColumnPropNameInTable="Demerit2Column" msprop:Generator_UserColumnName="Demerit2" type="xs:double" minOccurs="0" />
+              <xs:element name="Demerit3" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDemerit3" msprop:Generator_ColumnPropNameInRow="Demerit3" msprop:Generator_ColumnPropNameInTable="Demerit3Column" msprop:Generator_UserColumnName="Demerit3" type="xs:double" minOccurs="0" />
+              <xs:element name="Warning" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWarning" msprop:Generator_ColumnPropNameInRow="Warning" msprop:Generator_ColumnPropNameInTable="WarningColumn" msprop:Generator_UserColumnName="Warning" type="xs:double" minOccurs="0" />
+              <xs:element name="Alart" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnAlart" msprop:Generator_ColumnPropNameInRow="Alart" msprop:Generator_ColumnPropNameInTable="AlartColumn" msprop:Generator_UserColumnName="Alart" type="xs:double" minOccurs="0" />
+              <xs:element name="WRIWarning" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWRIWarning" msprop:Generator_ColumnPropNameInRow="WRIWarning" msprop:Generator_ColumnPropNameInTable="WRIWarningColumn" msprop:Generator_UserColumnName="WRIWarning" type="xs:double" minOccurs="0" />
+              <xs:element name="Fcomment" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFcomment" msprop:Generator_ColumnPropNameInRow="Fcomment" msprop:Generator_ColumnPropNameInTable="FcommentColumn" msprop:Generator_UserColumnName="Fcomment" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepNo_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepNo_C" msprop:Generator_ColumnPropNameInRow="DepNo_C" msprop:Generator_ColumnPropNameInTable="DepNo_CColumn" msprop:Generator_UserColumnName="DepNo_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FDate" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFDate" msprop:Generator_ColumnPropNameInRow="FDate" msprop:Generator_ColumnPropNameInTable="FDateColumn" msprop:Generator_UserColumnName="FDate" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="EmpMeritsP_Main" msprop:Generator_TableClassName="EmpMeritsP_MainDataTable" msprop:Generator_TableVarName="tableEmpMeritsP_Main" msprop:Generator_TablePropName="EmpMeritsP_Main" msprop:Generator_RowDeletingName="EmpMeritsP_MainRowDeleting" msprop:Generator_RowChangingName="EmpMeritsP_MainRowChanging" msprop:Generator_RowEvHandlerName="EmpMeritsP_MainRowChangeEventHandler" msprop:Generator_RowDeletedName="EmpMeritsP_MainRowDeleted" msprop:Generator_UserTableName="EmpMeritsP_Main" msprop:Generator_RowChangedName="EmpMeritsP_MainRowChanged" msprop:Generator_RowEvArgName="EmpMeritsP_MainRowChangeEvent" msprop:Generator_RowClassName="EmpMeritsP_MainRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="FNo" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFNo" msprop:Generator_ColumnPropNameInRow="FNo" msprop:Generator_ColumnPropNameInTable="FNoColumn" msprop:Generator_UserColumnName="FNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepNo" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepNo" msprop:Generator_ColumnPropNameInRow="DepNo" msprop:Generator_ColumnPropNameInTable="DepNoColumn" msprop:Generator_UserColumnName="DepNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepNo_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepNo_C" msprop:Generator_ColumnPropNameInRow="DepNo_C" msprop:Generator_ColumnPropNameInTable="DepNo_CColumn" msprop:Generator_UserColumnName="DepNo_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FDate" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFDate" msprop:Generator_ColumnPropNameInRow="FDate" msprop:Generator_ColumnPropNameInTable="FDateColumn" msprop:Generator_UserColumnName="FDate" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

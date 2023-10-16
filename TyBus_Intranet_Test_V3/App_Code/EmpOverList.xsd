@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="EmpOverList" targetNamespace="http://tempuri.org/EmpOverList.xsd" xmlns:mstns="http://tempuri.org/EmpOverList.xsd" xmlns="http://tempuri.org/EmpOverList.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="EmpOverListPTableAdapter" GeneratorDataComponentClassName="EmpOverListPTableAdapter" Name="EmpOverListP" UserDataComponentName="EmpOverListPTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="ERPBUS_TEST.dbo.OVERDUTY" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          applyman,
+                                (SELECT          NAME
+                                  FROM               EMPLOYEE
+                                  WHERE           (EMPNO = a.applyman)) AS ApplyName, depno,
+                                (SELECT          NAME
+                                  FROM               DEPARTMENT
+                                  WHERE           (DEPNO = a.depno)) AS DepName, realday, applytype,
+                                (SELECT          CLASSTXT
+                                  FROM               DBDICB
+                                  WHERE           (CLASSNO = a.applytype) AND (FKEY = '加班資料檔      OVERDUTY        APPLYTYPE')) 
+                            AS ApplyType_C, hours, CASE WHEN ApplyType IN ('02', '04') 
+                            THEN [Hours] - FeedNum - BackNum ELSE 0 END AS Over100, ISNULL(feednum, 0) + ISNULL(FRONTOVER2, 0) 
+                            AS Over133, ISNULL(backnum, 0) + ISNULL(POSTOVER2, 0) AS Over166, ISNULL(POSTOVER22, 0) AS Over266
+FROM              OVERDUTY AS a
+WHERE          (1 &lt;&gt; 1)</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="applyman" DataSetColumn="applyman" />
+              <Mapping SourceColumn="ApplyName" DataSetColumn="ApplyName" />
+              <Mapping SourceColumn="depno" DataSetColumn="depno" />
+              <Mapping SourceColumn="DepName" DataSetColumn="DepName" />
+              <Mapping SourceColumn="realday" DataSetColumn="realday" />
+              <Mapping SourceColumn="applytype" DataSetColumn="applytype" />
+              <Mapping SourceColumn="ApplyType_C" DataSetColumn="ApplyType_C" />
+              <Mapping SourceColumn="hours" DataSetColumn="hours" />
+              <Mapping SourceColumn="Over100" DataSetColumn="Over100" />
+              <Mapping SourceColumn="Over133" DataSetColumn="Over133" />
+              <Mapping SourceColumn="Over166" DataSetColumn="Over166" />
+              <Mapping SourceColumn="Over266" DataSetColumn="Over266" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="EmpOverList" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="EmpOverList" msprop:Generator_UserDSName="EmpOverList">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="EmpOverListP" msprop:Generator_TableClassName="EmpOverListPDataTable" msprop:Generator_TableVarName="tableEmpOverListP" msprop:Generator_TablePropName="EmpOverListP" msprop:Generator_RowDeletingName="EmpOverListPRowDeleting" msprop:Generator_RowChangingName="EmpOverListPRowChanging" msprop:Generator_RowEvHandlerName="EmpOverListPRowChangeEventHandler" msprop:Generator_RowDeletedName="EmpOverListPRowDeleted" msprop:Generator_UserTableName="EmpOverListP" msprop:Generator_RowChangedName="EmpOverListPRowChanged" msprop:Generator_RowEvArgName="EmpOverListPRowChangeEvent" msprop:Generator_RowClassName="EmpOverListPRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="applyman" msprop:Generator_ColumnVarNameInTable="columnapplyman" msprop:Generator_ColumnPropNameInRow="applyman" msprop:Generator_ColumnPropNameInTable="applymanColumn" msprop:Generator_UserColumnName="applyman" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ApplyName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnApplyName" msprop:Generator_ColumnPropNameInRow="ApplyName" msprop:Generator_ColumnPropNameInTable="ApplyNameColumn" msprop:Generator_UserColumnName="ApplyName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="depno" msprop:Generator_ColumnVarNameInTable="columndepno" msprop:Generator_ColumnPropNameInRow="depno" msprop:Generator_ColumnPropNameInTable="depnoColumn" msprop:Generator_UserColumnName="depno" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepName" msprop:Generator_ColumnPropNameInRow="DepName" msprop:Generator_ColumnPropNameInTable="DepNameColumn" msprop:Generator_UserColumnName="DepName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="realday" msprop:Generator_ColumnVarNameInTable="columnrealday" msprop:Generator_ColumnPropNameInRow="realday" msprop:Generator_ColumnPropNameInTable="realdayColumn" msprop:Generator_UserColumnName="realday" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="applytype" msprop:Generator_ColumnVarNameInTable="columnapplytype" msprop:Generator_ColumnPropNameInRow="applytype" msprop:Generator_ColumnPropNameInTable="applytypeColumn" msprop:Generator_UserColumnName="applytype" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="4" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ApplyType_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnApplyType_C" msprop:Generator_ColumnPropNameInRow="ApplyType_C" msprop:Generator_ColumnPropNameInTable="ApplyType_CColumn" msprop:Generator_UserColumnName="ApplyType_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="hours" msprop:Generator_ColumnVarNameInTable="columnhours" msprop:Generator_ColumnPropNameInRow="hours" msprop:Generator_ColumnPropNameInTable="hoursColumn" msprop:Generator_UserColumnName="hours" type="xs:double" minOccurs="0" />
+              <xs:element name="Over100" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnOver100" msprop:Generator_ColumnPropNameInRow="Over100" msprop:Generator_ColumnPropNameInTable="Over100Column" msprop:Generator_UserColumnName="Over100" type="xs:double" minOccurs="0" />
+              <xs:element name="Over133" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnOver133" msprop:Generator_ColumnPropNameInRow="Over133" msprop:Generator_ColumnPropNameInTable="Over133Column" msprop:Generator_UserColumnName="Over133" type="xs:double" minOccurs="0" />
+              <xs:element name="Over166" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnOver166" msprop:Generator_ColumnPropNameInRow="Over166" msprop:Generator_ColumnPropNameInTable="Over166Column" msprop:Generator_UserColumnName="Over166" type="xs:double" minOccurs="0" />
+              <xs:element name="Over266" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnOver266" msprop:Generator_ColumnPropNameInRow="Over266" msprop:Generator_ColumnPropNameInTable="Over266Column" msprop:Generator_UserColumnName="Over266" type="xs:double" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

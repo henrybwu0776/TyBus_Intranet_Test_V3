@@ -1,0 +1,331 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="RescueCarAssignListP" targetNamespace="http://tempuri.org/RescueCarAssignListP.xsd" xmlns:mstns="http://tempuri.org/RescueCarAssignListP.xsd" xmlns="http://tempuri.org/RescueCarAssignListP.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="RescueCarAssignListPTableAdapter" GeneratorDataComponentClassName="RescueCarAssignListPTableAdapter" Name="RescueCarAssignListP" UserDataComponentName="RescueCarAssignListPTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="ERPBUS_TEST.dbo.RescueCarAssignList" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT ListNo, CaseDate, Car_ID, StartPosition, StartDate, StartTime, StartMeterMiles, FinishPosition, FinishDate, FinishTime, FinishMeterMiles, AssignMan, (SELECT NAME FROM EMPLOYEE WHERE (EMPNO = r.AssignMan)) AS AssignManName, DepNo, (SELECT NAME FROM DEPARTMENT WHERE (DEPNO = r.DepNo)) AS DepName, FirstSupportMan, (SELECT NAME FROM EMPLOYEE AS EMPLOYEE_4 WHERE (EMPNO = r.FirstSupportMan)) AS FirstSupportManName, SecondSupportMan, (SELECT NAME FROM EMPLOYEE AS EMPLOYEE_3 WHERE (EMPNO = r.SecondSupportMan)) AS SecondSupportManName, AssignReason, ReasonNote, UsedMiles, UsedMin, Remark, BuMan, (SELECT NAME FROM EMPLOYEE AS EMPLOYEE_2 WHERE (EMPNO = r.BuMan)) AS BuManName, BuDate, ModifyMan, (SELECT NAME FROM EMPLOYEE AS EMPLOYEE_1 WHERE (EMPNO = r.ModifyMan)) AS ModifyManName, ModifyDate, TargetCarID FROM RescueCarAssignList AS r WHERE (1 &lt;&gt; 1)</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="ListNo" DataSetColumn="ListNo" />
+              <Mapping SourceColumn="CaseDate" DataSetColumn="CaseDate" />
+              <Mapping SourceColumn="Car_ID" DataSetColumn="Car_ID" />
+              <Mapping SourceColumn="StartPosition" DataSetColumn="StartPosition" />
+              <Mapping SourceColumn="StartTime" DataSetColumn="StartTime" />
+              <Mapping SourceColumn="StartMeterMiles" DataSetColumn="StartMeterMiles" />
+              <Mapping SourceColumn="FinishPosition" DataSetColumn="FinishPosition" />
+              <Mapping SourceColumn="FinishTime" DataSetColumn="FinishTime" />
+              <Mapping SourceColumn="FinishMeterMiles" DataSetColumn="FinishMeterMiles" />
+              <Mapping SourceColumn="AssignMan" DataSetColumn="AssignMan" />
+              <Mapping SourceColumn="AssignManName" DataSetColumn="AssignManName" />
+              <Mapping SourceColumn="DepNo" DataSetColumn="DepNo" />
+              <Mapping SourceColumn="DepName" DataSetColumn="DepName" />
+              <Mapping SourceColumn="FirstSupportMan" DataSetColumn="FirstSupportMan" />
+              <Mapping SourceColumn="FirstSupportManName" DataSetColumn="FirstSupportManName" />
+              <Mapping SourceColumn="SecondSupportMan" DataSetColumn="SecondSupportMan" />
+              <Mapping SourceColumn="SecondSupportManName" DataSetColumn="SecondSupportManName" />
+              <Mapping SourceColumn="AssignReason" DataSetColumn="AssignReason" />
+              <Mapping SourceColumn="ReasonNote" DataSetColumn="ReasonNote" />
+              <Mapping SourceColumn="UsedMiles" DataSetColumn="UsedMiles" />
+              <Mapping SourceColumn="UsedMin" DataSetColumn="UsedMin" />
+              <Mapping SourceColumn="Remark" DataSetColumn="Remark" />
+              <Mapping SourceColumn="BuMan" DataSetColumn="BuMan" />
+              <Mapping SourceColumn="BuManName" DataSetColumn="BuManName" />
+              <Mapping SourceColumn="BuDate" DataSetColumn="BuDate" />
+              <Mapping SourceColumn="ModifyMan" DataSetColumn="ModifyMan" />
+              <Mapping SourceColumn="ModifyManName" DataSetColumn="ModifyManName" />
+              <Mapping SourceColumn="ModifyDate" DataSetColumn="ModifyDate" />
+              <Mapping SourceColumn="TargetCarID" DataSetColumn="TargetCarID" />
+              <Mapping SourceColumn="StartDate" DataSetColumn="StartDate" />
+              <Mapping SourceColumn="FinishDate" DataSetColumn="FinishDate" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="RescueCarPersonListPTableAdapter" GeneratorDataComponentClassName="RescueCarPersonListPTableAdapter" Name="RescueCarPersonListP" UserDataComponentName="RescueCarPersonListPTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="ERPBUS_TEST.dbo.RescueCarAssignList" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT DepNo, CaseDate, CASE WHEN AssignReason &lt;&gt; '其他' THEN AssignReason ELSE ReasonNote END AS Reason, FinishPosition, StartDate, StartTime, FinishDate, FinishTime, (SELECT NAME FROM EMPLOYEE WHERE (EMPNO = r.AssignMan)) AS UseMan, (SELECT CLASSTXT FROM DBDICB WHERE (FKEY = '員工資料        EMPLOYEE        TITLE') AND (CLASSNO = (SELECT TITLE FROM EMPLOYEE AS EMPLOYEE_1 WHERE (EMPNO = r.AssignMan)))) AS TitleName, Remark FROM RescueCarAssignList AS r WHERE (1 &lt;&gt; 1)</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="CaseDate" DataSetColumn="CaseDate" />
+              <Mapping SourceColumn="Reason" DataSetColumn="Reason" />
+              <Mapping SourceColumn="FinishPosition" DataSetColumn="FinishPosition" />
+              <Mapping SourceColumn="StartTime" DataSetColumn="StartTime" />
+              <Mapping SourceColumn="FinishTime" DataSetColumn="FinishTime" />
+              <Mapping SourceColumn="UseMan" DataSetColumn="UseMan" />
+              <Mapping SourceColumn="TitleName" DataSetColumn="TitleName" />
+              <Mapping SourceColumn="Remark" DataSetColumn="Remark" />
+              <Mapping SourceColumn="DepNo" DataSetColumn="DepNo" />
+              <Mapping SourceColumn="StartDate" DataSetColumn="StartDate" />
+              <Mapping SourceColumn="FinishDate" DataSetColumn="FinishDate" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="RescueCarAssignListP" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="RescueCarAssignListP" msprop:Generator_UserDSName="RescueCarAssignListP">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="RescueCarAssignListP" msprop:Generator_TableClassName="RescueCarAssignListPDataTable" msprop:Generator_TableVarName="tableRescueCarAssignListP" msprop:Generator_TablePropName="_RescueCarAssignListP" msprop:Generator_RowDeletingName="RescueCarAssignListPRowDeleting" msprop:Generator_RowChangingName="RescueCarAssignListPRowChanging" msprop:Generator_RowEvHandlerName="RescueCarAssignListPRowChangeEventHandler" msprop:Generator_RowDeletedName="RescueCarAssignListPRowDeleted" msprop:Generator_UserTableName="RescueCarAssignListP" msprop:Generator_RowChangedName="RescueCarAssignListPRowChanged" msprop:Generator_RowEvArgName="RescueCarAssignListPRowChangeEvent" msprop:Generator_RowClassName="RescueCarAssignListPRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ListNo" msprop:Generator_ColumnVarNameInTable="columnListNo" msprop:Generator_ColumnPropNameInRow="ListNo" msprop:Generator_ColumnPropNameInTable="ListNoColumn" msprop:Generator_UserColumnName="ListNo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CaseDate" msprop:Generator_ColumnVarNameInTable="columnCaseDate" msprop:Generator_ColumnPropNameInRow="CaseDate" msprop:Generator_ColumnPropNameInTable="CaseDateColumn" msprop:Generator_UserColumnName="CaseDate" type="xs:dateTime" />
+              <xs:element name="Car_ID" msprop:Generator_ColumnVarNameInTable="columnCar_ID" msprop:Generator_ColumnPropNameInRow="Car_ID" msprop:Generator_ColumnPropNameInTable="Car_IDColumn" msprop:Generator_UserColumnName="Car_ID" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="StartPosition" msprop:Generator_ColumnVarNameInTable="columnStartPosition" msprop:Generator_ColumnPropNameInRow="StartPosition" msprop:Generator_ColumnPropNameInTable="StartPositionColumn" msprop:Generator_UserColumnName="StartPosition" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="StartTime" msprop:Generator_ColumnVarNameInTable="columnStartTime" msprop:Generator_ColumnPropNameInRow="StartTime" msprop:Generator_ColumnPropNameInTable="StartTimeColumn" msprop:Generator_UserColumnName="StartTime" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="StartMeterMiles" msprop:Generator_ColumnVarNameInTable="columnStartMeterMiles" msprop:Generator_ColumnPropNameInRow="StartMeterMiles" msprop:Generator_ColumnPropNameInTable="StartMeterMilesColumn" msprop:Generator_UserColumnName="StartMeterMiles" type="xs:int" minOccurs="0" />
+              <xs:element name="FinishPosition" msprop:Generator_ColumnVarNameInTable="columnFinishPosition" msprop:Generator_ColumnPropNameInRow="FinishPosition" msprop:Generator_ColumnPropNameInTable="FinishPositionColumn" msprop:Generator_UserColumnName="FinishPosition" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FinishTime" msprop:Generator_ColumnVarNameInTable="columnFinishTime" msprop:Generator_ColumnPropNameInRow="FinishTime" msprop:Generator_ColumnPropNameInTable="FinishTimeColumn" msprop:Generator_UserColumnName="FinishTime" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FinishMeterMiles" msprop:Generator_ColumnVarNameInTable="columnFinishMeterMiles" msprop:Generator_ColumnPropNameInRow="FinishMeterMiles" msprop:Generator_ColumnPropNameInTable="FinishMeterMilesColumn" msprop:Generator_UserColumnName="FinishMeterMiles" type="xs:int" minOccurs="0" />
+              <xs:element name="AssignMan" msprop:Generator_ColumnVarNameInTable="columnAssignMan" msprop:Generator_ColumnPropNameInRow="AssignMan" msprop:Generator_ColumnPropNameInTable="AssignManColumn" msprop:Generator_UserColumnName="AssignMan" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AssignManName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnAssignManName" msprop:Generator_ColumnPropNameInRow="AssignManName" msprop:Generator_ColumnPropNameInTable="AssignManNameColumn" msprop:Generator_UserColumnName="AssignManName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepNo" msprop:Generator_ColumnVarNameInTable="columnDepNo" msprop:Generator_ColumnPropNameInRow="DepNo" msprop:Generator_ColumnPropNameInTable="DepNoColumn" msprop:Generator_UserColumnName="DepNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepName" msprop:Generator_ColumnPropNameInRow="DepName" msprop:Generator_ColumnPropNameInTable="DepNameColumn" msprop:Generator_UserColumnName="DepName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FirstSupportMan" msprop:Generator_ColumnVarNameInTable="columnFirstSupportMan" msprop:Generator_ColumnPropNameInRow="FirstSupportMan" msprop:Generator_ColumnPropNameInTable="FirstSupportManColumn" msprop:Generator_UserColumnName="FirstSupportMan" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FirstSupportManName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFirstSupportManName" msprop:Generator_ColumnPropNameInRow="FirstSupportManName" msprop:Generator_ColumnPropNameInTable="FirstSupportManNameColumn" msprop:Generator_UserColumnName="FirstSupportManName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="SecondSupportMan" msprop:Generator_ColumnVarNameInTable="columnSecondSupportMan" msprop:Generator_ColumnPropNameInRow="SecondSupportMan" msprop:Generator_ColumnPropNameInTable="SecondSupportManColumn" msprop:Generator_UserColumnName="SecondSupportMan" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="SecondSupportManName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnSecondSupportManName" msprop:Generator_ColumnPropNameInRow="SecondSupportManName" msprop:Generator_ColumnPropNameInTable="SecondSupportManNameColumn" msprop:Generator_UserColumnName="SecondSupportManName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AssignReason" msprop:Generator_ColumnVarNameInTable="columnAssignReason" msprop:Generator_ColumnPropNameInRow="AssignReason" msprop:Generator_ColumnPropNameInTable="AssignReasonColumn" msprop:Generator_UserColumnName="AssignReason" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ReasonNote" msprop:Generator_ColumnVarNameInTable="columnReasonNote" msprop:Generator_ColumnPropNameInRow="ReasonNote" msprop:Generator_ColumnPropNameInTable="ReasonNoteColumn" msprop:Generator_UserColumnName="ReasonNote" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="128" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="UsedMiles" msprop:Generator_ColumnVarNameInTable="columnUsedMiles" msprop:Generator_ColumnPropNameInRow="UsedMiles" msprop:Generator_ColumnPropNameInTable="UsedMilesColumn" msprop:Generator_UserColumnName="UsedMiles" type="xs:int" minOccurs="0" />
+              <xs:element name="UsedMin" msprop:Generator_ColumnVarNameInTable="columnUsedMin" msprop:Generator_ColumnPropNameInRow="UsedMin" msprop:Generator_ColumnPropNameInTable="UsedMinColumn" msprop:Generator_UserColumnName="UsedMin" type="xs:int" minOccurs="0" />
+              <xs:element name="Remark" msprop:Generator_ColumnVarNameInTable="columnRemark" msprop:Generator_ColumnPropNameInRow="Remark" msprop:Generator_ColumnPropNameInTable="RemarkColumn" msprop:Generator_UserColumnName="Remark" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BuMan" msprop:Generator_ColumnVarNameInTable="columnBuMan" msprop:Generator_ColumnPropNameInRow="BuMan" msprop:Generator_ColumnPropNameInTable="BuManColumn" msprop:Generator_UserColumnName="BuMan" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BuManName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBuManName" msprop:Generator_ColumnPropNameInRow="BuManName" msprop:Generator_ColumnPropNameInTable="BuManNameColumn" msprop:Generator_UserColumnName="BuManName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BuDate" msprop:Generator_ColumnVarNameInTable="columnBuDate" msprop:Generator_ColumnPropNameInRow="BuDate" msprop:Generator_ColumnPropNameInTable="BuDateColumn" msprop:Generator_UserColumnName="BuDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="ModifyMan" msprop:Generator_ColumnVarNameInTable="columnModifyMan" msprop:Generator_ColumnPropNameInRow="ModifyMan" msprop:Generator_ColumnPropNameInTable="ModifyManColumn" msprop:Generator_UserColumnName="ModifyMan" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ModifyManName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnModifyManName" msprop:Generator_ColumnPropNameInRow="ModifyManName" msprop:Generator_ColumnPropNameInTable="ModifyManNameColumn" msprop:Generator_UserColumnName="ModifyManName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ModifyDate" msprop:Generator_ColumnVarNameInTable="columnModifyDate" msprop:Generator_ColumnPropNameInRow="ModifyDate" msprop:Generator_ColumnPropNameInTable="ModifyDateColumn" msprop:Generator_UserColumnName="ModifyDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="TargetCarID" msprop:Generator_ColumnVarNameInTable="columnTargetCarID" msprop:Generator_ColumnPropNameInRow="TargetCarID" msprop:Generator_ColumnPropNameInTable="TargetCarIDColumn" msprop:Generator_UserColumnName="TargetCarID" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="StartDate" msprop:Generator_ColumnVarNameInTable="columnStartDate" msprop:Generator_ColumnPropNameInRow="StartDate" msprop:Generator_ColumnPropNameInTable="StartDateColumn" msprop:Generator_UserColumnName="StartDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="FinishDate" msprop:Generator_ColumnVarNameInTable="columnFinishDate" msprop:Generator_ColumnPropNameInRow="FinishDate" msprop:Generator_ColumnPropNameInTable="FinishDateColumn" msprop:Generator_UserColumnName="FinishDate" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="RescueCarPersonListP" msprop:Generator_TableClassName="RescueCarPersonListPDataTable" msprop:Generator_TableVarName="tableRescueCarPersonListP" msprop:Generator_TablePropName="RescueCarPersonListP" msprop:Generator_RowDeletingName="RescueCarPersonListPRowDeleting" msprop:Generator_RowChangingName="RescueCarPersonListPRowChanging" msprop:Generator_RowEvHandlerName="RescueCarPersonListPRowChangeEventHandler" msprop:Generator_RowDeletedName="RescueCarPersonListPRowDeleted" msprop:Generator_UserTableName="RescueCarPersonListP" msprop:Generator_RowChangedName="RescueCarPersonListPRowChanged" msprop:Generator_RowEvArgName="RescueCarPersonListPRowChangeEvent" msprop:Generator_RowClassName="RescueCarPersonListPRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CaseDate" msprop:Generator_ColumnVarNameInTable="columnCaseDate" msprop:Generator_ColumnPropNameInRow="CaseDate" msprop:Generator_ColumnPropNameInTable="CaseDateColumn" msprop:Generator_UserColumnName="CaseDate" type="xs:dateTime" />
+              <xs:element name="Reason" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnReason" msprop:Generator_ColumnPropNameInRow="Reason" msprop:Generator_ColumnPropNameInTable="ReasonColumn" msprop:Generator_UserColumnName="Reason" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="128" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FinishPosition" msprop:Generator_ColumnVarNameInTable="columnFinishPosition" msprop:Generator_ColumnPropNameInRow="FinishPosition" msprop:Generator_ColumnPropNameInTable="FinishPositionColumn" msprop:Generator_UserColumnName="FinishPosition" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="StartTime" msprop:Generator_ColumnVarNameInTable="columnStartTime" msprop:Generator_ColumnPropNameInRow="StartTime" msprop:Generator_ColumnPropNameInTable="StartTimeColumn" msprop:Generator_UserColumnName="StartTime" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FinishTime" msprop:Generator_ColumnVarNameInTable="columnFinishTime" msprop:Generator_ColumnPropNameInRow="FinishTime" msprop:Generator_ColumnPropNameInTable="FinishTimeColumn" msprop:Generator_UserColumnName="FinishTime" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="UseMan" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnUseMan" msprop:Generator_ColumnPropNameInRow="UseMan" msprop:Generator_ColumnPropNameInTable="UseManColumn" msprop:Generator_UserColumnName="UseMan" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TitleName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTitleName" msprop:Generator_ColumnPropNameInRow="TitleName" msprop:Generator_ColumnPropNameInTable="TitleNameColumn" msprop:Generator_UserColumnName="TitleName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Remark" msprop:Generator_ColumnVarNameInTable="columnRemark" msprop:Generator_ColumnPropNameInRow="Remark" msprop:Generator_ColumnPropNameInTable="RemarkColumn" msprop:Generator_UserColumnName="Remark" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepNo" msprop:Generator_ColumnVarNameInTable="columnDepNo" msprop:Generator_ColumnPropNameInRow="DepNo" msprop:Generator_ColumnPropNameInTable="DepNoColumn" msprop:Generator_UserColumnName="DepNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="StartDate" msprop:Generator_ColumnVarNameInTable="columnStartDate" msprop:Generator_ColumnPropNameInRow="StartDate" msprop:Generator_ColumnPropNameInTable="StartDateColumn" msprop:Generator_UserColumnName="StartDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="FinishDate" msprop:Generator_ColumnVarNameInTable="columnFinishDate" msprop:Generator_ColumnPropNameInRow="FinishDate" msprop:Generator_ColumnPropNameInTable="FinishDateColumn" msprop:Generator_UserColumnName="FinishDate" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:RescueCarAssignListP" />
+      <xs:field xpath="mstns:ListNo" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

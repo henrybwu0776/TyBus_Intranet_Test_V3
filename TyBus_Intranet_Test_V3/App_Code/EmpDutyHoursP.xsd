@@ -1,0 +1,415 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="EmpDutyHoursP" targetNamespace="http://tempuri.org/EmpDutyHoursP.xsd" xmlns:mstns="http://tempuri.org/EmpDutyHoursP.xsd" xmlns="http://tempuri.org/EmpDutyHoursP.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="EmpDutyHoursP_DutyHoursTableAdapter" GeneratorDataComponentClassName="EmpDutyHoursP_DutyHoursTableAdapter" Name="EmpDutyHoursP_DutyHours" UserDataComponentName="EmpDutyHoursP_DutyHoursTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="ERPBUS_TEST.dbo.EmpDutyHours" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          LEFT(DutyIndex, 3) AS DutyYear, DepName, EmpNo, EmpName, cast(null as varchar) Title,
+                                (SELECT          CLASSTXT
+                                  FROM               DBDICB
+                                  WHERE           (FKEY = '員工資料        EMPLOYEE        TITLE') AND (CLASSNO =
+                                                                  (SELECT          TITLE
+                                                                    FROM               EMPLOYEE
+                                                                    WHERE           (EMPNO = e.EmpNo)))) AS Title_C, DutyDateStart, StartTime, DutyDateEnd, EndTime, 
+                            DutyHours, Remark
+FROM              EmpDutyHours AS e
+WHERE          (1 &lt;&gt; 1)</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="DutyYear" DataSetColumn="DutyYear" />
+              <Mapping SourceColumn="DepName" DataSetColumn="DepName" />
+              <Mapping SourceColumn="EmpNo" DataSetColumn="EmpNo" />
+              <Mapping SourceColumn="EmpName" DataSetColumn="EmpName" />
+              <Mapping SourceColumn="Title_C" DataSetColumn="Title_C" />
+              <Mapping SourceColumn="DutyDateStart" DataSetColumn="DutyDateStart" />
+              <Mapping SourceColumn="StartTime" DataSetColumn="StartTime" />
+              <Mapping SourceColumn="DutyDateEnd" DataSetColumn="DutyDateEnd" />
+              <Mapping SourceColumn="EndTime" DataSetColumn="EndTime" />
+              <Mapping SourceColumn="DutyHours" DataSetColumn="DutyHours" />
+              <Mapping SourceColumn="Remark" DataSetColumn="Remark" />
+              <Mapping SourceColumn="Title" DataSetColumn="Title" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="EmpDutyHoursP_ESCHoursTableAdapter" GeneratorDataComponentClassName="EmpDutyHoursP_ESCHoursTableAdapter" Name="EmpDutyHoursP_ESCHours" UserDataComponentName="EmpDutyHoursP_ESCHoursTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="ERPBUS_TEST.dbo.EmpDutyHours" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          LEFT(DutyIndex, 3) AS DutyYear, DepName, EmpNo, EmpName, cast(null as varchar) Title,
+                                (SELECT          CLASSTXT
+                                  FROM               DBDICB
+                                  WHERE           (FKEY = '員工資料        EMPLOYEE        TITLE') AND (CLASSNO =
+                                                                  (SELECT          TITLE
+                                                                    FROM               EMPLOYEE
+                                                                    WHERE           (EMPNO = e.EmpNo)))) AS Title_C, DutyDateStart, StartTime, DutyDateEnd, EndTime, 
+                            ESCHours, Remark
+FROM              EmpDutyHours AS e
+WHERE          (1 &lt;&gt; 1)</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="DutyYear" DataSetColumn="DutyYear" />
+              <Mapping SourceColumn="DepName" DataSetColumn="DepName" />
+              <Mapping SourceColumn="EmpNo" DataSetColumn="EmpNo" />
+              <Mapping SourceColumn="EmpName" DataSetColumn="EmpName" />
+              <Mapping SourceColumn="Title_C" DataSetColumn="Title_C" />
+              <Mapping SourceColumn="DutyDateStart" DataSetColumn="DutyDateStart" />
+              <Mapping SourceColumn="StartTime" DataSetColumn="StartTime" />
+              <Mapping SourceColumn="DutyDateEnd" DataSetColumn="DutyDateEnd" />
+              <Mapping SourceColumn="EndTime" DataSetColumn="EndTime" />
+              <Mapping SourceColumn="ESCHours" DataSetColumn="ESCHours" />
+              <Mapping SourceColumn="Remark" DataSetColumn="Remark" />
+              <Mapping SourceColumn="Title" DataSetColumn="Title" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="EmpDutyHoursP_OverdueTableAdapter" GeneratorDataComponentClassName="EmpDutyHoursP_OverdueTableAdapter" Name="EmpDutyHoursP_Overdue" UserDataComponentName="EmpDutyHoursP_OverdueTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="ERPBUS_TEST.dbo.EmpDutyHours" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          LEFT(DutyIndex, 3) AS DutyYear, DepName, EmpNo, EmpName, cast(null as varchar) Title,
+                                (SELECT          CLASSTXT
+                                  FROM               DBDICB
+                                  WHERE           (FKEY = '員工資料        EMPLOYEE        TITLE') AND (CLASSNO =
+                                                                  (SELECT          TITLE
+                                                                    FROM               EMPLOYEE
+                                                                    WHERE           (EMPNO = e.EmpNo)))) AS Title_C, SUM(UsableHours) AS TotalUseableHours, 
+                            CAST(NULL AS varchar) AS Remark
+FROM              EmpDutyHours AS e
+WHERE          (1 &lt;&gt; 1)
+GROUP BY   LEFT(DutyIndex, 3), DepName, EmpNo, EmpName</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="DutyYear" DataSetColumn="DutyYear" />
+              <Mapping SourceColumn="DepName" DataSetColumn="DepName" />
+              <Mapping SourceColumn="EmpNo" DataSetColumn="EmpNo" />
+              <Mapping SourceColumn="EmpName" DataSetColumn="EmpName" />
+              <Mapping SourceColumn="Title_C" DataSetColumn="Title_C" />
+              <Mapping SourceColumn="TotalUseableHours" DataSetColumn="TotalUseableHours" />
+              <Mapping SourceColumn="Remark" DataSetColumn="Remark" />
+              <Mapping SourceColumn="Title" DataSetColumn="Title" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="EmpDutyHoursP_UseableHoursTableAdapter" GeneratorDataComponentClassName="EmpDutyHoursP_UseableHoursTableAdapter" Name="EmpDutyHoursP_UseableHours" UserDataComponentName="EmpDutyHoursP_UseableHoursTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="ERPBUS_TEST.dbo.EmpDutyHours" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          LEFT(DutyIndex, 3) AS DutyYear, DepName, EmpNo, EmpName, cast(null as varchar) Title,
+                                (SELECT          CLASSTXT
+                                  FROM               DBDICB
+                                  WHERE           (FKEY = '員工資料        EMPLOYEE        TITLE') AND (CLASSNO =
+                                                                  (SELECT          TITLE
+                                                                    FROM               EMPLOYEE
+                                                                    WHERE           (EMPNO = e.EmpNo)))) AS Title_C, SUM(UsableHours) AS TotalUseableHours, 
+                            CAST(NULL AS varchar) AS Remark
+FROM              EmpDutyHours AS e
+WHERE          (1 &lt;&gt; 1)
+GROUP BY   LEFT(DutyIndex, 3), DepName, EmpNo, EmpName</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="DutyYear" DataSetColumn="DutyYear" />
+              <Mapping SourceColumn="DepName" DataSetColumn="DepName" />
+              <Mapping SourceColumn="EmpNo" DataSetColumn="EmpNo" />
+              <Mapping SourceColumn="EmpName" DataSetColumn="EmpName" />
+              <Mapping SourceColumn="Title_C" DataSetColumn="Title_C" />
+              <Mapping SourceColumn="TotalUseableHours" DataSetColumn="TotalUseableHours" />
+              <Mapping SourceColumn="Remark" DataSetColumn="Remark" />
+              <Mapping SourceColumn="Title" DataSetColumn="Title" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="EmpDutyHoursP" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="EmpDutyHoursP" msprop:Generator_UserDSName="EmpDutyHoursP">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="EmpDutyHoursP_DutyHours" msprop:Generator_TableClassName="EmpDutyHoursP_DutyHoursDataTable" msprop:Generator_TableVarName="tableEmpDutyHoursP_DutyHours" msprop:Generator_RowChangedName="EmpDutyHoursP_DutyHoursRowChanged" msprop:Generator_TablePropName="EmpDutyHoursP_DutyHours" msprop:Generator_RowDeletingName="EmpDutyHoursP_DutyHoursRowDeleting" msprop:Generator_RowChangingName="EmpDutyHoursP_DutyHoursRowChanging" msprop:Generator_RowEvHandlerName="EmpDutyHoursP_DutyHoursRowChangeEventHandler" msprop:Generator_RowDeletedName="EmpDutyHoursP_DutyHoursRowDeleted" msprop:Generator_RowClassName="EmpDutyHoursP_DutyHoursRow" msprop:Generator_UserTableName="EmpDutyHoursP_DutyHours" msprop:Generator_RowEvArgName="EmpDutyHoursP_DutyHoursRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DutyYear" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDutyYear" msprop:Generator_ColumnPropNameInRow="DutyYear" msprop:Generator_ColumnPropNameInTable="DutyYearColumn" msprop:Generator_UserColumnName="DutyYear" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="3" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepName" msprop:Generator_ColumnVarNameInTable="columnDepName" msprop:Generator_ColumnPropNameInRow="DepName" msprop:Generator_ColumnPropNameInTable="DepNameColumn" msprop:Generator_UserColumnName="DepName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EmpNo" msprop:Generator_ColumnVarNameInTable="columnEmpNo" msprop:Generator_ColumnPropNameInRow="EmpNo" msprop:Generator_ColumnPropNameInTable="EmpNoColumn" msprop:Generator_UserColumnName="EmpNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EmpName" msprop:Generator_ColumnVarNameInTable="columnEmpName" msprop:Generator_ColumnPropNameInRow="EmpName" msprop:Generator_ColumnPropNameInTable="EmpNameColumn" msprop:Generator_UserColumnName="EmpName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Title_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTitle_C" msprop:Generator_ColumnPropNameInRow="Title_C" msprop:Generator_ColumnPropNameInTable="Title_CColumn" msprop:Generator_UserColumnName="Title_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DutyDateStart" msprop:Generator_ColumnVarNameInTable="columnDutyDateStart" msprop:Generator_ColumnPropNameInRow="DutyDateStart" msprop:Generator_ColumnPropNameInTable="DutyDateStartColumn" msprop:Generator_UserColumnName="DutyDateStart" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="StartTime" msprop:Generator_ColumnVarNameInTable="columnStartTime" msprop:Generator_ColumnPropNameInRow="StartTime" msprop:Generator_ColumnPropNameInTable="StartTimeColumn" msprop:Generator_UserColumnName="StartTime" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="6" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DutyDateEnd" msprop:Generator_ColumnVarNameInTable="columnDutyDateEnd" msprop:Generator_ColumnPropNameInRow="DutyDateEnd" msprop:Generator_ColumnPropNameInTable="DutyDateEndColumn" msprop:Generator_UserColumnName="DutyDateEnd" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="EndTime" msprop:Generator_ColumnVarNameInTable="columnEndTime" msprop:Generator_ColumnPropNameInRow="EndTime" msprop:Generator_ColumnPropNameInTable="EndTimeColumn" msprop:Generator_UserColumnName="EndTime" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="6" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DutyHours" msprop:Generator_ColumnVarNameInTable="columnDutyHours" msprop:Generator_ColumnPropNameInRow="DutyHours" msprop:Generator_ColumnPropNameInTable="DutyHoursColumn" msprop:Generator_UserColumnName="DutyHours" type="xs:double" minOccurs="0" />
+              <xs:element name="Remark" msprop:Generator_ColumnVarNameInTable="columnRemark" msprop:Generator_ColumnPropNameInRow="Remark" msprop:Generator_ColumnPropNameInTable="RemarkColumn" msprop:Generator_UserColumnName="Remark" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Title" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTitle" msprop:Generator_ColumnPropNameInRow="Title" msprop:Generator_ColumnPropNameInTable="TitleColumn" msprop:Generator_UserColumnName="Title" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="EmpDutyHoursP_ESCHours" msprop:Generator_TableClassName="EmpDutyHoursP_ESCHoursDataTable" msprop:Generator_TableVarName="tableEmpDutyHoursP_ESCHours" msprop:Generator_RowChangedName="EmpDutyHoursP_ESCHoursRowChanged" msprop:Generator_TablePropName="EmpDutyHoursP_ESCHours" msprop:Generator_RowDeletingName="EmpDutyHoursP_ESCHoursRowDeleting" msprop:Generator_RowChangingName="EmpDutyHoursP_ESCHoursRowChanging" msprop:Generator_RowEvHandlerName="EmpDutyHoursP_ESCHoursRowChangeEventHandler" msprop:Generator_RowDeletedName="EmpDutyHoursP_ESCHoursRowDeleted" msprop:Generator_RowClassName="EmpDutyHoursP_ESCHoursRow" msprop:Generator_UserTableName="EmpDutyHoursP_ESCHours" msprop:Generator_RowEvArgName="EmpDutyHoursP_ESCHoursRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DutyYear" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDutyYear" msprop:Generator_ColumnPropNameInRow="DutyYear" msprop:Generator_ColumnPropNameInTable="DutyYearColumn" msprop:Generator_UserColumnName="DutyYear" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="3" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepName" msprop:Generator_ColumnVarNameInTable="columnDepName" msprop:Generator_ColumnPropNameInRow="DepName" msprop:Generator_ColumnPropNameInTable="DepNameColumn" msprop:Generator_UserColumnName="DepName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EmpNo" msprop:Generator_ColumnVarNameInTable="columnEmpNo" msprop:Generator_ColumnPropNameInRow="EmpNo" msprop:Generator_ColumnPropNameInTable="EmpNoColumn" msprop:Generator_UserColumnName="EmpNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EmpName" msprop:Generator_ColumnVarNameInTable="columnEmpName" msprop:Generator_ColumnPropNameInRow="EmpName" msprop:Generator_ColumnPropNameInTable="EmpNameColumn" msprop:Generator_UserColumnName="EmpName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Title_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTitle_C" msprop:Generator_ColumnPropNameInRow="Title_C" msprop:Generator_ColumnPropNameInTable="Title_CColumn" msprop:Generator_UserColumnName="Title_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DutyDateStart" msprop:Generator_ColumnVarNameInTable="columnDutyDateStart" msprop:Generator_ColumnPropNameInRow="DutyDateStart" msprop:Generator_ColumnPropNameInTable="DutyDateStartColumn" msprop:Generator_UserColumnName="DutyDateStart" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="StartTime" msprop:Generator_ColumnVarNameInTable="columnStartTime" msprop:Generator_ColumnPropNameInRow="StartTime" msprop:Generator_ColumnPropNameInTable="StartTimeColumn" msprop:Generator_UserColumnName="StartTime" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="6" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DutyDateEnd" msprop:Generator_ColumnVarNameInTable="columnDutyDateEnd" msprop:Generator_ColumnPropNameInRow="DutyDateEnd" msprop:Generator_ColumnPropNameInTable="DutyDateEndColumn" msprop:Generator_UserColumnName="DutyDateEnd" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="EndTime" msprop:Generator_ColumnVarNameInTable="columnEndTime" msprop:Generator_ColumnPropNameInRow="EndTime" msprop:Generator_ColumnPropNameInTable="EndTimeColumn" msprop:Generator_UserColumnName="EndTime" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="6" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ESCHours" msprop:Generator_ColumnVarNameInTable="columnESCHours" msprop:Generator_ColumnPropNameInRow="ESCHours" msprop:Generator_ColumnPropNameInTable="ESCHoursColumn" msprop:Generator_UserColumnName="ESCHours" type="xs:double" minOccurs="0" />
+              <xs:element name="Remark" msprop:Generator_ColumnVarNameInTable="columnRemark" msprop:Generator_ColumnPropNameInRow="Remark" msprop:Generator_ColumnPropNameInTable="RemarkColumn" msprop:Generator_UserColumnName="Remark" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Title" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTitle" msprop:Generator_ColumnPropNameInRow="Title" msprop:Generator_ColumnPropNameInTable="TitleColumn" msprop:Generator_UserColumnName="Title" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="EmpDutyHoursP_Overdue" msprop:Generator_TableClassName="EmpDutyHoursP_OverdueDataTable" msprop:Generator_TableVarName="tableEmpDutyHoursP_Overdue" msprop:Generator_RowChangedName="EmpDutyHoursP_OverdueRowChanged" msprop:Generator_TablePropName="EmpDutyHoursP_Overdue" msprop:Generator_RowDeletingName="EmpDutyHoursP_OverdueRowDeleting" msprop:Generator_RowChangingName="EmpDutyHoursP_OverdueRowChanging" msprop:Generator_RowEvHandlerName="EmpDutyHoursP_OverdueRowChangeEventHandler" msprop:Generator_RowDeletedName="EmpDutyHoursP_OverdueRowDeleted" msprop:Generator_RowClassName="EmpDutyHoursP_OverdueRow" msprop:Generator_UserTableName="EmpDutyHoursP_Overdue" msprop:Generator_RowEvArgName="EmpDutyHoursP_OverdueRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DutyYear" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDutyYear" msprop:Generator_ColumnPropNameInRow="DutyYear" msprop:Generator_ColumnPropNameInTable="DutyYearColumn" msprop:Generator_UserColumnName="DutyYear" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="3" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepName" msprop:Generator_ColumnVarNameInTable="columnDepName" msprop:Generator_ColumnPropNameInRow="DepName" msprop:Generator_ColumnPropNameInTable="DepNameColumn" msprop:Generator_UserColumnName="DepName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EmpNo" msprop:Generator_ColumnVarNameInTable="columnEmpNo" msprop:Generator_ColumnPropNameInRow="EmpNo" msprop:Generator_ColumnPropNameInTable="EmpNoColumn" msprop:Generator_UserColumnName="EmpNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EmpName" msprop:Generator_ColumnVarNameInTable="columnEmpName" msprop:Generator_ColumnPropNameInRow="EmpName" msprop:Generator_ColumnPropNameInTable="EmpNameColumn" msprop:Generator_UserColumnName="EmpName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Title_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTitle_C" msprop:Generator_ColumnPropNameInRow="Title_C" msprop:Generator_ColumnPropNameInTable="Title_CColumn" msprop:Generator_UserColumnName="Title_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TotalUseableHours" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTotalUseableHours" msprop:Generator_ColumnPropNameInRow="TotalUseableHours" msprop:Generator_ColumnPropNameInTable="TotalUseableHoursColumn" msprop:Generator_UserColumnName="TotalUseableHours" type="xs:double" minOccurs="0" />
+              <xs:element name="Remark" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRemark" msprop:Generator_ColumnPropNameInRow="Remark" msprop:Generator_ColumnPropNameInTable="RemarkColumn" msprop:Generator_UserColumnName="Remark" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Title" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTitle" msprop:Generator_ColumnPropNameInRow="Title" msprop:Generator_ColumnPropNameInTable="TitleColumn" msprop:Generator_UserColumnName="Title" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="EmpDutyHoursP_UseableHours" msprop:Generator_TableClassName="EmpDutyHoursP_UseableHoursDataTable" msprop:Generator_TableVarName="tableEmpDutyHoursP_UseableHours" msprop:Generator_RowChangedName="EmpDutyHoursP_UseableHoursRowChanged" msprop:Generator_TablePropName="EmpDutyHoursP_UseableHours" msprop:Generator_RowDeletingName="EmpDutyHoursP_UseableHoursRowDeleting" msprop:Generator_RowChangingName="EmpDutyHoursP_UseableHoursRowChanging" msprop:Generator_RowEvHandlerName="EmpDutyHoursP_UseableHoursRowChangeEventHandler" msprop:Generator_RowDeletedName="EmpDutyHoursP_UseableHoursRowDeleted" msprop:Generator_RowClassName="EmpDutyHoursP_UseableHoursRow" msprop:Generator_UserTableName="EmpDutyHoursP_UseableHours" msprop:Generator_RowEvArgName="EmpDutyHoursP_UseableHoursRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DutyYear" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDutyYear" msprop:Generator_ColumnPropNameInRow="DutyYear" msprop:Generator_ColumnPropNameInTable="DutyYearColumn" msprop:Generator_UserColumnName="DutyYear" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="3" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepName" msprop:Generator_ColumnVarNameInTable="columnDepName" msprop:Generator_ColumnPropNameInRow="DepName" msprop:Generator_ColumnPropNameInTable="DepNameColumn" msprop:Generator_UserColumnName="DepName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EmpNo" msprop:Generator_ColumnVarNameInTable="columnEmpNo" msprop:Generator_ColumnPropNameInRow="EmpNo" msprop:Generator_ColumnPropNameInTable="EmpNoColumn" msprop:Generator_UserColumnName="EmpNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EmpName" msprop:Generator_ColumnVarNameInTable="columnEmpName" msprop:Generator_ColumnPropNameInRow="EmpName" msprop:Generator_ColumnPropNameInTable="EmpNameColumn" msprop:Generator_UserColumnName="EmpName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Title_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTitle_C" msprop:Generator_ColumnPropNameInRow="Title_C" msprop:Generator_ColumnPropNameInTable="Title_CColumn" msprop:Generator_UserColumnName="Title_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TotalUseableHours" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTotalUseableHours" msprop:Generator_ColumnPropNameInRow="TotalUseableHours" msprop:Generator_ColumnPropNameInTable="TotalUseableHoursColumn" msprop:Generator_UserColumnName="TotalUseableHours" type="xs:double" minOccurs="0" />
+              <xs:element name="Remark" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRemark" msprop:Generator_ColumnPropNameInRow="Remark" msprop:Generator_ColumnPropNameInTable="RemarkColumn" msprop:Generator_UserColumnName="Remark" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Title" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTitle" msprop:Generator_ColumnPropNameInRow="Title" msprop:Generator_ColumnPropNameInTable="TitleColumn" msprop:Generator_UserColumnName="Title" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

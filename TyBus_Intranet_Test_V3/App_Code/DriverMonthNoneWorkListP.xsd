@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DriverMonthNoneWorkListP" targetNamespace="http://tempuri.org/DriverMonthNoneWorkListP.xsd" xmlns:mstns="http://tempuri.org/DriverMonthNoneWorkListP.xsd" xmlns="http://tempuri.org/DriverMonthNoneWorkListP.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="DriverMonthNoneWorkListPTableAdapter" GeneratorDataComponentClassName="DriverMonthNoneWorkListPTableAdapter" Name="DriverMonthNoneWorkListP" UserDataComponentName="DriverMonthNoneWorkListPTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="SELECT DEPNO, EMPNO, NAME, LEAVEDAY, BEGINDAY, STOPDAY, worktype, CASE WHEN t.ESCType = '01' THEN t.[Hours] ELSE 0 END AS Hours01, CASE WHEN t.ESCType = '03' THEN t.[Hours] ELSE 0 END AS Hours03, CASE WHEN t.ESCType = '04' THEN t.[Hours] ELSE 0 END AS Hours04, CASE WHEN t.ESCType = '05' THEN t.[Hours] ELSE 0 END AS Hours05, CASE WHEN t.ESCType NOT IN ('01' , '03' , '04' , '05') THEN t.[Hours] ELSE 0 END AS OtherHours FROM (SELECT e.DEPNO, e.EMPNO, e.NAME, e.worktype, e.LEAVEDAY, e.BEGINDAY, e.STOPDAY, d.esctype, d.hours FROM EMPLOYEE AS e LEFT OUTER JOIN ESCDUTY AS d ON d.applyman = e.EMPNO AND d.applyday BETWEEN '2020/04/01' AND '2020/04/30' WHERE (e.LEAVEDAY BETWEEN '2020/04/01' AND '2020/04/30') AND (e.TYPE = '20') AND (e.EMPNO NOT IN (SELECT DISTINCT DRIVER FROM RUNSHEETA WHERE (BUDATE BETWEEN '2020/04/01' AND '2020/04/30'))) AND (e.DEPNO IN (SELECT DEPNO FROM DEPARTMENT AS DEPARTMENT_3 WHERE (ISSTATION = 'V') AND (depGroup IN ('1', '2')) AND (PATINDEX('Z%', DEPNO) = 0))) UNION ALL SELECT e.DEPNO, e.EMPNO, e.NAME, e.worktype, e.LEAVEDAY, e.BEGINDAY, e.STOPDAY, d.esctype, d.hours FROM EMPLOYEE AS e LEFT OUTER JOIN ESCDUTY AS d ON d.applyman = e.EMPNO AND d.applyday BETWEEN '2020/04/01' AND '2020/04/30' WHERE (e.BEGINDAY BETWEEN '2020/04/01' AND '2020/04/30') AND (e.STOPDAY IS NULL OR e.STOPDAY &gt; '2020/04/01') AND (e.TYPE = '20') AND (e.EMPNO NOT IN (SELECT DISTINCT DRIVER FROM RUNSHEETA AS RUNSHEETA_2 WHERE (BUDATE BETWEEN '2020/04/01' AND '2020/04/30'))) AND (e.DEPNO IN (SELECT DEPNO FROM DEPARTMENT AS DEPARTMENT_2 WHERE (ISSTATION = 'V') AND (depGroup IN ('1', '2')) AND (PATINDEX('Z%', DEPNO) = 0))) UNION ALL SELECT e.DEPNO, e.EMPNO, e.NAME, e.worktype, e.LEAVEDAY, e.BEGINDAY, e.STOPDAY, d.esctype, d.hours FROM EMPLOYEE AS e LEFT OUTER JOIN ESCDUTY AS d ON d.applyman = e.EMPNO AND d.applyday BETWEEN '2020/04/01' AND '2020/04/30' WHERE (e.BEGINDAY IS NULL) AND (e.LEAVEDAY IS NULL) AND (e.TYPE = '20') AND (e.EMPNO NOT IN (SELECT DISTINCT DRIVER FROM RUNSHEETA AS RUNSHEETA_1 WHERE (BUDATE BETWEEN '2020/04/01' AND '2020/04/30'))) AND (e.DEPNO IN (SELECT DEPNO FROM DEPARTMENT AS DEPARTMENT_1 WHERE (ISSTATION = 'V') AND (depGroup IN ('1', '2')) AND (PATINDEX('Z%', DEPNO) = 0)))) AS t" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT DEPNO, (SELECT NAME FROM DEPARTMENT WHERE (DEPNO = z.DEPNO)) AS DepName, EMPNO, NAME, worktype, LEAVEDAY, BEGINDAY, STOPDAY, SUM(Hours01) / 8 AS TDay01, SUM(Hours03) / 8 AS TDay03, SUM(Hours04) / 8 AS TDay04, SUM(Hours05) / 8 AS TDay05, SUM(OtherHours) / 8 AS TOtherDays, CASE WHEN SUM(z.Hours01 + z.Hours03 + z.Hours04 + z.Hours05 + z.OtherHours) = 0 THEN '無請假記錄' ELSE CAST(SUM(z.Hours01 + z.Hours03 + z.Hours04 + z.Hours05 + z.OtherHours) / 8 AS varchar) END AS TotalESCDays FROM (SELECT DEPNO, EMPNO, NAME, LEAVEDAY, BEGINDAY, STOPDAY, worktype, CASE WHEN t.ESCType = '01' THEN t.[Hours] ELSE 0 END AS Hours01, CASE WHEN t.ESCType = '03' THEN t.[Hours] ELSE 0 END AS Hours03, CASE WHEN t.ESCType = '04' THEN t.[Hours] ELSE 0 END AS Hours04, CASE WHEN t.ESCType = '05' THEN t.[Hours] ELSE 0 END AS Hours05, CASE WHEN t.ESCType NOT IN ('01' , '03' , '04' , '05') THEN t.[Hours] ELSE 0 END AS OtherHours FROM (SELECT e.DEPNO, e.EMPNO, e.NAME, e.worktype, e.LEAVEDAY, e.BEGINDAY, e.STOPDAY, d.esctype, d.hours FROM EMPLOYEE AS e LEFT OUTER JOIN ESCDUTY AS d ON d.applyman = e.EMPNO AND d.applyday BETWEEN '2020/04/01' AND '2020/04/30' WHERE (e.LEAVEDAY BETWEEN '2020/04/01' AND '2020/04/30') AND (e.TYPE = '20') AND (e.EMPNO NOT IN (SELECT DISTINCT DRIVER FROM RUNSHEETA WHERE (BUDATE BETWEEN '2020/04/01' AND '2020/04/30'))) AND (e.DEPNO IN (SELECT DEPNO FROM DEPARTMENT AS DEPARTMENT_3 WHERE (ISSTATION = 'V') AND (depGroup IN ('1', '2')) AND (PATINDEX('Z%', DEPNO) = 0))) UNION ALL SELECT e.DEPNO, e.EMPNO, e.NAME, e.worktype, e.LEAVEDAY, e.BEGINDAY, e.STOPDAY, d.esctype, d.hours FROM EMPLOYEE AS e LEFT OUTER JOIN ESCDUTY AS d ON d.applyman = e.EMPNO AND d.applyday BETWEEN '2020/04/01' AND '2020/04/30' WHERE (e.BEGINDAY BETWEEN '2020/04/01' AND '2020/04/30') AND (e.STOPDAY IS NULL OR e.STOPDAY &gt; '2020/04/01') AND (e.TYPE = '20') AND (e.EMPNO NOT IN (SELECT DISTINCT DRIVER FROM RUNSHEETA AS RUNSHEETA_2 WHERE (BUDATE BETWEEN '2020/04/01' AND '2020/04/30'))) AND (e.DEPNO IN (SELECT DEPNO FROM DEPARTMENT AS DEPARTMENT_2 WHERE (ISSTATION = 'V') AND (depGroup IN ('1', '2')) AND (PATINDEX('Z%', DEPNO) = 0))) UNION ALL SELECT e.DEPNO, e.EMPNO, e.NAME, e.worktype, e.LEAVEDAY, e.BEGINDAY, e.STOPDAY, d.esctype, d.hours FROM EMPLOYEE AS e LEFT OUTER JOIN ESCDUTY AS d ON d.applyman = e.EMPNO AND d.applyday BETWEEN '2020/04/01' AND '2020/04/30' WHERE (e.BEGINDAY IS NULL) AND (e.LEAVEDAY IS NULL) AND (e.TYPE = '20') AND (e.EMPNO NOT IN (SELECT DISTINCT DRIVER FROM RUNSHEETA AS RUNSHEETA_1 WHERE (BUDATE BETWEEN '2020/04/01' AND '2020/04/30'))) AND (e.DEPNO IN (SELECT DEPNO FROM DEPARTMENT AS DEPARTMENT_1 WHERE (ISSTATION = 'V') AND (depGroup IN ('1', '2')) AND (PATINDEX('Z%', DEPNO) = 0)))) AS t) AS z WHERE (1 &lt;&gt; 1) GROUP BY DEPNO, EMPNO, NAME, LEAVEDAY, BEGINDAY, STOPDAY, worktype ORDER BY EMPNO</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="DEPNO" DataSetColumn="DEPNO" />
+              <Mapping SourceColumn="DepName" DataSetColumn="DepName" />
+              <Mapping SourceColumn="EMPNO" DataSetColumn="EMPNO" />
+              <Mapping SourceColumn="NAME" DataSetColumn="NAME" />
+              <Mapping SourceColumn="worktype" DataSetColumn="worktype" />
+              <Mapping SourceColumn="LEAVEDAY" DataSetColumn="LEAVEDAY" />
+              <Mapping SourceColumn="BEGINDAY" DataSetColumn="BEGINDAY" />
+              <Mapping SourceColumn="STOPDAY" DataSetColumn="STOPDAY" />
+              <Mapping SourceColumn="TDay01" DataSetColumn="TDay01" />
+              <Mapping SourceColumn="TDay03" DataSetColumn="TDay03" />
+              <Mapping SourceColumn="TDay04" DataSetColumn="TDay04" />
+              <Mapping SourceColumn="TDay05" DataSetColumn="TDay05" />
+              <Mapping SourceColumn="TOtherDays" DataSetColumn="TOtherDays" />
+              <Mapping SourceColumn="TotalESCDays" DataSetColumn="TotalESCDays" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DriverMonthNoneWorkListP" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DriverMonthNoneWorkListP" msprop:Generator_UserDSName="DriverMonthNoneWorkListP">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="DriverMonthNoneWorkListP" msprop:Generator_TableClassName="DriverMonthNoneWorkListPDataTable" msprop:Generator_TableVarName="tableDriverMonthNoneWorkListP" msprop:Generator_TablePropName="_DriverMonthNoneWorkListP" msprop:Generator_RowDeletingName="DriverMonthNoneWorkListPRowDeleting" msprop:Generator_RowChangingName="DriverMonthNoneWorkListPRowChanging" msprop:Generator_RowEvHandlerName="DriverMonthNoneWorkListPRowChangeEventHandler" msprop:Generator_RowDeletedName="DriverMonthNoneWorkListPRowDeleted" msprop:Generator_UserTableName="DriverMonthNoneWorkListP" msprop:Generator_RowChangedName="DriverMonthNoneWorkListPRowChanged" msprop:Generator_RowEvArgName="DriverMonthNoneWorkListPRowChangeEvent" msprop:Generator_RowClassName="DriverMonthNoneWorkListPRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DEPNO" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDEPNO" msprop:Generator_ColumnPropNameInRow="DEPNO" msprop:Generator_ColumnPropNameInTable="DEPNOColumn" msprop:Generator_UserColumnName="DEPNO" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepName" msprop:Generator_ColumnPropNameInRow="DepName" msprop:Generator_ColumnPropNameInTable="DepNameColumn" msprop:Generator_UserColumnName="DepName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EMPNO" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnEMPNO" msprop:Generator_ColumnPropNameInRow="EMPNO" msprop:Generator_ColumnPropNameInTable="EMPNOColumn" msprop:Generator_UserColumnName="EMPNO" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="NAME" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnNAME" msprop:Generator_ColumnPropNameInRow="NAME" msprop:Generator_ColumnPropNameInTable="NAMEColumn" msprop:Generator_UserColumnName="NAME" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="worktype" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnworktype" msprop:Generator_ColumnPropNameInRow="worktype" msprop:Generator_ColumnPropNameInTable="worktypeColumn" msprop:Generator_UserColumnName="worktype" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="LEAVEDAY" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnLEAVEDAY" msprop:Generator_ColumnPropNameInRow="LEAVEDAY" msprop:Generator_ColumnPropNameInTable="LEAVEDAYColumn" msprop:Generator_UserColumnName="LEAVEDAY" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="BEGINDAY" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBEGINDAY" msprop:Generator_ColumnPropNameInRow="BEGINDAY" msprop:Generator_ColumnPropNameInTable="BEGINDAYColumn" msprop:Generator_UserColumnName="BEGINDAY" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="STOPDAY" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnSTOPDAY" msprop:Generator_ColumnPropNameInRow="STOPDAY" msprop:Generator_ColumnPropNameInTable="STOPDAYColumn" msprop:Generator_UserColumnName="STOPDAY" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="TDay01" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTDay01" msprop:Generator_ColumnPropNameInRow="TDay01" msprop:Generator_ColumnPropNameInTable="TDay01Column" msprop:Generator_UserColumnName="TDay01" type="xs:double" minOccurs="0" />
+              <xs:element name="TDay03" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTDay03" msprop:Generator_ColumnPropNameInRow="TDay03" msprop:Generator_ColumnPropNameInTable="TDay03Column" msprop:Generator_UserColumnName="TDay03" type="xs:double" minOccurs="0" />
+              <xs:element name="TDay04" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTDay04" msprop:Generator_ColumnPropNameInRow="TDay04" msprop:Generator_ColumnPropNameInTable="TDay04Column" msprop:Generator_UserColumnName="TDay04" type="xs:double" minOccurs="0" />
+              <xs:element name="TDay05" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTDay05" msprop:Generator_ColumnPropNameInRow="TDay05" msprop:Generator_ColumnPropNameInTable="TDay05Column" msprop:Generator_UserColumnName="TDay05" type="xs:double" minOccurs="0" />
+              <xs:element name="TOtherDays" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTOtherDays" msprop:Generator_ColumnPropNameInRow="TOtherDays" msprop:Generator_ColumnPropNameInTable="TOtherDaysColumn" msprop:Generator_UserColumnName="TOtherDays" type="xs:double" minOccurs="0" />
+              <xs:element name="TotalESCDays" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTotalESCDays" msprop:Generator_ColumnPropNameInRow="TotalESCDays" msprop:Generator_ColumnPropNameInTable="TotalESCDaysColumn" msprop:Generator_UserColumnName="TotalESCDays" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

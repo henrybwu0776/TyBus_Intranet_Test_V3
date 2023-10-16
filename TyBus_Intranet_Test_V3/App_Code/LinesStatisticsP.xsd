@@ -1,0 +1,305 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="LinesStatisticsP" targetNamespace="http://tempuri.org/LinesStatisticsP.xsd" xmlns:mstns="http://tempuri.org/LinesStatisticsP.xsd" xmlns="http://tempuri.org/LinesStatisticsP.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="CityAreaBusTableAdapter" GeneratorDataComponentClassName="CityAreaBusTableAdapter" Name="CityAreaBus" UserDataComponentName="CityAreaBusTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="SELECT LinesNo, LinesNote, CASE WHEN day(ShiftDate) = 1 AND (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float) END) &lt; 0.9 THEN 1 ELSE 0 END AS [01], CASE WHEN day(ShiftDate) = 2 AND (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float) END) &lt; 0.9 THEN 1 ELSE 0 END AS [02], CASE WHEN day(ShiftDate) = 3 AND (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float) END) &lt; 0.9 THEN 1 ELSE 0 END AS [03], CASE WHEN day(ShiftDate) = 4 AND (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float) END) &lt; 0.9 THEN 1 ELSE 0 END AS [04], CASE WHEN day(ShiftDate) = 5 AND (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float) END) &lt; 0.9 THEN 1 ELSE 0 END AS [05], CASE WHEN day(ShiftDate) = 6 AND (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float) END) &lt; 0.9 THEN 1 ELSE 0 END AS [06], CASE WHEN day(ShiftDate) = 7 AND (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float) END) &lt; 0.9 THEN 1 ELSE 0 END AS [07], CASE WHEN day(ShiftDate) = 8 AND (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float) END) &lt; 0.9 THEN 1 ELSE 0 END AS [08], CASE WHEN day(ShiftDate) = 9 AND (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float) END) &lt; 0.9 THEN 1 ELSE 0 END AS [09], CASE WHEN day(ShiftDate) = 10 AND (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float) END) &lt; 0.9 THEN 1 ELSE 0 END AS [10], CASE WHEN day(ShiftDate) = 11 AND (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float) END) &lt; 0.9 THEN 1 ELSE 0 END AS [11], CASE WHEN day(ShiftDate) = 12 AND (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float) END) &lt; 0.9 THEN 1 ELSE 0 END AS [12], CASE WHEN day(ShiftDate) = 13 AND (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float) END) &lt; 0.9 THEN 1 ELSE 0 END AS [13], CASE WHEN day(ShiftDate) = 14 AND (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float) END) &lt; 0.9 THEN 1 ELSE 0 END AS [14], CASE WHEN day(ShiftDate) = 15 AND (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float) END) &lt; 0.9 THEN 1 ELSE 0 END AS [15], CASE WHEN day(ShiftDate) = 16 AND (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float) END) &lt; 0.9 THEN 1 ELSE 0 END AS [16], CASE WHEN day(ShiftDate) = 17 AND (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float) END) &lt; 0.9 THEN 1 ELSE 0 END AS [17], CASE WHEN day(ShiftDate) = 18 AND (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float) END) &lt; 0.9 THEN 1 ELSE 0 END AS [18], CASE WHEN day(ShiftDate) = 19 AND (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float) END) &lt; 0.9 THEN 1 ELSE 0 END AS [19], CASE WHEN day(ShiftDate) = 20 AND (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float) END) &lt; 0.9 THEN 1 ELSE 0 END AS [20], CASE WHEN day(ShiftDate) = 21 AND (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float) END) &lt; 0.9 THEN 1 ELSE 0 END AS [21], CASE WHEN day(ShiftDate) = 22 AND (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float) END) &lt; 0.9 THEN 1 ELSE 0 END AS [22], CASE WHEN day(ShiftDate) = 23 AND (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float) END) &lt; 0.9 THEN 1 ELSE 0 END AS [23], CASE WHEN day(ShiftDate) = 24 AND (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float) END) &lt; 0.9 THEN 1 ELSE 0 END AS [24], CASE WHEN day(ShiftDate) = 25 AND (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float) END) &lt; 0.9 THEN 1 ELSE 0 END AS [25], CASE WHEN day(ShiftDate) = 26 AND (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float) END) &lt; 0.9 THEN 1 ELSE 0 END AS [26], CASE WHEN day(ShiftDate) = 27 AND (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float) END) &lt; 0.9 THEN 1 ELSE 0 END AS [27], CASE WHEN day(ShiftDate) = 28 AND (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float) END) &lt; 0.9 THEN 1 ELSE 0 END AS [28], CASE WHEN day(ShiftDate) = 29 AND (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float) END) &lt; 0.9 THEN 1 ELSE 0 END AS [29], CASE WHEN day(ShiftDate) = 30 AND (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float) END) &lt; 0.9 THEN 1 ELSE 0 END AS [30], CASE WHEN day(ShiftDate) = 31 AND (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float) END) &lt; 0.9 THEN 1 ELSE 0 END AS [31], CASE WHEN (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float) END) &lt; 0.9 THEN 1 ELSE 0 END AS Unqualified FROM LinesStatistics WHERE (1 &lt;&gt; 1)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          LinesNo, LinesNote, SUM([01]) AS D01, SUM([02]) AS D02, SUM([03]) AS D03, SUM([04]) AS D04, SUM([05]) AS D05, 
+                            SUM([06]) AS D06, SUM([07]) AS D07, SUM([08]) AS D08, SUM([09]) AS D09, SUM([10]) AS D10, SUM([11]) AS D11, 
+                            SUM([12]) AS D12, SUM([13]) AS D13, SUM([14]) AS D14, SUM([15]) AS D15, SUM([16]) AS D16, SUM([17]) AS D17, 
+                            SUM([18]) AS D18, SUM([19]) AS D19, SUM([20]) AS D20, SUM([21]) AS D21, SUM([22]) AS D22, SUM([23]) AS D23, 
+                            SUM([24]) AS D24, SUM([25]) AS D25, SUM([26]) AS D26, SUM([27]) AS D27, SUM([28]) AS D28, SUM([29]) AS D29, 
+                            SUM([30]) AS D30, SUM([31]) AS D31, SUM(Unqualified) AS TotalDays
+FROM              (SELECT          LinesNo, LinesNote, CASE WHEN day(ShiftDate) = 1 AND 
+                                                        (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float)
+                                                         END) &lt; 0.9 THEN 1 ELSE 0 END AS [01], CASE WHEN day(ShiftDate) = 2 AND 
+                                                        (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float)
+                                                         END) &lt; 0.9 THEN 1 ELSE 0 END AS [02], CASE WHEN day(ShiftDate) = 3 AND 
+                                                        (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float)
+                                                         END) &lt; 0.9 THEN 1 ELSE 0 END AS [03], CASE WHEN day(ShiftDate) = 4 AND 
+                                                        (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float)
+                                                         END) &lt; 0.9 THEN 1 ELSE 0 END AS [04], CASE WHEN day(ShiftDate) = 5 AND 
+                                                        (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float)
+                                                         END) &lt; 0.9 THEN 1 ELSE 0 END AS [05], CASE WHEN day(ShiftDate) = 6 AND 
+                                                        (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float)
+                                                         END) &lt; 0.9 THEN 1 ELSE 0 END AS [06], CASE WHEN day(ShiftDate) = 7 AND 
+                                                        (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float)
+                                                         END) &lt; 0.9 THEN 1 ELSE 0 END AS [07], CASE WHEN day(ShiftDate) = 8 AND 
+                                                        (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float)
+                                                         END) &lt; 0.9 THEN 1 ELSE 0 END AS [08], CASE WHEN day(ShiftDate) = 9 AND 
+                                                        (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float)
+                                                         END) &lt; 0.9 THEN 1 ELSE 0 END AS [09], CASE WHEN day(ShiftDate) = 10 AND 
+                                                        (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float)
+                                                         END) &lt; 0.9 THEN 1 ELSE 0 END AS [10], CASE WHEN day(ShiftDate) = 11 AND 
+                                                        (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float)
+                                                         END) &lt; 0.9 THEN 1 ELSE 0 END AS [11], CASE WHEN day(ShiftDate) = 12 AND 
+                                                        (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float)
+                                                         END) &lt; 0.9 THEN 1 ELSE 0 END AS [12], CASE WHEN day(ShiftDate) = 13 AND 
+                                                        (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float)
+                                                         END) &lt; 0.9 THEN 1 ELSE 0 END AS [13], CASE WHEN day(ShiftDate) = 14 AND 
+                                                        (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float)
+                                                         END) &lt; 0.9 THEN 1 ELSE 0 END AS [14], CASE WHEN day(ShiftDate) = 15 AND 
+                                                        (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float)
+                                                         END) &lt; 0.9 THEN 1 ELSE 0 END AS [15], CASE WHEN day(ShiftDate) = 16 AND 
+                                                        (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float)
+                                                         END) &lt; 0.9 THEN 1 ELSE 0 END AS [16], CASE WHEN day(ShiftDate) = 17 AND 
+                                                        (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float)
+                                                         END) &lt; 0.9 THEN 1 ELSE 0 END AS [17], CASE WHEN day(ShiftDate) = 18 AND 
+                                                        (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float)
+                                                         END) &lt; 0.9 THEN 1 ELSE 0 END AS [18], CASE WHEN day(ShiftDate) = 19 AND 
+                                                        (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float)
+                                                         END) &lt; 0.9 THEN 1 ELSE 0 END AS [19], CASE WHEN day(ShiftDate) = 20 AND 
+                                                        (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float)
+                                                         END) &lt; 0.9 THEN 1 ELSE 0 END AS [20], CASE WHEN day(ShiftDate) = 21 AND 
+                                                        (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float)
+                                                         END) &lt; 0.9 THEN 1 ELSE 0 END AS [21], CASE WHEN day(ShiftDate) = 22 AND 
+                                                        (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float)
+                                                         END) &lt; 0.9 THEN 1 ELSE 0 END AS [22], CASE WHEN day(ShiftDate) = 23 AND 
+                                                        (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float)
+                                                         END) &lt; 0.9 THEN 1 ELSE 0 END AS [23], CASE WHEN day(ShiftDate) = 24 AND 
+                                                        (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float)
+                                                         END) &lt; 0.9 THEN 1 ELSE 0 END AS [24], CASE WHEN day(ShiftDate) = 25 AND 
+                                                        (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float)
+                                                         END) &lt; 0.9 THEN 1 ELSE 0 END AS [25], CASE WHEN day(ShiftDate) = 26 AND 
+                                                        (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float)
+                                                         END) &lt; 0.9 THEN 1 ELSE 0 END AS [26], CASE WHEN day(ShiftDate) = 27 AND 
+                                                        (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float)
+                                                         END) &lt; 0.9 THEN 1 ELSE 0 END AS [27], CASE WHEN day(ShiftDate) = 28 AND 
+                                                        (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float)
+                                                         END) &lt; 0.9 THEN 1 ELSE 0 END AS [28], CASE WHEN day(ShiftDate) = 29 AND 
+                                                        (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float)
+                                                         END) &lt; 0.9 THEN 1 ELSE 0 END AS [29], CASE WHEN day(ShiftDate) = 30 AND 
+                                                        (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float)
+                                                         END) &lt; 0.9 THEN 1 ELSE 0 END AS [30], CASE WHEN day(ShiftDate) = 31 AND 
+                                                        (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) / CAST(ApprovedShift AS float)
+                                                         END) &lt; 0.9 THEN 1 ELSE 0 END AS [31], 
+                                                        CASE WHEN (CASE WHEN ApprovedShift = 0 THEN 0 ELSE CAST(QualifiedShift AS float) 
+                                                        / CAST(ApprovedShift AS float) END) &lt; 0.9 THEN 1 ELSE 0 END AS Unqualified
+                            FROM               LinesStatistics
+                            WHERE           (1 &lt;&gt; 1)) AS z
+GROUP BY   LinesNo, LinesNote
+ORDER BY   LinesNo</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="LinesNo" DataSetColumn="LinesNo" />
+              <Mapping SourceColumn="LinesNote" DataSetColumn="LinesNote" />
+              <Mapping SourceColumn="TotalDays" DataSetColumn="TotalDays" />
+              <Mapping SourceColumn="D06" DataSetColumn="D06" />
+              <Mapping SourceColumn="D07" DataSetColumn="D07" />
+              <Mapping SourceColumn="D08" DataSetColumn="D08" />
+              <Mapping SourceColumn="D09" DataSetColumn="D09" />
+              <Mapping SourceColumn="D10" DataSetColumn="D10" />
+              <Mapping SourceColumn="D11" DataSetColumn="D11" />
+              <Mapping SourceColumn="D12" DataSetColumn="D12" />
+              <Mapping SourceColumn="D13" DataSetColumn="D13" />
+              <Mapping SourceColumn="D14" DataSetColumn="D14" />
+              <Mapping SourceColumn="D15" DataSetColumn="D15" />
+              <Mapping SourceColumn="D16" DataSetColumn="D16" />
+              <Mapping SourceColumn="D17" DataSetColumn="D17" />
+              <Mapping SourceColumn="D18" DataSetColumn="D18" />
+              <Mapping SourceColumn="D19" DataSetColumn="D19" />
+              <Mapping SourceColumn="D20" DataSetColumn="D20" />
+              <Mapping SourceColumn="D21" DataSetColumn="D21" />
+              <Mapping SourceColumn="D22" DataSetColumn="D22" />
+              <Mapping SourceColumn="D23" DataSetColumn="D23" />
+              <Mapping SourceColumn="D24" DataSetColumn="D24" />
+              <Mapping SourceColumn="D25" DataSetColumn="D25" />
+              <Mapping SourceColumn="D26" DataSetColumn="D26" />
+              <Mapping SourceColumn="D27" DataSetColumn="D27" />
+              <Mapping SourceColumn="D28" DataSetColumn="D28" />
+              <Mapping SourceColumn="D29" DataSetColumn="D29" />
+              <Mapping SourceColumn="D30" DataSetColumn="D30" />
+              <Mapping SourceColumn="D31" DataSetColumn="D31" />
+              <Mapping SourceColumn="D01" DataSetColumn="D01" />
+              <Mapping SourceColumn="D02" DataSetColumn="D02" />
+              <Mapping SourceColumn="D03" DataSetColumn="D03" />
+              <Mapping SourceColumn="D04" DataSetColumn="D04" />
+              <Mapping SourceColumn="D05" DataSetColumn="D05" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="FreeBusTableAdapter" GeneratorDataComponentClassName="FreeBusTableAdapter" Name="FreeBus" UserDataComponentName="FreeBusTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="ERPBUS_TEST.dbo.LinesStatistics" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          LinesNo, LinesNote, SUM(ApprovedShift) AS ApprovedShift, SUM(QualifiedShift) AS QualifiedShift, 
+                            CASE WHEN SUM(ApprovedShift) = 0 THEN 0 ELSE SUM(CAST(QualifiedShift AS float)) 
+                            / SUM(CAST(ApprovedShift AS float)) END AS QRate
+FROM              LinesStatistics
+WHERE          (1 &lt;&gt; 1)
+GROUP BY   LinesNo, LinesNote
+ORDER BY   LinesNo</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="LinesNo" DataSetColumn="LinesNo" />
+              <Mapping SourceColumn="LinesNote" DataSetColumn="LinesNote" />
+              <Mapping SourceColumn="ApprovedShift" DataSetColumn="ApprovedShift" />
+              <Mapping SourceColumn="QualifiedShift" DataSetColumn="QualifiedShift" />
+              <Mapping SourceColumn="QRate" DataSetColumn="QRate" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="HighwayBusTableAdapter" GeneratorDataComponentClassName="HighwayBusTableAdapter" Name="HighwayBus" UserDataComponentName="HighwayBusTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="ERPBUS_TEST.dbo.LinesStatistics" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          cast(0 as int) AS RowsNo, ISNULL(Station, '') AS Station, LinesNo, LinesNote, 
+CASE WHEN SUM(ApprovedShift) = 0 THEN 0 ELSE CAST(SUM(QualifiedShift) AS float) / CAST(SUM(ApprovedShift) AS float) 
+END AS QualifiedRate, CASE WHEN SUM(IdentificationShift) = 0 THEN 0 ELSE CAST(SUM(InsertIDCardShift + DriverInputShift) 
+AS float) / CAST(SUM(IdentificationShift) AS float) END AS IdentificationRate, CASE WHEN SUM(OnTimeTotalShift) 
+= 0 THEN 0 ELSE CAST(SUM(OntimeShift) AS float) / CAST(SUM(OnTimeTotalShift) AS float) END AS OnTimeRate
+FROM              LinesStatistics
+WHERE          (1 &lt;&gt; 1)
+GROUP BY   Station, LinesNo, LinesNote</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="LinesNo" DataSetColumn="LinesNo" />
+              <Mapping SourceColumn="LinesNote" DataSetColumn="LinesNote" />
+              <Mapping SourceColumn="QualifiedRate" DataSetColumn="QualifiedRate" />
+              <Mapping SourceColumn="IdentificationRate" DataSetColumn="IdentificationRate" />
+              <Mapping SourceColumn="OnTimeRate" DataSetColumn="OnTimeRate" />
+              <Mapping SourceColumn="Station" DataSetColumn="Station" />
+              <Mapping SourceColumn="RowsNo" DataSetColumn="RowsNo" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="LinesStatisticsP" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="LinesStatisticsP" msprop:Generator_UserDSName="LinesStatisticsP">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="CityAreaBus" msprop:Generator_TableClassName="CityAreaBusDataTable" msprop:Generator_TableVarName="tableCityAreaBus" msprop:Generator_TablePropName="CityAreaBus" msprop:Generator_RowDeletingName="CityAreaBusRowDeleting" msprop:Generator_RowChangingName="CityAreaBusRowChanging" msprop:Generator_RowEvHandlerName="CityAreaBusRowChangeEventHandler" msprop:Generator_RowDeletedName="CityAreaBusRowDeleted" msprop:Generator_UserTableName="CityAreaBus" msprop:Generator_RowChangedName="CityAreaBusRowChanged" msprop:Generator_RowEvArgName="CityAreaBusRowChangeEvent" msprop:Generator_RowClassName="CityAreaBusRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="LinesNo" msprop:Generator_ColumnVarNameInTable="columnLinesNo" msprop:Generator_ColumnPropNameInRow="LinesNo" msprop:Generator_ColumnPropNameInTable="LinesNoColumn" msprop:Generator_UserColumnName="LinesNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="LinesNote" msprop:Generator_ColumnVarNameInTable="columnLinesNote" msprop:Generator_ColumnPropNameInRow="LinesNote" msprop:Generator_ColumnPropNameInTable="LinesNoteColumn" msprop:Generator_UserColumnName="LinesNote" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TotalDays" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTotalDays" msprop:Generator_ColumnPropNameInRow="TotalDays" msprop:Generator_ColumnPropNameInTable="TotalDaysColumn" msprop:Generator_UserColumnName="TotalDays" type="xs:int" minOccurs="0" />
+              <xs:element name="D06" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnD06" msprop:Generator_ColumnPropNameInRow="D06" msprop:Generator_ColumnPropNameInTable="D06Column" msprop:Generator_UserColumnName="D06" type="xs:int" minOccurs="0" />
+              <xs:element name="D07" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnD07" msprop:Generator_ColumnPropNameInRow="D07" msprop:Generator_ColumnPropNameInTable="D07Column" msprop:Generator_UserColumnName="D07" type="xs:int" minOccurs="0" />
+              <xs:element name="D08" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnD08" msprop:Generator_ColumnPropNameInRow="D08" msprop:Generator_ColumnPropNameInTable="D08Column" msprop:Generator_UserColumnName="D08" type="xs:int" minOccurs="0" />
+              <xs:element name="D09" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnD09" msprop:Generator_ColumnPropNameInRow="D09" msprop:Generator_ColumnPropNameInTable="D09Column" msprop:Generator_UserColumnName="D09" type="xs:int" minOccurs="0" />
+              <xs:element name="D10" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnD10" msprop:Generator_ColumnPropNameInRow="D10" msprop:Generator_ColumnPropNameInTable="D10Column" msprop:Generator_UserColumnName="D10" type="xs:int" minOccurs="0" />
+              <xs:element name="D11" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnD11" msprop:Generator_ColumnPropNameInRow="D11" msprop:Generator_ColumnPropNameInTable="D11Column" msprop:Generator_UserColumnName="D11" type="xs:int" minOccurs="0" />
+              <xs:element name="D12" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnD12" msprop:Generator_ColumnPropNameInRow="D12" msprop:Generator_ColumnPropNameInTable="D12Column" msprop:Generator_UserColumnName="D12" type="xs:int" minOccurs="0" />
+              <xs:element name="D13" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnD13" msprop:Generator_ColumnPropNameInRow="D13" msprop:Generator_ColumnPropNameInTable="D13Column" msprop:Generator_UserColumnName="D13" type="xs:int" minOccurs="0" />
+              <xs:element name="D14" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnD14" msprop:Generator_ColumnPropNameInRow="D14" msprop:Generator_ColumnPropNameInTable="D14Column" msprop:Generator_UserColumnName="D14" type="xs:int" minOccurs="0" />
+              <xs:element name="D15" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnD15" msprop:Generator_ColumnPropNameInRow="D15" msprop:Generator_ColumnPropNameInTable="D15Column" msprop:Generator_UserColumnName="D15" type="xs:int" minOccurs="0" />
+              <xs:element name="D16" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnD16" msprop:Generator_ColumnPropNameInRow="D16" msprop:Generator_ColumnPropNameInTable="D16Column" msprop:Generator_UserColumnName="D16" type="xs:int" minOccurs="0" />
+              <xs:element name="D17" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnD17" msprop:Generator_ColumnPropNameInRow="D17" msprop:Generator_ColumnPropNameInTable="D17Column" msprop:Generator_UserColumnName="D17" type="xs:int" minOccurs="0" />
+              <xs:element name="D18" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnD18" msprop:Generator_ColumnPropNameInRow="D18" msprop:Generator_ColumnPropNameInTable="D18Column" msprop:Generator_UserColumnName="D18" type="xs:int" minOccurs="0" />
+              <xs:element name="D19" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnD19" msprop:Generator_ColumnPropNameInRow="D19" msprop:Generator_ColumnPropNameInTable="D19Column" msprop:Generator_UserColumnName="D19" type="xs:int" minOccurs="0" />
+              <xs:element name="D20" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnD20" msprop:Generator_ColumnPropNameInRow="D20" msprop:Generator_ColumnPropNameInTable="D20Column" msprop:Generator_UserColumnName="D20" type="xs:int" minOccurs="0" />
+              <xs:element name="D21" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnD21" msprop:Generator_ColumnPropNameInRow="D21" msprop:Generator_ColumnPropNameInTable="D21Column" msprop:Generator_UserColumnName="D21" type="xs:int" minOccurs="0" />
+              <xs:element name="D22" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnD22" msprop:Generator_ColumnPropNameInRow="D22" msprop:Generator_ColumnPropNameInTable="D22Column" msprop:Generator_UserColumnName="D22" type="xs:int" minOccurs="0" />
+              <xs:element name="D23" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnD23" msprop:Generator_ColumnPropNameInRow="D23" msprop:Generator_ColumnPropNameInTable="D23Column" msprop:Generator_UserColumnName="D23" type="xs:int" minOccurs="0" />
+              <xs:element name="D24" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnD24" msprop:Generator_ColumnPropNameInRow="D24" msprop:Generator_ColumnPropNameInTable="D24Column" msprop:Generator_UserColumnName="D24" type="xs:int" minOccurs="0" />
+              <xs:element name="D25" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnD25" msprop:Generator_ColumnPropNameInRow="D25" msprop:Generator_ColumnPropNameInTable="D25Column" msprop:Generator_UserColumnName="D25" type="xs:int" minOccurs="0" />
+              <xs:element name="D26" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnD26" msprop:Generator_ColumnPropNameInRow="D26" msprop:Generator_ColumnPropNameInTable="D26Column" msprop:Generator_UserColumnName="D26" type="xs:int" minOccurs="0" />
+              <xs:element name="D27" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnD27" msprop:Generator_ColumnPropNameInRow="D27" msprop:Generator_ColumnPropNameInTable="D27Column" msprop:Generator_UserColumnName="D27" type="xs:int" minOccurs="0" />
+              <xs:element name="D28" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnD28" msprop:Generator_ColumnPropNameInRow="D28" msprop:Generator_ColumnPropNameInTable="D28Column" msprop:Generator_UserColumnName="D28" type="xs:int" minOccurs="0" />
+              <xs:element name="D29" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnD29" msprop:Generator_ColumnPropNameInRow="D29" msprop:Generator_ColumnPropNameInTable="D29Column" msprop:Generator_UserColumnName="D29" type="xs:int" minOccurs="0" />
+              <xs:element name="D30" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnD30" msprop:Generator_ColumnPropNameInRow="D30" msprop:Generator_ColumnPropNameInTable="D30Column" msprop:Generator_UserColumnName="D30" type="xs:int" minOccurs="0" />
+              <xs:element name="D31" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnD31" msprop:Generator_ColumnPropNameInRow="D31" msprop:Generator_ColumnPropNameInTable="D31Column" msprop:Generator_UserColumnName="D31" type="xs:int" minOccurs="0" />
+              <xs:element name="D01" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnD01" msprop:Generator_ColumnPropNameInRow="D01" msprop:Generator_ColumnPropNameInTable="D01Column" msprop:Generator_UserColumnName="D01" type="xs:int" minOccurs="0" />
+              <xs:element name="D02" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnD02" msprop:Generator_ColumnPropNameInRow="D02" msprop:Generator_ColumnPropNameInTable="D02Column" msprop:Generator_UserColumnName="D02" type="xs:int" minOccurs="0" />
+              <xs:element name="D03" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnD03" msprop:Generator_ColumnPropNameInRow="D03" msprop:Generator_ColumnPropNameInTable="D03Column" msprop:Generator_UserColumnName="D03" type="xs:int" minOccurs="0" />
+              <xs:element name="D04" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnD04" msprop:Generator_ColumnPropNameInRow="D04" msprop:Generator_ColumnPropNameInTable="D04Column" msprop:Generator_UserColumnName="D04" type="xs:int" minOccurs="0" />
+              <xs:element name="D05" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnD05" msprop:Generator_ColumnPropNameInRow="D05" msprop:Generator_ColumnPropNameInTable="D05Column" msprop:Generator_UserColumnName="D05" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="FreeBus" msprop:Generator_TableClassName="FreeBusDataTable" msprop:Generator_TableVarName="tableFreeBus" msprop:Generator_TablePropName="FreeBus" msprop:Generator_RowDeletingName="FreeBusRowDeleting" msprop:Generator_RowChangingName="FreeBusRowChanging" msprop:Generator_RowEvHandlerName="FreeBusRowChangeEventHandler" msprop:Generator_RowDeletedName="FreeBusRowDeleted" msprop:Generator_UserTableName="FreeBus" msprop:Generator_RowChangedName="FreeBusRowChanged" msprop:Generator_RowEvArgName="FreeBusRowChangeEvent" msprop:Generator_RowClassName="FreeBusRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="LinesNo" msprop:Generator_ColumnVarNameInTable="columnLinesNo" msprop:Generator_ColumnPropNameInRow="LinesNo" msprop:Generator_ColumnPropNameInTable="LinesNoColumn" msprop:Generator_UserColumnName="LinesNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="LinesNote" msprop:Generator_ColumnVarNameInTable="columnLinesNote" msprop:Generator_ColumnPropNameInRow="LinesNote" msprop:Generator_ColumnPropNameInTable="LinesNoteColumn" msprop:Generator_UserColumnName="LinesNote" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ApprovedShift" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnApprovedShift" msprop:Generator_ColumnPropNameInRow="ApprovedShift" msprop:Generator_ColumnPropNameInTable="ApprovedShiftColumn" msprop:Generator_UserColumnName="ApprovedShift" type="xs:int" minOccurs="0" />
+              <xs:element name="QualifiedShift" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnQualifiedShift" msprop:Generator_ColumnPropNameInRow="QualifiedShift" msprop:Generator_ColumnPropNameInTable="QualifiedShiftColumn" msprop:Generator_UserColumnName="QualifiedShift" type="xs:int" minOccurs="0" />
+              <xs:element name="QRate" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnQRate" msprop:Generator_ColumnPropNameInRow="QRate" msprop:Generator_ColumnPropNameInTable="QRateColumn" msprop:Generator_UserColumnName="QRate" type="xs:double" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="HighwayBus" msprop:Generator_TableClassName="HighwayBusDataTable" msprop:Generator_TableVarName="tableHighwayBus" msprop:Generator_RowChangedName="HighwayBusRowChanged" msprop:Generator_TablePropName="HighwayBus" msprop:Generator_RowDeletingName="HighwayBusRowDeleting" msprop:Generator_RowChangingName="HighwayBusRowChanging" msprop:Generator_RowEvHandlerName="HighwayBusRowChangeEventHandler" msprop:Generator_RowDeletedName="HighwayBusRowDeleted" msprop:Generator_RowClassName="HighwayBusRow" msprop:Generator_UserTableName="HighwayBus" msprop:Generator_RowEvArgName="HighwayBusRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="LinesNo" msprop:Generator_ColumnVarNameInTable="columnLinesNo" msprop:Generator_ColumnPropNameInRow="LinesNo" msprop:Generator_ColumnPropNameInTable="LinesNoColumn" msprop:Generator_UserColumnName="LinesNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="LinesNote" msprop:Generator_ColumnVarNameInTable="columnLinesNote" msprop:Generator_ColumnPropNameInRow="LinesNote" msprop:Generator_ColumnPropNameInTable="LinesNoteColumn" msprop:Generator_UserColumnName="LinesNote" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="QualifiedRate" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnQualifiedRate" msprop:Generator_ColumnPropNameInRow="QualifiedRate" msprop:Generator_ColumnPropNameInTable="QualifiedRateColumn" msprop:Generator_UserColumnName="QualifiedRate" type="xs:double" minOccurs="0" />
+              <xs:element name="IdentificationRate" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnIdentificationRate" msprop:Generator_ColumnPropNameInRow="IdentificationRate" msprop:Generator_ColumnPropNameInTable="IdentificationRateColumn" msprop:Generator_UserColumnName="IdentificationRate" type="xs:double" minOccurs="0" />
+              <xs:element name="OnTimeRate" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnOnTimeRate" msprop:Generator_ColumnPropNameInRow="OnTimeRate" msprop:Generator_ColumnPropNameInTable="OnTimeRateColumn" msprop:Generator_UserColumnName="OnTimeRate" type="xs:double" minOccurs="0" />
+              <xs:element name="Station" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnStation" msprop:Generator_ColumnPropNameInRow="Station" msprop:Generator_ColumnPropNameInTable="StationColumn" msprop:Generator_UserColumnName="Station" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="4" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="RowsNo" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRowsNo" msprop:Generator_ColumnPropNameInRow="RowsNo" msprop:Generator_ColumnPropNameInTable="RowsNoColumn" msprop:Generator_UserColumnName="RowsNo" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

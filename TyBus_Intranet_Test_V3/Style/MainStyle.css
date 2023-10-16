@@ -1,0 +1,391 @@
+﻿body {
+    overflow-y: scroll;
+    overflow-x: scroll;
+}
+
+#TopBorder {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 90px;
+    width: 100%;
+    background-color: beige;
+    z-index: 90;
+}
+
+#TitleText {
+    position: absolute;
+    top: 15px;
+    left: 450px;
+    font-family: 'Microsoft JhengHei', 'Microsoft YaHei',Arial;
+    font-size: 40px;
+    font-style: oblique;
+    font-weight: 900;
+    color: dimgray;
+    z-index: 95;
+}
+
+#TitleArea {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    width: 400px;
+    height: 60px;
+    background-color: lightgray;
+    z-index: 95;
+}
+
+#TitleArea2 {
+    position: absolute;
+    top: 0px;
+    left: 100px;
+    width: 70px;
+    height: 50px;
+    background-color: aliceblue;
+    z-index: 97;
+}
+
+#TitleArea3 {
+    position: absolute;
+    top: 20px;
+    left: 120px;
+    width: 90px;
+    height: 70px;
+    background-color: darkblue;
+    z-index: 95;
+}
+
+#ListArea {
+    position: absolute;
+    top: 90px;
+    left: 0px;
+    width: 100%;
+    z-index: 99;
+}
+
+#LoginArea {
+    position: absolute;
+    top: 40px;
+    right: 0px;
+    height: 50px;
+    z-index: 95;
+}
+
+#BodyArea {
+    position: absolute;
+    top: 135px;
+    width: 90%;
+    left: 5%;
+    background-color: #E6E6FA;
+    z-index: 97;
+}
+
+.TableSetting {
+    text-align: left;
+    width: 100%;
+}
+
+.SearchPanel {
+    width: 100%;
+    background-color: #F0FFF0;
+}
+
+.ShowPanel {
+    width: 100%;
+    background-color: #FFFFE0;
+}
+
+.ShowPanel-Detail {
+    width: 100%;
+    background-color: #FFF0F5;
+}
+
+.ShowPanel-Detail_B {
+    float: left;
+    width: 55%;
+    background-color: #FFF0F5;
+}
+
+.ShowPanel-Detail_C {
+    float: left;
+    width: 35%;
+    background-color: #E6E6FA;
+}
+
+.PrintPanel {
+    width: 100%;
+    background-color: #FFFFE0;
+}
+
+.menuPosition {
+    position: fixed;
+    top: 250px;
+    left: 0px;
+    width: 100%;
+}
+
+.WorkList {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border: #cccccc 1px solid;
+    display: inline-block;
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 13px;
+    z-index: 99;
+}
+
+    .WorkList li {
+        position: relative;
+        white-space: nowrap;
+        list-style: none;
+        border-right: #cccccc 1px solid;
+    }
+
+    .WorkList > li:last-child {
+        border-right: none;
+    }
+
+    .WorkList > li {
+        float: left;
+    }
+
+    .WorkList a {
+        background-color: #ffffff;
+        color: #333333;
+        display: block;
+        padding: 0 15px;
+        text-decoration: none;
+        line-height: 40px;
+    }
+
+        .WorkList a:hover {
+            background-color: #ef5c28;
+            color: #ffffff;
+        }
+
+    .WorkList li:hover > a {
+        background-color: #ef5c28;
+        color: #ffffff;
+    }
+
+    .WorkList ul {
+        border: none;
+        position: absolute;
+        z-index: 89;
+        left: -1px;
+        top: 100%;
+        min-width: 150px;
+    }
+
+        .WorkList ul li {
+            border-bottom: #cccccc 1px solid;
+            border-left: #cccccc 1px solid;
+        }
+
+        .WorkList ul ul {
+            top: 10px;
+            left: 90%;
+            z-index: 889;
+        }
+
+    .WorkList ul {
+        display: none;
+    }
+
+    .WorkList li:hover > ul {
+        display: block;
+    }
+
+.NoneDisplay {
+    display: none;
+}
+
+.errorMessageText {
+    text-align: left;
+    font-size: 20px;
+    font-weight: bold;
+    color: red;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.titleText-Red {
+    text-align: center;
+    font-size: x-large;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    color: red;
+}
+
+.titleText-Black {
+    text-align: center;
+    font-size: x-large;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.titleText-Blue {
+    text-align: center;
+    font-size: x-large;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    color: blue;
+}
+
+.titleText-S-Red {
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    color: red;
+}
+
+.titleText-S-Black {
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.titleText-S-Blue {
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    color: blue;
+}
+
+.text-Left-Red {
+    text-align: left;
+    font-size: 14px;
+    font-weight: bold;
+    color: red;
+}
+
+.text-Left-Black {
+    text-align: left;
+    font-size: 14px;
+    font-weight: bold;
+    color: black;
+}
+
+.text-Left-Blue {
+    text-align: left;
+    font-size: 14px;
+    font-weight: bold;
+    color: blue;
+}
+
+.text-Right-Red {
+    text-align: right;
+    font-size: 14px;
+    font-weight: bold;
+    color: red;
+}
+
+.text-Right-Black {
+    text-align: right;
+    font-size: 14px;
+    font-weight: bold;
+    color: black;
+}
+
+.text-Right-Blue {
+    text-align: right;
+    font-size: 14px;
+    font-weight: bold;
+    color: blue;
+}
+
+.button-Red {
+    height: 25px;
+    font-size: 14px;
+    font-weight: bold;
+    color: red;
+}
+
+.button-Black {
+    height: 25px;
+    font-size: 14px;
+    font-weight: bold;
+    color: black;
+}
+
+.button-Blue {
+    height: 25px;
+    font-size: 14px;
+    font-weight: bold;
+    color: blue;
+}
+
+.ColHeight {
+    height: 30px;
+}
+
+.ColBorder {
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+}
+
+.ColWidth-4Col {
+    width: 25%;
+}
+
+.ColWidth-5Col {
+    width: 20%;
+}
+
+.ColWidth-6Col {
+    width: 16%;
+}
+
+.ColWidth-7Col {
+    width: 14%;
+}
+
+.ColWidth-8Col {
+    width: 12%;
+}
+
+.ColWidth-9Col {
+    width: 11%;
+}
+
+.ColWidth-10Col {
+    width: 10%
+}
+
+.MultiLine_High {
+    height: 90px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: bold;
+    color: black;
+}
+
+.MultiLine_Low {
+    height: 60px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: bold;
+    color: black;
+}

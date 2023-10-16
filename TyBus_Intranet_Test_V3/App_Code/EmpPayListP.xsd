@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="EmpPayListP" targetNamespace="http://tempuri.org/EmpPayListP.xsd" xmlns:mstns="http://tempuri.org/EmpPayListP.xsd" xmlns="http://tempuri.org/EmpPayListP.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="EmpPayListPTableAdapter" GeneratorDataComponentClassName="EmpPayListPTableAdapter" Name="EmpPayListP" UserDataComponentName="EmpPayListPTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>select p.DepNo, (select [Name] from Department where DepNo = p.DepNo) DepName,
+       p.EmpNo, p.[Name], e.WorkType, 
+	   case when e.AssumeDay &gt;= '2020/09/01' then AssumeDay else null end AssumeDay, e.LeaveDay, e.BeginDay, e.StopDay,
+	   DATEDIFF(Day, case when e.AssumeDay &gt;= '2020/09/01' then AssumeDay else '2020/09/01' end, case when isnull(e.LeaveDay, '2020/09/30') &gt; '2020/09/30' then '2020/09/30' else isnull(e.LeaveDay, '2020/09/30') end) + 1 WorkDays,
+	   p.GivCash
+  from PayRec p left join Employee e on e.EmpNo = p.EmpNo
+ where 1 &lt;&gt; 1</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="DepNo" DataSetColumn="DepNo" />
+              <Mapping SourceColumn="DepName" DataSetColumn="DepName" />
+              <Mapping SourceColumn="EmpNo" DataSetColumn="EmpNo" />
+              <Mapping SourceColumn="Name" DataSetColumn="Name" />
+              <Mapping SourceColumn="WorkType" DataSetColumn="WorkType" />
+              <Mapping SourceColumn="AssumeDay" DataSetColumn="AssumeDay" />
+              <Mapping SourceColumn="LeaveDay" DataSetColumn="LeaveDay" />
+              <Mapping SourceColumn="GivCash" DataSetColumn="GivCash" />
+              <Mapping SourceColumn="WorkDays" DataSetColumn="WorkDays" />
+              <Mapping SourceColumn="BeginDay" DataSetColumn="BeginDay" />
+              <Mapping SourceColumn="StopDay" DataSetColumn="StopDay" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="EmpPayListP" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="EmpPayListP" msprop:Generator_UserDSName="EmpPayListP">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="EmpPayListP" msprop:Generator_TableClassName="EmpPayListPDataTable" msprop:Generator_TableVarName="tableEmpPayListP" msprop:Generator_RowChangedName="EmpPayListPRowChanged" msprop:Generator_TablePropName="_EmpPayListP" msprop:Generator_RowDeletingName="EmpPayListPRowDeleting" msprop:Generator_RowChangingName="EmpPayListPRowChanging" msprop:Generator_RowEvHandlerName="EmpPayListPRowChangeEventHandler" msprop:Generator_RowDeletedName="EmpPayListPRowDeleted" msprop:Generator_RowClassName="EmpPayListPRow" msprop:Generator_UserTableName="EmpPayListP" msprop:Generator_RowEvArgName="EmpPayListPRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DepNo" msprop:Generator_ColumnVarNameInTable="columnDepNo" msprop:Generator_ColumnPropNameInRow="DepNo" msprop:Generator_ColumnPropNameInTable="DepNoColumn" msprop:Generator_UserColumnName="DepNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepName" msprop:Generator_ColumnPropNameInRow="DepName" msprop:Generator_ColumnPropNameInTable="DepNameColumn" msprop:Generator_UserColumnName="DepName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EmpNo" msprop:Generator_ColumnVarNameInTable="columnEmpNo" msprop:Generator_ColumnPropNameInRow="EmpNo" msprop:Generator_ColumnPropNameInTable="EmpNoColumn" msprop:Generator_UserColumnName="EmpNo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Name" msprop:Generator_ColumnVarNameInTable="columnName" msprop:Generator_ColumnPropNameInRow="Name" msprop:Generator_ColumnPropNameInTable="NameColumn" msprop:Generator_UserColumnName="Name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WorkType" msprop:Generator_ColumnVarNameInTable="columnWorkType" msprop:Generator_ColumnPropNameInRow="WorkType" msprop:Generator_ColumnPropNameInTable="WorkTypeColumn" msprop:Generator_UserColumnName="WorkType" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AssumeDay" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnAssumeDay" msprop:Generator_ColumnPropNameInRow="AssumeDay" msprop:Generator_ColumnPropNameInTable="AssumeDayColumn" msprop:Generator_UserColumnName="AssumeDay" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="LeaveDay" msprop:Generator_ColumnVarNameInTable="columnLeaveDay" msprop:Generator_ColumnPropNameInRow="LeaveDay" msprop:Generator_ColumnPropNameInTable="LeaveDayColumn" msprop:Generator_UserColumnName="LeaveDay" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="GivCash" msprop:Generator_ColumnVarNameInTable="columnGivCash" msprop:Generator_ColumnPropNameInRow="GivCash" msprop:Generator_ColumnPropNameInTable="GivCashColumn" msprop:Generator_UserColumnName="GivCash" type="xs:double" minOccurs="0" />
+              <xs:element name="WorkDays" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWorkDays" msprop:Generator_ColumnPropNameInRow="WorkDays" msprop:Generator_ColumnPropNameInTable="WorkDaysColumn" msprop:Generator_UserColumnName="WorkDays" type="xs:int" minOccurs="0" />
+              <xs:element name="BeginDay" msprop:Generator_ColumnVarNameInTable="columnBeginDay" msprop:Generator_ColumnPropNameInRow="BeginDay" msprop:Generator_ColumnPropNameInTable="BeginDayColumn" msprop:Generator_UserColumnName="BeginDay" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="StopDay" msprop:Generator_ColumnVarNameInTable="columnStopDay" msprop:Generator_ColumnPropNameInRow="StopDay" msprop:Generator_ColumnPropNameInTable="StopDayColumn" msprop:Generator_UserColumnName="StopDay" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

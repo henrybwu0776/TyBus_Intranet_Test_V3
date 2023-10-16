@@ -1,0 +1,255 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MainPage.master.cs" Inherits="TyBus_Intranet_Test_V3.MainPage" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="Style/MainStyle.css" />
+    <title>桃園客運內部網站</title>
+    <script>
+        var now, years, months, days, hours, minutes, seconds, timeValue;
+        function showTime() {
+            now = new Date();
+            years = now.getFullYear();
+            months = now.getMonth() + 1;
+            days = now.getDate();
+            hours = now.getHours();
+            minutes = now.getMinutes();
+            seconds = now.getSeconds();
+            timeValue = "現在時間：西元 " + years + " 年 " + (months < 10 ? "0" : "") + months + " 月 " + (days < 10 ? "0" : "") + days + " 日 ";
+            timeValue += (hours < 10 ? "0" : "") + hours + " 點 ";
+            timeValue += (minutes < 10 ? "0" : "") + minutes + " 分 ";
+            timeValue += (seconds < 10 ? "0" : "") + seconds + " 秒";
+            clock.innerHTML = timeValue;
+            setTimeout("showTime()", 1000);
+        }
+        showTime();
+    </script>
+</head>
+<body onload="showTime();">
+    <form id="form1" runat="server">
+        <div>
+            <div id="TopBorder">
+                <asp:Label ID="TitleText" runat="server" Text="桃園客運內部網頁" />
+            </div>
+            <div id="TitleArea"></div>
+            <div id="TitleArea2"></div>
+            <div id="TitleArea3"></div>
+            <div id="LoginArea">
+                <asp:Panel ID="plGuest" CssClass="titleText-S-Black" runat="server">
+                    <asp:Label ID="lbAccount_Log" runat="server" Text="帳號：" />
+                    <asp:TextBox ID="eAccount_Log" runat="server" Width="120px" />
+                    <asp:Label ID="lbPassword_Log" runat="server" Text="密碼：" />
+                    <asp:TextBox ID="ePassword_Log" runat="server" TextMode="Password" Width="120px" />
+                    <asp:Button ID="bbLogin" runat="server" CssClass="button-Blue" Text="登入" OnClick="bbLogin_Click" Width="90px" />
+                    <br />
+                    <asp:RequiredFieldValidator ID="rfAccount_Log" runat="server" ErrorMessage="帳號不可空白" ControlToValidate="eAccount_Log" SetFocusOnError="True" Display="Dynamic" Font-Bold="True" Font-Names="標楷體" Font-Size="18px" ForeColor="Red" />
+                    <asp:RequiredFieldValidator ID="rfPassword_Log" runat="server" ErrorMessage="密碼不可空白" ControlToValidate="ePassword_Log" SetFocusOnError="True" Display="Dynamic" Font-Bold="True" Font-Names="標楷體" Font-Size="18px" ForeColor="Red" />
+                </asp:Panel>
+                <asp:Panel ID="plMember" CssClass="titleText-S-Black" runat="server">
+                    <asp:Label ID="lbLoginData_Log" runat="server" Text="登入使用者：" />
+                    <asp:Label ID="eLoginDepName_Log" runat="server" />
+                    <asp:Label ID="eLoginTitle_Log" runat="server" />
+                    <asp:Label ID="eLogInID_Log" runat="server" />
+                    <asp:Label ID="eLoginMan_Log" runat="server" />
+                    <asp:Button ID="bbLogOut" runat="server" CssClass="button-Red" Text="登出" OnClick="bbLogOut_Click" Width="90px" />
+                    <br />
+                    <span id="clock" style="color: red"></span>
+                </asp:Panel>
+            </div>
+            <div id="ListArea">
+                <ul class="WorkList">
+                    <li id="G001" runat="server"><a href="#">通用功能</a>
+                        <ul>
+                            <li id="FixMain" runat="server"><a href="FixRequestMain.aspx">線上報修暨進度查詢(需求單)</a></li>
+                            <li id="PrintReport" runat="server"><a href="PrintReport.aspx">報修單列印</a></li>
+                            <li id="OfficialDocument" runat="server"><a href="OfficialDocument.aspx">公文收發</a></li>
+                            <li id="AnnSearch" runat="server"><a href="AnnSearch.aspx">公告資料查詢</a></li>
+                            <li id="ContractManager" runat="server"><a href="ContractManager.aspx">合約書管理</a></li>
+                            <li id="ChangePWD" runat="server"><a href="ChangePWD.aspx">變更密碼</a></li>
+                        </ul>
+                    </li>
+                    <li id="G002" runat="server"><a href="#">0800客服作業</a>
+                        <ul>
+                            <li id="CustomServiceMain" runat="server"><a href="CustomServiceMain.aspx">0800客服專線紀錄表</a></li>
+                            <li id="CustomServiceDetail" runat="server"><a href="CustomServiceDetail.aspx">0800客服專線處理歷程紀錄表</a></li>
+                            <li id="CustomServiceDriverList" runat="server"><a href="CustomServiceDriverList.aspx">駕駛客訴案件報表</a></li>
+                            <li id="CustomServiceReportList" runat="server"><a href="CustomServiceReportList.aspx">0800客服專線統計報表</a></li>
+                            <li id="CustomServiceListOut" runat="server"><a href="CustomServiceListOut.aspx">客服資料匯出</a></li>
+                            <li id="CustomServiceHistory" runat="server"><a href="CustomServiceHistory.aspx">0800客服專線記錄表異動記錄</a></li>
+                        </ul>
+                    </li>
+                    <li id="G003" runat="server"><a href="#">行車憑單相關作業</a>
+                        <ul>
+                            <li id="RunSheetCheckByStation" runat="server"><a href="RunSheetCheckByStation.aspx">各站行車記錄單異常查詢</a></li>
+                            <li id="RunSheetCheck" runat="server"><a href="RunSheetCheck.aspx">行車憑單錯誤檢查</a></li>
+                            <li id="ExportRSPre" runat="server"><a href="ExportRSPre.aspx">行車預排資料轉出動態系統</a></li>
+                        </ul>
+                    </li>
+                    <li id="G004" runat="server"><a href="#">車輛相關作業</a>
+                        <ul>
+                            <li id="CarFixWorkHistoryP" runat="server"><a href="CarFixWorkHistoryP.aspx">車輛資歷卡</a></li>
+                            <li id="CarModifyList" runat="server"><a href="CarModifyList.aspx">車輛調動通知單</a></li>
+                            <li id="CarInfoExport" runat="server"><a href="CarInfoExport.aspx">車輛資料匯出作業</a></li>
+                            <li id="TirePerfCal" runat="server"><a href="TirePerfCal.aspx">輪胎公里數展開</a></li>
+                            <li id="CarInspection" runat="server"><a href="CarInspection.aspx">車輛檢驗到期查核</a></li>
+                            <li id="CarInspectionDataCheck" runat="server"><a href="CarInspectionDataCheck.aspx">車輛檢驗資料查詢</a></li>
+                            <li id="CarDeviceList" runat="server"><a href="CarDeviceList.aspx">車輛配備清冊匯出</a></li>
+                            <li id="CarServiceList" runat="server"><a href="CarServiceList.aspx">車輛保養預排</a></li>
+                            <li id="CarEQUIPSetting" runat="server"><a href="CarEQUIPSetting.aspx">ERP車輛固定配備名稱維護</a></li>
+                        </ul>
+                    </li>
+                    <li id="G005" runat="server"><a href="#">路線相關作業</a>
+                        <ul>
+                            <li id="LinesData" runat="server"><a href="LinesData.aspx">路線基本資料</a></li>
+                            <li id="TimeTable" runat="server"><a href="TimeTable.aspx">路線時刻表</a></li>
+                            <li id="TimeTableToGov" runat="server"><a href="TimeTableToGov.aspx">路線班次匯出公總用資料</a></li>
+                            <li id="Lines952List" runat="server"><a href="Lines952List.aspx">路線匯出新北動態系統用資料</a></li>
+                            <li id="LinesStatistics" runat="server"><a href="LinesStatistics.aspx">各路線合格率統計</a></li>
+                            <li id="LinesNoChart" runat="server"><a href="LinesNoChart.aspx">路線代號對照表</a></li>
+                            <li id="LinesBounds" runat="server"><a href="LinesBounds.aspx">路線電子票證營收及優惠補助資料</a></li>
+                        </ul>
+                    </li>
+                    <li id="G006" runat="server"><a href="#">駕駛員相關作業</a>
+                        <ul>
+                            <li id="RequestDriverWorkData" runat="server"><a href="RequestDriverWorkData.aspx">駕駛員公里數及津貼查詢</a></li>
+                            <li id="DriverBoundsList" runat="server"><a href="DriverBoundsList.aspx">駕駛員大巴／國道／AB班趟次表</a></li>
+                            <li id="DriverWorkHoursDays" runat="server"><a href="DriverWorkHoursDays.aspx">駕駛員時數統計查詢</a></li>
+                            <li id="DriverWorkHoursStatistics" runat="server"><a href="DriverWorkHoursStatistics.aspx">駕駛員時數統計月結查詢</a></li>
+                            <li id="DriverWorkHoursTotal" runat="server"><a href="DriverWorkHoursTotal.aspx">駕駛員工時累計查詢</a></li>
+                            <li id="DriverWorkHoursTCT" runat="server"><a href="DriverWorkHoursTCT.aspx">駕駛員工時兩期比較表</a></li>
+                            <li id="DriverWorkStateList" runat="server"><a href="DriverWorkStateList.aspx">駕駛員排班狀況表</a></li>
+                            <li id="DriverWorkState" runat="server"><a href="DriverWorkState.aspx">駕駛員出勤狀況查核</a></li>
+                            <li id="Driver30DaysWorkList" runat="server"><a href="Driver30DaysWorkList.aspx">駕駛員最近30天出勤狀況</a></li>
+                            <li id="DriverMonthNoneWorkList" runat="server"><a href="DriverMonthNoneWorkList.aspx">全月未出勤駕駛員查詢</a></li>
+                            <li id="DriverRegularTraining" runat="server"><a href="DriverRegularTraining.aspx">駕駛員駕照及定期訓練證管理</a></li>
+                            <li id="PayCash65List" runat="server"><a href="PayCash65List.aspx">精勤保安獎金減發名冊</a></li>
+                            <li id="DriverNoneSafeP" runat="server"><a href="DriverNoneSafeP.aspx">駕駛員未領精勤獎金一覽表</a></li>
+                            <li id="Over65DriverList" runat="server"><a href="Over65DriverList.aspx">年滿65歲駕駛員名冊</a></li>
+                            <li id="DriverWorkStateBatch" runat="server"><a href="DriverWorkStateBatch.aspx">駕駛員例休批次修改</a></li>
+                        </ul>
+                    </li>
+                    <li id="G007" runat="server"><a href="#">員工相關作業</a>
+                        <ul>
+                            <li id="EmpDutyHours" runat="server"><a href="EmpDutyHours.aspx">員工加班補休</a></li>
+                            <li id="EmpDutyHoursP" runat="server"><a href="EmpDutyHoursP.aspx">員工加班補休統計表</a></li>
+                            <li id="EmpDutyAllows" runat="server"><a href="EmpDutyAllows.aspx">員工補休審核</a></li>
+                            <li id="EmpOverList" runat="server"><a href="EmpOverList.aspx">加班資料明細表</a></li>
+                            <li id="CreateNameList" runat="server"><a href="CreateNameList.aspx">福利品發放名冊</a></li>
+                            <li id="RetireFreeTicketList" runat="server"><a href="RetireFreeTicketList.aspx">退休人員乘車證維護作業</a></li>
+                            <li id="EmpAltersReport" runat="server"><a href="EmpAltersReport.aspx">人事異動送審單匯出</a></li>
+                            <li id="EmpMeritsPrint" runat="server"><a href="EmpMeritsPrint.aspx">人事考績獎懲明細表</a></li>
+                            <li id="EmpESCList" runat="server"><a href="EmpESCList.aspx">員工請假狀況月報</a></li>
+                        </ul>
+                    </li>
+                    <li id="G008" runat="server"><a href="#">督導查核作業</a>
+                        <ul>
+                            <li id="AdviceReport" runat="server"><a href="AdviceReport.aspx">員工疏失勸導單</a></li>
+                            <li id="RPReport" runat="server"><a href="RPReport.aspx">員工獎懲呈報單</a></li>
+                            <li id="TicketCheckP" runat="server"><a href="TicketCheckP.aspx">查票工作報告</a></li>
+                            <li id="HDDCheckReport" runat="server"><a href="HDDCheckReport.aspx">查核硬碟工作報告</a></li>
+                            <li id="ExceedSpeedReport" runat="server"><a href="ExceedSpeedReport.aspx">遊覽車超速檢查表</a></li>
+                            <li id="RunsheetDailyCheck" runat="server"><a href="RunsheetDailyCheck.aspx">每日憑單及碼表抽查表</a></li>
+                            <li id="ViolationCase" runat="server"><a href="ViolationCase.aspx">違規案件處理</a></li>
+                            <li id="ViolationCaseDetail" runat="server"><a href="ViolationCaseDetail.aspx">違規案件處理歷程</a></li>
+                            <li id="ViolationCaseHistory" runat="server"><a href="ViolationCaseHistory.aspx">違規案件異動記錄</a></li>
+                            <li id="ViolationCaseP" runat="server"><a href="ViolationCaseP.aspx">違規案件統計表</a></li>
+                            <li id="AnecdoteCase" runat="server"><a href="AnecdoteCase.aspx">肇事案件處理</a></li>
+                            <li id="AnecdoteCaseDetail" runat="server"><a href="AnecdoteCaseDetail.aspx">肇事案件處理歷程</a></li>
+                            <li id="AnecdoteCaseHistory" runat="server"><a href="AnecdoteCaseHistory.aspx">肇事案件異動記錄</a></li>
+                            <li id="AnecdoteCaseP" runat="server"><a href="AnecdoteCaseP.aspx">肇事案件統計表</a></li>
+                        </ul>
+                    </li>
+                    <li id="G009" runat="server"><a href="#">修車廠相關作業</a>
+                        <ul>
+                            <li id="CarFixWorkList" runat="server"><a href="CarFixWorkList.aspx">修車廠工作單資料匯出</a></li>
+                            <li id="StoreOutAllList" runat="server"><a href="StoreOutAllList.aspx">修車廠領料單資料匯出</a></li>
+                            <li id="OfficialDriverHours" runat="server"><a href="OfficialDriverHours.aspx">公務車行車憑證登記表</a></li>
+                            <li id="RescueCarAssignList" runat="server"><a href="RescueCarAssignList.aspx">救援車勤務派遣登記表</a></li>
+                            <li id="TowTruckAssignList" runat="server"><a href="TowTruckAssignList.aspx">拖吊車叫用記錄表</a></li>
+                            <li id="StockMonth" runat="server"><a href="StockMonth.aspx">材料月結存清冊</a></li>
+                            <li id="PurchaseToExcel" runat="server"><a href="PurchaseToExcel.aspx">材料請購單轉出 EXCEL</a></li>
+                        </ul>
+                    </li>
+                    <li id="G010" runat="server"><a href="#">計算相關作業</a>
+                        <ul>
+                            <li id="WorkReportOverTimes" runat="server"><a href="WorkReportOverTimes.aspx">工作會報用加班時數統計</a></li>
+                            <li id="TourCarIncome" runat="server"><a href="TourCarIncome.aspx">各站遊覽車營收成本表</a></li>
+                            <li id="AssetReportList" runat="server"><a href="AssetReportList.aspx">固定資產報表</a></li>
+                            <li id="CalAvgPayment" runat="server"><a href="CalAvgPayment.aspx">計算平均薪資</a></li>
+                            <li id="ExportRealCompanyPay" runat="server"><a href="ExportRealCompanyPay.aspx">匯出公司提撥金額</a></li>
+                            <li id="CalCompanyPay" runat="server"><a href="CalCompanyPay.aspx">重新計算公司提撥</a></li>
+                            <li id="CalDepIncomeStatement" runat="server"><a href="CalDepIncomeStatement.aspx">客運業務損益表</a></li>
+                            <li id="TrialBalance" runat="server"><a href="TrialBalance.aspx">科目分類帳轉出EXCEL</a></li>
+                            <li id="IncomeStatement2Excel" runat="server"><a href="IncomeStatement2Excel.aspx">月損益表資料匯EXCEL</a></li>
+                            <li id="BatchTransferList" runat="server"><a href="BatchTransferList.aspx">整批匯款名冊轉換</a></li>
+                            <li id="ImportCash" runat="server"><a href="ImportCash.aspx">投現收入轉檔</a></li>
+                            <li id="CashBillListP" runat="server"><a href="CashBillListP.aspx">投現繳銷統計</a></li>
+                            <li id="DriverYearSummary" runat="server"><a href="DriverYearSummary.aspx">駕駛員營運收入里程及時數明細表</a></li>
+                            <li id="TicketTrans" runat="server"><a href="TicketTrans.aspx">電子票證營收轉入</a></li>
+                            <li id="ImportAccount" runat="server"><a href="ImportAccount.aspx">傳票匯入作業</a></li>
+                        </ul>
+                    </li>
+                    <li id="G011" runat="server"><a href="#">租車相關作業</a>
+                        <ul>
+                            <li id="RentDailyCarCount" runat="server"><a href="RentDailyCarCount.aspx">每日車輛可用數</a></li>
+                            <li id="ExportRentCarData" runat="server"><a href="ExportRentCarData.aspx">租車資料匯出</a></li>
+                        </ul>
+                    </li>
+                    <li id="G012" runat="server"><a href="#">職安相關作業</a>
+                        <ul>
+                            <li id="DriverRiskLevel" runat="server"><a href="DriverRiskLevel.aspx">員工風險評估等級</a></li>
+                            <li id="DriverStatus" runat="server"><a href="DriverStatus.aspx">駕駛員月出勤及請休假狀況表</a></li>
+                            <li id="EmpCardIDChange" runat="server"><a href="EmpCardIDChange.aspx">人員卡內碼轉換</a></li>
+                        </ul>
+                    </li>
+                    <li id="G013" runat="server"><a href="#">電腦耗材庫存量管理</a>
+                        <ul>
+                            <li id="IAConsumables" runat="server"><a href="IAConsumables.aspx">電腦課耗材管理</a></li>
+                            <li id="IAConsumablesInstore" runat="server"><a href="IAConsumablesInstore.aspx">電腦課耗材進貨</a></li>
+                            <li id="IAConsumablesOutStore" runat="server"><a href="IAConsumablesOutStore.aspx">電腦課耗材領用</a></li>
+                            <li id="IAConsumablesReport" runat="server"><a href="IAConsumablesReport.aspx">電腦課耗材報表</a></li>
+                        </ul>
+                    </li>
+                    <li id="G014" runat="server"><a href="#">公文管理</a>
+                        <ul>
+                            <li id="OfficialDocumentPrint" runat="server"><a href="OfficialDocumentPrint.aspx">公文統計列印</a></li>
+                            <li id="OfficialDocumentGetIn" runat="server"><a href="OfficialDocumentGetIn.aspx">公文歸檔</a></li>
+                            <li id="EditOfficialDocument" runat="server"><a href="EditOfficialDocument.aspx">公文登錄資料修改</a></li>
+                            <li id="OfficialDocumentHistory" runat="server"><a href="OfficialDocumentHistory.aspx">公文異動歷史</a></li>
+                            <li id="DocFirstWordPermission" runat="server"><a href="DocFirstWordPermission.aspx">公文字號權限設定</a></li>
+                        </ul>
+                    </li>
+                    <li id="G999" runat="server"><a href="#">管理作業</a>
+                        <ul>
+                            <li id="AnnList" runat="server"><a href="AnnList.aspx">公告管理</a></li>
+                            <li id="WorkWeeklyReport" runat="server"><a href="WorkWeeklyReport.aspx">工作週報上傳作業</a></li>
+                            <li id="Feedback" runat="server"><a href="Feedback.aspx">電腦課派工回報作業</a></li>
+                            <li id="DataImport" runat="server"><a href="DataImport.aspx">資料匯入</a></li>
+                            <li id="EmpMultiDep" runat="server"><a href="EmpMultiDep.aspx">員工多單位設定</a></li>
+                            <li id="EmployeeYearMerits" runat="server"><a href="EmployeeYearMerits.aspx">員工考核參考資料查詢</a></li>
+                            <li id="DriverWorkHourAnalysisMain" runat="server"><a href="DriverWorkHourAnalysisMain.aspx">駕駛員工時統計分析總表</a></li>
+                            <li id="DriverWorkHourLevelByMan" runat="server"><a href="DriverWorkHourLevelByMan.aspx">駕駛員工時級數分析表(人)</a></li>
+                            <li id="DriverWorkHourLevelByDep" runat="server"><a href="DriverWorkHourLevelByDep.aspx">駕駛員工時級數分析表(單位)</a></li>
+                            <li id="EmpPayRangeList" runat="server"><a href="EmpPayRangeList.aspx">員工薪資發放級距統計表</a></li>
+                            <li id="DriverPayRangeList" runat="server"><a href="DriverPayRangeList.aspx">各單位駕駛員薪資發放級距表</a></li>
+                            <li id="EmpPayList" runat="server"><a href="EmpPayList.aspx">到離員工應發薪資清冊</a></li>
+                            <li id="CustomServiceType" runat="server"><a href="CustomServiceType.aspx">反映事項類別設定</a></li>
+                            <li id="TicketListP" runat="server"><a href="TicketListP.aspx">票證庫存統計表</a></li>
+                            <li id="TicketStore" runat="server"><a href="TicketStore.aspx">票證庫存庫位維護</a></li>
+                            <li id="AlertTimeSetting" runat="server"><a href="AlertTimeSetting.aspx">提示視窗時間設定</a></li>
+                            <li id="OperateRecord" runat="server"><a href="OperateRecord.aspx">系統操作記錄</a></li>
+                            <li id="PermissionSetting" runat="server"><a href="PermissionSetting.aspx">網頁權限設定</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div id="BodyArea">
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

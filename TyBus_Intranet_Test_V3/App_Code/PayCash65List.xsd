@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="PayCash65List" targetNamespace="http://tempuri.org/PayCash65List.xsd" xmlns:mstns="http://tempuri.org/PayCash65List.xsd" xmlns="http://tempuri.org/PayCash65List.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="PayCash65ListPTableAdapter" GeneratorDataComponentClassName="PayCash65ListPTableAdapter" Name="PayCash65ListP" UserDataComponentName="PayCash65ListPTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          CAST('' AS varchar) AS DepNo, CAST('' AS varchar) AS DepNo_L, CAST('' AS varchar) AS Driver, CAST('' AS varchar) 
+                            AS EmpName, CAST('' AS varchar) AS EmpTitle, CAST('' AS varchar) AS Car_No, CAST('' AS varchar) AS Car_ID, 
+                            CAST(NULL AS DateTime) AS HapDate, CAST('' AS varchar) AS Content, CAST(NULL AS float) AS AMT_Duty, CAST(NULL
+                             AS float) AS AMT_FixAsk, CAST(NULL AS DateTime) AS Pay_Day, CAST('' AS varchar) AS WorkType
+FROM              Duty
+WHERE          (1 &lt;&gt; 1)</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="DepNo" DataSetColumn="DepNo" />
+              <Mapping SourceColumn="DepNo_L" DataSetColumn="DepNo_L" />
+              <Mapping SourceColumn="Driver" DataSetColumn="Driver" />
+              <Mapping SourceColumn="EmpName" DataSetColumn="EmpName" />
+              <Mapping SourceColumn="EmpTitle" DataSetColumn="EmpTitle" />
+              <Mapping SourceColumn="Car_No" DataSetColumn="Car_No" />
+              <Mapping SourceColumn="Car_ID" DataSetColumn="Car_ID" />
+              <Mapping SourceColumn="HapDate" DataSetColumn="HapDate" />
+              <Mapping SourceColumn="Content" DataSetColumn="Content" />
+              <Mapping SourceColumn="AMT_Duty" DataSetColumn="AMT_Duty" />
+              <Mapping SourceColumn="AMT_FixAsk" DataSetColumn="AMT_FixAsk" />
+              <Mapping SourceColumn="Pay_Day" DataSetColumn="Pay_Day" />
+              <Mapping SourceColumn="WorkType" DataSetColumn="WorkType" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="PayCash65List" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="PayCash65List" msprop:Generator_UserDSName="PayCash65List">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="PayCash65ListP" msprop:Generator_TableClassName="PayCash65ListPDataTable" msprop:Generator_TableVarName="tablePayCash65ListP" msprop:Generator_TablePropName="PayCash65ListP" msprop:Generator_RowDeletingName="PayCash65ListPRowDeleting" msprop:Generator_RowChangingName="PayCash65ListPRowChanging" msprop:Generator_RowEvHandlerName="PayCash65ListPRowChangeEventHandler" msprop:Generator_RowDeletedName="PayCash65ListPRowDeleted" msprop:Generator_UserTableName="PayCash65ListP" msprop:Generator_RowChangedName="PayCash65ListPRowChanged" msprop:Generator_RowEvArgName="PayCash65ListPRowChangeEvent" msprop:Generator_RowClassName="PayCash65ListPRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DepNo" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepNo" msprop:Generator_ColumnPropNameInRow="DepNo" msprop:Generator_ColumnPropNameInTable="DepNoColumn" msprop:Generator_UserColumnName="DepNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepNo_L" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepNo_L" msprop:Generator_ColumnPropNameInRow="DepNo_L" msprop:Generator_ColumnPropNameInTable="DepNo_LColumn" msprop:Generator_UserColumnName="DepNo_L" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Driver" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDriver" msprop:Generator_ColumnPropNameInRow="Driver" msprop:Generator_ColumnPropNameInTable="DriverColumn" msprop:Generator_UserColumnName="Driver" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EmpName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnEmpName" msprop:Generator_ColumnPropNameInRow="EmpName" msprop:Generator_ColumnPropNameInTable="EmpNameColumn" msprop:Generator_UserColumnName="EmpName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EmpTitle" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnEmpTitle" msprop:Generator_ColumnPropNameInRow="EmpTitle" msprop:Generator_ColumnPropNameInTable="EmpTitleColumn" msprop:Generator_UserColumnName="EmpTitle" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Car_No" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnCar_No" msprop:Generator_ColumnPropNameInRow="Car_No" msprop:Generator_ColumnPropNameInTable="Car_NoColumn" msprop:Generator_UserColumnName="Car_No" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Car_ID" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnCar_ID" msprop:Generator_ColumnPropNameInRow="Car_ID" msprop:Generator_ColumnPropNameInTable="Car_IDColumn" msprop:Generator_UserColumnName="Car_ID" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="HapDate" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnHapDate" msprop:Generator_ColumnPropNameInRow="HapDate" msprop:Generator_ColumnPropNameInTable="HapDateColumn" msprop:Generator_UserColumnName="HapDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Content" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnContent" msprop:Generator_ColumnPropNameInRow="Content" msprop:Generator_ColumnPropNameInTable="ContentColumn" msprop:Generator_UserColumnName="Content" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AMT_Duty" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnAMT_Duty" msprop:Generator_ColumnPropNameInRow="AMT_Duty" msprop:Generator_ColumnPropNameInTable="AMT_DutyColumn" msprop:Generator_UserColumnName="AMT_Duty" type="xs:double" minOccurs="0" />
+              <xs:element name="AMT_FixAsk" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnAMT_FixAsk" msprop:Generator_ColumnPropNameInRow="AMT_FixAsk" msprop:Generator_ColumnPropNameInTable="AMT_FixAskColumn" msprop:Generator_UserColumnName="AMT_FixAsk" type="xs:double" minOccurs="0" />
+              <xs:element name="Pay_Day" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnPay_Day" msprop:Generator_ColumnPropNameInRow="Pay_Day" msprop:Generator_ColumnPropNameInTable="Pay_DayColumn" msprop:Generator_UserColumnName="Pay_Day" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="WorkType" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWorkType" msprop:Generator_ColumnPropNameInRow="WorkType" msprop:Generator_ColumnPropNameInTable="WorkTypeColumn" msprop:Generator_UserColumnName="WorkType" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
