@@ -238,7 +238,6 @@
                             <li id="CustomServiceType" runat="server"><a href="CustomServiceType.aspx">反映事項類別設定</a></li>
                             <li id="TicketListP" runat="server"><a href="TicketListP.aspx">票證庫存統計表</a></li>
                             <li id="TicketStore" runat="server"><a href="TicketStore.aspx">票證庫存庫位維護</a></li>
-                            <li id="AlertTimeSetting" runat="server"><a href="AlertTimeSetting.aspx">提示視窗時間設定</a></li>
                             <li id="OperateRecord" runat="server"><a href="OperateRecord.aspx">系統操作記錄</a></li>
                             <li id="PermissionSetting" runat="server"><a href="PermissionSetting.aspx">網頁權限設定</a></li>
                         </ul>
