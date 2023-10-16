@@ -1266,6 +1266,7 @@ IIF(Fields!AssignReason.Value="其他","V"," ") + " 其他 "</Value>
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
               <Top>0.08114cm</Top>
+              <Left>2.98979cm</Left>
               <Height>1.9491cm</Height>
               <Width>0.595cm</Width>
               <Style>
@@ -1330,67 +1331,10 @@ IIF(Fields!AssignReason.Value="其他","V"," ") + " 其他 "</Value>
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
               <Top>0.08114cm</Top>
-              <Left>3.63911cm</Left>
+              <Left>7.13161cm</Left>
               <Height>1.9491cm</Height>
               <Width>0.595cm</Width>
               <ZIndex>1</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-            <Textbox Name="Textbox6">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>主</Value>
-                      <Style />
-                    </TextRun>
-                  </TextRuns>
-                  <Style />
-                </Paragraph>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value />
-                      <Style />
-                    </TextRun>
-                  </TextRuns>
-                  <Style />
-                </Paragraph>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value />
-                      <Style />
-                    </TextRun>
-                  </TextRuns>
-                  <Style />
-                </Paragraph>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>任</Value>
-                      <Style />
-                    </TextRun>
-                  </TextRuns>
-                  <Style />
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox2</rd:DefaultName>
-              <Top>0.08114cm</Top>
-              <Left>7.27823cm</Left>
-              <Height>1.9491cm</Height>
-              <Width>0.595cm</Width>
-              <ZIndex>2</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1447,7 +1391,7 @@ IIF(Fields!AssignReason.Value="其他","V"," ") + " 其他 "</Value>
               <Left>10.91734cm</Left>
               <Height>1.9491cm</Height>
               <Width>0.595cm</Width>
-              <ZIndex>3</ZIndex>
+              <ZIndex>2</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1504,7 +1448,7 @@ IIF(Fields!AssignReason.Value="其他","V"," ") + " 其他 "</Value>
               <Left>14.55646cm</Left>
               <Height>1.9491cm</Height>
               <Width>0.595cm</Width>
-              <ZIndex>4</ZIndex>
+              <ZIndex>3</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
