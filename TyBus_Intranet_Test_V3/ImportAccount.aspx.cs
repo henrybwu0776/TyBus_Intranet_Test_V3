@@ -302,6 +302,7 @@ namespace TyBus_Intranet_Test_V3
             string vTypeStr = "";
             string vTempStr = "";
             int vSubject1110 = 0;
+            int vCellIndex = 0;
 
             //取回關帳日期
             vSQLStr_Temp = "select Desscription from AC_CLS where PK = '關帳' and Class = '關帳日期' ";
@@ -395,6 +396,7 @@ namespace TyBus_Intranet_Test_V3
                 {
                     //2023.10.02 因應測試回饋修改
                     //vAccDateStr = (eIgoneExcelDate_Search.Checked == true) ? vAcc_Date_Temp.ToShortDateString() : vRowTemp_H.GetCell(16).ToString().Trim();
+                    /*
                     vTempDate = (eIgoneExcelDate_Search.Checked == true) ? vAcc_Date_Temp : DateTime.Parse(vRowTemp_H.GetCell(16).ToString().Trim());
                     vAccDateStr = vTempDate.ToString("yyyy/MM/dd") + " 00:00:00";
                     vSubject = vRowTemp_H.GetCell(2).ToString().Trim();
@@ -405,7 +407,56 @@ namespace TyBus_Intranet_Test_V3
                     vMemo2 = vRowTemp_H.GetCell(9).ToString().Trim();
                     vStoreNo = vRowTemp_H.GetCell(10).ToString().Trim();
                     vAcc_Source = (vRowTemp_H.GetCell(22).ToString().Trim() != "") ? vRowTemp_H.GetCell(22).ToString().Trim() : String.Empty;
-                    vAcc_SourceID = (vRowTemp_H.GetCell(23).ToString().Trim() != "") ? vRowTemp_H.GetCell(23).ToString().Trim() : String.Empty;
+                    vAcc_SourceID = (vRowTemp_H.GetCell(23).ToString().Trim() != "") ? vRowTemp_H.GetCell(23).ToString().Trim() : String.Empty; //*/
+                    //2023.10.19 因為讀取 EXCEL 資料的時候經常出現沒有資料的空格被跳過，所以試一下別的做法
+                    vSubject = "";
+                    vDebit = 0;
+                    vCredit = 0;
+                    vDepNo = "";
+                    vRemark = "";
+                    vMemo2 = "";
+                    vStoreNo = "";
+                    vAccDateStr = "";
+                    vAcc_Source = "";
+                    vAcc_SourceID = "";
+                    for (int iColumnIndex = 0; iColumnIndex < vRowTemp_H.Cells.Count; iColumnIndex++)
+                    {
+                        vCellIndex = vRowTemp_H.Cells[iColumnIndex].ColumnIndex;
+                        switch (vCellIndex)
+                        {
+                            case 2:
+                                vSubject = vRowTemp_H.GetCell(vCellIndex).ToString().Trim();
+                                break;
+                            case 4:
+                                vDebit = (int)vRowTemp_H.GetCell(vCellIndex).NumericCellValue;
+                                break;
+                            case 5:
+                                vCredit = (int)vRowTemp_H.GetCell(vCellIndex).NumericCellValue;
+                                break;
+                            case 6:
+                                vDepNo = vRowTemp_H.GetCell(vCellIndex).ToString().Trim();
+                                break;
+                            case 8:
+                                vRemark = vRowTemp_H.GetCell(vCellIndex).ToString().Trim();
+                                break;
+                            case 9:
+                                vMemo2 = vRowTemp_H.GetCell(vCellIndex).ToString().Trim();
+                                break;
+                            case 10:
+                                vStoreNo = vRowTemp_H.GetCell(vCellIndex).ToString().Trim();
+                                break;
+                            case 16:
+                                vTempDate = (eIgoneExcelDate_Search.Checked == true) ? vAcc_Date_Temp : DateTime.Parse(vRowTemp_H.GetCell(vCellIndex).ToString().Trim());
+                                vAccDateStr = vTempDate.ToString("yyyy/MM/dd") + " 00:00:00";
+                                break;
+                            case 22:
+                                vAcc_Source = (vRowTemp_H.GetCell(vCellIndex).ToString().Trim() != "") ? vRowTemp_H.GetCell(vCellIndex).ToString().Trim() : String.Empty;
+                                break;
+                            case 23:
+                                vAcc_SourceID = (vRowTemp_H.GetCell(vCellIndex).ToString().Trim() != "") ? vRowTemp_H.GetCell(vCellIndex).ToString().Trim() : String.Empty;
+                                break;
+                        }
+                    }
 
                     //檢查傳票日期
                     if (!DateTime.TryParse(vAccDateStr, out vAcc_Date_Source))
