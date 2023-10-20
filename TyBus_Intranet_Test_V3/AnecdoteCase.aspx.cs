@@ -236,6 +236,7 @@ namespace TyBus_Intranet_Test_V3
             string vRemarkB = "";
             string vPassengerInsu = "0";
             string vSQLStr = "";
+            int vColIndex = 0;
 
             if (fuExcel.FileName != "")
             {
@@ -255,6 +256,88 @@ namespace TyBus_Intranet_Test_V3
                         HSSFRow vRowTemp_H = (HSSFRow)sheetExcel_H.GetRow(i);
                         if (vRowTemp_H.GetCell(1).CellType != CellType.Blank)
                         {
+                            // 2023.10.19 避免發生 EXCEL 欄位空白導致欄位對應錯亂
+                            vDepNo_Temp = "";
+                            vDepName_Temp = "";
+                            vBuildDate = "";
+                            vCaseNo = "";
+                            vBuildMan = vLoginID;
+                            vCar_ID = "";
+                            vDriverName = "";
+                            vDriver = "";
+                            vInsuMan = vLoginID;
+                            vAncedotalResRatio = "";
+                            vRemark = "";
+                            vDeductionDate = "";
+                            vIsNoDeduction = "";
+                            for (int iColumnIndex = 0; iColumnIndex < vRowTemp_H.Cells.Count; iColumnIndex++)
+                            {
+                                vColIndex = vRowTemp_H.Cells[iColumnIndex].ColumnIndex;
+                                switch (vColIndex)
+                                {
+                                    case 1:
+                                        vDepNo_Temp = vRowTemp_H.GetCell(vColIndex).ToString().Trim();
+                                        vSQLStr = "select [Name] from Department where DepNo = '" + vDepNo_Temp + "' ";
+                                        vDepName_Temp = PF.GetValue(vConnStr, vSQLStr, "Name");
+                                        break;
+                                    case 3:
+                                        vBuildDate = (DateTime.ParseExact(vRowTemp_H.GetCell(vColIndex).ToString().Trim(), "yyy.MM.dd", CultureInfo.InvariantCulture).AddYears(1911)).ToString("yyyy/MM/dd");
+                                        vCaseNo = (DateTime.Today.Year - 1911).ToString("D3") + DateTime.Today.Month.ToString("D2") + "A";
+                                        vSQLStr = "select MAX(CaseNo) CaseNo from AnecdoteCase where CaseNo like '" + vCaseNo + "%' ";
+                                        vTempIndex = (PF.GetValue(vConnStr, vSQLStr, "CaseNo")).Replace(vCaseNo, "").Trim();
+                                        vTempIndex = (vTempIndex != "") ? (int.Parse(vTempIndex) + 1).ToString("D4") : "0001";
+                                        vCaseNo = vCaseNo + vTempIndex;
+                                        break;
+                                    case 4:
+                                        vCar_ID = (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_H.GetCell(4).ToString().Trim() : "";
+                                        break;
+                                    case 5:
+                                        vDriverName = vRowTemp_H.GetCell(vColIndex).ToString().Trim();
+                                        vSQLStr = "select EmpNo from Employee where [Name] = '" + vDriverName + "' ";
+                                        vDriver = PF.GetValue(vConnStr, vSQLStr, "EmpNo");
+                                        break;
+                                    case 8:
+                                        vInsuMan = (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_H.GetCell(8).ToString().Trim() : "";
+                                        break;
+                                    case 18:
+                                        vAncedotalResRatio = (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_H.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
+                                        break;
+                                    case 19:
+                                        if (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank)
+                                        {
+                                            vTempStr = vRowTemp_H.GetCell(vColIndex).ToString().Trim();
+                                            vIsNoDeduction = (vTempStr == "免扣") ? "true" : "false";
+                                            vTempStr = vTempStr.Replace("免扣", "");
+                                            if (DateTime.TryParseExact(vTempStr.Replace("扣", ""), "yyy.MM.dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out vTempDate))
+                                            {
+                                                vDeductionDate = vTempDate.AddYears(1911).ToString("yyyy/MM/dd");
+                                                vRemark = "";
+                                            }
+                                            else
+                                            {
+                                                vDeductionDate = "";
+                                                vRemark = vTempStr;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            vIsNoDeduction = "false";
+                                            vDeductionDate = "";
+                                        }
+                                        break;
+                                    case 20:
+                                        if (vRemark != "")
+                                        {
+                                            vRemark = (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank) ? vRemark + Environment.NewLine + vRowTemp_H.GetCell(vColIndex).ToString().Trim() : vRemark;
+                                        }
+                                        else
+                                        {
+                                            vRemark = (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_H.GetCell(20).ToString().Trim() : "";
+                                        }
+                                        break;
+                                }
+                            }
+                            /*
                             vDepNo_Temp = vRowTemp_H.GetCell(1).ToString().Trim();
                             vSQLStr = "select [Name] from Department where DepNo = '" + vDepNo_Temp + "' ";
                             vDepName_Temp = PF.GetValue(vConnStr, vSQLStr, "Name");
@@ -304,7 +387,7 @@ namespace TyBus_Intranet_Test_V3
                             else
                             {
                                 vRemark = (vRowTemp_H.GetCell(20).CellType != CellType.Blank) ? vRowTemp_H.GetCell(20).ToString().Trim() : "";
-                            }
+                            } //*/
 
                             using (SqlDataSource dsTemp = new SqlDataSource())
                             {
@@ -339,6 +422,75 @@ namespace TyBus_Intranet_Test_V3
                             vTempIndex = PF.GetValue(vConnStr, vSQLStr, "MaxItem");
                             vItems = (vTempIndex != "") ? (int.Parse(vTempIndex) + 1).ToString("D4") : "0001";
                             vCaseNoItems = vCaseNo + vItems;
+                            // 2023.10.19 避免發生 EXCEL 欄位空白導致欄位對應錯亂
+                            vRelationship = "";
+                            vRelCar_ID = "";
+                            vRemarkB = "";
+                            vEstimatedAmount = "0";
+                            vThirdInsurance = "0";
+                            vCompInsurance = "0";
+                            vDriverSharing = "0";
+                            vCompanySharing = "0";
+                            vCarDamageAMT = "0";
+                            vPersonDamageAMT = "0";
+                            vRelationComp = "0";
+                            vPassengerInsu = "0";
+                            vReconciliationDate = "";
+                            for (int iColumnIndex = 0; iColumnIndex < vRowTemp_H.Cells.Count; iColumnIndex++)
+                            {
+                                vColIndex = vRowTemp_H.Cells[iColumnIndex].ColumnIndex;
+                                switch (vColIndex)
+                                {
+                                    case 6:
+                                        vRelationship = (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_H.GetCell(vColIndex).ToString().Trim() : "";
+                                        break;
+                                    case 7:
+                                        vRelCar_ID = (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_H.GetCell(vColIndex).ToString().Trim() : "";
+                                        break;
+                                    case 9:
+                                        vEstimatedAmount = (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_H.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
+                                        if (Int32.TryParse(vEstimatedAmount, out vTempINT))
+                                        {
+                                            vEstimatedAmount = vTempINT.ToString();
+                                            vRemarkB = "";
+                                        }
+                                        else
+                                        {
+                                            vRemarkB = vEstimatedAmount;
+                                            vEstimatedAmount = "0";
+                                        }
+                                        break;
+                                    case 10:
+                                        vThirdInsurance = (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_H.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
+                                        break;
+                                    case 11:
+                                        vCompInsurance = (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_H.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
+                                        break;
+                                    case 12:
+                                        vDriverSharing = (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_H.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
+                                        break;
+                                    case 13:
+                                        vCompanySharing = (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_H.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
+                                        break;
+                                    case 14:
+                                        vCarDamageAMT = (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_H.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
+                                        break;
+                                    case 15:
+                                        vPersonDamageAMT = (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_H.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
+                                        break;
+                                    case 16:
+                                        vRelationComp = (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_H.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
+                                        break;
+                                    case 17:
+                                        vTempStr = (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_H.GetCell(vColIndex).ToString().Trim() : "";
+                                        vTempStr = vTempStr.Replace("和解", "");
+                                        vTempStr = vTempStr.Replace("自行", "");
+                                        vPassengerInsu = "0"; //乘客險先用 0 轉入
+                                        vReconciliationDate = (vTempStr != "") ? (DateTime.ParseExact(vTempStr, "yyy.MM.dd", CultureInfo.InvariantCulture).AddYears(1911)).ToString("yyyy/MM/dd") : vTempStr;
+                                        break;
+                                }
+                            }
+                            /*
                             vRelationship = (vRowTemp_H.GetCell(6).CellType != CellType.Blank) ? vRowTemp_H.GetCell(6).ToString().Trim() : "";
                             vRelCar_ID = (vRowTemp_H.GetCell(7).CellType != CellType.Blank) ? vRowTemp_H.GetCell(7).ToString().Trim() : "";
                             vEstimatedAmount = (vRowTemp_H.GetCell(9).CellType != CellType.Blank) ? vRowTemp_H.GetCell(9).ToString().Trim().Replace(",", "") : "0";
@@ -364,6 +516,7 @@ namespace TyBus_Intranet_Test_V3
                             vTempStr = vTempStr.Replace("自行", "");
                             vPassengerInsu = "0"; //乘客險先用 0 轉入
                             vReconciliationDate = (vTempStr != "") ? (DateTime.ParseExact(vTempStr, "yyy.MM.dd", CultureInfo.InvariantCulture).AddYears(1911)).ToString("yyyy/MM/dd") : vTempStr;
+                            //*/ 
 
                             using (SqlDataSource dsTempB = new SqlDataSource())
                             {
@@ -406,6 +559,88 @@ namespace TyBus_Intranet_Test_V3
                         XSSFRow vRowTemp_X = (XSSFRow)sheetExcel_X.GetRow(i);
                         if (vRowTemp_X.GetCell(1).CellType != CellType.Blank)
                         {
+                            // 2023.10.19 避免發生 EXCEL 欄位空白導致欄位對應錯亂
+                            vDepNo_Temp = "";
+                            vDepName_Temp = "";
+                            vBuildDate = "";
+                            vCaseNo = "";
+                            vBuildMan = vLoginID;
+                            vCar_ID = "";
+                            vDriverName = "";
+                            vDriver = "";
+                            vInsuMan = vLoginID;
+                            vAncedotalResRatio = "";
+                            vRemark = "";
+                            vDeductionDate = "";
+                            vIsNoDeduction = "";
+                            for (int iColumnIndex = 0; iColumnIndex < vRowTemp_X.Cells.Count; iColumnIndex++)
+                            {
+                                vColIndex = vRowTemp_X.Cells[iColumnIndex].ColumnIndex;
+                                switch (vColIndex)
+                                {
+                                    case 1:
+                                        vDepNo_Temp = vRowTemp_X.GetCell(vColIndex).ToString().Trim();
+                                        vSQLStr = "select [Name] from Department where DepNo = '" + vDepNo_Temp + "' ";
+                                        vDepName_Temp = PF.GetValue(vConnStr, vSQLStr, "Name");
+                                        break;
+                                    case 3:
+                                        vBuildDate = (DateTime.ParseExact(vRowTemp_X.GetCell(vColIndex).ToString().Trim(), "yyy.MM.dd", CultureInfo.InvariantCulture).AddYears(1911)).ToString("yyyy/MM/dd");
+                                        vCaseNo = (DateTime.Today.Year - 1911).ToString("D3") + DateTime.Today.Month.ToString("D2") + "A";
+                                        vSQLStr = "select MAX(CaseNo) CaseNo from AnecdoteCase where CaseNo like '" + vCaseNo + "%' ";
+                                        vTempIndex = (PF.GetValue(vConnStr, vSQLStr, "CaseNo")).Replace(vCaseNo, "").Trim();
+                                        vTempIndex = (vTempIndex != "") ? (int.Parse(vTempIndex) + 1).ToString("D4") : "0001";
+                                        vCaseNo = vCaseNo + vTempIndex;
+                                        break;
+                                    case 4:
+                                        vCar_ID = (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_X.GetCell(4).ToString().Trim() : "";
+                                        break;
+                                    case 5:
+                                        vDriverName = vRowTemp_X.GetCell(vColIndex).ToString().Trim();
+                                        vSQLStr = "select EmpNo from Employee where [Name] = '" + vDriverName + "' ";
+                                        vDriver = PF.GetValue(vConnStr, vSQLStr, "EmpNo");
+                                        break;
+                                    case 8:
+                                        vInsuMan = (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_X.GetCell(8).ToString().Trim() : "";
+                                        break;
+                                    case 18:
+                                        vAncedotalResRatio = (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_X.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
+                                        break;
+                                    case 19:
+                                        if (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank)
+                                        {
+                                            vTempStr = vRowTemp_X.GetCell(vColIndex).ToString().Trim();
+                                            vIsNoDeduction = (vTempStr == "免扣") ? "true" : "false";
+                                            vTempStr = vTempStr.Replace("免扣", "");
+                                            if (DateTime.TryParseExact(vTempStr.Replace("扣", ""), "yyy.MM.dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out vTempDate))
+                                            {
+                                                vDeductionDate = vTempDate.AddYears(1911).ToString("yyyy/MM/dd");
+                                                vRemark = "";
+                                            }
+                                            else
+                                            {
+                                                vDeductionDate = "";
+                                                vRemark = vTempStr;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            vIsNoDeduction = "false";
+                                            vDeductionDate = "";
+                                        }
+                                        break;
+                                    case 20:
+                                        if (vRemark != "")
+                                        {
+                                            vRemark = (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank) ? vRemark + Environment.NewLine + vRowTemp_X.GetCell(vColIndex).ToString().Trim() : vRemark;
+                                        }
+                                        else
+                                        {
+                                            vRemark = (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_X.GetCell(20).ToString().Trim() : "";
+                                        }
+                                        break;
+                                }
+                            }
+                            /*
                             vDepNo_Temp = vRowTemp_X.GetCell(1).ToString().Trim();
                             vSQLStr = "select [Name] from Department where DepNo = '" + vDepNo_Temp + "' ";
                             vDepName_Temp = PF.GetValue(vConnStr, vSQLStr, "Name");
@@ -455,7 +690,7 @@ namespace TyBus_Intranet_Test_V3
                             else
                             {
                                 vRemark = (vRowTemp_X.GetCell(20).CellType != CellType.Blank) ? vRowTemp_X.GetCell(20).ToString().Trim() : "";
-                            }
+                            } //*/
 
                             using (SqlDataSource dsTemp = new SqlDataSource())
                             {
@@ -490,6 +725,75 @@ namespace TyBus_Intranet_Test_V3
                             vTempIndex = PF.GetValue(vConnStr, vSQLStr, "MaxItem");
                             vItems = (vTempIndex != "") ? (int.Parse(vTempIndex) + 1).ToString("D4") : "0001";
                             vCaseNoItems = vCaseNo + vItems;
+                            // 2023.10.19 避免發生 EXCEL 欄位空白導致欄位對應錯亂
+                            vRelationship = "";
+                            vRelCar_ID = "";
+                            vRemarkB = "";
+                            vEstimatedAmount = "0";
+                            vThirdInsurance = "0";
+                            vCompInsurance = "0";
+                            vDriverSharing = "0";
+                            vCompanySharing = "0";
+                            vCarDamageAMT = "0";
+                            vPersonDamageAMT = "0";
+                            vRelationComp = "0";
+                            vPassengerInsu = "0";
+                            vReconciliationDate = "";
+                            for (int iColumnIndex = 0; iColumnIndex < vRowTemp_X.Cells.Count; iColumnIndex++)
+                            {
+                                vColIndex = vRowTemp_X.Cells[iColumnIndex].ColumnIndex;
+                                switch (vColIndex)
+                                {
+                                    case 6:
+                                        vRelationship = (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_X.GetCell(vColIndex).ToString().Trim() : "";
+                                        break;
+                                    case 7:
+                                        vRelCar_ID = (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_X.GetCell(vColIndex).ToString().Trim() : "";
+                                        break;
+                                    case 9:
+                                        vEstimatedAmount = (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_X.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
+                                        if (Int32.TryParse(vEstimatedAmount, out vTempINT))
+                                        {
+                                            vEstimatedAmount = vTempINT.ToString();
+                                            vRemarkB = "";
+                                        }
+                                        else
+                                        {
+                                            vRemarkB = vEstimatedAmount;
+                                            vEstimatedAmount = "0";
+                                        }
+                                        break;
+                                    case 10:
+                                        vThirdInsurance = (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_X.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
+                                        break;
+                                    case 11:
+                                        vCompInsurance = (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_X.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
+                                        break;
+                                    case 12:
+                                        vDriverSharing = (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_X.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
+                                        break;
+                                    case 13:
+                                        vCompanySharing = (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_X.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
+                                        break;
+                                    case 14:
+                                        vCarDamageAMT = (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_X.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
+                                        break;
+                                    case 15:
+                                        vPersonDamageAMT = (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_X.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
+                                        break;
+                                    case 16:
+                                        vRelationComp = (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_X.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
+                                        break;
+                                    case 17:
+                                        vTempStr = (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_X.GetCell(vColIndex).ToString().Trim() : "";
+                                        vTempStr = vTempStr.Replace("和解", "");
+                                        vTempStr = vTempStr.Replace("自行", "");
+                                        vPassengerInsu = "0"; //乘客險先用 0 轉入
+                                        vReconciliationDate = (vTempStr != "") ? (DateTime.ParseExact(vTempStr, "yyy.MM.dd", CultureInfo.InvariantCulture).AddYears(1911)).ToString("yyyy/MM/dd") : vTempStr;
+                                        break;
+                                }
+                            }
+                            /*
                             vRelationship = (vRowTemp_X.GetCell(6).CellType != CellType.Blank) ? vRowTemp_X.GetCell(6).ToString().Trim() : "";
                             vRelCar_ID = (vRowTemp_X.GetCell(7).CellType != CellType.Blank) ? vRowTemp_X.GetCell(7).ToString().Trim() : "";
                             vEstimatedAmount = (vRowTemp_X.GetCell(9).CellType != CellType.Blank) ? vRowTemp_X.GetCell(9).ToString().Trim().Replace(",", "") : "0";
@@ -515,6 +819,7 @@ namespace TyBus_Intranet_Test_V3
                             vTempStr = vTempStr.Replace("自行", "");
                             vPassengerInsu = "0"; //乘客險先用 0 轉入
                             vReconciliationDate = (vTempStr != "") ? (DateTime.ParseExact(vTempStr, "yyy.MM.dd", CultureInfo.InvariantCulture).AddYears(1911)).ToString("yyyy/MM/dd") : vTempStr;
+                            //*/
 
                             using (SqlDataSource dsTempB = new SqlDataSource())
                             {
