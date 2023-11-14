@@ -4035,8 +4035,8 @@ namespace TyBus_Intranet_Test_V3
                         csData_Int.DataFormat = format.GetFormat("###,##0");
 
                         HSSFCellStyle csData_Float = (HSSFCellStyle)wbExcel.CreateCellStyle();
-                        csData_Int.VerticalAlignment = VerticalAlignment.Center; //垂直置中
-                        csData_Int.Alignment = HorizontalAlignment.Right;
+                        csData_Float.VerticalAlignment = VerticalAlignment.Center; //垂直置中
+                        csData_Float.Alignment = HorizontalAlignment.Right;
 
                         HSSFDataFormat format_Float = (HSSFDataFormat)wbExcel.CreateDataFormat();
                         csData_Float.DataFormat = format.GetFormat("##0.00");

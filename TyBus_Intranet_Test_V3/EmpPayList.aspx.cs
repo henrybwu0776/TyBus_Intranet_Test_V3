@@ -189,7 +189,7 @@ namespace TyBus_Intranet_Test_V3
             csData_Int.DataFormat = format.GetFormat("###,##0");
 
             HSSFCellStyle csData_Float = (HSSFCellStyle)wbExcel.CreateCellStyle();
-            csData_Int.VerticalAlignment = VerticalAlignment.Center; //垂直置中
+            csData_Float.VerticalAlignment = VerticalAlignment.Center; //垂直置中
             csData_Float.DataFormat = format.GetFormat("###,##0.00%");
 
             string vHeaderText = "";

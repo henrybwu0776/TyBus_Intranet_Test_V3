@@ -229,10 +229,22 @@ namespace TyBus_Intranet_Test_V3
             string vSelectStr = "";
             string vCalDepNo = "";
             string vCalDepName = "";
-            using (SqlConnection connDepNo = new SqlConnection(vConnStr))
+            //2023/10/26 改用 MARS 多重結果作用集
+            //using (SqlConnection connDepNo = new SqlConnection(vConnStr))
+            SqlConnectionStringBuilder vConnStr_Temp = new SqlConnectionStringBuilder(vConnStr);
+            SqlConnectionStringBuilder vConnStr_Multi = new SqlConnectionStringBuilder();
+            using (SqlConnection connMulti = new SqlConnection())
             {
-                SqlCommand cmdDepNo = new SqlCommand(vDepNoSelStr, connDepNo);
-                connDepNo.Open();
+                vConnStr_Multi.InitialCatalog = vConnStr_Temp.InitialCatalog;
+                vConnStr_Multi.DataSource = vConnStr_Temp.DataSource;
+                vConnStr_Multi.UserID = vConnStr_Temp.UserID;
+                vConnStr_Multi.Password = vConnStr_Temp.Password;
+                vConnStr_Multi.MultipleActiveResultSets = true;
+                connMulti.ConnectionString = vConnStr_Multi.ConnectionString;
+                //SqlCommand cmdDepNo = new SqlCommand(vDepNoSelStr, connDepNo);
+                //connDepNo.Open();
+                SqlCommand cmdDepNo = new SqlCommand(vDepNoSelStr, connMulti);
+                connMulti.Open();
                 SqlDataReader drDepNo = cmdDepNo.ExecuteReader();
                 if (drDepNo.HasRows)
                 {
@@ -305,624 +317,626 @@ namespace TyBus_Intranet_Test_V3
                                      "  from SHR1202Lines z " + Environment.NewLine +
                                      " where isnull(IndexNo_IS, '') <> '' " + Environment.NewLine +
                                      " order by z.IndexNo_IS";
-                        using (SqlConnection connGetData = new SqlConnection(vConnStr))
+                        //2023/10/26 改用 MARS 多重結果作用集
+                        //using (SqlConnection connGetData = new SqlConnection(vConnStr))
+                        //{
+                        //SqlCommand cmdGetData = new SqlCommand(vSelectStr, connGetData);
+                        //connGetData.Open();
+                        SqlCommand cmdGetData = new SqlCommand(vSelectStr, connMulti);
+                        SqlDataReader drGetData = cmdGetData.ExecuteReader();
+                        if (drGetData.HasRows)
                         {
-                            SqlCommand cmdGetData = new SqlCommand(vSelectStr, connGetData);
-                            connGetData.Open();
-                            SqlDataReader drGetData = cmdGetData.ExecuteReader();
-                            if (drGetData.HasRows)
+                            //新增一個工作表
+                            wsExcel = (XSSFSheet)wbExcel.CreateSheet(vSheetName);
+                            //寫入標題列
+                            vLinesNo = 0;
+                            wsExcel.CreateRow(vLinesNo);
+                            wsExcel.GetRow(vLinesNo).CreateCell(0, CellType.String);
+                            wsExcel.GetRow(vLinesNo).GetCell(0).SetCellValue(vSheetName);
+                            wsExcel.AddMergedRegion(new CellRangeAddress(vLinesNo, vLinesNo, 0, 15)); //設定合併儲存格, 4個值分別是 (起始行, 結束行, 起始欄, 結束欄)
+                            wsExcel.GetRow(vLinesNo).GetCell(0).CellStyle = csTitle;
+                            //標題列 2
+                            vLinesNo++;
+                            wsExcel.CreateRow(vLinesNo);
+                            wsExcel.GetRow(vLinesNo).CreateCell(0);
+                            wsExcel.GetRow(vLinesNo).GetCell(0).SetCellValue("");
+                            wsExcel.AddMergedRegion(new CellRangeAddress(vLinesNo, vLinesNo, 0, 1));
+                            wsExcel.GetRow(vLinesNo).CreateCell(2);
+                            wsExcel.GetRow(vLinesNo).GetCell(2).SetCellValue(vCalYear + "/" + Int32.Parse(eCalMonth.Text.Trim()).ToString("D2") + "實際");
+                            wsExcel.AddMergedRegion(new CellRangeAddress(vLinesNo, vLinesNo, 2, 3));
+                            wsExcel.GetRow(vLinesNo).GetCell(2).CellStyle = csTitle;
+                            wsExcel.GetRow(vLinesNo).CreateCell(4);
+                            wsExcel.GetRow(vLinesNo).GetCell(4).SetCellValue(vCalYear + "/" + Int32.Parse(eCalMonth.Text.Trim()).ToString("D2") + "預算");
+                            wsExcel.AddMergedRegion(new CellRangeAddress(vLinesNo, vLinesNo, 4, 5));
+                            wsExcel.GetRow(vLinesNo).GetCell(4).CellStyle = csTitle;
+                            wsExcel.GetRow(vLinesNo).CreateCell(6);
+                            wsExcel.GetRow(vLinesNo).GetCell(6).SetCellValue(vLastYear + "/" + Int32.Parse(eCalMonth.Text.Trim()).ToString("D2") + "實際");
+                            wsExcel.AddMergedRegion(new CellRangeAddress(vLinesNo, vLinesNo, 6, 7));
+                            wsExcel.GetRow(vLinesNo).GetCell(6).CellStyle = csTitle;
+                            wsExcel.GetRow(vLinesNo).CreateCell(8);
+                            wsExcel.GetRow(vLinesNo).GetCell(8).SetCellValue("成長率%");
+                            wsExcel.AddMergedRegion(new CellRangeAddress(vLinesNo, vLinesNo + 1, 8, 8));
+                            wsExcel.GetRow(vLinesNo).GetCell(8).CellStyle = csTitle;
+                            wsExcel.GetRow(vLinesNo).CreateCell(9);
+                            wsExcel.GetRow(vLinesNo).GetCell(9).SetCellValue(vCalYear + "/01-" + vCalYear + "/" + Int32.Parse(eCalMonth.Text.Trim()).ToString("D2") + "實際");
+                            wsExcel.AddMergedRegion(new CellRangeAddress(vLinesNo, vLinesNo, 9, 10));
+                            wsExcel.GetRow(vLinesNo).GetCell(9).CellStyle = csTitle;
+                            wsExcel.GetRow(vLinesNo).CreateCell(11);
+                            wsExcel.GetRow(vLinesNo).GetCell(11).SetCellValue(vCalYear + "/01-" + vCalYear + "/" + Int32.Parse(eCalMonth.Text.Trim()).ToString("D2") + "預算");
+                            wsExcel.AddMergedRegion(new CellRangeAddress(vLinesNo, vLinesNo, 11, 12));
+                            wsExcel.GetRow(vLinesNo).GetCell(11).CellStyle = csTitle;
+                            wsExcel.GetRow(vLinesNo).CreateCell(13);
+                            wsExcel.GetRow(vLinesNo).GetCell(13).SetCellValue(vLastYear + "/01-" + vLastYear + "/" + Int32.Parse(eCalMonth.Text.Trim()).ToString("D2") + "實際");
+                            wsExcel.AddMergedRegion(new CellRangeAddress(vLinesNo, vLinesNo, 13, 14));
+                            wsExcel.GetRow(vLinesNo).GetCell(13).CellStyle = csTitle;
+                            wsExcel.GetRow(vLinesNo).CreateCell(15);
+                            wsExcel.GetRow(vLinesNo).GetCell(15).SetCellValue("成長率%");
+                            wsExcel.AddMergedRegion(new CellRangeAddress(vLinesNo, vLinesNo + 1, 15, 15));
+                            wsExcel.GetRow(vLinesNo).GetCell(15).CellStyle = csTitle;
+                            //標題列 3
+                            vLinesNo++;
+                            wsExcel.CreateRow(vLinesNo);
+                            for (int i = 0; i < drGetData.FieldCount; i++)
                             {
-                                //新增一個工作表
-                                wsExcel = (XSSFSheet)wbExcel.CreateSheet(vSheetName);
-                                //寫入標題列
-                                vLinesNo = 0;
-                                wsExcel.CreateRow(vLinesNo);
-                                wsExcel.GetRow(vLinesNo).CreateCell(0, CellType.String);
-                                wsExcel.GetRow(vLinesNo).GetCell(0).SetCellValue(vSheetName);
-                                wsExcel.AddMergedRegion(new CellRangeAddress(vLinesNo, vLinesNo, 0, 15)); //設定合併儲存格, 4個值分別是 (起始行, 結束行, 起始欄, 結束欄)
-                                wsExcel.GetRow(vLinesNo).GetCell(0).CellStyle = csTitle;
-                                //標題列 2
-                                vLinesNo++;
-                                wsExcel.CreateRow(vLinesNo);
-                                wsExcel.GetRow(vLinesNo).CreateCell(0);
-                                wsExcel.GetRow(vLinesNo).GetCell(0).SetCellValue("");
-                                wsExcel.AddMergedRegion(new CellRangeAddress(vLinesNo, vLinesNo, 0, 1));
-                                wsExcel.GetRow(vLinesNo).CreateCell(2);
-                                wsExcel.GetRow(vLinesNo).GetCell(2).SetCellValue(vCalYear + "/" + Int32.Parse(eCalMonth.Text.Trim()).ToString("D2") + "實際");
-                                wsExcel.AddMergedRegion(new CellRangeAddress(vLinesNo, vLinesNo, 2, 3));
-                                wsExcel.GetRow(vLinesNo).GetCell(2).CellStyle = csTitle;
-                                wsExcel.GetRow(vLinesNo).CreateCell(4);
-                                wsExcel.GetRow(vLinesNo).GetCell(4).SetCellValue(vCalYear + "/" + Int32.Parse(eCalMonth.Text.Trim()).ToString("D2") + "預算");
-                                wsExcel.AddMergedRegion(new CellRangeAddress(vLinesNo, vLinesNo, 4, 5));
-                                wsExcel.GetRow(vLinesNo).GetCell(4).CellStyle = csTitle;
-                                wsExcel.GetRow(vLinesNo).CreateCell(6);
-                                wsExcel.GetRow(vLinesNo).GetCell(6).SetCellValue(vLastYear + "/" + Int32.Parse(eCalMonth.Text.Trim()).ToString("D2") + "實際");
-                                wsExcel.AddMergedRegion(new CellRangeAddress(vLinesNo, vLinesNo, 6, 7));
-                                wsExcel.GetRow(vLinesNo).GetCell(6).CellStyle = csTitle;
-                                wsExcel.GetRow(vLinesNo).CreateCell(8);
-                                wsExcel.GetRow(vLinesNo).GetCell(8).SetCellValue("成長率%");
-                                wsExcel.AddMergedRegion(new CellRangeAddress(vLinesNo, vLinesNo + 1, 8, 8));
-                                wsExcel.GetRow(vLinesNo).GetCell(8).CellStyle = csTitle;
-                                wsExcel.GetRow(vLinesNo).CreateCell(9);
-                                wsExcel.GetRow(vLinesNo).GetCell(9).SetCellValue(vCalYear + "/01-" + vCalYear + "/" + Int32.Parse(eCalMonth.Text.Trim()).ToString("D2") + "實際");
-                                wsExcel.AddMergedRegion(new CellRangeAddress(vLinesNo, vLinesNo, 9, 10));
-                                wsExcel.GetRow(vLinesNo).GetCell(9).CellStyle = csTitle;
-                                wsExcel.GetRow(vLinesNo).CreateCell(11);
-                                wsExcel.GetRow(vLinesNo).GetCell(11).SetCellValue(vCalYear + "/01-" + vCalYear + "/" + Int32.Parse(eCalMonth.Text.Trim()).ToString("D2") + "預算");
-                                wsExcel.AddMergedRegion(new CellRangeAddress(vLinesNo, vLinesNo, 11, 12));
-                                wsExcel.GetRow(vLinesNo).GetCell(11).CellStyle = csTitle;
-                                wsExcel.GetRow(vLinesNo).CreateCell(13);
-                                wsExcel.GetRow(vLinesNo).GetCell(13).SetCellValue(vLastYear + "/01-" + vLastYear + "/" + Int32.Parse(eCalMonth.Text.Trim()).ToString("D2") + "實際");
-                                wsExcel.AddMergedRegion(new CellRangeAddress(vLinesNo, vLinesNo, 13, 14));
-                                wsExcel.GetRow(vLinesNo).GetCell(13).CellStyle = csTitle;
-                                wsExcel.GetRow(vLinesNo).CreateCell(15);
-                                wsExcel.GetRow(vLinesNo).GetCell(15).SetCellValue("成長率%");
-                                wsExcel.AddMergedRegion(new CellRangeAddress(vLinesNo, vLinesNo + 1, 15, 15));
-                                wsExcel.GetRow(vLinesNo).GetCell(15).CellStyle = csTitle;
-                                //標題列 3
+                                vHeaderText = (drGetData.GetName(i) == "ChartBarCode") ? "科目" :
+                                              (drGetData.GetName(i) == "LinesName_IS") ? "項目" :
+                                              ((drGetData.GetName(i) == "MonthAMT") ||
+                                               (drGetData.GetName(i) == "MonthBudgetAMT") ||
+                                               (drGetData.GetName(i) == "LastYearMonthAMT") ||
+                                               (drGetData.GetName(i) == "MonthAMT_T") ||
+                                               (drGetData.GetName(i) == "MonthBudgetAMT_T") ||
+                                               (drGetData.GetName(i) == "LastYearMonthAMT_T")) ? "金　　額" :
+                                              ((drGetData.GetName(i) == "MonthAMT_KM") ||
+                                               (drGetData.GetName(i) == "LastYearMonthAMT_KM") ||
+                                               (drGetData.GetName(i) == "MonthAMT_KM_T") ||
+                                               (drGetData.GetName(i) == "LastYearMonthAMT_KM_T")) ? "每公里收支" :
+                                              ((drGetData.GetName(i) == "MonthBudgetAMT_KM") ||
+                                               (drGetData.GetName(i) == "MonthBudgetAMT_KM_T")) ? "達成率%" : "";
+                                wsExcel.GetRow(vLinesNo).CreateCell(i);
+                                wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(vHeaderText);
+                                wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csTitle;
+                            }
+
+                            while (drGetData.Read())
+                            {
                                 vLinesNo++;
                                 wsExcel.CreateRow(vLinesNo);
                                 for (int i = 0; i < drGetData.FieldCount; i++)
                                 {
-                                    vHeaderText = (drGetData.GetName(i) == "ChartBarCode") ? "科目" :
-                                                  (drGetData.GetName(i) == "LinesName_IS") ? "項目" :
-                                                  ((drGetData.GetName(i) == "MonthAMT") ||
-                                                   (drGetData.GetName(i) == "MonthBudgetAMT") ||
-                                                   (drGetData.GetName(i) == "LastYearMonthAMT") ||
-                                                   (drGetData.GetName(i) == "MonthAMT_T") ||
-                                                   (drGetData.GetName(i) == "MonthBudgetAMT_T") ||
-                                                   (drGetData.GetName(i) == "LastYearMonthAMT_T")) ? "金　　額" :
-                                                  ((drGetData.GetName(i) == "MonthAMT_KM") ||
-                                                   (drGetData.GetName(i) == "LastYearMonthAMT_KM") ||
-                                                   (drGetData.GetName(i) == "MonthAMT_KM_T") ||
-                                                   (drGetData.GetName(i) == "LastYearMonthAMT_KM_T")) ? "每公里收支" :
-                                                  ((drGetData.GetName(i) == "MonthBudgetAMT_KM") ||
-                                                   (drGetData.GetName(i) == "MonthBudgetAMT_KM_T")) ? "達成率%" : "";
                                     wsExcel.GetRow(vLinesNo).CreateCell(i);
-                                    wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(vHeaderText);
-                                    wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csTitle;
-                                }
-
-                                while (drGetData.Read())
-                                {
-                                    vLinesNo++;
-                                    wsExcel.CreateRow(vLinesNo);
-                                    for (int i = 0; i < drGetData.FieldCount; i++)
+                                    if (drGetData.GetName(i) == "LinesName_IS") //項目名稱
                                     {
-                                        wsExcel.GetRow(vLinesNo).CreateCell(i);
-                                        if (drGetData.GetName(i) == "LinesName_IS") //項目名稱
+                                        wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(drGetData.GetString(i));
+                                        wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csData;
+                                    }
+                                    else if (drGetData.GetName(i) == "MonthBudgetAMT_KM") //當月預算達成率
+                                    {
+                                        wsExcel.GetRow(vLinesNo).GetCell(i).SetCellFormula("IF(E" + (vLinesNo + 1).ToString() + " <> 0, ROUND((C" + (vLinesNo + 1).ToString() + " / ABS(E" + (vLinesNo + 1).ToString() + ")) * 100, 2), IF(C" + (vLinesNo + 1).ToString() + " <> 0, 100, 0))");
+                                        wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
+                                    }
+                                    else if (drGetData.GetName(i) == "MonthBudgetAMT_KM_T") //累計預算達成率
+                                    {
+                                        wsExcel.GetRow(vLinesNo).GetCell(i).SetCellFormula("IF(L" + (vLinesNo + 1).ToString() + " <> 0, ROUND((J" + (vLinesNo + 1).ToString() + " / ABS(L" + (vLinesNo + 1).ToString() + ")) * 100, 2), IF(J" + (vLinesNo + 1).ToString() + " <> 0, 100, 0))");
+                                        wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
+                                    }
+                                    else if (drGetData.GetName(i) == "GrowthRatio") //當月成長率
+                                    {
+                                        wsExcel.GetRow(vLinesNo).GetCell(i).SetCellFormula("IF(G" + (vLinesNo + 1).ToString() + " <> 0, ROUND((C" + (vLinesNo + 1).ToString() + " - G" + (vLinesNo + 1).ToString() + ") / ABS(G" + (vLinesNo + 1).ToString() + ") * 100, 2), IF(C" + (vLinesNo + 1).ToString() + " <> 0, 100, 0))");
+                                        wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
+                                    }
+                                    else if (drGetData.GetName(i) == "GrowthRatio_T") //累計成長率
+                                    {
+                                        wsExcel.GetRow(vLinesNo).GetCell(i).SetCellFormula("IF(N" + (vLinesNo + 1).ToString() + " <> 0, ROUND((J" + (vLinesNo + 1).ToString() + " - N" + (vLinesNo + 1).ToString() + ") / ABS(N" + (vLinesNo + 1).ToString() + ") * 100, 2), IF(J" + (vLinesNo + 1).ToString() + " <> 0, 100, 0))");
+                                        wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
+                                    }
+                                    else if (drGetData.GetName(i) == "ChartBarCode") //第一欄 (空欄)
+                                    {
+                                        wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue("");
+                                        //wsExcel.AutoSizeColumn(i);
+                                        wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csData;
+                                    }
+                                    else if (drGetData.GetName(i) == "MonthAMT") //當月實際
+                                    {
+                                        if (drGetData.GetString(0) == "COS302")
                                         {
-                                            wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(drGetData.GetString(i));
-                                            wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csData;
-                                        }
-                                        else if (drGetData.GetName(i) == "MonthBudgetAMT_KM") //當月預算達成率
-                                        {
-                                            wsExcel.GetRow(vLinesNo).GetCell(i).SetCellFormula("IF(E" + (vLinesNo + 1).ToString() + " <> 0, ROUND((C" + (vLinesNo + 1).ToString() + " / ABS(E" + (vLinesNo + 1).ToString() + ")) * 100, 2), IF(C" + (vLinesNo + 1).ToString() + " <> 0, 100, 0))");
+                                            wsExcel.GetRow(vLinesNo).GetCell(i).SetCellFormula("C" + vINTZZ_Index.ToString() + "-C" + vCOS301_Index.ToString());
                                             wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
                                         }
-                                        else if (drGetData.GetName(i) == "MonthBudgetAMT_KM_T") //累計預算達成率
+                                        else if (drGetData.GetString(0) == "AVG 01")
                                         {
-                                            wsExcel.GetRow(vLinesNo).GetCell(i).SetCellFormula("IF(L" + (vLinesNo + 1).ToString() + " <> 0, ROUND((J" + (vLinesNo + 1).ToString() + " / ABS(L" + (vLinesNo + 1).ToString() + ")) * 100, 2), IF(J" + (vLinesNo + 1).ToString() + " <> 0, 100, 0))");
+                                            wsExcel.GetRow(vLinesNo).GetCell(i).SetCellFormula("ROUND(C" + vINTZZ_Index.ToString() + "/C" + vCars01_Index.ToString() + ", 2)");
                                             wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
                                         }
-                                        else if (drGetData.GetName(i) == "GrowthRatio") //當月成長率
+                                        else if (drGetData.GetString(0) == "AVG 02")
                                         {
-                                            wsExcel.GetRow(vLinesNo).GetCell(i).SetCellFormula("IF(G" + (vLinesNo + 1).ToString() + " <> 0, ROUND((C" + (vLinesNo + 1).ToString() + " - G" + (vLinesNo + 1).ToString() + ") / ABS(G" + (vLinesNo + 1).ToString() + ") * 100, 2), IF(C" + (vLinesNo + 1).ToString() + " <> 0, 100, 0))");
+                                            wsExcel.GetRow(vLinesNo).GetCell(i).SetCellFormula("ROUND(C" + vCOS301_Index.ToString() + "/C" + vCars01_Index.ToString() + ", 2)");
                                             wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
                                         }
-                                        else if (drGetData.GetName(i) == "GrowthRatio_T") //累計成長率
+                                        else if (drGetData.GetString(0) == "AVG 03")
                                         {
-                                            wsExcel.GetRow(vLinesNo).GetCell(i).SetCellFormula("IF(N" + (vLinesNo + 1).ToString() + " <> 0, ROUND((J" + (vLinesNo + 1).ToString() + " - N" + (vLinesNo + 1).ToString() + ") / ABS(N" + (vLinesNo + 1).ToString() + ") * 100, 2), IF(J" + (vLinesNo + 1).ToString() + " <> 0, 100, 0))");
+                                            wsExcel.GetRow(vLinesNo).GetCell(i).SetCellFormula("ROUND(C" + vCOS302_Index.ToString() + "/C" + vCars01_Index.ToString() + ", 2)");
                                             wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
                                         }
-                                        else if (drGetData.GetName(i) == "ChartBarCode") //第一欄 (空欄)
+                                        else if (drGetData.GetString(0) == "COS 28")
                                         {
-                                            wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue("");
-                                            //wsExcel.AutoSizeColumn(i);
-                                            wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csData;
+                                            vTempStr = "select Sum(SubjectAMT + OtherAMT + ShareAMT) MonthAMT " + Environment.NewLine +
+                                                       "  from DepMonthIncome " + Environment.NewLine +
+                                                       " where IncomeYM = '" + vCalYM + "' " + Environment.NewLine +
+                                                       "   and DepNo = '" + vCalDepNo + "' " + Environment.NewLine +
+                                                       "   and ChartBarCode in ('COS 28', 'COS 56')";
+                                            vCellValue = Double.Parse(PF.GetValue(vConnStr, vTempStr, "MonthAMT"));
+                                            wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(vCellValue);
                                         }
-                                        else if (drGetData.GetName(i) == "MonthAMT") //當月實際
+                                        else
                                         {
-                                            if (drGetData.GetString(0) == "COS302")
+                                            if (vCalDepNo == "00")
                                             {
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).SetCellFormula("C" + vINTZZ_Index.ToString() + "-C" + vCOS301_Index.ToString());
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
-                                            }
-                                            else if (drGetData.GetString(0) == "AVG 01")
-                                            {
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).SetCellFormula("ROUND(C" + vINTZZ_Index.ToString() + "/C" + vCars01_Index.ToString() + ", 2)");
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
-                                            }
-                                            else if (drGetData.GetString(0) == "AVG 02")
-                                            {
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).SetCellFormula("ROUND(C" + vCOS301_Index.ToString() + "/C" + vCars01_Index.ToString() + ", 2)");
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
-                                            }
-                                            else if (drGetData.GetString(0) == "AVG 03")
-                                            {
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).SetCellFormula("ROUND(C" + vCOS302_Index.ToString() + "/C" + vCars01_Index.ToString() + ", 2)");
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
-                                            }
-                                            else if (drGetData.GetString(0) == "COS 28")
-                                            {
-                                                vTempStr = "select Sum(SubjectAMT + OtherAMT + ShareAMT) MonthAMT " + Environment.NewLine +
-                                                           "  from DepMonthIncome " + Environment.NewLine +
-                                                           " where IncomeYM = '" + vCalYM + "' " + Environment.NewLine +
-                                                           "   and DepNo = '" + vCalDepNo + "' " + Environment.NewLine +
-                                                           "   and ChartBarCode in ('COS 28', 'COS 56')";
-                                                vCellValue = Double.Parse(PF.GetValue(vConnStr, vTempStr, "MonthAMT"));
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(vCellValue);
+                                                vTempStr = (drGetData.GetString(0) == "KMS 01") ? "select sum(KMS_Bus + KMS_Rule + KMS_NoneBusi) TotalKM from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM like '" + vCalYM + "%' " :
+                                                           (drGetData.GetString(0) == "KMS 02") ? "select sum(KMS_Tour )KMS_Tour from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM like '" + vCalYM + "%' " :
+                                                           (drGetData.GetString(0) == "KMS 03") ? "select sum(KMS_Rent) KMS_Rent from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM like '" + vCalYM + "%' " :
+                                                           (drGetData.GetString(0) == "KMS 04") ? "select sum(KMS_Trans) KMS_Trans from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM like '" + vCalYM + "%' " :
+                                                           (drGetData.GetString(0) == "KMS 05") ? "select sum(KMS_Spec) KMS_Spec from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM like '" + vCalYM + "%' " :
+                                                           (drGetData.GetString(0) == "KMS100") ? "select sum(DriveRange) DriveRange from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM like '" + vCalYM + "%' " :
+                                                           (drGetData.GetString(0) == "CARS01") ? "select sum(CarCount) CarCount from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM like '" + vCalYM + "%' " : "";
                                             }
                                             else
                                             {
-                                                if (vCalDepNo == "00")
-                                                {
-                                                    vTempStr = (drGetData.GetString(0) == "KMS 01") ? "select sum(KMS_Bus + KMS_Rule + KMS_NoneBusi) TotalKM from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM like '" + vCalYM + "%' " :
-                                                               (drGetData.GetString(0) == "KMS 02") ? "select sum(KMS_Tour )KMS_Tour from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM like '" + vCalYM + "%' " :
-                                                               (drGetData.GetString(0) == "KMS 03") ? "select sum(KMS_Rent) KMS_Rent from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM like '" + vCalYM + "%' " :
-                                                               (drGetData.GetString(0) == "KMS 04") ? "select sum(KMS_Trans) KMS_Trans from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM like '" + vCalYM + "%' " :
-                                                               (drGetData.GetString(0) == "KMS 05") ? "select sum(KMS_Spec) KMS_Spec from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM like '" + vCalYM + "%' " :
-                                                               (drGetData.GetString(0) == "KMS100") ? "select sum(DriveRange) DriveRange from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM like '" + vCalYM + "%' " :
-                                                               (drGetData.GetString(0) == "CARS01") ? "select sum(CarCount) CarCount from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM like '" + vCalYM + "%' " : "";
-                                                }
-                                                else
-                                                {
-                                                    vTempStr = (drGetData.GetString(0) == "KMS 01") ? "select (KMS_Bus + KMS_Rule + KMS_NoneBusi) TotalKM from CarCount where DepNoYM = '" + vCalYM + vCalDepNo + "' " :
-                                                               (drGetData.GetString(0) == "KMS 02") ? "select KMS_Tour from CarCount where DepNoYM = '" + vCalYM + vCalDepNo + "' " :
-                                                               (drGetData.GetString(0) == "KMS 03") ? "select KMS_Rent from CarCount where DepNoYM = '" + vCalYM + vCalDepNo + "' " :
-                                                               (drGetData.GetString(0) == "KMS 04") ? "select KMS_Trans from CarCount where DepNoYM = '" + vCalYM + vCalDepNo + "' " :
-                                                               (drGetData.GetString(0) == "KMS 05") ? "select KMS_Spec from CarCount where DepNoYM = '" + vCalYM + vCalDepNo + "' " :
-                                                               (drGetData.GetString(0) == "KMS100") ? "select DriveRange from CarCount where DepNoYM = '" + vCalYM + vCalDepNo + "' " :
-                                                               (drGetData.GetString(0) == "CARS01") ? "select CarCount from CarCount where DepNoYM = '" + vCalYM + vCalDepNo + "' " : "";
-                                                }
-                                                vCellValue = (drGetData.GetString(0) == "KMS 01") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "TotalKM")) :
-                                                             (drGetData.GetString(0) == "KMS 02") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "KMS_Tour")) :
-                                                             (drGetData.GetString(0) == "KMS 03") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "KMS_Rent")) :
-                                                             (drGetData.GetString(0) == "KMS 04") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "KMS_Trans")) :
-                                                             (drGetData.GetString(0) == "KMS 05") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "KMS_Spec")) :
-                                                             (drGetData.GetString(0) == "KMS100") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "DriveRange")) :
-                                                             (drGetData.GetString(0) == "CARS01") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "CarCount")) :
-                                                             (drGetData.IsDBNull(drGetData.GetOrdinal(drGetData.GetName(i)))) ? 0.0 : drGetData.GetDouble(i);
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(vCellValue);
+                                                vTempStr = (drGetData.GetString(0) == "KMS 01") ? "select (KMS_Bus + KMS_Rule + KMS_NoneBusi) TotalKM from CarCount where DepNoYM = '" + vCalYM + vCalDepNo + "' " :
+                                                           (drGetData.GetString(0) == "KMS 02") ? "select KMS_Tour from CarCount where DepNoYM = '" + vCalYM + vCalDepNo + "' " :
+                                                           (drGetData.GetString(0) == "KMS 03") ? "select KMS_Rent from CarCount where DepNoYM = '" + vCalYM + vCalDepNo + "' " :
+                                                           (drGetData.GetString(0) == "KMS 04") ? "select KMS_Trans from CarCount where DepNoYM = '" + vCalYM + vCalDepNo + "' " :
+                                                           (drGetData.GetString(0) == "KMS 05") ? "select KMS_Spec from CarCount where DepNoYM = '" + vCalYM + vCalDepNo + "' " :
+                                                           (drGetData.GetString(0) == "KMS100") ? "select DriveRange from CarCount where DepNoYM = '" + vCalYM + vCalDepNo + "' " :
+                                                           (drGetData.GetString(0) == "CARS01") ? "select CarCount from CarCount where DepNoYM = '" + vCalYM + vCalDepNo + "' " : "";
                                             }
+                                            vCellValue = (drGetData.GetString(0) == "KMS 01") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "TotalKM")) :
+                                                         (drGetData.GetString(0) == "KMS 02") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "KMS_Tour")) :
+                                                         (drGetData.GetString(0) == "KMS 03") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "KMS_Rent")) :
+                                                         (drGetData.GetString(0) == "KMS 04") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "KMS_Trans")) :
+                                                         (drGetData.GetString(0) == "KMS 05") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "KMS_Spec")) :
+                                                         (drGetData.GetString(0) == "KMS100") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "DriveRange")) :
+                                                         (drGetData.GetString(0) == "CARS01") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "CarCount")) :
+                                                         (drGetData.IsDBNull(drGetData.GetOrdinal(drGetData.GetName(i)))) ? 0.0 : drGetData.GetDouble(i);
+                                            wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(vCellValue);
+                                        }
+                                        wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
+                                    }
+                                    else if (drGetData.GetName(i) == "LastYearMonthAMT") //去年同期實際
+                                    {
+                                        if (drGetData.GetString(0) == "COS302")
+                                        {
+                                            wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("G" + vINTZZ_Index.ToString() + "-G" + vCOS301_Index.ToString());
                                             wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
                                         }
-                                        else if (drGetData.GetName(i) == "LastYearMonthAMT") //去年同期實際
+                                        else if (drGetData.GetString(0) == "AVG 01")
                                         {
-                                            if (drGetData.GetString(0) == "COS302")
+                                            wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("ROUND(G" + vINTZZ_Index.ToString() + "/G" + vCars01_Index.ToString() + ", 2)");
+                                            wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
+                                        }
+                                        else if (drGetData.GetString(0) == "AVG 02")
+                                        {
+                                            wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("ROUND(G" + vCOS301_Index.ToString() + "/G" + vCars01_Index.ToString() + ", 2)");
+                                            wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
+                                        }
+                                        else if (drGetData.GetString(0) == "AVG 03")
+                                        {
+                                            wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("ROUND(G" + vCOS302_Index.ToString() + "/G" + vCars01_Index.ToString() + ", 2)");
+                                            wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
+                                        }
+                                        else if (drGetData.GetString(0) == "COS 28")
+                                        {
+                                            vTempStr = "select Sum(SubjectAMT + OtherAMT + ShareAMT) MonthAMT " + Environment.NewLine +
+                                                       "  from DepMonthIncome " + Environment.NewLine +
+                                                       " where IncomeYM = '" + vLastYM + "' " + Environment.NewLine +
+                                                       "   and DepNo = '" + vCalDepNo + "' " + Environment.NewLine +
+                                                       "   and ChartBarCode in ('COS 28', 'COS 56')";
+                                            vCellValue = Double.Parse(PF.GetValue(vConnStr, vTempStr, "MonthAMT"));
+                                            wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(vCellValue);
+                                        }
+                                        else
+                                        {
+                                            if (vCalDepNo == "00")
                                             {
-                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("G" + vINTZZ_Index.ToString() + "-G" + vCOS301_Index.ToString());
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
-                                            }
-                                            else if (drGetData.GetString(0) == "AVG 01")
-                                            {
-                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("ROUND(G" + vINTZZ_Index.ToString() + "/G" + vCars01_Index.ToString() + ", 2)");
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
-                                            }
-                                            else if (drGetData.GetString(0) == "AVG 02")
-                                            {
-                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("ROUND(G" + vCOS301_Index.ToString() + "/G" + vCars01_Index.ToString() + ", 2)");
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
-                                            }
-                                            else if (drGetData.GetString(0) == "AVG 03")
-                                            {
-                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("ROUND(G" + vCOS302_Index.ToString() + "/G" + vCars01_Index.ToString() + ", 2)");
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
-                                            }
-                                            else if (drGetData.GetString(0) == "COS 28")
-                                            {
-                                                vTempStr = "select Sum(SubjectAMT + OtherAMT + ShareAMT) MonthAMT " + Environment.NewLine +
-                                                           "  from DepMonthIncome " + Environment.NewLine +
-                                                           " where IncomeYM = '" + vLastYM + "' " + Environment.NewLine +
-                                                           "   and DepNo = '" + vCalDepNo + "' " + Environment.NewLine +
-                                                           "   and ChartBarCode in ('COS 28', 'COS 56')";
-                                                vCellValue = Double.Parse(PF.GetValue(vConnStr, vTempStr, "MonthAMT"));
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(vCellValue);
+                                                vTempStr = (drGetData.GetString(0) == "KMS 01") ? "select sum(KMS_Bus + KMS_Rule + KMS_NoneBusi) TotalKM from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM like '" + vLastYM + "%' " :
+                                                           (drGetData.GetString(0) == "KMS 02") ? "select sum(KMS_Tour )KMS_Tour from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM like '" + vLastYM + "%' " :
+                                                           (drGetData.GetString(0) == "KMS 03") ? "select sum(KMS_Rent) KMS_Rent from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM like '" + vLastYM + "%' " :
+                                                           (drGetData.GetString(0) == "KMS 04") ? "select sum(KMS_Trans) KMS_Trans from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM like '" + vLastYM + "%' " :
+                                                           (drGetData.GetString(0) == "KMS 05") ? "select sum(KMS_Spec) KMS_Spec from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM like '" + vLastYM + "%' " :
+                                                           (drGetData.GetString(0) == "KMS100") ? "select sum(DriveRange) DriveRange from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM like '" + vLastYM + "%' " :
+                                                           (drGetData.GetString(0) == "CARS01") ? "select sum(CarCount) CarCount from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM like '" + vLastYM + "%' " : "";
                                             }
                                             else
                                             {
-                                                if (vCalDepNo == "00")
-                                                {
-                                                    vTempStr = (drGetData.GetString(0) == "KMS 01") ? "select sum(KMS_Bus + KMS_Rule + KMS_NoneBusi) TotalKM from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM like '" + vLastYM + "%' " :
-                                                               (drGetData.GetString(0) == "KMS 02") ? "select sum(KMS_Tour )KMS_Tour from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM like '" + vLastYM + "%' " :
-                                                               (drGetData.GetString(0) == "KMS 03") ? "select sum(KMS_Rent) KMS_Rent from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM like '" + vLastYM + "%' " :
-                                                               (drGetData.GetString(0) == "KMS 04") ? "select sum(KMS_Trans) KMS_Trans from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM like '" + vLastYM + "%' " :
-                                                               (drGetData.GetString(0) == "KMS 05") ? "select sum(KMS_Spec) KMS_Spec from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM like '" + vLastYM + "%' " :
-                                                               (drGetData.GetString(0) == "KMS100") ? "select sum(DriveRange) DriveRange from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM like '" + vLastYM + "%' " :
-                                                               (drGetData.GetString(0) == "CARS01") ? "select sum(CarCount) CarCount from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM like '" + vLastYM + "%' " : "";
-                                                }
-                                                else
-                                                {
-                                                    vTempStr = (drGetData.GetString(0) == "KMS 01") ? "select (KMS_Bus + KMS_Rule + KMS_NoneBusi) TotalKM from CarCount where DepNoYM = '" + vLastYM + vCalDepNo + "' " :
-                                                               (drGetData.GetString(0) == "KMS 02") ? "select KMS_Tour from CarCount where DepNoYM = '" + vLastYM + vCalDepNo + "' " :
-                                                               (drGetData.GetString(0) == "KMS 03") ? "select KMS_Rent from CarCount where DepNoYM = '" + vLastYM + vCalDepNo + "' " :
-                                                               (drGetData.GetString(0) == "KMS 04") ? "select KMS_Trans from CarCount where DepNoYM = '" + vLastYM + vCalDepNo + "' " :
-                                                               (drGetData.GetString(0) == "KMS 05") ? "select KMS_Spec from CarCount where DepNoYM = '" + vLastYM + vCalDepNo + "' " :
-                                                               (drGetData.GetString(0) == "KMS100") ? "select DriveRange from CarCount where DepNoYM = '" + vLastYM + vCalDepNo + "' " :
-                                                               (drGetData.GetString(0) == "CARS01") ? "select CarCount from CarCount where DepNoYM = '" + vLastYM + vCalDepNo + "' " : "";
-                                                }
-                                                vCellValue = (drGetData.GetString(0) == "KMS 01") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "TotalKM")) :
-                                                             (drGetData.GetString(0) == "KMS 02") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "KMS_Tour")) :
-                                                             (drGetData.GetString(0) == "KMS 03") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "KMS_Rent")) :
-                                                             (drGetData.GetString(0) == "KMS 04") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "KMS_Trans")) :
-                                                             (drGetData.GetString(0) == "KMS 05") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "KMS_Spec")) :
-                                                             (drGetData.GetString(0) == "KMS100") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "DriveRange")) :
-                                                             (drGetData.GetString(0) == "CARS01") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "CarCount")) :
-                                                             (drGetData.IsDBNull(drGetData.GetOrdinal(drGetData.GetName(i)))) ? 0.0 : drGetData.GetDouble(i);
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(vCellValue);
+                                                vTempStr = (drGetData.GetString(0) == "KMS 01") ? "select (KMS_Bus + KMS_Rule + KMS_NoneBusi) TotalKM from CarCount where DepNoYM = '" + vLastYM + vCalDepNo + "' " :
+                                                           (drGetData.GetString(0) == "KMS 02") ? "select KMS_Tour from CarCount where DepNoYM = '" + vLastYM + vCalDepNo + "' " :
+                                                           (drGetData.GetString(0) == "KMS 03") ? "select KMS_Rent from CarCount where DepNoYM = '" + vLastYM + vCalDepNo + "' " :
+                                                           (drGetData.GetString(0) == "KMS 04") ? "select KMS_Trans from CarCount where DepNoYM = '" + vLastYM + vCalDepNo + "' " :
+                                                           (drGetData.GetString(0) == "KMS 05") ? "select KMS_Spec from CarCount where DepNoYM = '" + vLastYM + vCalDepNo + "' " :
+                                                           (drGetData.GetString(0) == "KMS100") ? "select DriveRange from CarCount where DepNoYM = '" + vLastYM + vCalDepNo + "' " :
+                                                           (drGetData.GetString(0) == "CARS01") ? "select CarCount from CarCount where DepNoYM = '" + vLastYM + vCalDepNo + "' " : "";
                                             }
+                                            vCellValue = (drGetData.GetString(0) == "KMS 01") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "TotalKM")) :
+                                                         (drGetData.GetString(0) == "KMS 02") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "KMS_Tour")) :
+                                                         (drGetData.GetString(0) == "KMS 03") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "KMS_Rent")) :
+                                                         (drGetData.GetString(0) == "KMS 04") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "KMS_Trans")) :
+                                                         (drGetData.GetString(0) == "KMS 05") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "KMS_Spec")) :
+                                                         (drGetData.GetString(0) == "KMS100") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "DriveRange")) :
+                                                         (drGetData.GetString(0) == "CARS01") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "CarCount")) :
+                                                         (drGetData.IsDBNull(drGetData.GetOrdinal(drGetData.GetName(i)))) ? 0.0 : drGetData.GetDouble(i);
+                                            wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(vCellValue);
+                                        }
+                                        wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
+                                    }
+                                    else if (drGetData.GetName(i) == "MonthAMT_T") //當年度累計
+                                    {
+                                        vDepNoYMStr = "";
+                                        if (drGetData.GetString(0) == "COS302")
+                                        {
+                                            wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("J" + vINTZZ_Index.ToString() + "-J" + vCOS301_Index.ToString());
                                             wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
                                         }
-                                        else if (drGetData.GetName(i) == "MonthAMT_T") //當年度累計
+                                        else if (drGetData.GetString(0) == "AVG 01")
                                         {
-                                            vDepNoYMStr = "";
-                                            if (drGetData.GetString(0) == "COS302")
+                                            wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("ROUND(J" + vINTZZ_Index.ToString() + "/J" + vCars01_Index.ToString() + ", 2)");
+                                            wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
+                                        }
+                                        else if (drGetData.GetString(0) == "AVG 02")
+                                        {
+                                            wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("ROUND(J" + vCOS301_Index.ToString() + "/J" + vCars01_Index.ToString() + ", 2)");
+                                            wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
+                                        }
+                                        else if (drGetData.GetString(0) == "AVG 03")
+                                        {
+                                            wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("ROUND(J" + vCOS302_Index.ToString() + "/J" + vCars01_Index.ToString() + ", 2)");
+                                            wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
+                                        }
+                                        else if (drGetData.GetString(0) == "COS 28")
+                                        {
+                                            vTempStr = "select Sum(SubjectAMT + OtherAMT + ShareAMT) MonthAMT " + Environment.NewLine +
+                                                       "  from DepMonthIncome " + Environment.NewLine +
+                                                       " where IncomeYM between '" + vCalYear + "01' and '" + vCalYM + "' " + Environment.NewLine +
+                                                       "   and DepNo = '" + vCalDepNo + "' " + Environment.NewLine +
+                                                       "   and ChartBarCode in ('COS 28', 'COS 56')";
+                                            vCellValue = Double.Parse(PF.GetValue(vConnStr, vTempStr, "MonthAMT"));
+                                            wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(vCellValue);
+                                        }
+                                        else
+                                        {
+                                            if (vCalDepNo == "00")
                                             {
-                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("J" + vINTZZ_Index.ToString() + "-J" + vCOS301_Index.ToString());
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
-                                            }
-                                            else if (drGetData.GetString(0) == "AVG 01")
-                                            {
-                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("ROUND(J" + vINTZZ_Index.ToString() + "/J" + vCars01_Index.ToString() + ", 2)");
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
-                                            }
-                                            else if (drGetData.GetString(0) == "AVG 02")
-                                            {
-                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("ROUND(J" + vCOS301_Index.ToString() + "/J" + vCars01_Index.ToString() + ", 2)");
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
-                                            }
-                                            else if (drGetData.GetString(0) == "AVG 03")
-                                            {
-                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("ROUND(J" + vCOS302_Index.ToString() + "/J" + vCars01_Index.ToString() + ", 2)");
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
-                                            }
-                                            else if (drGetData.GetString(0) == "COS 28")
-                                            {
-                                                vTempStr = "select Sum(SubjectAMT + OtherAMT + ShareAMT) MonthAMT " + Environment.NewLine +
-                                                           "  from DepMonthIncome " + Environment.NewLine +
-                                                           " where IncomeYM between '" + vCalYear + "01' and '" + vCalYM + "' " + Environment.NewLine +
-                                                           "   and DepNo = '" + vCalDepNo + "' " + Environment.NewLine +
-                                                           "   and ChartBarCode in ('COS 28', 'COS 56')";
-                                                vCellValue = Double.Parse(PF.GetValue(vConnStr, vTempStr, "MonthAMT"));
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(vCellValue);
-                                            }
-                                            else
-                                            {
-                                                if (vCalDepNo == "00")
-                                                {
-                                                    string vDepNoSelStr_Sub = "select distinct DepNo from DepMonthIncome where IncomeYM = '" + vCalYM + "' and DepNo not in ('00', '12' ,'21') order by DepNo";
+                                                string vDepNoSelStr_Sub = "select distinct DepNo from DepMonthIncome where IncomeYM = '" + vCalYM + "' and DepNo not in ('00', '12' ,'21') order by DepNo";
 
-                                                    for (int vMonth = 1; vMonth <= Int32.Parse(eCalMonth.Text.Trim()); vMonth++)
-                                                    {
-                                                        using (SqlConnection connTempDepNo = new SqlConnection(vConnStr))
-                                                        {
-                                                            SqlCommand cmdTempDepNo = new SqlCommand(vDepNoSelStr_Sub, connTempDepNo);
-                                                            connTempDepNo.Open();
-                                                            SqlDataReader drTempDepNo = cmdTempDepNo.ExecuteReader();
-                                                            if (drTempDepNo.HasRows)
-                                                            {
-                                                                while (drTempDepNo.Read())
-                                                                {
-                                                                    vDepNoYMStr = (vDepNoYMStr == "") ?
-                                                                                  "'" + vCalYear + vMonth.ToString("D2") + drTempDepNo[0].ToString().Trim() + "'" :
-                                                                                  vDepNoYMStr + ", '" + vCalYear + vMonth.ToString("D2") + drTempDepNo[0].ToString().Trim() + "'";
-                                                                }
-                                                            }
-                                                            drTempDepNo.Close();
-                                                            cmdTempDepNo.Cancel();
-                                                        }
-                                                    }
-                                                }
-                                                else
+                                                for (int vMonth = 1; vMonth <= Int32.Parse(eCalMonth.Text.Trim()); vMonth++)
                                                 {
-                                                    for (int vMonth = 1; vMonth <= Int32.Parse(eCalMonth.Text.Trim()); vMonth++)
+                                                    using (SqlConnection connTempDepNo = new SqlConnection(vConnStr))
                                                     {
-                                                        vDepNoYMStr = (vDepNoYMStr == "") ?
-                                                                      "'" + vCalYear + vMonth.ToString("D2") + vCalDepNo + "'" :
-                                                                      vDepNoYMStr + ", '" + vCalYear + vMonth.ToString("D2") + vCalDepNo + "'";
+                                                        SqlCommand cmdTempDepNo = new SqlCommand(vDepNoSelStr_Sub, connTempDepNo);
+                                                        connTempDepNo.Open();
+                                                        SqlDataReader drTempDepNo = cmdTempDepNo.ExecuteReader();
+                                                        if (drTempDepNo.HasRows)
+                                                        {
+                                                            while (drTempDepNo.Read())
+                                                            {
+                                                                vDepNoYMStr = (vDepNoYMStr == "") ?
+                                                                              "'" + vCalYear + vMonth.ToString("D2") + drTempDepNo[0].ToString().Trim() + "'" :
+                                                                              vDepNoYMStr + ", '" + vCalYear + vMonth.ToString("D2") + drTempDepNo[0].ToString().Trim() + "'";
+                                                            }
+                                                        }
+                                                        drTempDepNo.Close();
+                                                        cmdTempDepNo.Cancel();
                                                     }
                                                 }
-                                                vTempStr = (drGetData.GetString(0) == "KMS 01") ? "select sum(KMS_Bus + KMS_Rule + KMS_NoneBusi) TotalKM from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM in (" + vDepNoYMStr + ") " :
-                                                           (drGetData.GetString(0) == "KMS 02") ? "select sum(KMS_Tour) KMS_Tour from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM in (" + vDepNoYMStr + ") " :
-                                                           (drGetData.GetString(0) == "KMS 03") ? "select sum(KMS_Rent) KMS_Rent from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM in (" + vDepNoYMStr + ") " :
-                                                           (drGetData.GetString(0) == "KMS 04") ? "select sum(KMS_Trans) KMS_Trans from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM in (" + vDepNoYMStr + ") " :
-                                                           (drGetData.GetString(0) == "KMS 05") ? "select sum(KMS_Spec) KMS_Spec from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM in (" + vDepNoYMStr + ") " :
-                                                           (drGetData.GetString(0) == "KMS100") ? "select sum(DriveRange) DriveRange from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM in (" + vDepNoYMStr + ") " :
-                                                           (drGetData.GetString(0) == "CARS01") ? "select sum(CarCount) CarCount from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM in (" + vDepNoYMStr + ") " : "";
-                                                vCellValue = (drGetData.GetString(0) == "KMS 01") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "TotalKM")) :
-                                                             (drGetData.GetString(0) == "KMS 02") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "KMS_Tour")) :
-                                                             (drGetData.GetString(0) == "KMS 03") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "KMS_Rent")) :
-                                                             (drGetData.GetString(0) == "KMS 04") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "KMS_Trans")) :
-                                                             (drGetData.GetString(0) == "KMS 05") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "KMS_Spec")) :
-                                                             (drGetData.GetString(0) == "KMS100") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "DriveRange")) :
-                                                             (drGetData.GetString(0) == "CARS01") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "CarCount")) :
-                                                             (drGetData.IsDBNull(drGetData.GetOrdinal(drGetData.GetName(i)))) ? 0.0 : drGetData.GetDouble(i);
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(vCellValue);
-                                            }
-                                            wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
-                                        }
-                                        else if (drGetData.GetName(i) == "LastYearMonthAMT_T") //去年同期累計
-                                        {
-                                            vDepNoYMStr = "";
-                                            if (drGetData.GetString(0) == "COS302")
-                                            {
-                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("N" + vINTZZ_Index.ToString() + "-N" + vCOS301_Index.ToString());
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
-                                            }
-                                            else if (drGetData.GetString(0) == "AVG 01")
-                                            {
-                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("ROUND(N" + vINTZZ_Index.ToString() + "/N" + vCars01_Index.ToString() + ", 2)");
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
-                                            }
-                                            else if (drGetData.GetString(0) == "AVG 02")
-                                            {
-                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("ROUND(N" + vCOS301_Index.ToString() + "/N" + vCars01_Index.ToString() + ", 2)");
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
-                                            }
-                                            else if (drGetData.GetString(0) == "AVG 03")
-                                            {
-                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("ROUND(N" + vCOS302_Index.ToString() + "/N" + vCars01_Index.ToString() + ", 2)");
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
-                                            }
-                                            else if (drGetData.GetString(0) == "COS 28")
-                                            {
-                                                vTempStr = "select Sum(SubjectAMT + OtherAMT + ShareAMT) MonthAMT " + Environment.NewLine +
-                                                           "  from DepMonthIncome " + Environment.NewLine +
-                                                           " where IncomeYM between '" + vLastYear + "01' and '" + vLastYM + "' " + Environment.NewLine +
-                                                           "   and DepNo = '" + vCalDepNo + "' " + Environment.NewLine +
-                                                           "   and ChartBarCode in ('COS 28', 'COS 56')";
-                                                vCellValue = Double.Parse(PF.GetValue(vConnStr, vTempStr, "MonthAMT"));
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(vCellValue);
                                             }
                                             else
                                             {
-                                                if (vCalDepNo == "00")
+                                                for (int vMonth = 1; vMonth <= Int32.Parse(eCalMonth.Text.Trim()); vMonth++)
                                                 {
-                                                    string vDepNoSelStr_Sub = "select distinct DepNo from DepMonthIncome where IncomeYM = '" + vCalYM + "' and DepNo not in ('00', '12' ,'21') order by DepNo";
-
-                                                    for (int vMonth = 1; vMonth <= Int32.Parse(eCalMonth.Text.Trim()); vMonth++)
-                                                    {
-                                                        using (SqlConnection connTempDepNo = new SqlConnection(vConnStr))
-                                                        {
-                                                            SqlCommand cmdTempDepNo = new SqlCommand(vDepNoSelStr_Sub, connTempDepNo);
-                                                            connTempDepNo.Open();
-                                                            SqlDataReader drTempDepNo = cmdTempDepNo.ExecuteReader();
-                                                            if (drTempDepNo.HasRows)
-                                                            {
-                                                                while (drTempDepNo.Read())
-                                                                {
-                                                                    vDepNoYMStr = (vDepNoYMStr == "") ?
-                                                                                  "'" + vLastYear + vMonth.ToString("D2") + drTempDepNo[0].ToString().Trim() + "'" :
-                                                                                  vDepNoYMStr + ", '" + vLastYear + vMonth.ToString("D2") + drTempDepNo[0].ToString().Trim() + "'";
-                                                                }
-                                                            }
-                                                            drTempDepNo.Close();
-                                                            cmdTempDepNo.Cancel();
-                                                        }
-                                                    }
+                                                    vDepNoYMStr = (vDepNoYMStr == "") ?
+                                                                  "'" + vCalYear + vMonth.ToString("D2") + vCalDepNo + "'" :
+                                                                  vDepNoYMStr + ", '" + vCalYear + vMonth.ToString("D2") + vCalDepNo + "'";
                                                 }
-                                                else
-                                                {
-                                                    for (int vMonth = 1; vMonth <= Int32.Parse(eCalMonth.Text.Trim()); vMonth++)
-                                                    {
-                                                        vDepNoYMStr = (vDepNoYMStr == "") ?
-                                                                      "'" + vLastYear + vMonth.ToString("D2") + vCalDepNo + "'" :
-                                                                      vDepNoYMStr + ", '" + vLastYear + vMonth.ToString("D2") + vCalDepNo + "'";
-                                                    }
-                                                }
-                                                vTempStr = (drGetData.GetString(0) == "KMS 01") ? "select sum(KMS_Bus + KMS_Rule + KMS_NoneBusi) TotalKM from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM in (" + vDepNoYMStr + ") " :
-                                                           (drGetData.GetString(0) == "KMS 02") ? "select sum(KMS_Tour) KMS_Tour from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM in (" + vDepNoYMStr + ") " :
-                                                           (drGetData.GetString(0) == "KMS 03") ? "select sum(KMS_Rent) KMS_Rent from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM in (" + vDepNoYMStr + ") " :
-                                                           (drGetData.GetString(0) == "KMS 04") ? "select sum(KMS_Trans) KMS_Trans from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM in (" + vDepNoYMStr + ") " :
-                                                           (drGetData.GetString(0) == "KMS 05") ? "select sum(KMS_Spec) KMS_Spec from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM in (" + vDepNoYMStr + ") " :
-                                                           (drGetData.GetString(0) == "KMS100") ? "select sum(DriveRange) DriveRange from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM in (" + vDepNoYMStr + ") " :
-                                                           (drGetData.GetString(0) == "CARS01") ? "select sum(CarCount) CarCount from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM in (" + vDepNoYMStr + ") " : "";
-                                                vCellValue = (drGetData.GetString(0) == "KMS 01") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "TotalKM")) :
-                                                             (drGetData.GetString(0) == "KMS 02") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "KMS_Tour")) :
-                                                             (drGetData.GetString(0) == "KMS 03") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "KMS_Rent")) :
-                                                             (drGetData.GetString(0) == "KMS 04") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "KMS_Trans")) :
-                                                             (drGetData.GetString(0) == "KMS 05") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "KMS_Spec")) :
-                                                             (drGetData.GetString(0) == "KMS100") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "DriveRange")) :
-                                                             (drGetData.GetString(0) == "CARS01") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "CarCount")) :
-                                                             (drGetData.IsDBNull(drGetData.GetOrdinal(drGetData.GetName(i)))) ? 0.0 : drGetData.GetDouble(i);
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(vCellValue);
                                             }
+                                            vTempStr = (drGetData.GetString(0) == "KMS 01") ? "select sum(KMS_Bus + KMS_Rule + KMS_NoneBusi) TotalKM from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM in (" + vDepNoYMStr + ") " :
+                                                       (drGetData.GetString(0) == "KMS 02") ? "select sum(KMS_Tour) KMS_Tour from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM in (" + vDepNoYMStr + ") " :
+                                                       (drGetData.GetString(0) == "KMS 03") ? "select sum(KMS_Rent) KMS_Rent from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM in (" + vDepNoYMStr + ") " :
+                                                       (drGetData.GetString(0) == "KMS 04") ? "select sum(KMS_Trans) KMS_Trans from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM in (" + vDepNoYMStr + ") " :
+                                                       (drGetData.GetString(0) == "KMS 05") ? "select sum(KMS_Spec) KMS_Spec from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM in (" + vDepNoYMStr + ") " :
+                                                       (drGetData.GetString(0) == "KMS100") ? "select sum(DriveRange) DriveRange from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM in (" + vDepNoYMStr + ") " :
+                                                       (drGetData.GetString(0) == "CARS01") ? "select sum(CarCount) CarCount from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM in (" + vDepNoYMStr + ") " : "";
+                                            vCellValue = (drGetData.GetString(0) == "KMS 01") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "TotalKM")) :
+                                                         (drGetData.GetString(0) == "KMS 02") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "KMS_Tour")) :
+                                                         (drGetData.GetString(0) == "KMS 03") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "KMS_Rent")) :
+                                                         (drGetData.GetString(0) == "KMS 04") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "KMS_Trans")) :
+                                                         (drGetData.GetString(0) == "KMS 05") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "KMS_Spec")) :
+                                                         (drGetData.GetString(0) == "KMS100") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "DriveRange")) :
+                                                         (drGetData.GetString(0) == "CARS01") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "CarCount")) :
+                                                         (drGetData.IsDBNull(drGetData.GetOrdinal(drGetData.GetName(i)))) ? 0.0 : drGetData.GetDouble(i);
+                                            wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(vCellValue);
+                                        }
+                                        wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
+                                    }
+                                    else if (drGetData.GetName(i) == "LastYearMonthAMT_T") //去年同期累計
+                                    {
+                                        vDepNoYMStr = "";
+                                        if (drGetData.GetString(0) == "COS302")
+                                        {
+                                            wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("N" + vINTZZ_Index.ToString() + "-N" + vCOS301_Index.ToString());
                                             wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
                                         }
-                                        else if (drGetData.GetName(i) == "MonthAMT_KM") //當月每公里收支
+                                        else if (drGetData.GetString(0) == "AVG 01")
                                         {
-                                            if (drGetData.GetString(0).Substring(0, 3).Trim().ToUpper() == "COS")
+                                            wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("ROUND(N" + vINTZZ_Index.ToString() + "/N" + vCars01_Index.ToString() + ", 2)");
+                                            wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
+                                        }
+                                        else if (drGetData.GetString(0) == "AVG 02")
+                                        {
+                                            wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("ROUND(N" + vCOS301_Index.ToString() + "/N" + vCars01_Index.ToString() + ", 2)");
+                                            wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
+                                        }
+                                        else if (drGetData.GetString(0) == "AVG 03")
+                                        {
+                                            wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("ROUND(N" + vCOS302_Index.ToString() + "/N" + vCars01_Index.ToString() + ", 2)");
+                                            wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
+                                        }
+                                        else if (drGetData.GetString(0) == "COS 28")
+                                        {
+                                            vTempStr = "select Sum(SubjectAMT + OtherAMT + ShareAMT) MonthAMT " + Environment.NewLine +
+                                                       "  from DepMonthIncome " + Environment.NewLine +
+                                                       " where IncomeYM between '" + vLastYear + "01' and '" + vLastYM + "' " + Environment.NewLine +
+                                                       "   and DepNo = '" + vCalDepNo + "' " + Environment.NewLine +
+                                                       "   and ChartBarCode in ('COS 28', 'COS 56')";
+                                            vCellValue = Double.Parse(PF.GetValue(vConnStr, vTempStr, "MonthAMT"));
+                                            wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(vCellValue);
+                                        }
+                                        else
+                                        {
+                                            if (vCalDepNo == "00")
+                                            {
+                                                string vDepNoSelStr_Sub = "select distinct DepNo from DepMonthIncome where IncomeYM = '" + vCalYM + "' and DepNo not in ('00', '12' ,'21') order by DepNo";
+
+                                                for (int vMonth = 1; vMonth <= Int32.Parse(eCalMonth.Text.Trim()); vMonth++)
+                                                {
+                                                    using (SqlConnection connTempDepNo = new SqlConnection(vConnStr))
+                                                    {
+                                                        SqlCommand cmdTempDepNo = new SqlCommand(vDepNoSelStr_Sub, connTempDepNo);
+                                                        connTempDepNo.Open();
+                                                        SqlDataReader drTempDepNo = cmdTempDepNo.ExecuteReader();
+                                                        if (drTempDepNo.HasRows)
+                                                        {
+                                                            while (drTempDepNo.Read())
+                                                            {
+                                                                vDepNoYMStr = (vDepNoYMStr == "") ?
+                                                                              "'" + vLastYear + vMonth.ToString("D2") + drTempDepNo[0].ToString().Trim() + "'" :
+                                                                              vDepNoYMStr + ", '" + vLastYear + vMonth.ToString("D2") + drTempDepNo[0].ToString().Trim() + "'";
+                                                            }
+                                                        }
+                                                        drTempDepNo.Close();
+                                                        cmdTempDepNo.Cancel();
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                for (int vMonth = 1; vMonth <= Int32.Parse(eCalMonth.Text.Trim()); vMonth++)
+                                                {
+                                                    vDepNoYMStr = (vDepNoYMStr == "") ?
+                                                                  "'" + vLastYear + vMonth.ToString("D2") + vCalDepNo + "'" :
+                                                                  vDepNoYMStr + ", '" + vLastYear + vMonth.ToString("D2") + vCalDepNo + "'";
+                                                }
+                                            }
+                                            vTempStr = (drGetData.GetString(0) == "KMS 01") ? "select sum(KMS_Bus + KMS_Rule + KMS_NoneBusi) TotalKM from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM in (" + vDepNoYMStr + ") " :
+                                                       (drGetData.GetString(0) == "KMS 02") ? "select sum(KMS_Tour) KMS_Tour from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM in (" + vDepNoYMStr + ") " :
+                                                       (drGetData.GetString(0) == "KMS 03") ? "select sum(KMS_Rent) KMS_Rent from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM in (" + vDepNoYMStr + ") " :
+                                                       (drGetData.GetString(0) == "KMS 04") ? "select sum(KMS_Trans) KMS_Trans from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM in (" + vDepNoYMStr + ") " :
+                                                       (drGetData.GetString(0) == "KMS 05") ? "select sum(KMS_Spec) KMS_Spec from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM in (" + vDepNoYMStr + ") " :
+                                                       (drGetData.GetString(0) == "KMS100") ? "select sum(DriveRange) DriveRange from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM in (" + vDepNoYMStr + ") " :
+                                                       (drGetData.GetString(0) == "CARS01") ? "select sum(CarCount) CarCount from CarCount where DepNo in (select DepNo from Department where InSHReport = 'V') and DepNoYM in (" + vDepNoYMStr + ") " : "";
+                                            vCellValue = (drGetData.GetString(0) == "KMS 01") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "TotalKM")) :
+                                                         (drGetData.GetString(0) == "KMS 02") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "KMS_Tour")) :
+                                                         (drGetData.GetString(0) == "KMS 03") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "KMS_Rent")) :
+                                                         (drGetData.GetString(0) == "KMS 04") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "KMS_Trans")) :
+                                                         (drGetData.GetString(0) == "KMS 05") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "KMS_Spec")) :
+                                                         (drGetData.GetString(0) == "KMS100") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "DriveRange")) :
+                                                         (drGetData.GetString(0) == "CARS01") ? Double.Parse(PF.GetValue(vConnStr, vTempStr, "CarCount")) :
+                                                         (drGetData.IsDBNull(drGetData.GetOrdinal(drGetData.GetName(i)))) ? 0.0 : drGetData.GetDouble(i);
+                                            wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(vCellValue);
+                                        }
+                                        wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
+                                    }
+                                    else if (drGetData.GetName(i) == "MonthAMT_KM") //當月每公里收支
+                                    {
+                                        if (drGetData.GetString(0).Substring(0, 3).Trim().ToUpper() == "COS")
+                                        {
+                                            wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(C" + (vLinesNo + 1).ToString() + " <> 0, ROUND(C" + (vLinesNo + 1).ToString() + "/ C" + vKMS100_Index.ToString() + ", 2), 0)");
+                                        }
+                                        else if (drGetData.GetString(0).Substring(0, 3).Trim().ToUpper() == "INC")
+                                        {
+                                            if ((drGetData.GetString(0).ToUpper() == "INC 10") || (drGetData.GetString(0).ToUpper() == "INC 20") || (drGetData.GetString(0).ToUpper() == "INC 55"))
+                                            {
+                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(C" + (vLinesNo + 1).ToString() + " <> 0, ROUND(C" + (vLinesNo + 1).ToString() + "/ C" + vKMS01_Index.ToString() + ", 2), 0)");
+                                            }
+                                            else if (drGetData.GetString(0).ToUpper() == "INC 30")
+                                            {
+                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(C" + (vLinesNo + 1).ToString() + " <> 0, ROUND(C" + (vLinesNo + 1).ToString() + "/ C" + vKMS02_Index.ToString() + ", 2), 0)");
+                                            }
+                                            else if (drGetData.GetString(0).ToUpper() == "INC 40")
+                                            {
+                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(C" + (vLinesNo + 1).ToString() + " <> 0, ROUND(C" + (vLinesNo + 1).ToString() + "/ C" + vKMS03_Index.ToString() + ", 2), 0)");
+                                            }
+                                            else if (drGetData.GetString(0).ToUpper() == "INC 50")
+                                            {
+                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(C" + (vLinesNo + 1).ToString() + " <> 0, ROUND(C" + (vLinesNo + 1).ToString() + "/ C" + vKMS04_Index.ToString() + ", 2), 0)");
+                                            }
+                                            else if (drGetData.GetString(0).ToUpper() == "INC 58")
+                                            {
+                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(C" + (vLinesNo + 1).ToString() + " <> 0, ROUND(C" + (vLinesNo + 1).ToString() + "/ C" + vKMS05_Index.ToString() + ", 2), 0)");
+                                            }
+                                            else
                                             {
                                                 wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(C" + (vLinesNo + 1).ToString() + " <> 0, ROUND(C" + (vLinesNo + 1).ToString() + "/ C" + vKMS100_Index.ToString() + ", 2), 0)");
                                             }
-                                            else if (drGetData.GetString(0).Substring(0, 3).Trim().ToUpper() == "INC")
+                                        }
+                                        else
+                                        {
+                                            wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(0);
+                                        }
+                                        wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
+                                    }
+                                    else if (drGetData.GetName(i) == "LastYearMonthAMT_KM") //去年同期每公里收支
+                                    {
+                                        if (drGetData.GetString(0).Substring(0, 3).Trim().ToUpper() == "COS")
+                                        {
+                                            wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(G" + (vLinesNo + 1).ToString() + " <> 0, ROUND(G" + (vLinesNo + 1).ToString() + "/ G" + vKMS100_Index.ToString() + ", 2), 0)");
+                                        }
+                                        else if (drGetData.GetString(0).Substring(0, 3).Trim().ToUpper() == "INC")
+                                        {
+                                            if ((drGetData.GetString(0).ToUpper() == "INC 10") || (drGetData.GetString(0).ToUpper() == "INC 20") || (drGetData.GetString(0).ToUpper() == "INC 55"))
                                             {
-                                                if ((drGetData.GetString(0).ToUpper() == "INC 10") || (drGetData.GetString(0).ToUpper() == "INC 20") || (drGetData.GetString(0).ToUpper() == "INC 55"))
-                                                {
-                                                    wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(C" + (vLinesNo + 1).ToString() + " <> 0, ROUND(C" + (vLinesNo + 1).ToString() + "/ C" + vKMS01_Index.ToString() + ", 2), 0)");
-                                                }
-                                                else if (drGetData.GetString(0).ToUpper() == "INC 30")
-                                                {
-                                                    wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(C" + (vLinesNo + 1).ToString() + " <> 0, ROUND(C" + (vLinesNo + 1).ToString() + "/ C" + vKMS02_Index.ToString() + ", 2), 0)");
-                                                }
-                                                else if (drGetData.GetString(0).ToUpper() == "INC 40")
-                                                {
-                                                    wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(C" + (vLinesNo + 1).ToString() + " <> 0, ROUND(C" + (vLinesNo + 1).ToString() + "/ C" + vKMS03_Index.ToString() + ", 2), 0)");
-                                                }
-                                                else if (drGetData.GetString(0).ToUpper() == "INC 50")
-                                                {
-                                                    wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(C" + (vLinesNo + 1).ToString() + " <> 0, ROUND(C" + (vLinesNo + 1).ToString() + "/ C" + vKMS04_Index.ToString() + ", 2), 0)");
-                                                }
-                                                else if (drGetData.GetString(0).ToUpper() == "INC 58")
-                                                {
-                                                    wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(C" + (vLinesNo + 1).ToString() + " <> 0, ROUND(C" + (vLinesNo + 1).ToString() + "/ C" + vKMS05_Index.ToString() + ", 2), 0)");
-                                                }
-                                                else
-                                                {
-                                                    wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(C" + (vLinesNo + 1).ToString() + " <> 0, ROUND(C" + (vLinesNo + 1).ToString() + "/ C" + vKMS100_Index.ToString() + ", 2), 0)");
-                                                }
+                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(G" + (vLinesNo + 1).ToString() + " <> 0, ROUND(G" + (vLinesNo + 1).ToString() + "/ G" + vKMS01_Index.ToString() + ", 2), 0)");
+                                            }
+                                            else if (drGetData.GetString(0).ToUpper() == "INC 30")
+                                            {
+                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(G" + (vLinesNo + 1).ToString() + " <> 0, ROUND(G" + (vLinesNo + 1).ToString() + "/ G" + vKMS02_Index.ToString() + ", 2), 0)");
+                                            }
+                                            else if (drGetData.GetString(0).ToUpper() == "INC 40")
+                                            {
+                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(G" + (vLinesNo + 1).ToString() + " <> 0, ROUND(G" + (vLinesNo + 1).ToString() + "/ G" + vKMS03_Index.ToString() + ", 2), 0)");
+                                            }
+                                            else if (drGetData.GetString(0).ToUpper() == "INC 50")
+                                            {
+                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(G" + (vLinesNo + 1).ToString() + " <> 0, ROUND(G" + (vLinesNo + 1).ToString() + "/ G" + vKMS04_Index.ToString() + ", 2), 0)");
+                                            }
+                                            else if (drGetData.GetString(0).ToUpper() == "INC 58")
+                                            {
+                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(G" + (vLinesNo + 1).ToString() + " <> 0, ROUND(G" + (vLinesNo + 1).ToString() + "/ G" + vKMS05_Index.ToString() + ", 2), 0)");
                                             }
                                             else
-                                            {
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(0);
-                                            }
-                                            wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
-                                        }
-                                        else if (drGetData.GetName(i) == "LastYearMonthAMT_KM") //去年同期每公里收支
-                                        {
-                                            if (drGetData.GetString(0).Substring(0, 3).Trim().ToUpper() == "COS")
                                             {
                                                 wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(G" + (vLinesNo + 1).ToString() + " <> 0, ROUND(G" + (vLinesNo + 1).ToString() + "/ G" + vKMS100_Index.ToString() + ", 2), 0)");
                                             }
-                                            else if (drGetData.GetString(0).Substring(0, 3).Trim().ToUpper() == "INC")
+                                        }
+                                        else
+                                        {
+                                            wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(0);
+                                        }
+                                        wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
+                                    }
+                                    else if (drGetData.GetName(i) == "MonthAMT_KM_T") //當年度每公里收支累計
+                                    {
+                                        if (drGetData.GetString(0).Substring(0, 3).Trim().ToUpper() == "COS")
+                                        {
+                                            wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(J" + (vLinesNo + 1).ToString() + " <> 0, ROUND(J" + (vLinesNo + 1).ToString() + "/ J" + vKMS100_Index.ToString() + ", 2), 0)");
+                                        }
+                                        else if (drGetData.GetString(0).Substring(0, 3).Trim().ToUpper() == "INC")
+                                        {
+                                            if ((drGetData.GetString(0).ToUpper() == "INC 10") || (drGetData.GetString(0).ToUpper() == "INC 20") || (drGetData.GetString(0).ToUpper() == "INC 55"))
                                             {
-                                                if ((drGetData.GetString(0).ToUpper() == "INC 10") || (drGetData.GetString(0).ToUpper() == "INC 20") || (drGetData.GetString(0).ToUpper() == "INC 55"))
-                                                {
-                                                    wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(G" + (vLinesNo + 1).ToString() + " <> 0, ROUND(G" + (vLinesNo + 1).ToString() + "/ G" + vKMS01_Index.ToString() + ", 2), 0)");
-                                                }
-                                                else if (drGetData.GetString(0).ToUpper() == "INC 30")
-                                                {
-                                                    wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(G" + (vLinesNo + 1).ToString() + " <> 0, ROUND(G" + (vLinesNo + 1).ToString() + "/ G" + vKMS02_Index.ToString() + ", 2), 0)");
-                                                }
-                                                else if (drGetData.GetString(0).ToUpper() == "INC 40")
-                                                {
-                                                    wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(G" + (vLinesNo + 1).ToString() + " <> 0, ROUND(G" + (vLinesNo + 1).ToString() + "/ G" + vKMS03_Index.ToString() + ", 2), 0)");
-                                                }
-                                                else if (drGetData.GetString(0).ToUpper() == "INC 50")
-                                                {
-                                                    wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(G" + (vLinesNo + 1).ToString() + " <> 0, ROUND(G" + (vLinesNo + 1).ToString() + "/ G" + vKMS04_Index.ToString() + ", 2), 0)");
-                                                }
-                                                else if (drGetData.GetString(0).ToUpper() == "INC 58")
-                                                {
-                                                    wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(G" + (vLinesNo + 1).ToString() + " <> 0, ROUND(G" + (vLinesNo + 1).ToString() + "/ G" + vKMS05_Index.ToString() + ", 2), 0)");
-                                                }
-                                                else
-                                                {
-                                                    wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(G" + (vLinesNo + 1).ToString() + " <> 0, ROUND(G" + (vLinesNo + 1).ToString() + "/ G" + vKMS100_Index.ToString() + ", 2), 0)");
-                                                }
+                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(J" + (vLinesNo + 1).ToString() + " <> 0, ROUND(J" + (vLinesNo + 1).ToString() + "/ J" + vKMS01_Index.ToString() + ", 2), 0)");
+                                            }
+                                            else if (drGetData.GetString(0).ToUpper() == "INC 30")
+                                            {
+                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(J" + (vLinesNo + 1).ToString() + " <> 0, ROUND(J" + (vLinesNo + 1).ToString() + "/ J" + vKMS02_Index.ToString() + ", 2), 0)");
+                                            }
+                                            else if (drGetData.GetString(0).ToUpper() == "INC 40")
+                                            {
+                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(J" + (vLinesNo + 1).ToString() + " <> 0, ROUND(J" + (vLinesNo + 1).ToString() + "/ J" + vKMS03_Index.ToString() + ", 2), 0)");
+                                            }
+                                            else if (drGetData.GetString(0).ToUpper() == "INC 50")
+                                            {
+                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(J" + (vLinesNo + 1).ToString() + " <> 0, ROUND(J" + (vLinesNo + 1).ToString() + "/ J" + vKMS04_Index.ToString() + ", 2), 0)");
+                                            }
+                                            else if (drGetData.GetString(0).ToUpper() == "INC 58")
+                                            {
+                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(J" + (vLinesNo + 1).ToString() + " <> 0, ROUND(J" + (vLinesNo + 1).ToString() + "/ J" + vKMS05_Index.ToString() + ", 2), 0)");
                                             }
                                             else
-                                            {
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(0);
-                                            }
-                                            wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
-                                        }
-                                        else if (drGetData.GetName(i) == "MonthAMT_KM_T") //當年度每公里收支累計
-                                        {
-                                            if (drGetData.GetString(0).Substring(0, 3).Trim().ToUpper() == "COS")
                                             {
                                                 wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(J" + (vLinesNo + 1).ToString() + " <> 0, ROUND(J" + (vLinesNo + 1).ToString() + "/ J" + vKMS100_Index.ToString() + ", 2), 0)");
                                             }
-                                            else if (drGetData.GetString(0).Substring(0, 3).Trim().ToUpper() == "INC")
+                                        }
+                                        else
+                                        {
+                                            wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(0);
+                                        }
+                                        wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
+                                    }
+                                    else if (drGetData.GetName(i) == "LastYearMonthAMT_KM_T") //去年每公里收支累計
+                                    {
+                                        if (drGetData.GetString(0).Substring(0, 3).Trim().ToUpper() == "COS")
+                                        {
+                                            wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(N" + (vLinesNo + 1).ToString() + " <> 0, ROUND(N" + (vLinesNo + 1).ToString() + "/ N" + vKMS100_Index.ToString() + ", 2), 0)");
+                                        }
+                                        else if (drGetData.GetString(0).Substring(0, 3).Trim().ToUpper() == "INC")
+                                        {
+                                            if ((drGetData.GetString(0).ToUpper() == "INC 10") || (drGetData.GetString(0).ToUpper() == "INC 20") || (drGetData.GetString(0).ToUpper() == "INC 55"))
                                             {
-                                                if ((drGetData.GetString(0).ToUpper() == "INC 10") || (drGetData.GetString(0).ToUpper() == "INC 20") || (drGetData.GetString(0).ToUpper() == "INC 55"))
-                                                {
-                                                    wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(J" + (vLinesNo + 1).ToString() + " <> 0, ROUND(J" + (vLinesNo + 1).ToString() + "/ J" + vKMS01_Index.ToString() + ", 2), 0)");
-                                                }
-                                                else if (drGetData.GetString(0).ToUpper() == "INC 30")
-                                                {
-                                                    wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(J" + (vLinesNo + 1).ToString() + " <> 0, ROUND(J" + (vLinesNo + 1).ToString() + "/ J" + vKMS02_Index.ToString() + ", 2), 0)");
-                                                }
-                                                else if (drGetData.GetString(0).ToUpper() == "INC 40")
-                                                {
-                                                    wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(J" + (vLinesNo + 1).ToString() + " <> 0, ROUND(J" + (vLinesNo + 1).ToString() + "/ J" + vKMS03_Index.ToString() + ", 2), 0)");
-                                                }
-                                                else if (drGetData.GetString(0).ToUpper() == "INC 50")
-                                                {
-                                                    wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(J" + (vLinesNo + 1).ToString() + " <> 0, ROUND(J" + (vLinesNo + 1).ToString() + "/ J" + vKMS04_Index.ToString() + ", 2), 0)");
-                                                }
-                                                else if (drGetData.GetString(0).ToUpper() == "INC 58")
-                                                {
-                                                    wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(J" + (vLinesNo + 1).ToString() + " <> 0, ROUND(J" + (vLinesNo + 1).ToString() + "/ J" + vKMS05_Index.ToString() + ", 2), 0)");
-                                                }
-                                                else
-                                                {
-                                                    wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(J" + (vLinesNo + 1).ToString() + " <> 0, ROUND(J" + (vLinesNo + 1).ToString() + "/ J" + vKMS100_Index.ToString() + ", 2), 0)");
-                                                }
+                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(N" + (vLinesNo + 1).ToString() + " <> 0, ROUND(N" + (vLinesNo + 1).ToString() + "/ N" + vKMS01_Index.ToString() + ", 2), 0)");
+                                            }
+                                            else if (drGetData.GetString(0).ToUpper() == "INC 30")
+                                            {
+                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(N" + (vLinesNo + 1).ToString() + " <> 0, ROUND(N" + (vLinesNo + 1).ToString() + "/ N" + vKMS02_Index.ToString() + ", 2), 0)");
+                                            }
+                                            else if (drGetData.GetString(0).ToUpper() == "INC 40")
+                                            {
+                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(N" + (vLinesNo + 1).ToString() + " <> 0, ROUND(N" + (vLinesNo + 1).ToString() + "/ N" + vKMS03_Index.ToString() + ", 2), 0)");
+                                            }
+                                            else if (drGetData.GetString(0).ToUpper() == "INC 50")
+                                            {
+                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(N" + (vLinesNo + 1).ToString() + " <> 0, ROUND(N" + (vLinesNo + 1).ToString() + "/ N" + vKMS04_Index.ToString() + ", 2), 0)");
+                                            }
+                                            else if (drGetData.GetString(0).ToUpper() == "INC 58")
+                                            {
+                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(N" + (vLinesNo + 1).ToString() + " <> 0, ROUND(N" + (vLinesNo + 1).ToString() + "/ N" + vKMS05_Index.ToString() + ", 2), 0)");
                                             }
                                             else
-                                            {
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(0);
-                                            }
-                                            wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
-                                        }
-                                        else if (drGetData.GetName(i) == "LastYearMonthAMT_KM_T") //去年每公里收支累計
-                                        {
-                                            if (drGetData.GetString(0).Substring(0, 3).Trim().ToUpper() == "COS")
                                             {
                                                 wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(N" + (vLinesNo + 1).ToString() + " <> 0, ROUND(N" + (vLinesNo + 1).ToString() + "/ N" + vKMS100_Index.ToString() + ", 2), 0)");
                                             }
-                                            else if (drGetData.GetString(0).Substring(0, 3).Trim().ToUpper() == "INC")
-                                            {
-                                                if ((drGetData.GetString(0).ToUpper() == "INC 10") || (drGetData.GetString(0).ToUpper() == "INC 20") || (drGetData.GetString(0).ToUpper() == "INC 55"))
-                                                {
-                                                    wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(N" + (vLinesNo + 1).ToString() + " <> 0, ROUND(N" + (vLinesNo + 1).ToString() + "/ N" + vKMS01_Index.ToString() + ", 2), 0)");
-                                                }
-                                                else if (drGetData.GetString(0).ToUpper() == "INC 30")
-                                                {
-                                                    wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(N" + (vLinesNo + 1).ToString() + " <> 0, ROUND(N" + (vLinesNo + 1).ToString() + "/ N" + vKMS02_Index.ToString() + ", 2), 0)");
-                                                }
-                                                else if (drGetData.GetString(0).ToUpper() == "INC 40")
-                                                {
-                                                    wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(N" + (vLinesNo + 1).ToString() + " <> 0, ROUND(N" + (vLinesNo + 1).ToString() + "/ N" + vKMS03_Index.ToString() + ", 2), 0)");
-                                                }
-                                                else if (drGetData.GetString(0).ToUpper() == "INC 50")
-                                                {
-                                                    wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(N" + (vLinesNo + 1).ToString() + " <> 0, ROUND(N" + (vLinesNo + 1).ToString() + "/ N" + vKMS04_Index.ToString() + ", 2), 0)");
-                                                }
-                                                else if (drGetData.GetString(0).ToUpper() == "INC 58")
-                                                {
-                                                    wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(N" + (vLinesNo + 1).ToString() + " <> 0, ROUND(N" + (vLinesNo + 1).ToString() + "/ N" + vKMS05_Index.ToString() + ", 2), 0)");
-                                                }
-                                                else
-                                                {
-                                                    wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("IF(N" + (vLinesNo + 1).ToString() + " <> 0, ROUND(N" + (vLinesNo + 1).ToString() + "/ N" + vKMS100_Index.ToString() + ", 2), 0)");
-                                                }
-                                            }
-                                            else
-                                            {
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(0);
-                                            }
+                                        }
+                                        else
+                                        {
+                                            wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(0);
+                                        }
+                                        wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
+                                    }
+                                    else if ((drGetData.GetName(i) == "MonthBudgetAMT") || (drGetData.GetName(i) == "MonthBudgetAMT_T")) //預算
+                                    {
+                                        vCellStr = ((char)(i + 65)).ToString();
+                                        if (drGetData.GetString(0) == "AVG 01")
+                                        {
+                                            wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("ROUND(" + vCellStr + vINTZZ_Index.ToString() + "/" + vCellStr + vCars01_Index.ToString() + ", 2)");
                                             wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
                                         }
-                                        else if ((drGetData.GetName(i) == "MonthBudgetAMT") || (drGetData.GetName(i) == "MonthBudgetAMT_T")) //預算
+                                        else if (drGetData.GetString(0) == "AVG 02")
                                         {
-                                            vCellStr = ((char)(i + 65)).ToString();
-                                            if (drGetData.GetString(0) == "AVG 01")
-                                            {
-                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("ROUND(" + vCellStr + vINTZZ_Index.ToString() + "/" + vCellStr + vCars01_Index.ToString() + ", 2)");
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
-                                            }
-                                            else if (drGetData.GetString(0) == "AVG 02")
-                                            {
-                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("ROUND(" + vCellStr + vCOS301_Index.ToString() + "/" + vCellStr + vCars01_Index.ToString() + ", 2)");
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
-                                            }
-                                            else if (drGetData.GetString(0) == "AVG 03")
-                                            {
-                                                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("ROUND(" + vCellStr + vCOS302_Index.ToString() + "/" + vCellStr + vCars01_Index.ToString() + ", 2)");
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
-                                            }
-                                            else
-                                            {
-                                                vCellValue = (drGetData.IsDBNull(drGetData.GetOrdinal(drGetData.GetName(i)))) ? 0.0 : drGetData.GetDouble(i);
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(vCellValue);
-                                                wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
-                                            }
+                                            wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("ROUND(" + vCellStr + vCOS301_Index.ToString() + "/" + vCellStr + vCars01_Index.ToString() + ", 2)");
+                                            wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
+                                        }
+                                        else if (drGetData.GetString(0) == "AVG 03")
+                                        {
+                                            wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellFormula("ROUND(" + vCellStr + vCOS302_Index.ToString() + "/" + vCellStr + vCars01_Index.ToString() + ", 2)");
+                                            wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
                                         }
                                         else
                                         {
                                             vCellValue = (drGetData.IsDBNull(drGetData.GetOrdinal(drGetData.GetName(i)))) ? 0.0 : drGetData.GetDouble(i);
                                             wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(vCellValue);
                                             wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
-
                                         }
+                                    }
+                                    else
+                                    {
+                                        vCellValue = (drGetData.IsDBNull(drGetData.GetOrdinal(drGetData.GetName(i)))) ? 0.0 : drGetData.GetDouble(i);
+                                        wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(vCellValue);
+                                        wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csDoubleData;
+
                                     }
                                 }
                             }
-                            drGetData.Close();
-                            cmdGetData.Cancel();
                         }
+                        drGetData.Close();
+                        cmdGetData.Cancel();
+                        //}
                     }
 
                     try

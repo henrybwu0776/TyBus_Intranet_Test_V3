@@ -5,7 +5,6 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
-using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -41,7 +40,7 @@ namespace TyBus_Intranet_Test_V3
                 //vComputerName = Environment.MachineName; //2021.09.27 新增取得電腦名稱
                 vComputerName = Page.Request.UserHostName; //2021.10.08 改變取得電腦名稱的方法
 
-                UnobtrusiveValidationMode = System.Web.UI.UnobtrusiveValidationMode.None;
+                UnobtrusiveValidationMode = UnobtrusiveValidationMode.None;
 
                 if (vLoginID != "")
                 {

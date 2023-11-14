@@ -189,6 +189,7 @@
                             <li id="DriverYearSummary" runat="server"><a href="DriverYearSummary.aspx">駕駛員營運收入里程及時數明細表</a></li>
                             <li id="TicketTrans" runat="server"><a href="TicketTrans.aspx">電子票證營收轉入</a></li>
                             <li id="ImportAccount" runat="server"><a href="ImportAccount.aspx">傳票匯入作業</a></li>
+                            <li id="ImportTLD_Data" runat="server"><a href="ImportTLD_Data.aspx">匯入交易明細檔資料</a></li>
                         </ul>
                     </li>
                     <li id="G011" runat="server"><a href="#">租車相關作業</a>

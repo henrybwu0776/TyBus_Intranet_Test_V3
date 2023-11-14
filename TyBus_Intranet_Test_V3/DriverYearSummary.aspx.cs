@@ -133,7 +133,7 @@ namespace TyBus_Intranet_Test_V3
                     for (int i = 0; i <= sheetExcel_H.LastRowNum; i++)
                     {
                         HSSFRow vRowTemp_H = (HSSFRow)sheetExcel_H.GetRow(i);
-                        if (vRowTemp_H.GetCell(0).StringCellValue.Trim() != "")
+                        if ((vRowTemp_H != null) && (vRowTemp_H.GetCell(0).StringCellValue.Trim() != ""))
                         {
                             vDriverNo = vRowTemp_H.GetCell(0).StringCellValue.Trim();
                             if (Int32.TryParse(vDriverNo, out int j))
@@ -151,7 +151,7 @@ namespace TyBus_Intranet_Test_V3
                     for (int i = 0; i <= sheetExcel_X.LastRowNum; i++)
                     {
                         XSSFRow vRowTemp_X = (XSSFRow)sheetExcel_X.GetRow(i);
-                        if (vRowTemp_X.GetCell(0).StringCellValue.Trim() != "")
+                        if ((vRowTemp_X != null) && (vRowTemp_X.GetCell(0).StringCellValue.Trim() != ""))
                         {
                             vDriverNo = vRowTemp_X.GetCell(0).StringCellValue.Trim();
                             if (Int32.TryParse(vDriverNo, out int j))
