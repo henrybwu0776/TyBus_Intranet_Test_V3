@@ -599,14 +599,22 @@ namespace TyBus_Intranet_Test_V3
                 }
                 using (SqlConnection connExport = new SqlConnection(vConnStr))
                 {
-                    SqlDataAdapter daExport = new SqlDataAdapter(vSelectStr, connExport);
-                    daExport.SelectCommand.Parameters.Clear();
-                    daExport.SelectCommand.Parameters.Add(new Parameter("ClearDate", DbType.Date, vClearDate_Export.ToString("yyyy/MM/dd")));
+                    SqlCommand cmdExport = new SqlCommand(vSelectStr, connExport);
+                    SqlParameter parTemp = new SqlParameter("ClearDate", SqlDbType.DateTime);
+                    parTemp.Value = vClearDate_Export.ToString("yyyy/MM/dd");
+                    cmdExport.Parameters.Clear();
+                    cmdExport.Parameters.Add(parTemp);
                     connExport.Open();
-                    daExport.Fill(dtTemp);
-                    if (dtTemp.Rows.Count > 0)
+                    SqlDataReader drExport = cmdExport.ExecuteReader();
+                    if (drExport.HasRows)
                     {
-                        ExportFile(dtTemp, vClearDate_Export);
+                        ExportFile(drExport, vClearDate_Export);
+                    }
+                    else
+                    {
+                        Response.Write("<Script language='Javascript'>");
+                        Response.Write("alert('指定日期無清分資料！')");
+                        Response.Write("</" + "Script>");
                     }
                 }
             }
@@ -615,57 +623,278 @@ namespace TyBus_Intranet_Test_V3
                 Response.Write("<Script language='Javascript'>");
                 Response.Write("alert('請輸入清分日期！')");
                 Response.Write("</" + "Script>");
-            } 
+            }
         }
 
-        private void ExportFile(DataTable dtTemp, DateTime fClearDate)
+        private void ExportFile(SqlDataReader drTemp, DateTime fClearDate)
         {
-            HSSFWorkbook wbExcel = new HSSFWorkbook();
+            XSSFWorkbook wbExcel = new XSSFWorkbook();
             //Excel 工作表
-            HSSFSheet wsExcel;
+            XSSFSheet wsExcel;
             //設定標題欄位的格式
-            HSSFCellStyle csTitle = (HSSFCellStyle)wbExcel.CreateCellStyle();
+            XSSFCellStyle csTitle = (XSSFCellStyle)wbExcel.CreateCellStyle();
             csTitle.VerticalAlignment = VerticalAlignment.Center; //垂直置中
             csTitle.Alignment = HorizontalAlignment.Center; //水平置中
 
             //設定字體格式
-            HSSFFont fontTitle = (HSSFFont)wbExcel.CreateFont();
+            XSSFFont fontTitle = (XSSFFont)wbExcel.CreateFont();
             //fontTitle.Boldweight = (short)FontBoldWeight.Bold; //粗體字
             fontTitle.IsBold = true;
             fontTitle.FontHeightInPoints = 12; //字體大小
             csTitle.SetFont(fontTitle);
 
             //設定資料內容欄位的格式
-            HSSFCellStyle csData = (HSSFCellStyle)wbExcel.CreateCellStyle();
+            XSSFCellStyle csData = (XSSFCellStyle)wbExcel.CreateCellStyle();
             csData.VerticalAlignment = VerticalAlignment.Center; //垂直置中
 
-            HSSFFont fontData = (HSSFFont)wbExcel.CreateFont();
+            XSSFFont fontData = (XSSFFont)wbExcel.CreateFont();
             fontData.FontHeightInPoints = 12;
             csData.SetFont(fontData);
 
-            HSSFCellStyle csData_Red = (HSSFCellStyle)wbExcel.CreateCellStyle();
-            csData_Red.VerticalAlignment = VerticalAlignment.Center; //垂直置中
-
-            HSSFFont fontData_Red = (HSSFFont)wbExcel.CreateFont();
-            fontData_Red.FontHeightInPoints = 12; //字體大小
-            fontData_Red.Color = HSSFColor.Red.Index; //字體顏色
-            csData_Red.SetFont(fontData_Red);
-
-            HSSFCellStyle csData_Int = (HSSFCellStyle)wbExcel.CreateCellStyle();
+            XSSFCellStyle csData_Int = (XSSFCellStyle)wbExcel.CreateCellStyle();
             csData_Int.VerticalAlignment = VerticalAlignment.Center; //垂直置中
 
-            HSSFDataFormat format = (HSSFDataFormat)wbExcel.CreateDataFormat();
+            XSSFDataFormat format = (XSSFDataFormat)wbExcel.CreateDataFormat();
             csData_Int.DataFormat = format.GetFormat("###,##0");
 
-            HSSFCellStyle csData_Float = (HSSFCellStyle)wbExcel.CreateCellStyle();
+            XSSFCellStyle csData_Float = (XSSFCellStyle)wbExcel.CreateCellStyle();
             csData_Float.VerticalAlignment = VerticalAlignment.Center; //垂直置中
-            csData_Float.DataFormat = format.GetFormat("###,##0.00%");
+            csData_Float.DataFormat = format.GetFormat("###,##0.00");
 
+            string vHeaderText = "";
+            int vLinesNo = 0;
             string vFileName = fClearDate.Year.ToString("D4") + "年" +
                                fClearDate.Month.ToString("D2") + "月" +
                                fClearDate.Day.ToString("D2") + "日" +
-                               eImportSourceType.SelectedItem.Text.Trim() + ".xls";
+                               eImportSourceType.SelectedItem.Text.Trim();
+            DateTime vDate;
+            string vFieldValue = "";
+            double vTempFloat = 0.0;
 
+            //新增一個工作表
+            wsExcel = (XSSFSheet)wbExcel.CreateSheet(vFileName);
+            //寫入標題列
+            vLinesNo = 0;
+            wsExcel.CreateRow(vLinesNo);
+            for (int i = 0; i < drTemp.FieldCount; i++)
+            {
+                vHeaderText = (drTemp.GetName(i).ToUpper().Trim() == "TITLEMARK") ? "檔頭標籤" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "DATATYPE") ? "資料屬性" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "TRADEMODE") ? "交易模式" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "CLEARDATE") ? "清分日期" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "SERVICEDATE") ? "營運日期" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "STATIONCODE") ? "站別代碼" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "MACHINECODE") ? "設備代碼" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "CAR_ID") ? "車號" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "LINESNO") ? "路線代碼" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "DRIVERNO") ? "司機代碼" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "STARTTIME") ? "開班時間" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "IDTYPE") ? "身份別" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "CHIPCARDNO") ? "晶片卡號" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "SP_CARD") ? "特種票種" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "TRADEDATE") ? "交易日期" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "TRADECODE") ? "交易序號" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "AMOUNT") ? "交易金額" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "TRANSDISCOUNT") ? "轉乘優惠" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "PERSONALDISCOUNT") ? "個人優惠" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "LEAVESTATION") ? "出站" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "IN_OUTFLAG") ? "上下車" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "AREACODE") ? "區碼" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "INSTATION") ? "進站" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "INDEXNO") ? "序號" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "TICKETTYPE") ? "票證公司" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "TSAMOUNT") ? "總營運金額" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "STUDENTAMOUNT") ? "學生卡金額" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "OLDAMOUNT_N") ? "敬老愛心卡金額" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "NORMALAMOUNT_8KM") ? "普卡金額 (8KM)" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "TOTALAMOUNT") ? "總合計" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "TOTALPASSCOUNT") ? "總載客人數" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "PASSCOUNT_N") ? "普卡載客人數" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "PASSCOUNT_U") ? "聯營卡載客人數" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "PASSCOUNT_S") ? "學生卡載客人數" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "PASSCOUNT_O") ? "敬老愛心卡載客人數" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "TPASSCOUNT") ? "基北北桃月票人數" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "TPASSAMOUNT") ? "基北北桃月票金額" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "TNAMOUNT") ? "合計(不含優待學生卡)" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "STUAMOUNT_ALL") ? "學生卡金額(全額)" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "STUAMOUNT_DISC") ? "學生卡金額(優待)" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "STUAMOUNT_8KM") ? "學生卡金額(8KM優惠)" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "OLDAMOUNT_O") ? "敬老愛心卡金額(全額)" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "OLDAMOUNT_P") ? "敬老愛心卡金額(優待)" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "OLDAMOUNT_8KM") ? "敬老愛心卡金額(8KM優惠)" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "TNAMOUNT_8KM") ? "合計(8KM優惠)" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "PASSCOUNT_SA") ? "學生卡載客人數(全額)" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "PASSCOUNT_SD") ? "學生卡載客人數(優待)" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "PASSCOUNT_OA") ? "敬老愛心卡載客人數(全額)" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "PASSCOUNT_OD") ? "敬老愛心卡載客人數(優待)" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "PASSCOUNT_OP") ? "敬老愛心卡扣點筆數" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "PASSCOUNT_S8KM") ? "8KM優惠學生卡載客人數" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "PASSCOUNT_O8KM") ? "8KM優惠敬老愛心卡載客人數" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "PASSCOUNT_N8KM") ? "8KM優惠普卡載客人數" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "PASSCOUNT_T8KM") ? "8KM優惠總人數" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "TRANSAMOUNT_N") ? "轉乘優惠普卡金額" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "TRANSAMOUNT_S") ? "轉乘優惠學生卡金額" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "TRANSAMOUNT_O") ? "轉乘優惠敬老愛心卡金額" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "TRANSCOUNT_N") ? "轉乘優惠普卡載客人數" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "TRANSCOUNT_S") ? "轉乘優惠學生卡載客人數" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "TRANSCOUNT_O") ? "轉乘優惠敬老愛心卡載客人數" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "TICKETDIFFAMOUNT_N") ? "票差優惠普卡金額" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "TICKETDIFFAMOUNT_S") ? "票差優惠學生卡金額" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "TICKETDIFFAMOUNT_O") ? "票差優惠敬老愛心卡金額" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "TICKETDIFFCOUNT_N") ? "票差優惠普卡載客人數" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "TICKETDIFFCOUNT_S") ? "票差優惠學生卡載客人數" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "TICKETDIFFCOUNT_O") ? "票差優惠敬老愛心卡載客人數" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "AREADISAMOUNT_N") ? "區間優惠普卡金額" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "AREADISAMOUNT_S") ? "區間優惠學生卡金額" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "AREADISAMOUNT_O") ? "區間優惠敬老愛心卡金額" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "AREADISCOUNT_N") ? "區間優惠普卡載客人數" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "AREADISCOUNT_S") ? "區間優惠學生卡載客人數" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "AREADISCOUNT_O") ? "區間優惠敬老愛心卡載客人數" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "1280MTICKETAMOUNT_N") ? "雙北定期票普卡金額" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "1280MTICKETAMOUNT_S") ? "雙北定期票學生卡金額" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "1280MTICKETAMOUNT_O") ? "雙北定期票敬老愛心卡金額" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "1280MTICKETCOUNT_N") ? "雙北定期票普卡載客人數" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "1280MTICKETCOUNT_S") ? "雙北定期票學生卡載客人數" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "1280MTICKETCOUNT_O") ? "雙北定期票敬老愛心卡載客人數" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "QRCOUNT") ? "QR人數" :
+                              (drTemp.GetName(i).ToUpper().Trim() == "QRAMOUNT") ? "QR金額" : drTemp.GetName(i).Trim();
+                wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellValue(vHeaderText);
+                wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csTitle;
+            }
+            while (drTemp.Read())
+            {
+                vLinesNo++;
+                wsExcel.CreateRow(vLinesNo);
+                for (int i = 0; i < drTemp.FieldCount; i++)
+                {
+                    vHeaderText = drTemp.GetName(i).ToUpper();
+                    wsExcel.GetRow(vLinesNo).CreateCell(i);
+                    if ((vHeaderText == "TITLEMARK") ||
+                        (vHeaderText == "DATATYPE") ||
+                        (vHeaderText == "TRADEMODE") ||
+                        (vHeaderText == "STATIONCODE") ||
+                        (vHeaderText == "MACHINECODE") ||
+                        (vHeaderText == "CAR_ID") ||
+                        (vHeaderText == "LINESNO") ||
+                        (vHeaderText == "IDTYPE") ||
+                        (vHeaderText == "CHIPCARDNO") ||
+                        (vHeaderText == "SP_CARD") ||
+                        (vHeaderText == "TRADECODE") ||
+                        (vHeaderText == "LEAVESTATION") ||
+                        (vHeaderText == "IN_OUTFLAG") ||
+                        (vHeaderText == "AREACODE") ||
+                        (vHeaderText == "DRIVERNO") ||
+                        (vHeaderText == "INSTATION") ||
+                        (vHeaderText == "TICKETTYPE"))
+                    {
+                        //文字欄位
+                        wsExcel.GetRow(vLinesNo).GetCell(i).SetCellType(CellType.String);
+                        wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(drTemp[i].ToString());
+                        wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csData;
+                    }
+                    else if ((vHeaderText == "CLEARDATE") || (vHeaderText == "SERVICEDATE"))
+                    {
+                        string vTempStr = drTemp[i].ToString();
+                        vDate = DateTime.Parse(drTemp[i].ToString());
+                        wsExcel.GetRow(vLinesNo).GetCell(i).SetCellType(CellType.String);
+                        wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(vDate.ToString("yyyy/MM/dd"));
+                        wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csData;
+                    }
+                    else if ((vHeaderText == "STARTTIME") || (vHeaderText == "TRADEDATE"))
+                    {
+                        string vTempStr = drTemp[i].ToString();
+                        vDate = DateTime.Parse(drTemp[i].ToString());
+                        wsExcel.GetRow(vLinesNo).GetCell(i).SetCellType(CellType.String);
+                        wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(vDate.ToString("yyyy/MM/dd HH:mm:ss"));
+                        wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csData;
+                    }
+                    else if ((vHeaderText == "INDEXNO") ||
+                             (vHeaderText == "TOTALPASSCOUNT") ||
+                             (vHeaderText == "PASSCOUNT_N") ||
+                             (vHeaderText == "PASSCOUNT_U") ||
+                             (vHeaderText == "PASSCOUNT_S") ||
+                             (vHeaderText == "PASSCOUNT_O") ||
+                             (vHeaderText == "TPASSCOUNT") ||
+                             (vHeaderText == "PASSCOUNT_SA") ||
+                             (vHeaderText == "PASSCOUNT_SD") ||
+                             (vHeaderText == "PASSCOUNT_OA") ||
+                             (vHeaderText == "PASSCOUNT_OD") ||
+                             (vHeaderText == "PASSCOUNT_OP") ||
+                             (vHeaderText == "PASSCOUNT_S8KM") ||
+                             (vHeaderText == "PASSCOUNT_O8KM") ||
+                             (vHeaderText == "PASSCOUNT_N8KM") ||
+                             (vHeaderText == "PASSCOUNT_T8KM") ||
+                             (vHeaderText == "TRANSCOUNT_N") ||
+                             (vHeaderText == "TRANSCOUNT_S") ||
+                             (vHeaderText == "TRANSCOUNT_O") ||
+                             (vHeaderText == "TICKETDIFFCOUNT_N") ||
+                             (vHeaderText == "TICKETDIFFCOUNT_S") ||
+                             (vHeaderText == "TICKETDIFFCOUNT_O") ||
+                             (vHeaderText == "AREADISCOUNT_N") ||
+                             (vHeaderText == "AREADISCOUNT_S") ||
+                             (vHeaderText == "AREADISCOUNT_O") ||
+                             (vHeaderText == "1280MTICKETCOUNT_N") ||
+                             (vHeaderText == "1280MTICKETCOUNT_S") ||
+                             (vHeaderText == "1280MTICKETCOUNT_O") ||
+                             (vHeaderText == "QRCOUNT"))
+                    {
+                        //整數數值欄位
+                        wsExcel.GetRow(vLinesNo).GetCell(i).SetCellType(CellType.Numeric);
+                        vFieldValue = (drTemp[i].ToString().Trim() != "") ? drTemp[i].ToString().Trim() : "0";
+                        wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(Int32.Parse(vFieldValue));
+                        wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csData_Int;
+                    }
+                    else
+                    {
+                        vFieldValue = drTemp[i].ToString();
+                        wsExcel.GetRow(vLinesNo).GetCell(i).SetCellType(CellType.Numeric);
+                        wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(double.TryParse(vFieldValue, out vTempFloat) ? vTempFloat : 0.0);
+                        wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csData_Float;
+                    }
+                }
+            }
+            try
+            {
+                var msTarget = new NPOIMemoryStream();
+                msTarget.AllowClose = false;
+                wbExcel.Write(msTarget);
+                msTarget.Flush();
+                msTarget.Seek(0, SeekOrigin.Begin);
+                msTarget.AllowClose = true;
+
+                if (msTarget.Length > 0)
+                {
+                    string vRecordNote = "匯出檔案_" + vFileName + Environment.NewLine +
+                                         "ImportTLD_Data.aspx" + Environment.NewLine +
+                                         "清分日期" + fClearDate.ToString("yyyy/MM/dd");
+                    PF.InsertOperateRecord(vConnStr, vLoginID, vComputerName, vRecordNote);
+                    //先判斷是不是IE
+                    HttpContext.Current.Response.ContentType = "application/octet-stream";
+                    //HttpContext.Current.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                    HttpBrowserCapabilities brObject = HttpContext.Current.Request.Browser;
+                    string TourVerision = brObject.Type;
+                    if ((TourVerision.Substring(0, 2).ToUpper() == "IE") || (TourVerision == "InternetExplorer11"))
+                    {
+                        HttpContext.Current.Response.AddHeader("Content-Disposition", "attachment;filename=" + HttpUtility.UrlEncode("" + vFileName + ".xlsx", System.Text.Encoding.UTF8));
+                    }
+                    else if (TourVerision.Contains("Chrome") || TourVerision.Contains("Firefox"))
+                    {
+                        // 設定強制下載標頭
+                        Response.AddHeader("Content-Disposition", string.Format("attachment; filename=" + vFileName + ".xlsx"));
+                    }
+                    // 輸出檔案
+                    Response.BinaryWrite(msTarget.ToArray());
+                    msTarget.Close();
+
+                    Response.End();
+                }
+            }
+            catch (Exception eMessage)
+            {
+                Response.Write("<Script language='Javascript'>");
+                Response.Write("alert('" + eMessage.Message + "')");
+                Response.Write("</" + "Script>");
+            }
         }
     }
 }

@@ -3,10 +3,8 @@ using NPOI.HSSF.UserModel;
 using NPOI.HSSF.Util;
 using NPOI.SS.UserModel;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
-using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -25,7 +23,7 @@ namespace TyBus_Intranet_Test_V3
         private string vLoginEmpType = "";
         private string vComputerName = ""; //2021.09.27 新增
         private string vConnStr = "";
-        DateTime vToday = DateTime.Today;
+        //DateTime vToday = DateTime.Today;
 
         protected void Page_Load(object sender, EventArgs e)
         {
