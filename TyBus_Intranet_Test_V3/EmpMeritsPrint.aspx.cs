@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Amaterasu_Function;
+﻿using Amaterasu_Function;
+using Microsoft.Reporting.WebForms;
+using System;
 using System.Data;
 using System.Data.SqlClient;
-using System.IO;
-using Microsoft.Reporting.WebForms;
+using System.Globalization;
+using System.Web.UI;
 
 namespace TyBus_Intranet_Test_V3
 {
-    public partial class EmpMeritsPrint : System.Web.UI.Page
+    public partial class EmpMeritsPrint : Page
     {
         PublicFunction PF = new PublicFunction(); //加入公用程式碼參考
         private string vLoginID = "";

@@ -170,6 +170,7 @@
                             <li id="TowTruckAssignList" runat="server"><a href="TowTruckAssignList.aspx">拖吊車叫用記錄表</a></li>
                             <li id="StockMonth" runat="server"><a href="StockMonth.aspx">材料月結存清冊</a></li>
                             <li id="PurchaseToExcel" runat="server"><a href="PurchaseToExcel.aspx">材料請購單轉出 EXCEL</a></li>
+                            <li id="FixWorkDailyReport" runat="server"><a href="FixWorkDailyReport.aspx">修車日報表</a></li>
                         </ul>
                     </li>
                     <li id="G010" runat="server"><a href="#">計算相關作業</a>

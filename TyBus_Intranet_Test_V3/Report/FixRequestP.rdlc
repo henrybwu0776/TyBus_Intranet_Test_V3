@@ -926,7 +926,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>3.35167cm</Height>
+              <Height>7cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1038,6 +1038,7 @@
                       </Style>
                     </Textbox>
                     <ColSpan>6</ColSpan>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell />
@@ -1094,7 +1095,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>12cm</Height>
+              <Height>8cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1230,7 +1231,6 @@
                       </Style>
                     </Textbox>
                     <ColSpan>6</ColSpan>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell />
@@ -1338,7 +1338,7 @@
         <DataSetName>FixRequestP</DataSetName>
         <Top>0.34078cm</Top>
         <Left>0.55245cm</Left>
-        <Height>20.01896cm</Height>
+        <Height>19.66729cm</Height>
         <Width>18.15cm</Width>
         <Style>
           <Border>

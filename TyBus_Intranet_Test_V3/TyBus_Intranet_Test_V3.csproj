@@ -517,6 +517,7 @@
     <Content Include="ExportRentCarData.aspx" />
     <Content Include="Feedback.aspx" />
     <Content Include="FixRequestMain.aspx" />
+    <Content Include="FixWorkDailyReport.aspx" />
     <Content Include="Global.asax" />
     <Content Include="HDDCheckReport.aspx" />
     <Content Include="IAConsumables.aspx" />
@@ -595,6 +596,17 @@
     </None>
     <Content Include="App_Code\ExportRentCarData.xss">
       <DependentUpon>ExportRentCarData.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\FixWorkDailyReport.xsc">
+      <DependentUpon>FixWorkDailyReport.xsd</DependentUpon>
+    </Content>
+    <None Include="App_Code\FixWorkDailyReport.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>FixWorkDailyReport.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="App_Code\FixWorkDailyReport.xss">
+      <DependentUpon>FixWorkDailyReport.xsd</DependentUpon>
     </Content>
     <None Include="App_Code\IAConsumablesOutStoreP.xsd">
       <SubType>Designer</SubType>
@@ -835,6 +847,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ExportRentCarData.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\FixWorkDailyReport.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FixWorkDailyReport.xsd</DependentUpon>
     </Content>
     <Compile Include="AssetReportList.aspx.cs">
       <DependentUpon>AssetReportList.aspx</DependentUpon>
@@ -1304,6 +1321,13 @@
     </Compile>
     <Compile Include="FixRequestMain.aspx.designer.cs">
       <DependentUpon>FixRequestMain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FixWorkDailyReport.aspx.cs">
+      <DependentUpon>FixWorkDailyReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FixWorkDailyReport.aspx.designer.cs">
+      <DependentUpon>FixWorkDailyReport.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1904,6 +1928,7 @@
     <EmbeddedResource Include="Report\ExceedSpeedReportP.rdlc" />
     <EmbeddedResource Include="Report\FixRequestP.rdlc" />
     <EmbeddedResource Include="Report\FixSheetP.rdlc" />
+    <EmbeddedResource Include="Report\FixWorkDailyReportP.rdlc" />
     <EmbeddedResource Include="Report\FreeBusP.rdlc" />
     <EmbeddedResource Include="Report\GiftNameListP_Gift.rdlc" />
     <EmbeddedResource Include="Report\GiftNameListP_Money.rdlc" />

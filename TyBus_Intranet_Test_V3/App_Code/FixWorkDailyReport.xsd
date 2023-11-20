@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="FixWorkDailyReport" targetNamespace="http://tempuri.org/FixWorkDailyReport.xsd" xmlns:mstns="http://tempuri.org/FixWorkDailyReport.xsd" xmlns="http://tempuri.org/FixWorkDailyReport.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="FixWorkDailyReportPTableAdapter" GeneratorDataComponentClassName="FixWorkDailyReportPTableAdapter" Name="FixWorkDailyReportP" UserDataComponentName="FixWorkDailyReportPTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>select cast(null as varchar) as FixDateIn, cast(null as varchar) as Car_ID , cast(null as varchar) as MainTain1, cast(null as varchar) as MainTain1_C, 
+       cast(null as varchar) as MainTain, cast(null as varchar) as MainTain_C, cast(null as varchar) as [Service], cast(null as varchar) as Service_C, 
+       cast(null as varchar) as FixInTime, cast(null as varchar) as FixOutTime, cast(null as varchar) as Remark, cast(null as varchar) as BuMan, 
+	   cast(null as varchar) as BuMan_C, cast(null as varchar) as FixMan, cast(null as varchar) as FixMan_C, cast(null as varchar) as WorkHours </CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="FixDateIn" DataSetColumn="FixDateIn" />
+              <Mapping SourceColumn="Car_ID" DataSetColumn="Car_ID" />
+              <Mapping SourceColumn="MainTain1" DataSetColumn="MainTain1" />
+              <Mapping SourceColumn="MainTain1_C" DataSetColumn="MainTain1_C" />
+              <Mapping SourceColumn="MainTain" DataSetColumn="MainTain" />
+              <Mapping SourceColumn="MainTain_C" DataSetColumn="MainTain_C" />
+              <Mapping SourceColumn="Service" DataSetColumn="Service" />
+              <Mapping SourceColumn="Service_C" DataSetColumn="Service_C" />
+              <Mapping SourceColumn="FixInTime" DataSetColumn="FixInTime" />
+              <Mapping SourceColumn="FixOutTime" DataSetColumn="FixOutTime" />
+              <Mapping SourceColumn="Remark" DataSetColumn="Remark" />
+              <Mapping SourceColumn="BuMan" DataSetColumn="BuMan" />
+              <Mapping SourceColumn="BuMan_C" DataSetColumn="BuMan_C" />
+              <Mapping SourceColumn="FixMan" DataSetColumn="FixMan" />
+              <Mapping SourceColumn="FixMan_C" DataSetColumn="FixMan_C" />
+              <Mapping SourceColumn="WorkHours" DataSetColumn="WorkHours" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="FixWorkDailyReport" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="FixWorkDailyReport" msprop:Generator_UserDSName="FixWorkDailyReport">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="FixWorkDailyReportP" msprop:Generator_TableClassName="FixWorkDailyReportPDataTable" msprop:Generator_TableVarName="tableFixWorkDailyReportP" msprop:Generator_TablePropName="FixWorkDailyReportP" msprop:Generator_RowDeletingName="FixWorkDailyReportPRowDeleting" msprop:Generator_RowChangingName="FixWorkDailyReportPRowChanging" msprop:Generator_RowEvHandlerName="FixWorkDailyReportPRowChangeEventHandler" msprop:Generator_RowDeletedName="FixWorkDailyReportPRowDeleted" msprop:Generator_UserTableName="FixWorkDailyReportP" msprop:Generator_RowChangedName="FixWorkDailyReportPRowChanged" msprop:Generator_RowEvArgName="FixWorkDailyReportPRowChangeEvent" msprop:Generator_RowClassName="FixWorkDailyReportPRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="FixDateIn" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFixDateIn" msprop:Generator_ColumnPropNameInRow="FixDateIn" msprop:Generator_ColumnPropNameInTable="FixDateInColumn" msprop:Generator_UserColumnName="FixDateIn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Car_ID" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnCar_ID" msprop:Generator_ColumnPropNameInRow="Car_ID" msprop:Generator_ColumnPropNameInTable="Car_IDColumn" msprop:Generator_UserColumnName="Car_ID" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="MainTain1" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnMainTain1" msprop:Generator_ColumnPropNameInRow="MainTain1" msprop:Generator_ColumnPropNameInTable="MainTain1Column" msprop:Generator_UserColumnName="MainTain1" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="MainTain1_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnMainTain1_C" msprop:Generator_ColumnPropNameInRow="MainTain1_C" msprop:Generator_ColumnPropNameInTable="MainTain1_CColumn" msprop:Generator_UserColumnName="MainTain1_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="MainTain" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnMainTain" msprop:Generator_ColumnPropNameInRow="MainTain" msprop:Generator_ColumnPropNameInTable="MainTainColumn" msprop:Generator_UserColumnName="MainTain" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="MainTain_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnMainTain_C" msprop:Generator_ColumnPropNameInRow="MainTain_C" msprop:Generator_ColumnPropNameInTable="MainTain_CColumn" msprop:Generator_UserColumnName="MainTain_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Service" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnService" msprop:Generator_ColumnPropNameInRow="Service" msprop:Generator_ColumnPropNameInTable="ServiceColumn" msprop:Generator_UserColumnName="Service" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Service_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnService_C" msprop:Generator_ColumnPropNameInRow="Service_C" msprop:Generator_ColumnPropNameInTable="Service_CColumn" msprop:Generator_UserColumnName="Service_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FixInTime" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFixInTime" msprop:Generator_ColumnPropNameInRow="FixInTime" msprop:Generator_ColumnPropNameInTable="FixInTimeColumn" msprop:Generator_UserColumnName="FixInTime" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FixOutTime" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFixOutTime" msprop:Generator_ColumnPropNameInRow="FixOutTime" msprop:Generator_ColumnPropNameInTable="FixOutTimeColumn" msprop:Generator_UserColumnName="FixOutTime" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Remark" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRemark" msprop:Generator_ColumnPropNameInRow="Remark" msprop:Generator_ColumnPropNameInTable="RemarkColumn" msprop:Generator_UserColumnName="Remark" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BuMan" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBuMan" msprop:Generator_ColumnPropNameInRow="BuMan" msprop:Generator_ColumnPropNameInTable="BuManColumn" msprop:Generator_UserColumnName="BuMan" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BuMan_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBuMan_C" msprop:Generator_ColumnPropNameInRow="BuMan_C" msprop:Generator_ColumnPropNameInTable="BuMan_CColumn" msprop:Generator_UserColumnName="BuMan_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FixMan" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFixMan" msprop:Generator_ColumnPropNameInRow="FixMan" msprop:Generator_ColumnPropNameInTable="FixManColumn" msprop:Generator_UserColumnName="FixMan" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FixMan_C" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFixMan_C" msprop:Generator_ColumnPropNameInRow="FixMan_C" msprop:Generator_ColumnPropNameInTable="FixMan_CColumn" msprop:Generator_UserColumnName="FixMan_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WorkHours" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWorkHours" msprop:Generator_ColumnPropNameInRow="WorkHours" msprop:Generator_ColumnPropNameInTable="WorkHoursColumn" msprop:Generator_UserColumnName="WorkHours" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
