@@ -160,7 +160,7 @@ namespace TyBus_Intranet_Test_V3
                         {
                             vMailMessage.Attachments.Add(new Attachment(fFileName));
                         }
-                        SmtpClient vMailClient = new SmtpClient();
+                        //SmtpClient vMailClient = new SmtpClient();
                         /* 測試改用 GMail
                         vMailClient.Host = "Mail.Tybus.com.tw";
                         vMailClient.Port = 25;
@@ -168,15 +168,23 @@ namespace TyBus_Intranet_Test_V3
                         */
                         //2022.06.09 因應 GMail 政策改變，試看看改用 "應用程式密碼登入" 的方式操作 GMail
                         //vMailClient.Credentials = new NetworkCredential("tybusmis@gmail.com", "TyBusMis9999");
-                        NetworkCredential cred = new NetworkCredential("tybusmis@gmail.com", "icyemoozikjooazh");
+                        //2023.11.24 改回用公司主機
+                        /*NetworkCredential cred = new NetworkCredential("tybusmis@gmail.com", "icyemoozikjooazh");
                         CredentialCache credCache = new CredentialCache();
                         vMailClient.Host = "smtp.gmail.com";
                         vMailClient.Port = 587;
                         credCache.Add(vMailClient.Host, vMailClient.Port, "login", cred);
                         vMailClient.EnableSsl = true;
-                        vMailClient.Credentials = credCache;
+                        vMailClient.Credentials = credCache; //*/
+                        string smtpAddress = "172.20.3.142";
+                        bool enableSSL = true;
+                        string eMailFrom = "webmaster@tybus.com.tw";
+                        string eMailPassword = "TyBusMis9999";
                         try
                         {
+                            SmtpClient vMailClient = new SmtpClient(smtpAddress, 587);
+                            vMailClient.Credentials = new NetworkCredential(eMailFrom, eMailPassword);
+                            vMailClient.EnableSsl = enableSSL;
                             vMailClient.Send(vMailMessage);
                         }
                         catch (Exception eMessage)

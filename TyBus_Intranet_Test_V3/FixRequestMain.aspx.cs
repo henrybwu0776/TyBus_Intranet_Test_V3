@@ -182,22 +182,31 @@ namespace TyBus_Intranet_Test_V3
                                                     "報修大類：" + drMail["FixType_C"] + Environment.NewLine +
                                                     "報修項目：" + drMail["FixItems"] + Environment.NewLine +
                                                     "說明事項：" + drMail["FixRemark"];
-                                SmtpClient vMailClient = new SmtpClient();
+                                //SmtpClient vMailClient = new SmtpClient();
                                 //改用 GMail
                                 //vMailClient.Host = "Mail.Tybus.com.tw";
                                 //vMailClient.Port = 25;
                                 //vMailClient.Credentials = new NetworkCredential("webmaster", "TyBusMis9999");
                                 //2022.06.09 因應 GMail 政策改變，試看看改用 "應用程式密碼登入" 的方式操作 GMail
                                 //vMailClient.Credentials = new NetworkCredential("tybusmis@gmail.com", "TyBusMis9999");
-                                NetworkCredential cred = new NetworkCredential("tybusmis@gmail.com", "icyemoozikjooazh");
+                                //2023.11.24 改回用公司主機寄信
+                                /*NetworkCredential cred = new NetworkCredential("tybusmis@gmail.com", "icyemoozikjooazh");
                                 CredentialCache credCache = new CredentialCache();
                                 vMailClient.Host = "smtp.gmail.com";
                                 vMailClient.Port = 587;
-                                credCache.Add(vMailClient.Host, vMailClient.Port, "login", cred);
+                                credCache.Add(vMailClient.Host, vMailClient.Port, "login", cred); 
                                 vMailClient.EnableSsl = true;
-                                vMailClient.Credentials = credCache;
+                                vMailClient.Credentials = credCache;//*/
+                                //===================================================================================================================
+                                string smtpAddress = "172.20.3.142";
+                                bool enableSSL = true;
+                                string eMailFrom = "webmaster@tybus.com.tw";
+                                string eMailPassword = "TyBusMis9999";
                                 try
                                 {
+                                    SmtpClient vMailClient = new SmtpClient(smtpAddress, 587);
+                                    vMailClient.Credentials = new NetworkCredential(eMailFrom, eMailPassword);
+                                    vMailClient.EnableSsl = enableSSL;
                                     vMailClient.Send(vMailMessage);
                                     Session["FixRequestNo"] = "";
                                 }
