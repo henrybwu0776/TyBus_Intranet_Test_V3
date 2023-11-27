@@ -515,6 +515,7 @@
     <Content Include="ExceedSpeedReport.aspx" />
     <Content Include="ExportRealCompanyPay.aspx" />
     <Content Include="ExportRentCarData.aspx" />
+    <Content Include="ExportStockList.aspx" />
     <Content Include="Feedback.aspx" />
     <Content Include="FixRequestMain.aspx" />
     <Content Include="FixWorkDailyReport.aspx" />
@@ -1307,6 +1308,13 @@
     </Compile>
     <Compile Include="ExportRentCarData.aspx.designer.cs">
       <DependentUpon>ExportRentCarData.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ExportStockList.aspx.cs">
+      <DependentUpon>ExportStockList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ExportStockList.aspx.designer.cs">
+      <DependentUpon>ExportStockList.aspx</DependentUpon>
     </Compile>
     <Compile Include="Feedback.aspx.cs">
       <DependentUpon>Feedback.aspx</DependentUpon>
