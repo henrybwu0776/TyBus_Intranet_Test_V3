@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Amaterasu_Function;
+using Microsoft.Reporting.WebForms;
+using System;
+using System.Data;
+using System.Data.SqlClient;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Amaterasu_Function;
-using Microsoft.Reporting.WebForms;
-using System.IO;
-using System.Data.SqlClient;
-using System.Data;
 
 namespace TyBus_Intranet_Test_V3
 {

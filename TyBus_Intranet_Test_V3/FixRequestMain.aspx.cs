@@ -199,7 +199,7 @@ namespace TyBus_Intranet_Test_V3
                                 vMailClient.Credentials = credCache;//*/
                                 //===================================================================================================================
                                 string smtpAddress = "172.20.3.142";
-                                bool enableSSL = true;
+                                bool enableSSL = false;
                                 string eMailFrom = "webmaster@tybus.com.tw";
                                 string eMailPassword = "TyBusMis9999";
                                 try
