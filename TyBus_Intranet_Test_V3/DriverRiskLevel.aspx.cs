@@ -1288,7 +1288,7 @@ namespace TyBus_Intranet_Test_V3
                                     PF.GetMonthLastDay(DateTime.Parse((Int32.Parse(eRiskYearE_Search.Text.Trim())).ToString() + "/" + Int32.Parse(eRiskMonthE_Search.SelectedValue).ToString("D2") + "/01"), "B");
                 string vWStr_CalYM = (cbGetFullYear_Search.Checked) ?
                                      "   and CalYear = '" + eRiskYearS_Search.Text.Trim() + "' " :
-                                     "   and CalYM >= '" + eRiskYearS_Search.Text.Trim() + Int32.Parse(eRiskMonthS_Search.SelectedValue).ToString("D2") + "' and CalYM <= '" + eRiskYearE_Search.Text.Trim() + Int32.Parse(eRiskMonthE_Search.SelectedValue).ToString("D2") + "' ";
+                                     "   and d.CalYM >= '" + eRiskYearS_Search.Text.Trim() + Int32.Parse(eRiskMonthS_Search.SelectedValue).ToString("D2") + "' and d.CalYM <= '" + eRiskYearE_Search.Text.Trim() + Int32.Parse(eRiskMonthE_Search.SelectedValue).ToString("D2") + "' ";
                 /* 2023.04.17 修正，時數和工作天數按月取合計，而不是取全年合計
                 string vSelStr = "select IndexNo, CalYear, CalYM, IDCardNo, " + Environment.NewLine +
                                  "       (select top 1 EmpNo from Employee where IDCardNo = d.IDCardNo order by AssumeDay DESC) EmpNo, " + Environment.NewLine +
@@ -1351,7 +1351,7 @@ namespace TyBus_Intranet_Test_V3
                                     PF.GetMonthLastDay(DateTime.Parse((Int32.Parse(eRiskYearE_Search.Text.Trim())).ToString() + "/" + Int32.Parse(eRiskMonthE_Search.SelectedValue).ToString("D2") + "/01"), "B");
                 string vWStr_CalYM = (cbGetFullYear_Search.Checked) ?
                                      "   and CalYear = '" + eRiskYearS_Search.Text.Trim() + "' " :
-                                     "   and CalYM >= '" + eRiskYearS_Search.Text.Trim() + Int32.Parse(eRiskMonthS_Search.SelectedValue).ToString("D2") + "' and CalYM <= '" + eRiskYearE_Search.Text.Trim() + Int32.Parse(eRiskMonthE_Search.SelectedValue).ToString("D2") + "' ";
+                                     "   and d.CalYM >= '" + eRiskYearS_Search.Text.Trim() + Int32.Parse(eRiskMonthS_Search.SelectedValue).ToString("D2") + "' and d.CalYM <= '" + eRiskYearE_Search.Text.Trim() + Int32.Parse(eRiskMonthE_Search.SelectedValue).ToString("D2") + "' ";
                 /* 2023.04.17 修正，時數和工作天數按月取合計，而不是取全年合計
                 string vSelStr = "select IndexNo, CalYear, CalYM, IDCardNo, " + Environment.NewLine +
                                  "       (select top 1 EmpNo from Employee where IDCardNo = d.IDCardNo order by AssumeDay DESC) EmpNo, " + Environment.NewLine +
