@@ -2217,7 +2217,7 @@
             </Paragraphs>
             <rd:DefaultName>Textbox96</rd:DefaultName>
             <Top>19.70829cm</Top>
-            <Left>6.49953cm</Left>
+            <Left>9.49953cm</Left>
             <Height>4.35708cm</Height>
             <Width>1.49458cm</Width>
             <ZIndex>1</ZIndex>
@@ -2427,10 +2427,91 @@
             </Paragraphs>
             <rd:DefaultName>Textbox96</rd:DefaultName>
             <Top>19.70829cm</Top>
-            <Left>0.49953cm</Left>
+            <Left>5.00495cm</Left>
             <Height>4.35708cm</Height>
             <Width>1.49458cm</Width>
             <ZIndex>3</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox100">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>總</Value>
+                    <Style>
+                      <FontFamily>標楷體</FontFamily>
+                      <FontSize>16pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value />
+                    <Style>
+                      <FontFamily>標楷體</FontFamily>
+                      <FontSize>16pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>經</Value>
+                    <Style>
+                      <FontFamily>標楷體</FontFamily>
+                      <FontSize>16pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value />
+                    <Style>
+                      <FontFamily>標楷體</FontFamily>
+                      <FontSize>16pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>理</Value>
+                    <Style>
+                      <FontFamily>標楷體</FontFamily>
+                      <FontSize>16pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox96</rd:DefaultName>
+            <Top>19.70829cm</Top>
+            <Left>0.49953cm</Left>
+            <Height>4.35708cm</Height>
+            <Width>1.49458cm</Width>
+            <ZIndex>4</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
