@@ -488,7 +488,9 @@ namespace TyBus_Intranet_Test_V3
                                  (drExcel.GetName(i) == "StartDate")) && (drExcel[i].ToString() != ""))
                             {
                                 string vTempStr = drExcel[i].ToString();
-                                vBuDate = DateTime.Parse(drExcel[i].ToString());
+                                string[] vaTempStr = vTempStr.Split('/');
+                                vBuDate = new DateTime(Int32.Parse(vaTempStr[0]), Int32.Parse(vaTempStr[1]), Int32.Parse(vaTempStr[2]));
+                                //vBuDate = DateTime.Parse(drExcel[i].ToString());
                                 wsExcel.GetRow(vLinesNo).GetCell(i).SetCellType(CellType.String);
                                 if (vBuDate.Year > 3822)
                                 {
