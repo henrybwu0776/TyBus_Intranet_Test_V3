@@ -488,9 +488,11 @@ namespace TyBus_Intranet_Test_V3
                                  (drExcel.GetName(i) == "StartDate")) && (drExcel[i].ToString() != ""))
                             {
                                 string vTempStr = drExcel[i].ToString();
-                                string[] vaTempStr = vTempStr.Split('/');
-                                vBuDate = new DateTime(Int32.Parse(vaTempStr[0]), Int32.Parse(vaTempStr[1]), Int32.Parse(vaTempStr[2]));
-                                //vBuDate = DateTime.Parse(drExcel[i].ToString());
+                                //2023.12.19 把日期年月日拆開再用 new DateTime(Year, Month, Day) 的格式轉
+                                //string[] vaTempStr = vTempStr.Split('/');
+                                //vBuDate = new DateTime(Int32.Parse(vaTempStr[0]), Int32.Parse(vaTempStr[1]), Int32.Parse(vaTempStr[2]));
+                                //2023.12.20 改用比較正統的方式，用 DateTime.Parse(DateString, CultureInfo) 來強制用英式日期格式轉換
+                                vBuDate = DateTime.Parse(drExcel[i].ToString(), new CultureInfo("en-US"));
                                 wsExcel.GetRow(vLinesNo).GetCell(i).SetCellType(CellType.String);
                                 if (vBuDate.Year > 3822)
                                 {
