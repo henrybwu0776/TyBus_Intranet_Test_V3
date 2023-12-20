@@ -7,9 +7,10 @@
     <asp:Panel ID="plSearch" runat="server" CssClass="SearchPanel">
         <table class="TableSetting">
             <tr>
-                <td class="ColHeight ColBorder ColWidth-6Col" colspan="2">
-                    <asp:RadioButtonList ID="eImportSourceType" runat="server" CssClass="text-Left-Black" Width="95%" RepeatColumns="2">
+                <td class="ColHeight ColBorder ColWidth-6Col" colspan="3">
+                    <asp:RadioButtonList ID="eImportSourceType" runat="server" CssClass="text-Left-Black" Width="95%" RepeatColumns="3">
                         <asp:ListItem Value="TLD_Data" Text="悠遊卡 TLD 交易明細" />
+                        <asp:ListItem Value="TLD_Data2" Text="悠遊卡 TLD 交易明細 (有錯誤代碼)" />
                         <asp:ListItem Value="ACER_Data" Text="宏碁清分記錄" />
                     </asp:RadioButtonList>
                 </td>
@@ -78,6 +79,7 @@
                 <asp:BoundField DataField="In_OutFlag" HeaderText="上下車" SortExpression="In_OutFlag" />
                 <asp:BoundField DataField="AreaCode" HeaderText="區碼" SortExpression="AreaCode" />
                 <asp:BoundField DataField="InStation" HeaderText="進站" SortExpression="InStation" />
+                <asp:BoundField DataField="ErrorCode" HeaderText="錯誤代碼" SortExpression="ErrorCode" />
             </Columns>
             <EditRowStyle BackColor="#2461BF" />
             <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
@@ -126,6 +128,6 @@
             <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
         </asp:GridView>
     </asp:Panel>
-    <asp:SqlDataSource ID="dsTLD_Data" runat="server" ConnectionString="<%$ ConnectionStrings:connERPSQL %>" SelectCommand="SELECT [TitleMark], [DataType], [TradeMode], [ClearDate], [ServiceDate], [StationCode], [MachineCode], [Car_ID], [LinesNo], [DriverNo], [StartTime], [IDType], [ChipCardNo], [SP_Card], [TradeDate], [TradeCode], [Amount], [TransDiscount], [PersonalDiscount], [LeaveStation], [In_OutFlag], [AreaCode], [InStation] FROM [TLD_Data]"></asp:SqlDataSource>
+    <asp:SqlDataSource ID="dsTLD_Data" runat="server" ConnectionString="<%$ ConnectionStrings:connERPSQL %>" SelectCommand="SELECT [TitleMark], [DataType], [TradeMode], [ClearDate], [ServiceDate], [StationCode], [MachineCode], [Car_ID], [LinesNo], [DriverNo], [StartTime], [IDType], [ChipCardNo], [SP_Card], [TradeDate], [TradeCode], [Amount], [TransDiscount], [PersonalDiscount], [LeaveStation], [In_OutFlag], [AreaCode], [InStation], [ErrorCode] FROM [TLD_Data]"></asp:SqlDataSource>
     <asp:SqlDataSource ID="dsACER_Data" runat="server" ConnectionString="<%$ ConnectionStrings:connERPSQL %>" SelectCommand="SELECT IndexNo, TicketType, ClearDate, ServiceDate, StationCode, Car_ID, DriverNo, LinesNo, TSAmount, StudentAmount, OldAmount_N, NormalAmount_8KM, TotalAmount, TotalPassCount, PassCount_N, PassCount_U, PassCount_S, PassCount_O, TPassCount, TPassAmount FROM ACER_Data"></asp:SqlDataSource>
 </asp:Content>

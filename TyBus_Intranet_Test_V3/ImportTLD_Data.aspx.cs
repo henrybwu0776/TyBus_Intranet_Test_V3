@@ -167,6 +167,11 @@ namespace TyBus_Intranet_Test_V3
             DataColumn dcInStation = new DataColumn("InStation", typeof(String));
             dcInStation.MaxLength = 3; //資料長度
             dtResult.Columns.Add(dcInStation);
+            //2023.12.18 悠遊卡 TLD 檔案新增【錯誤代碼】欄位 
+            //錯誤代碼
+            DataColumn dcErrorCode = new DataColumn("ErrorCode", typeof(String));
+            dcErrorCode.MaxLength = 12; //資料長度
+            dtResult.Columns.Add(dcErrorCode);
 
             return dtResult;
         }
@@ -342,7 +347,74 @@ namespace TyBus_Intranet_Test_V3
                     drTemp["In_OutFlag"] = vDataStr.Substring(123, 2).Trim();
                     drTemp["AreaCode"] = vDataStr.Substring(125, 3).Trim();
                     drTemp["InStation"] = vDataStr.Substring(128, 3).Trim();
+                    //2023.12.18 悠遊卡 TLD 檔案新增【錯誤代碼】欄位 
+                    drTemp["ErrorCode"] = String.Empty; //因為是舊版沒有帶錯誤代碼的資料，所以這個欄位先帶空值
                     dtResult.Rows.Add(drTemp);
+                }
+            }
+            return dtResult;
+        }
+
+        private DataTable GetDataTableData_TLD_E(string fTempStr)
+        {
+            DataTable dtResult = new DataTable();
+            dtResult = CreateTempTable_TLD();
+            string[] vaTempStr = fTempStr.Split(Environment.NewLine.ToCharArray());
+            string vErrorCode = "";
+            string vErrorCode_Temp = "";
+            int vErrorSourceInt = 0;
+            string vTempStr = "";
+            foreach (string vDataStr in vaTempStr)
+            {
+                if ((vDataStr.Length > 0) && (vDataStr.Substring(0, 3) == "D01"))
+                {
+                    try
+                    {
+                        DataRow drTemp = dtResult.NewRow();
+                        drTemp["TitleMark"] = vDataStr.Substring(0, 1).Trim();
+                        drTemp["DataType"] = vDataStr.Substring(1, 2).Trim();
+                        drTemp["TradeMode"] = vDataStr.Substring(3, 2).Trim();
+                        drTemp["ClearDate"] = DateTime.Parse(PF.TransNoneSymbolDateStrToDate(vDataStr.Substring(5, 8).Trim(), "B") + " 00:00:00");
+                        drTemp["ServiceDate"] = DateTime.Parse(PF.TransNoneSymbolDateStrToDate(vDataStr.Substring(13, 8).Trim(), "B") + " 00:00:00");
+                        drTemp["StationCode"] = vDataStr.Substring(21, 3).Trim();
+                        drTemp["MachineCode"] = vDataStr.Substring(24, 9).Trim();
+                        drTemp["Car_ID"] = vDataStr.Substring(33, 10).Trim().Replace("_B", "");
+                        drTemp["LinesNo"] = vDataStr.Substring(43, 5).Trim();
+                        drTemp["DriverNo"] = vDataStr.Substring(48, 5).Trim();
+                        drTemp["StartTime"] = DateTime.Parse(PF.TransNoneSymbolDateStrToDate(vDataStr.Substring(53, 8).Trim(), "B") + " " + vDataStr.Substring(61, 2).Trim() + ":" + vDataStr.Substring(63, 2).Trim() + ":" + vDataStr.Substring(65, 2).Trim());
+                        drTemp["IDType"] = vDataStr.Substring(67, 2).Trim();
+                        drTemp["ChipCardNo"] = vDataStr.Substring(69, 16).Trim();
+                        drTemp["SP_Card"] = vDataStr.Substring(85, 3).Trim();
+                        drTemp["TradeDate"] = DateTime.Parse(PF.TransNoneSymbolDateStrToDate(vDataStr.Substring(88, 8).Trim(), "B") + " " + vDataStr.Substring(96, 2).Trim() + ":" + vDataStr.Substring(98, 2).Trim() + ":" + vDataStr.Substring(100, 2).Trim());
+                        drTemp["TradeCode"] = vDataStr.Substring(102, 3).Trim();
+                        drTemp["Amount"] = Double.Parse(vDataStr.Substring(105, 5).Trim());
+                        drTemp["TransDiscount"] = Double.Parse(vDataStr.Substring(110, 5).Trim());
+                        drTemp["PersonalDiscount"] = Double.Parse(vDataStr.Substring(115, 5).Trim());
+                        drTemp["LeaveStation"] = vDataStr.Substring(120, 3).Trim();
+                        drTemp["In_OutFlag"] = vDataStr.Substring(123, 2).Trim();
+                        drTemp["AreaCode"] = vDataStr.Substring(125, 3).Trim();
+                        drTemp["InStation"] = vDataStr.Substring(128, 3).Trim();
+                        //2023.12.18 悠遊卡 TLD 檔案新增【錯誤代碼】欄位 
+                        vErrorCode_Temp = vDataStr.Substring(131, 6).Trim();
+                        if (vErrorCode_Temp.Trim().Substring(0, 1).ToUpper() == "A") //A類錯誤代碼要另外處理
+                        {
+                            if (Int32.TryParse(vErrorCode_Temp.Trim().Substring(1), out vErrorSourceInt)) //試著去掉開頭的 "A" 字，轉成整數數值
+                            {
+                                vTempStr = ("00000" + Convert.ToString(vErrorSourceInt, 2));
+                                vErrorCode = "A" + vTempStr.Substring(vTempStr.Length - 5, 5);
+                            }
+                        }
+                        drTemp["ErrorCode"] = (vErrorCode_Temp.Trim() == "000000") ? "" :
+                                              (vErrorCode_Temp.Trim().Substring(0, 1).ToUpper() == "B") ? vErrorCode_Temp.Trim() : vErrorCode.Trim();
+                        dtResult.Rows.Add(drTemp);
+                    }
+                    catch (Exception eMessage)
+                    {
+                        Response.Write("<Script language='Javascript'>");
+                        Response.Write("alert('" + eMessage.Message + "')");
+                        Response.Write("</" + "Script>");
+                    }
+
                 }
             }
             return dtResult;
@@ -445,17 +517,29 @@ namespace TyBus_Intranet_Test_V3
 
         protected void bbImport_Click(object sender, EventArgs e)
         {
+            string vTableName = "";
             if (fuFileName.FileName.Trim() != "")
             {
+                string vTempStr = "";
                 switch (eImportSourceType.SelectedValue.Trim())
                 {
                     case "TLD_Data":
                         StreamReader srTemp = new StreamReader(fuFileName.PostedFile.InputStream);
-                        string vTempStr = srTemp.ReadToEnd();
+                        vTempStr = srTemp.ReadToEnd();
+                        vTableName = "TLD_Data";
                         dtTarget = GetDataTableData_TLD(vTempStr);
                         break;
 
+                    case "TLD_Data2":
+                        //2023.12.18 悠遊卡 TLD 檔案新增【錯誤代碼】欄位 
+                        StreamReader srTemp_E = new StreamReader(fuFileName.PostedFile.InputStream);
+                        vTempStr = srTemp_E.ReadToEnd();
+                        vTableName = "TLD_Data";
+                        dtTarget = GetDataTableData_TLD_E(vTempStr);
+                        break;
+
                     case "ACER_Data":
+                        vTableName = "ACER_Data";
                         dtTarget = GetDataTableData_ACER();
                         break;
                 }
@@ -466,7 +550,7 @@ namespace TyBus_Intranet_Test_V3
                         try
                         {
                             //sbkTemp.DestinationTableName = "TLD_Data";
-                            sbkTemp.DestinationTableName = eImportSourceType.SelectedValue.Trim();
+                            sbkTemp.DestinationTableName = vTableName;
                             sbkTemp.WriteToServer(dtTarget);
                             dtTarget.Clear();
                             Response.Write("<Script language='Javascript'>");
@@ -518,9 +602,10 @@ namespace TyBus_Intranet_Test_V3
                 switch (eImportSourceType.SelectedValue.Trim())
                 {
                     case "TLD_Data":
+                    case "TLD_Data2":
                         dsTLD_Data.SelectCommand = "SELECT TitleMark, DataType, TradeMode, ClearDate, ServiceDate, StationCode, MachineCode, " + Environment.NewLine +
                                                    "       Car_ID, LinesNo, DriverNo, StartTime, IDType, ChipCardNo, SP_Card, TradeDate, TradeCode, " + Environment.NewLine +
-                                                   "       Amount, TransDiscount, PersonalDiscount, LeaveStation, In_OutFlag, AreaCode, InStation " + Environment.NewLine +
+                                                   "       Amount, TransDiscount, PersonalDiscount, LeaveStation, In_OutFlag, AreaCode, InStation, ErrorCode " + Environment.NewLine +
                                                    "  FROM TLD_Data " + Environment.NewLine +
                                                    " WHERE ClearDate = @ClearDate ";
                         dsTLD_Data.SelectParameters.Clear();
@@ -578,8 +663,9 @@ namespace TyBus_Intranet_Test_V3
                 switch (eImportSourceType.SelectedValue.Trim())
                 {
                     case "TLD_Data":
+                    case "TLD_Data2":
                         vSelectStr = "SELECT TitleMark, DataType, TradeMode, ClearDate, ServiceDate, StationCode, MachineCode, Car_ID, LinesNo, DriverNo, StartTime, IDType, " + Environment.NewLine +
-                                     "       ChipCardNo, SP_Card, TradeDate, TradeCode, Amount, TransDiscount, PersonalDiscount, LeaveStation, In_OutFlag, AreaCode, InStation " + Environment.NewLine +
+                                     "       ChipCardNo, SP_Card, TradeDate, TradeCode, Amount, TransDiscount, PersonalDiscount, LeaveStation, In_OutFlag, AreaCode, InStation, ErrorCode " + Environment.NewLine +
                                      "  FROM TLD_Data " + Environment.NewLine +
                                       " WHERE ClearDate = @ClearDate";
                         break;
@@ -626,6 +712,44 @@ namespace TyBus_Intranet_Test_V3
             }
         }
 
+        private string GetErrorCodeA(string fErrorCode)
+        {
+            if (vConnStr == "")
+            {
+                vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
+            }
+            string vResultStr = "";
+            string vFKey = "匯入交易明細資料TLD_Data        ErrorCodeA";
+            int vTempInt = 0;
+            for (int i = 1; i < 6; i++)
+            {
+                if ((fErrorCode.Substring(i, 1) == "1") && (vResultStr.Trim() == ""))
+                {
+                    vTempInt = (int)Math.Pow(2, 5 - i);
+                    vResultStr = PF.GetValue(vConnStr, "select ClassTxt from DBDICB where ClassNo = '" + vTempInt.ToString() + "' and FKey = '" + vFKey + "' ", "ClassTxt");
+                }
+                else if ((fErrorCode.Substring(i, 1) == "1") && (vResultStr.Trim() != ""))
+                {
+                    vTempInt = (int)Math.Pow(2, 5 - i);
+                    vResultStr = vResultStr + ", " + PF.GetValue(vConnStr, "select ClassTxt from DBDICB where ClassNo = '" + vTempInt.ToString() + "' and FKey = '" + vFKey + "' ", "ClassTxt");
+                }
+            }
+            return vResultStr;
+        }
+
+        private string GetErrorCodeB(string fErrorCode)
+        {
+            if (vConnStr == "")
+            {
+                vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
+            }
+            string vResultStr = "";
+            string vFKey = "匯入交易明細資料TLD_Data        ErrorCodeB";
+            string vClassNo = Int32.Parse(fErrorCode.Substring(1, 5)).ToString();
+            vResultStr = PF.GetValue(vConnStr, "select ClassTxt from DBDICB where ClassNo = '" + vClassNo + "' and FKey = '" + vFKey + "' ", "ClassTxt");
+            return vResultStr;
+        }
+
         private void ExportFile(SqlDataReader drTemp, DateTime fClearDate)
         {
             XSSFWorkbook wbExcel = new XSSFWorkbook();
@@ -669,6 +793,7 @@ namespace TyBus_Intranet_Test_V3
                                eImportSourceType.SelectedItem.Text.Trim();
             DateTime vDate;
             string vFieldValue = "";
+            string vErrorCode = "";
             double vTempFloat = 0.0;
 
             //新增一個工作表
@@ -757,7 +882,9 @@ namespace TyBus_Intranet_Test_V3
                               (drTemp.GetName(i).ToUpper().Trim() == "1280MTICKETCOUNT_S") ? "雙北定期票學生卡載客人數" :
                               (drTemp.GetName(i).ToUpper().Trim() == "1280MTICKETCOUNT_O") ? "雙北定期票敬老愛心卡載客人數" :
                               (drTemp.GetName(i).ToUpper().Trim() == "QRCOUNT") ? "QR人數" :
-                              (drTemp.GetName(i).ToUpper().Trim() == "QRAMOUNT") ? "QR金額" : drTemp.GetName(i).Trim();
+                              (drTemp.GetName(i).ToUpper().Trim() == "QRAMOUNT") ? "QR金額" :
+                              //2023.12.18 悠遊卡 TLD 檔案新增【錯誤代碼】欄位 
+                              (drTemp.GetName(i).ToUpper().Trim() == "ERRORCODE") ? "錯誤代碼" : drTemp.GetName(i).Trim();
                 wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellValue(vHeaderText);
                 wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csTitle;
             }
@@ -790,6 +917,15 @@ namespace TyBus_Intranet_Test_V3
                         //文字欄位
                         wsExcel.GetRow(vLinesNo).GetCell(i).SetCellType(CellType.String);
                         wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(drTemp[i].ToString());
+                        wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csData;
+                    }
+                    else if (vHeaderText == "ERRORCODE")
+                    {
+                        //2023.12.18 悠遊卡 TLD 檔案新增【錯誤代碼】欄位 
+                        vErrorCode = (vFieldValue.Substring(0, 1).ToUpper() == "A") ? GetErrorCodeA(vFieldValue) :
+                                     (vFieldValue.Substring(0, 1).ToUpper() == "B") ? GetErrorCodeB(vFieldValue) : "";
+                        vFieldValue = drTemp[i].ToString().Trim();
+                        wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(vErrorCode);
                         wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csData;
                     }
                     else if ((vHeaderText == "CLEARDATE") || (vHeaderText == "SERVICEDATE"))
