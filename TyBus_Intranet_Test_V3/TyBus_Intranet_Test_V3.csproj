@@ -453,6 +453,7 @@
     <Content Include="AssetReportList.aspx" />
     <Content Include="BatchTransferList.aspx" />
     <Content Include="CalAvgPayment.aspx" />
+    <Content Include="CalCarCount.aspx" />
     <Content Include="CalCompanyPay.aspx" />
     <Content Include="CalDepIncomeStatement.aspx" />
     <Content Include="CarDeviceList.aspx" />
@@ -874,6 +875,13 @@
     </Compile>
     <Compile Include="CalAvgPayment.aspx.designer.cs">
       <DependentUpon>CalAvgPayment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CalCarCount.aspx.cs">
+      <DependentUpon>CalCarCount.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CalCarCount.aspx.designer.cs">
+      <DependentUpon>CalCarCount.aspx</DependentUpon>
     </Compile>
     <Compile Include="CalCompanyPay.aspx.cs">
       <DependentUpon>CalCompanyPay.aspx</DependentUpon>
