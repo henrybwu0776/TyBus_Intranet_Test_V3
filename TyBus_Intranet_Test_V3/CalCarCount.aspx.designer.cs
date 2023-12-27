@@ -87,6 +87,15 @@ namespace TyBus_Intranet_Test_V3
         protected global::System.Web.UI.WebControls.Panel plCarCount;
 
         /// <summary>
+        /// gvCarCount_List 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvCarCount_List;
+
+        /// <summary>
         /// fvCarCount 控制項。
         /// </summary>
         /// <remarks>
@@ -96,12 +105,21 @@ namespace TyBus_Intranet_Test_V3
         protected global::System.Web.UI.WebControls.FormView fvCarCount;
 
         /// <summary>
-        /// sdCarCount 控制項。
+        /// dsCarCount 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource sdCarCount;
+        protected global::System.Web.UI.WebControls.SqlDataSource dsCarCount;
+
+        /// <summary>
+        /// dsCarCount_List 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource dsCarCount_List;
     }
 }
