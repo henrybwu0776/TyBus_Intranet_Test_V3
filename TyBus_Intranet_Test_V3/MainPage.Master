@@ -203,6 +203,7 @@
                     </li>
                     <li id="G012" runat="server"><a href="#">職安相關作業</a>
                         <ul>
+                            <li id="EducationList" runat="server"><a href="EducationList.aspx">職安教育訓練名冊</a></li>
                             <li id="DriverRiskLevel" runat="server"><a href="DriverRiskLevel.aspx">員工風險評估等級</a></li>
                             <li id="DriverStatus" runat="server"><a href="DriverStatus.aspx">駕駛員月出勤及請休假狀況表</a></li>
                             <li id="EmpCardIDChange" runat="server"><a href="EmpCardIDChange.aspx">人員卡內碼轉換</a></li>

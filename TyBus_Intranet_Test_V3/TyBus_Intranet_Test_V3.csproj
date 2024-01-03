@@ -500,6 +500,7 @@
     <Content Include="DriverWorkStateList.aspx" />
     <Content Include="DriverYearSummary.aspx" />
     <Content Include="EditOfficialDocument.aspx" />
+    <Content Include="EducationList.aspx" />
     <Content Include="EmpAltersReport.aspx" />
     <Content Include="EmpCardIDChange.aspx" />
     <Content Include="EmpDutyAllows.aspx" />
@@ -565,6 +566,17 @@
     </Content>
     <Content Include="App_Code\EmpESCList.xsc">
       <DependentUpon>EmpESCList.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\EducationListP.xsc">
+      <DependentUpon>EducationListP.xsd</DependentUpon>
+    </Content>
+    <None Include="App_Code\EducationListP.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>EducationListP.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="App_Code\EducationListP.xss">
+      <DependentUpon>EducationListP.xsd</DependentUpon>
     </Content>
     <None Include="App_Code\EmpESCList.xsd">
       <SubType>Designer</SubType>
@@ -854,6 +866,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FixWorkDailyReport.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\EducationListP.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EducationListP.xsd</DependentUpon>
     </Content>
     <Compile Include="AssetReportList.aspx.cs">
       <DependentUpon>AssetReportList.aspx</DependentUpon>
@@ -1204,6 +1221,13 @@
     </Compile>
     <Compile Include="EditOfficialDocument.aspx.designer.cs">
       <DependentUpon>EditOfficialDocument.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EducationList.aspx.cs">
+      <DependentUpon>EducationList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EducationList.aspx.designer.cs">
+      <DependentUpon>EducationList.aspx</DependentUpon>
     </Compile>
     <Compile Include="EmpAltersReport.aspx.cs">
       <DependentUpon>EmpAltersReport.aspx</DependentUpon>
@@ -1934,6 +1958,7 @@
     <EmbeddedResource Include="Report\DriverRegularTrainingP.rdlc" />
     <EmbeddedResource Include="Report\DriverWorkHoursTCTP_HR.rdlc" />
     <EmbeddedResource Include="Report\DriverWorkHoursTCTP_KM.rdlc" />
+    <EmbeddedResource Include="Report\EducationListP.rdlc" />
     <EmbeddedResource Include="Report\EmpDutyHoursP_DutyHours.rdlc" />
     <EmbeddedResource Include="Report\EmpDutyHoursP_ESCHours.rdlc" />
     <EmbeddedResource Include="Report\EmpDutyHoursP_Overdue.rdlc" />
