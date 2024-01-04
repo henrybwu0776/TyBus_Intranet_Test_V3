@@ -42,6 +42,10 @@ namespace TyBus_Intranet_Test_V3
 
                 if (vLoginID != "")
                 {
+                    string vCaseDateURL = "InputDate.aspx?TextboxID=" + eClassDate_Search.ClientID;
+                    string vCaseDateScript = "window.open('" + vCaseDateURL + "','','height=315, width=350,status=no,toolbar=no,menubar=no,location=no','')";
+                    eClassDate_Search.Attributes["onClick"] = vCaseDateScript;
+
                     if (vConnStr == "")
                     {
                         vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
@@ -130,6 +134,8 @@ namespace TyBus_Intranet_Test_V3
         {
             string vSelectStr = GetSelectStr();
             string vReportName = "職業安全衛生教育訓練宣導";
+            DateTime vTempDate;
+            string vClassDateStr = (DateTime.TryParse(eClassDate_Search.Text.Trim(), out vTempDate)) ? (vTempDate.Year - 1911).ToString() + " 年 " + vTempDate.Month.ToString("D2") + " 月 " + vTempDate.Date.ToString("dd") + " 日" : "";
             try
             {
                 using (SqlConnection connPrint = new SqlConnection(vConnStr))
@@ -144,6 +150,11 @@ namespace TyBus_Intranet_Test_V3
                     rvPrint.LocalReport.DataSources.Add(rdsPrint);
                     rvPrint.LocalReport.SetParameters(new ReportParameter("CompanyName", "桃園汽車客運股份有限公司"));
                     rvPrint.LocalReport.SetParameters(new ReportParameter("ReportName", vReportName));
+                    rvPrint.LocalReport.SetParameters(new ReportParameter("ClassTitle", eClassTitle_Search.Text.Trim()));
+                    rvPrint.LocalReport.SetParameters(new ReportParameter("TeacherName", eTeacherName_Search.Text.Trim()));
+                    rvPrint.LocalReport.SetParameters(new ReportParameter("Location", eLocation_Search.Text.Trim()));
+                    rvPrint.LocalReport.SetParameters(new ReportParameter("ClassDate", vClassDateStr));
+                    rvPrint.LocalReport.SetParameters(new ReportParameter("ClassTime", eClassTime_Search.Text.Trim()));
                     rvPrint.LocalReport.Refresh();
                     plSearch.Visible = false;
                     plPrint.Visible = true;

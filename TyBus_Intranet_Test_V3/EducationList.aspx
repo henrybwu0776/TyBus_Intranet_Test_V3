@@ -9,22 +9,58 @@
     <asp:Panel ID="plSearch" runat="server" CssClass="SearchPanel">
         <table class="TableSetting">
             <tr>
-                <td class="ColHeight ColBorder ColWidth-8Col">
+                <td class="ColHeight ColBorder ColWidth-8Col" rowspan="4">
                     <asp:Label ID="lbDepNo_Search" runat="server" CssClass="text-Right-Blue" Text="站別" Width="95%" />
                 </td>
-                <td class="ColBorder ColWidth-8Col" height="200px">
-                    <asp:ListBox ID="eDepNo_Search" runat="server" CssClass="text-Left-Black" Width="95%" Height="95%" SelectionMode="Multiple" />
+                <td class="ColHeight ColBorder ColWidth-8Col" rowspan="4">
+                    <asp:ListBox ID="eDepNo_Search" runat="server" CssClass="text-Left-Black" Width="95%" Height="97%" SelectionMode="Multiple" />
                 </td>
-                <td class="ColHeight ColBorder ColWidth-8Col">
+                <td class="ColHeight ColBorder ColWidth-8Col" rowspan="4">
                     <asp:Label ID="lbEmpType_Search" runat="server" CssClass="text-Right-Blue" Text="身分別" Width="95%" />
                 </td>
-                <td class="ColHeight ColBorder ColWidth-8Col">
+                <td class="ColHeight ColBorder ColWidth-8Col" rowspan="4">
                     <asp:CheckBoxList ID="eEmpType_Search" runat="server" CssClass="text-Left-Black" Width="95%">
                         <asp:ListItem Text="內勤人員" Value="00" />
                         <asp:ListItem Text="修護人員" Value="10" />
                         <asp:ListItem Text="行車人員" Value="20" />
                     </asp:CheckBoxList>
                 </td>
+                <td class="colh ColBorder ColWidth-8Col">
+                    <asp:Label ID="lbClassTitle_Search" runat="server" CssClass="text-Right-Blue" Text="課程名稱" Width="95%" />
+                </td>
+                <td class="ColHeight ColBorder ColWidth-8Col" colspan="3">
+                    <asp:TextBox ID="eClassTitle_Search" runat="server" CssClass="text-Left-Black" Width="95%" />
+                </td>
+            </tr>
+            <tr>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:Label ID="lbTeacherName_Search" runat="server" CssClass="text-Right-Blue" Text="講師姓名" Width="95%" />
+                </td>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:TextBox ID="eTeacherName_Search" runat="server" CssClass="text-Left-Black" Width="95%" />
+                </td>
+                <td class="ColHeight ColBorder  ColWidth-8Col">
+                    <asp:Label ID="lbLocation_Search" runat="server" CssClass="text-Right-Blue" Text="上課地點" Width="95%" />
+                </td>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:TextBox ID="eLocation_Search" runat="server" CssClass="text-Left-Black" Width="95%" />
+                </td>
+            </tr>
+            <tr>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:Label ID="lbClassDate_Search" runat="server" CssClass="text-Right-Blue" Text="上課日期" Width="95%" />
+                </td>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:TextBox ID="eClassDate_Search" runat="server" CssClass="text-Left-Black" Width="95%" />
+                </td>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:Label ID="lbClassTime_Search" runat="server" CssClass="text-Right-Blue" Text="上課時間" Width="95%" />
+                </td>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:TextBox ID="eClassTime_Search" runat="server" CssClass="text-Left-Black" Width="95%" />
+                 </td>
+            </tr>
+            <tr>
                 <td class="ColHeight ColBorder ColWidth-8Col" />
                 <td class="ColHeight ColBorder ColWidth-8Col">
                     <asp:Button ID="bbPreview" runat="server" CssClass="button-Black" Text="預覽報表" OnClick="bbPreview_Click" Width="120px" />
@@ -34,7 +70,7 @@
                 </td>
                 <td class="ColHeight ColBorder ColWidth-8Col">
                     <asp:Button ID="bbExit" runat="server" CssClass="button-Red" Text="離開" OnClick="bbExit_Click" Width="120px" />
-                </td>
+                </td>                
             </tr>
             <tr>
                 <td class="ColHeight ColWidth-8Col" />
