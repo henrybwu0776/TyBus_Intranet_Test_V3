@@ -65,10 +65,14 @@
           <DataField>Over266</DataField>
           <rd:TypeName>System.Double</rd:TypeName>
         </Field>
+        <Field Name="Title">
+          <DataField>Title</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>EmpOverList</rd:DataSetName>
-        <rd:SchemaPath>D:\OneDrive\程式開發\TYBUS_Webset_New\TYBUS_Webset_New\App_Code\EmpOverList.xsd</rd:SchemaPath>
+        <rd:SchemaPath>D:\程式開發\TyBus_Intranet_Test_V3\TyBus_Intranet_Test_V3\App_Code\EmpOverList.xsd</rd:SchemaPath>
         <rd:TableName>EmpOverListP</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
@@ -121,7 +125,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>部　　門</Value>
+                                  <Value>部門／職稱</Value>
                                   <Style>
                                     <FontFamily>新細明體</FontFamily>
                                   </Style>
@@ -451,7 +455,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!DepName.Value</Value>
+                                  <Value>=Fields!DepName.Value+CHR(13)+CHR(10)+Fields!Title.Value</Value>
                                   <Style>
                                     <FontFamily>新細明體</FontFamily>
                                   </Style>
@@ -465,32 +469,13 @@
                             <Border>
                               <Style>Solid</Style>
                             </Border>
-                            <TopBorder>
-                              <Color>Black</Color>
-                              <Style>Solid</Style>
-                              <Width>1pt</Width>
-                            </TopBorder>
-                            <BottomBorder>
-                              <Color>Black</Color>
-                              <Style>Solid</Style>
-                              <Width>1pt</Width>
-                            </BottomBorder>
-                            <LeftBorder>
-                              <Color>Black</Color>
-                              <Style>Solid</Style>
-                              <Width>1pt</Width>
-                            </LeftBorder>
-                            <RightBorder>
-                              <Color>Black</Color>
-                              <Style>Solid</Style>
-                              <Width>1pt</Width>
-                            </RightBorder>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1241,7 +1226,6 @@
                           <PaddingBottom>2pt</PaddingBottom>
                         </Style>
                       </Textbox>
-                      <rd:Selected>true</rd:Selected>
                     </CellContents>
                   </TablixHeader>
                   <TablixMembers>

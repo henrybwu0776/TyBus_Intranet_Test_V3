@@ -113,6 +113,7 @@ namespace TyBus_Intranet_Test_V3
                     DateTime eCalYM_Temp = new DateTime(Int32.Parse(eCalYM_Search.Text.Trim().Substring(0, 3)) + 1911, Int32.Parse(eCalYM_Search.Text.Trim().Substring(3, 2)), 1);
                     vHasOldData = (Int32.Parse(PF.GetValue(vConnStr, "select count(DepNoYM) RCount from CarCount where CalYM = '" + eCalYM_Temp.ToString("yyyy/MM/dd") + "' ", "RCount")) > 0);
                     DateTime eCalYMLast_Temp = DateTime.Parse(PF.GetMonthLastDay(eCalYM_Temp, "B"), new CultureInfo("en-US"));
+                    /* 2024.02.07 改從 Department 取回基本資料清單
                     vSelectStr = "select ('" + eCalYM_Search.Text.Trim() + "' + CompanyNo) as DepNoYM, cast('" + eCalYM_Temp.ToString("yyyy/MM/dd") + "' as DateTime) as CalYM, CompanyNo as DepNo, " + Environment.NewLine +
                                  "       cast(null as datetime) ModifyYM, cast(null as varchar)ModifyMan, cast(0 as float) CarCount, cast(0 as float) DriveRange, cast(null as varchar) Remark, " + Environment.NewLine +
                                  "       cast(0 as float) KMS_BUS, cast(0 as float) KMS_Rent, cast(0 as float) KMS_Tour, cast(0 as float) KMS_Trans, cast(0 as float) KMS_Spec, " + Environment.NewLine +
@@ -131,7 +132,28 @@ namespace TyBus_Intranet_Test_V3
                                  "       cast(0 as float) KMS_Total, cast(0 as float) HighWayCount_OA, cast(0 as float) HighWayCount_EA, cast(0 as float) HighWayCount_OB, cast(0 as float) HighWayCount_EB, cast(0 as float) HighWayCount_OT, cast(0 as float) HighWayCount_ET, " + Environment.NewLine +
                                  "       cast(0 as float) OtherCount_OA, cast(0 as float) OtherCount_EA, cast(0 as float) OtherCount_OB, cast(0 as float) OtherCount_EB, cast(0 as float) OtherCount_OT, cast(0 as float) OtherCount_ET, " + Environment.NewLine +
                                  "       cast(0 as float) ModifyKMS, cast(0 as float) SpecIncome, cast(0 as float) UsedCars, cast(0 as float) ElecCardCount, cast(0 as float) EmpCount, cast(0 as float) DriverOD, cast(0 as float) EmpCount_M, cast(0 as float) EmpCount_F, cast(0 as float) EmpCount_D, cast(0 as float) BreakDown " + Environment.NewLine +
-                                 "  from Car_infoA group by CompanyNo ";
+                                 "  from Car_infoA group by CompanyNo "; */
+                    vSelectStr = "select ('" + eCalYM_Search.Text.Trim() + "' + DepNo) as DepNoYM, cast('" + eCalYM_Temp.ToString("yyyy/MM/dd") + "' as DateTime) as CalYM, DepNo, " + Environment.NewLine +
+                                 "       cast(null as datetime) ModifyYM, cast(null as varchar)ModifyMan, cast(0 as float) CarCount, cast(0 as float) DriveRange, cast(null as varchar) Remark, " + Environment.NewLine +
+                                 "       cast(0 as float) KMS_BUS, cast(0 as float) KMS_Rent, cast(0 as float) KMS_Tour, cast(0 as float) KMS_Trans, cast(0 as float) KMS_Spec, " + Environment.NewLine +
+                                 "       cast(0 as float) RuleCount_OA, cast(0 as float) RuleCount_EA, cast(0 as float) RuleCount_OB, cast(0 as float) RuleCount_EB, cast(0 as float) RuleCount_OT, cast(0 as float) RuleCount_ET, " + Environment.NewLine +
+                                 "       cast(0 as float) BusCount_OA, cast(0 as float) BusCount_EA, cast(0 as float) BusCount_OB, cast(0 as float) BusCount_EB, cast(0 as float) BusCount_OT, cast(0 as float) BusCount_ET, " + Environment.NewLine +
+                                 "       cast(0 as float) TourCount_OA, cast(0 as float) TourCount_EA, cast(0 as float) TourCount_OB, cast(0 as float) TourCount_EB, cast(0 as float) TourCount_OT, cast(0 as float) TourCount_ET, " + Environment.NewLine +
+                                 "       cast(0 as float) CarSum_OA, cast(0 as float) CarSum_EA, cast(0 as float) CarSum_OB, cast(0 as float) CarSum_EB, cast(0 as float) CarSum_OT, cast(0 as float) CarSum_ET, " + Environment.NewLine +
+                                 "       cast(0 as float) RuleKMS_OA, cast(0 as float) RuleKMS_EA, cast(0 as float) RuleKMS_OB, cast(0 as float) RuleKMS_EB, cast(0 as float) RuleKMS_OT, cast(0 as float) RuleKMS_ET, cast(0 as float) KMS_Rule, " + Environment.NewLine +
+                                 "       cast(0 as float) BusKMS_OA, cast(0 as float) BusKMS_EA, cast(0 as float) BusKMS_OB, cast(0 as float) BusKMS_EB, cast(0 as float) BusKMS_OT, cast(0 as float) BusKMS_ET, " + Environment.NewLine +
+                                 "       cast(0 as float) SpecKMS_OA, cast(0 as float) SpecKMS_EA, cast(0 as float) SpecKMS_OB, cast(0 as float) SpecKMS_EB, cast(0 as float) SpecKMS_OT, cast(0 as float) SpecKMS_ET, " + Environment.NewLine +
+                                 "       cast(0 as float) RentKMS_OA, cast(0 as float) RentKMS_EA, cast(0 as float) RentKMS_OB, cast(0 as float) RentKMS_EB, cast(0 as float) RentKMS_OT, cast(0 as float) RentKMS_ET, " + Environment.NewLine +
+                                 "       cast(0 as float) TransKMS_OA, cast(0 as float) TransKMS_EA, cast(0 as float) TransKMS_OB, cast(0 as float) TransKMS_EB, cast(0 as float) TransKMS_OT, cast(0 as float) TransKMS_ET, " + Environment.NewLine +
+                                 "       cast(0 as float) TourKMS_OA, cast(0 as float) TourKMS_EA, cast(0 as float) TourKMS_OB, cast(0 as float) TourKMS_EB, cast(0 as float) TourKMS_OT, cast(0 as float) TourKMS_ET, " + Environment.NewLine +
+                                 "       cast(0 as float) NoneBusiKMS_OA, cast(0 as float) NoneBusiKMS_EA, cast(0 as float) NoneBusiKMS_OB, cast(0 as float) NoneBusiKMS_EB, cast(0 as float) NoneBusiKMS_OT, cast(0 as float) NoneBusiKMS_ET, cast(0 as float) KMS_NoneBusi, " + Environment.NewLine +
+                                 "       cast(0 as float) TotalKMS_OA, cast(0 as float) TotalKMS_EA, cast(0 as float) TotalKMS_OB, cast(0 as float) TotalKMS_EB, cast(0 as float) TotalKMS_OT, cast(0 as float) TotalKMS_ET, " + Environment.NewLine +
+                                 "       cast(0 as float) KMS_Total, cast(0 as float) HighWayCount_OA, cast(0 as float) HighWayCount_EA, cast(0 as float) HighWayCount_OB, cast(0 as float) HighWayCount_EB, cast(0 as float) HighWayCount_OT, cast(0 as float) HighWayCount_ET, " + Environment.NewLine +
+                                 "       cast(0 as float) OtherCount_OA, cast(0 as float) OtherCount_EA, cast(0 as float) OtherCount_OB, cast(0 as float) OtherCount_EB, cast(0 as float) OtherCount_OT, cast(0 as float) OtherCount_ET, " + Environment.NewLine +
+                                 "       cast(0 as float) ModifyKMS, cast(0 as float) SpecIncome, cast(0 as float) UsedCars, cast(0 as float) ElecCardCount, cast(0 as float) EmpCount, cast(0 as float) DriverOD, cast(0 as float) EmpCount_M, cast(0 as float) EmpCount_F, cast(0 as float) EmpCount_D, cast(0 as float) BreakDown " + Environment.NewLine +
+                                 "  from Department " + Environment.NewLine +
+                                 " where InPayReport = 'Y' and IsPrint = 'Y' " + Environment.NewLine +
+                                 " order by DepNo ";
                     using (SqlConnection connCarCount = new SqlConnection(vConnStr))
                     {
                         SqlDataAdapter daCarCount = new SqlDataAdapter(vSelectStr, connCarCount);

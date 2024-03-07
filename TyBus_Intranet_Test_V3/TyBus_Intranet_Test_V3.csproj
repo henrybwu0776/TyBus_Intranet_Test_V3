@@ -499,6 +499,7 @@
     <Content Include="DriverWorkStateBatch.aspx" />
     <Content Include="DriverWorkStateList.aspx" />
     <Content Include="DriverYearSummary.aspx" />
+    <Content Include="DuplicationRuns.aspx" />
     <Content Include="EditOfficialDocument.aspx" />
     <Content Include="EducationList.aspx" />
     <Content Include="EmpAltersReport.aspx" />
@@ -1214,6 +1215,13 @@
     </Compile>
     <Compile Include="DriverYearSummary.aspx.designer.cs">
       <DependentUpon>DriverYearSummary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DuplicationRuns.aspx.cs">
+      <DependentUpon>DuplicationRuns.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DuplicationRuns.aspx.designer.cs">
+      <DependentUpon>DuplicationRuns.aspx</DependentUpon>
     </Compile>
     <Compile Include="EditOfficialDocument.aspx.cs">
       <DependentUpon>EditOfficialDocument.aspx</DependentUpon>

@@ -93,17 +93,17 @@ namespace TyBus_Intranet_Test_V3
             string vWStr_RealDay = ((eRealDay_S.Text.Trim() != "") && (eRealDay_E.Text.Trim() != "")) ? "   and a.RealDay between '" + DateTime.Parse(eRealDay_S.Text.Trim()).Year.ToString("D4") + "/" + DateTime.Parse(eRealDay_S.Text.Trim()).ToString("MM/dd") + "' and '" + DateTime.Parse(eRealDay_E.Text.Trim()).Year.ToString("D4") + "/" + DateTime.Parse(eRealDay_E.Text.Trim()).ToString("MM/dd") + "' " + Environment.NewLine :
                                    ((eRealDay_S.Text.Trim() != "") && (eRealDay_E.Text.Trim() == "")) ? "   and a.RealDay = '" + DateTime.Parse(eRealDay_S.Text.Trim()).Year.ToString("D4") + "/" + DateTime.Parse(eRealDay_S.Text.Trim()).ToString("MM/dd") + "' " + Environment.NewLine :
                                    ((eRealDay_S.Text.Trim() == "") && (eRealDay_E.Text.Trim() != "")) ? "   and a.RealDay = '" + DateTime.Parse(eRealDay_E.Text.Trim()).Year.ToString("D4") + "/" + DateTime.Parse(eRealDay_E.Text.Trim()).ToString("MM/dd") + "' " + Environment.NewLine : "";
-            string vSelect = "select ApplyMan, (select [Name] from Employee where EmpNo = a.ApplyMan) ApplyName, " + Environment.NewLine +
-                             "       DepNo, (select[Name] from Department where DepNo = a.DepNo) DepName, " + Environment.NewLine +
-                             "       RealDay, " + Environment.NewLine +
-                             "       ApplyType, (select ClassTxt from DBDICB where ClassNo = a.ApplyType and FKey = '加班資料檔      OVERDUTY        APPLYTYPE') ApplyType_C, " + Environment.NewLine +
-                             "       [Hours], case when ApplyType in ('02', '04') then[Hours] - FeedNum - BackNum else 0 end Over100, " + Environment.NewLine +
-                             "       (isnull(FeedNum, 0) + isnull(FrontOver2, 0)) as Over133, " + Environment.NewLine +
-                             "       (isnull(BackNum, 0) + isnull(PostOver2, 0)) as Over166, " + Environment.NewLine +
-                             "       isnull(PostOver22, 0) as Over266 " + Environment.NewLine +
-                             "  from OverDuty a " + Environment.NewLine +
+            string vSelect = "select a.ApplyMan, e.[Name] ApplyName, " + Environment.NewLine +
+                             "       a.DepNo, (select[Name] from Department where DepNo = a.DepNo) DepName, " + Environment.NewLine +
+                             "       (select ClassTxt from DBDICB where ClassNo = e.Title and FKey = '員工資料        EMPLOYEE        TITLE') Title, a.RealDay, " + Environment.NewLine +
+                             "       a.ApplyType, (select ClassTxt from DBDICB where ClassNo = a.ApplyType and FKey = '加班資料檔      OVERDUTY        APPLYTYPE') ApplyType_C, " + Environment.NewLine +
+                             "       a.[Hours], case when a.ApplyType in ('02', '04') then a.[Hours] - a.FeedNum - a.BackNum else 0 end Over100, " + Environment.NewLine +
+                             "       (isnull(a.FeedNum, 0) + isnull(a.FrontOver2, 0)) as Over133, " + Environment.NewLine +
+                             "       (isnull(a.BackNum, 0) + isnull(a.PostOver2, 0)) as Over166, " + Environment.NewLine +
+                             "       isnull(a.PostOver22, 0) as Over266 " + Environment.NewLine +
+                             "  from OverDuty a left join Employee e on e.EmpNo = a.ApplyMan " + Environment.NewLine +
                              " where 1 = 1 " + Environment.NewLine + vWStr_ApplyMan + vWStr_DepNo + vWStr_RealDay +
-                             " order by DepNo, ApplyMan, RealDay";
+                             " order by a.DepNo, a.ApplyMan, a.RealDay";
             return vSelect;
         }
 
@@ -237,6 +237,7 @@ namespace TyBus_Intranet_Test_V3
                                       (drExcel.GetName(i) == "ApplyName") ? "員工姓名" :
                                       (drExcel.GetName(i) == "DepNo") ? "部門代號" :
                                       (drExcel.GetName(i) == "DepName") ? "部門" :
+                                      (drExcel.GetName(i) == "Title") ? "職稱" :
                                       (drExcel.GetName(i) == "RealDay") ? "加班日期" :
                                       (drExcel.GetName(i) == "ApplyType") ? "加班類別代號" :
                                       (drExcel.GetName(i) == "ApplyType_C") ? "加班類別" :

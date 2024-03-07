@@ -95,7 +95,7 @@
     <asp:FormView ID="fvAdviceReportDetail" runat="server" DataKeyNames="CaseNo" DataSourceID="sdsAdviceReport_Detail" Width="100%"
         OnDataBound="fvAdviceReportDetail_DataBound">
         <EditItemTemplate>
-            <asp:Button ID="bbOK_Edit" runat="server" CausesValidation="True" OnClick="bbOK_Edit_Click" CssClass="button-Black" Text="確定" Width="120px" UseSubmitBehavior="False" OnClientClick="this.disabled=true;" />
+            <asp:Button ID="bbOK_Edit" runat="server" CausesValidation="True" OnClick="bbOK_Edit_Click" CssClass="button-Black" Text="確定" Width="120px" />
             &nbsp;<asp:Button ID="bbCancel_Edit" runat="server" CausesValidation="False" CommandName="Cancel" CssClass="button-Red" Text="取消" Width="120px" />
             <asp:UpdatePanel ID="upDataEdit" runat="server">
                 <ContentTemplate>
@@ -241,7 +241,7 @@
             </asp:UpdatePanel>
         </EditItemTemplate>
         <InsertItemTemplate>
-            <asp:Button ID="bbOK_INS" runat="server" CausesValidation="True" OnClick="bbOK_INS_Click" CssClass="button-Black" Text="確定" Width="120px" UseSubmitBehavior="False" OnClientClick='this.disabled=true;' />
+            <asp:Button ID="bbOK_INS" runat="server" CausesValidation="True" OnClick="bbOK_INS_Click" CssClass="button-Black" Text="確定" Width="120px" />
             &nbsp;<asp:Button ID="bbCancel_INS" runat="server" CausesValidation="False" CommandName="Cancel" CssClass="button-Red" Text="取消" Width="120px" />
             <asp:UpdatePanel ID="upDataInsert" runat="server">
                 <ContentTemplate>

@@ -85,6 +85,7 @@
                             <li id="RunSheetCheckByStation" runat="server"><a href="RunSheetCheckByStation.aspx">各站行車記錄單異常查詢</a></li>
                             <li id="RunSheetCheck" runat="server"><a href="RunSheetCheck.aspx">行車憑單錯誤檢查</a></li>
                             <li id="ExportRSPre" runat="server"><a href="ExportRSPre.aspx">行車預排資料轉出動態系統</a></li>
+                            <li id="DuplicationRuns" runat="server"><a href="DuplicationRuns.aspx">行車班次表複製</a></li>
                         </ul>
                     </li>
                     <li id="G004" runat="server"><a href="#">車輛相關作業</a>
