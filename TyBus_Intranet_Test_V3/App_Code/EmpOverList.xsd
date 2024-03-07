@@ -9,24 +9,28 @@
         <Tables>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="EmpOverListPTableAdapter" GeneratorDataComponentClassName="EmpOverListPTableAdapter" Name="EmpOverListP" UserDataComponentName="EmpOverListPTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectName="ERPBUS_TEST.dbo.OVERDUTY" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
-                    <CommandText>SELECT          applyman,
-                                (SELECT          NAME
-                                  FROM               EMPLOYEE
-                                  WHERE           (EMPNO = a.applyman)) AS ApplyName, depno,
+                    <CommandText>SELECT          a.applyman, e.NAME AS ApplyName, a.depno,
                                 (SELECT          NAME
                                   FROM               DEPARTMENT
-                                  WHERE           (DEPNO = a.depno)) AS DepName, realday, applytype,
+                                  WHERE           (DEPNO = a.depno)) AS DepName,
                                 (SELECT          CLASSTXT
                                   FROM               DBDICB
+                                  WHERE           (CLASSNO = e.TITLE) AND (FKEY = '員工資料        EMPLOYEE        TITLE')) AS Title, a.realday, 
+                            a.applytype,
+                                (SELECT          CLASSTXT
+                                  FROM               DBDICB AS DBDICB_1
                                   WHERE           (CLASSNO = a.applytype) AND (FKEY = '加班資料檔      OVERDUTY        APPLYTYPE')) 
-                            AS ApplyType_C, hours, CASE WHEN ApplyType IN ('02', '04') 
-                            THEN [Hours] - FeedNum - BackNum ELSE 0 END AS Over100, ISNULL(feednum, 0) + ISNULL(FRONTOVER2, 0) 
-                            AS Over133, ISNULL(backnum, 0) + ISNULL(POSTOVER2, 0) AS Over166, ISNULL(POSTOVER22, 0) AS Over266
-FROM              OVERDUTY AS a
-WHERE          (1 &lt;&gt; 1)</CommandText>
+                            AS ApplyType_C, a.hours, CASE WHEN a.ApplyType IN ('02', '04') 
+                            THEN a.[Hours] - a.FeedNum - a.BackNum ELSE 0 END AS Over100, ISNULL(a.feednum, 0) + ISNULL(a.FRONTOVER2, 
+                            0) AS Over133, ISNULL(a.backnum, 0) + ISNULL(a.POSTOVER2, 0) AS Over166, ISNULL(a.POSTOVER22, 0) 
+                            AS Over266
+FROM              OVERDUTY AS a LEFT OUTER JOIN
+                            EMPLOYEE AS e ON e.EMPNO = a.applyman
+WHERE          (1 &lt;&gt; 1)
+ORDER BY   a.depno, a.applyman, a.realday</CommandText>
                     <Parameters />
                   </DbCommand>
                 </SelectCommand>
@@ -45,6 +49,7 @@ WHERE          (1 &lt;&gt; 1)</CommandText>
               <Mapping SourceColumn="Over133" DataSetColumn="Over133" />
               <Mapping SourceColumn="Over166" DataSetColumn="Over166" />
               <Mapping SourceColumn="Over266" DataSetColumn="Over266" />
+              <Mapping SourceColumn="Title" DataSetColumn="Title" />
             </Mappings>
             <Sources />
           </TableAdapter>
@@ -56,7 +61,7 @@ WHERE          (1 &lt;&gt; 1)</CommandText>
   <xs:element name="EmpOverList" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="EmpOverList" msprop:Generator_UserDSName="EmpOverList">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="EmpOverListP" msprop:Generator_TableClassName="EmpOverListPDataTable" msprop:Generator_TableVarName="tableEmpOverListP" msprop:Generator_TablePropName="EmpOverListP" msprop:Generator_RowDeletingName="EmpOverListPRowDeleting" msprop:Generator_RowChangingName="EmpOverListPRowChanging" msprop:Generator_RowEvHandlerName="EmpOverListPRowChangeEventHandler" msprop:Generator_RowDeletedName="EmpOverListPRowDeleted" msprop:Generator_UserTableName="EmpOverListP" msprop:Generator_RowChangedName="EmpOverListPRowChanged" msprop:Generator_RowEvArgName="EmpOverListPRowChangeEvent" msprop:Generator_RowClassName="EmpOverListPRow">
+        <xs:element name="EmpOverListP" msprop:Generator_TableClassName="EmpOverListPDataTable" msprop:Generator_TableVarName="tableEmpOverListP" msprop:Generator_RowChangedName="EmpOverListPRowChanged" msprop:Generator_TablePropName="EmpOverListP" msprop:Generator_RowDeletingName="EmpOverListPRowDeleting" msprop:Generator_RowChangingName="EmpOverListPRowChanging" msprop:Generator_RowEvHandlerName="EmpOverListPRowChangeEventHandler" msprop:Generator_RowDeletedName="EmpOverListPRowDeleted" msprop:Generator_RowClassName="EmpOverListPRow" msprop:Generator_UserTableName="EmpOverListP" msprop:Generator_RowEvArgName="EmpOverListPRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="applyman" msprop:Generator_ColumnVarNameInTable="columnapplyman" msprop:Generator_ColumnPropNameInRow="applyman" msprop:Generator_ColumnPropNameInTable="applymanColumn" msprop:Generator_UserColumnName="applyman" minOccurs="0">
@@ -107,6 +112,13 @@ WHERE          (1 &lt;&gt; 1)</CommandText>
               <xs:element name="Over133" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnOver133" msprop:Generator_ColumnPropNameInRow="Over133" msprop:Generator_ColumnPropNameInTable="Over133Column" msprop:Generator_UserColumnName="Over133" type="xs:double" minOccurs="0" />
               <xs:element name="Over166" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnOver166" msprop:Generator_ColumnPropNameInRow="Over166" msprop:Generator_ColumnPropNameInTable="Over166Column" msprop:Generator_UserColumnName="Over166" type="xs:double" minOccurs="0" />
               <xs:element name="Over266" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnOver266" msprop:Generator_ColumnPropNameInRow="Over266" msprop:Generator_ColumnPropNameInTable="Over266Column" msprop:Generator_UserColumnName="Over266" type="xs:double" minOccurs="0" />
+              <xs:element name="Title" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTitle" msprop:Generator_ColumnPropNameInRow="Title" msprop:Generator_ColumnPropNameInTable="TitleColumn" msprop:Generator_UserColumnName="Title" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
             </xs:sequence>
           </xs:complexType>
         </xs:element>

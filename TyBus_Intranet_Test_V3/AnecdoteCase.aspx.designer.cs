@@ -285,6 +285,33 @@ namespace TyBus_Intranet_Test_V3
         protected global::System.Web.UI.WebControls.FormView fvAnecdoteCaseB_Data;
 
         /// <summary>
+        /// plPrint 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel plPrint;
+
+        /// <summary>
+        /// bbCloseReport 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button bbCloseReport;
+
+        /// <summary>
+        /// rvPrint 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::Microsoft.Reporting.WebForms.ReportViewer rvPrint;
+
+        /// <summary>
         /// sdsAnecdoteCaseB_List 控制項。
         /// </summary>
         /// <remarks>

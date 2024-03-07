@@ -85,6 +85,7 @@
                             <li id="RunSheetCheckByStation" runat="server"><a href="RunSheetCheckByStation.aspx">各站行車記錄單異常查詢</a></li>
                             <li id="RunSheetCheck" runat="server"><a href="RunSheetCheck.aspx">行車憑單錯誤檢查</a></li>
                             <li id="ExportRSPre" runat="server"><a href="ExportRSPre.aspx">行車預排資料轉出動態系統</a></li>
+                            <li id="DuplicationRuns" runat="server"><a href="DuplicationRuns.aspx">行車班次表複製</a></li>
                         </ul>
                     </li>
                     <li id="G004" runat="server"><a href="#">車輛相關作業</a>
@@ -141,6 +142,7 @@
                             <li id="EmpAltersReport" runat="server"><a href="EmpAltersReport.aspx">人事異動送審單匯出</a></li>
                             <li id="EmpMeritsPrint" runat="server"><a href="EmpMeritsPrint.aspx">人事考績獎懲明細表</a></li>
                             <li id="EmpESCList" runat="server"><a href="EmpESCList.aspx">員工請假狀況月報</a></li>
+                            <li id="EmpWorkList" runat="server"><a href="EmpWorkList.aspx">票價補助發放名冊(內勤)</a></li>
                         </ul>
                     </li>
                     <li id="G008" runat="server"><a href="#">督導查核作業</a>
@@ -207,6 +209,7 @@
                             <li id="DriverRiskLevel" runat="server"><a href="DriverRiskLevel.aspx">員工風險評估等級</a></li>
                             <li id="DriverStatus" runat="server"><a href="DriverStatus.aspx">駕駛員月出勤及請休假狀況表</a></li>
                             <li id="EmpCardIDChange" runat="server"><a href="EmpCardIDChange.aspx">人員卡內碼轉換</a></li>
+                            <li id="EmpHealthCheckList" runat="server"><a href="EmpHealthCheckList.aspx">年度健康檢查名冊</a></li>
                         </ul>
                     </li>
                     <li id="G013" runat="server"><a href="#">電腦耗材庫存量管理</a>
@@ -245,6 +248,7 @@
                             <li id="TicketStore" runat="server"><a href="TicketStore.aspx">票證庫存庫位維護</a></li>
                             <li id="OperateRecord" runat="server"><a href="OperateRecord.aspx">系統操作記錄</a></li>
                             <li id="PermissionSetting" runat="server"><a href="PermissionSetting.aspx">網頁權限設定</a></li>
+                            <li id="AnnSignList" runat="server"><a href="AnnSignList.aspx">公告簽名本</a></li>
                         </ul>
                     </li>
                 </ul>

@@ -112,6 +112,12 @@
     background-color: #E6E6FA;
 }
 
+.ShowPanel-Detail-TwoColumns {
+    float: left;
+    width: 49%;
+    background-color: burlywood;
+}
+
 .PrintPanel {
     width: 100%;
     background-color: #FFFFE0;

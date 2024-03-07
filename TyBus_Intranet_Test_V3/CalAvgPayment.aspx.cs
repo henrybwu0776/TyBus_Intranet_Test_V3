@@ -236,10 +236,10 @@ namespace TyBus_Intranet_Test_V3
                             "       t.ClassBounds, cast((t.ClassBounds / 3) as decimal(10, 0)) ClassBounds_AVG, " + Environment.NewLine +
                             "       cast((t.YM_Total / 3) as decimal(10, 0)) PaymentAVG, cast(((t.Payment_New) / 3) as decimal(10, 0)) PaymentAVG_New, e.IDCardNo, e.Birthday, " + Environment.NewLine +
                             //2023.08.09 把勞健保級距資料表裡面的 BLOCK 欄位拿來設定該級距我司有沒有使用，我司實務上有使用的級距設成 'Y'的級距在這個表單中才可以取到資料
-                            "       e.LaiAMT, isnull((select MIN(LiAMT) from LABOR where LiAMT >= cast(((t.Payment_New) / 3) as decimal(10, 0)) and BLOCK = 'Y' ), (select MAX(LiAMT) from LABOR)) LiAMT_New, " + Environment.NewLine +
-                            "       (e.LaiAMT - isnull((select MIN(LiAMT) from LABOR where LiAMT >= cast(((t.Payment_New) / 3) as decimal(10, 0)) and BLOCK = 'Y' ), (select MAX(LiAMT) from LABOR))) LiAMT_Diff, " + Environment.NewLine +
-                            "       e.HiAMT, isnull((select MIN(HiAMT) from Health where HiAMT >= cast(((t.Payment_New) / 3) as decimal(10, 0)) and BLOCK = 'Y' ), (select MAX(HiAMT) from Health)) HiAMT_New, " + Environment.NewLine +
-                            "       (e.HiAMT - isnull((select MIN(HiAMT) from Health where HiAMT >= cast(((t.Payment_New) / 3) as decimal(10, 0)) and BLOCK = 'Y' ), (select MAX(HiAMT) from Health))) HiAMT_Diff, " + Environment.NewLine +
+                            "       e.LaiAMT, isnull((select MIN(LiAMT) from LABOR where LiAMT >= cast(((t.Payment_New + t.ClassBounds) / 3) as decimal(10, 0)) and BLOCK = 'Y' ), (select MAX(LiAMT) from LABOR)) LiAMT_New, " + Environment.NewLine +
+                            "       (e.LaiAMT - isnull((select MIN(LiAMT) from LABOR where LiAMT >= cast(((t.Payment_New + t.ClassBounds) / 3) as decimal(10, 0)) and BLOCK = 'Y' ), (select MAX(LiAMT) from LABOR))) LiAMT_Diff, " + Environment.NewLine +
+                            "       e.HiAMT, isnull((select MIN(HiAMT) from Health where HiAMT >= cast(((t.Payment_New + t.ClassBounds) / 3) as decimal(10, 0)) and BLOCK = 'Y' ), (select MAX(HiAMT) from Health)) HiAMT_New, " + Environment.NewLine +
+                            "       (e.HiAMT - isnull((select MIN(HiAMT) from Health where HiAMT >= cast(((t.Payment_New + t.ClassBounds) / 3) as decimal(10, 0)) and BLOCK = 'Y' ), (select MAX(HiAMT) from Health))) HiAMT_Diff, " + Environment.NewLine +
                             "       t.LiFee, t.HiFee, " + Environment.NewLine +
                             "       case when e.RetireType = '舊制' then e.RetireType else '' end RetireType " + Environment.NewLine +
                             "  from ( " + Environment.NewLine +

@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="EmpWorkList" targetNamespace="http://tempuri.org/EmpWorkList.xsd" xmlns:mstns="http://tempuri.org/EmpWorkList.xsd" xmlns="http://tempuri.org/EmpWorkList.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="dtEmpWorkListPTableAdapter" GeneratorDataComponentClassName="dtEmpWorkListPTableAdapter" Name="dtEmpWorkListP" UserDataComponentName="dtEmpWorkListPTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>select cast(0 as Int) RowID, e.IDCardNo, e.DepNo, d.[Name] DepName, e.EmpNo, e.[Name] EmpName, e.Title, cast(0 as float) MonthDays, cast(0 as float) BaseAmounts, cast(0 as float) Holidays, cast(0 as float) ESCDays,cast(0 as int) WorkDays, cast(0 as float) BoundsRatio, cast(0 as float) Bounds, cast(null as nvarchar) WorkType 
+  from Employee e left join Department d on d.DepNo = e.DepNo 
+                  left join DBDICB a on a.ClassNo = e.Title and a.Fkey = '人事資料檔      EMPLOYEE        TITLE' 
+ where 1 &lt;&gt; 1</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="DepNo" DataSetColumn="DepNo" />
+              <Mapping SourceColumn="DepName" DataSetColumn="DepName" />
+              <Mapping SourceColumn="EmpNo" DataSetColumn="EmpNo" />
+              <Mapping SourceColumn="EmpName" DataSetColumn="EmpName" />
+              <Mapping SourceColumn="Title" DataSetColumn="Title" />
+              <Mapping SourceColumn="WorkDays" DataSetColumn="WorkDays" />
+              <Mapping SourceColumn="RowID" DataSetColumn="RowID" />
+              <Mapping SourceColumn="MonthDays" DataSetColumn="MonthDays" />
+              <Mapping SourceColumn="BaseAmounts" DataSetColumn="BaseAmounts" />
+              <Mapping SourceColumn="Holidays" DataSetColumn="Holidays" />
+              <Mapping SourceColumn="ESCDays" DataSetColumn="ESCDays" />
+              <Mapping SourceColumn="BoundsRatio" DataSetColumn="BoundsRatio" />
+              <Mapping SourceColumn="Bounds" DataSetColumn="Bounds" />
+              <Mapping SourceColumn="IDCardNo" DataSetColumn="IDCardNo" />
+              <Mapping SourceColumn="WorkType" DataSetColumn="WorkType" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="EmpWorkList" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="EmpWorkList" msprop:Generator_UserDSName="EmpWorkList">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dtEmpWorkListP" msprop:Generator_TableClassName="dtEmpWorkListPDataTable" msprop:Generator_TableVarName="tabledtEmpWorkListP" msprop:Generator_RowChangedName="dtEmpWorkListPRowChanged" msprop:Generator_TablePropName="dtEmpWorkListP" msprop:Generator_RowDeletingName="dtEmpWorkListPRowDeleting" msprop:Generator_RowChangingName="dtEmpWorkListPRowChanging" msprop:Generator_RowEvHandlerName="dtEmpWorkListPRowChangeEventHandler" msprop:Generator_RowDeletedName="dtEmpWorkListPRowDeleted" msprop:Generator_RowClassName="dtEmpWorkListPRow" msprop:Generator_UserTableName="dtEmpWorkListP" msprop:Generator_RowEvArgName="dtEmpWorkListPRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DepNo" msprop:Generator_ColumnVarNameInTable="columnDepNo" msprop:Generator_ColumnPropNameInRow="DepNo" msprop:Generator_ColumnPropNameInTable="DepNoColumn" msprop:Generator_UserColumnName="DepNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepName" msprop:Generator_ColumnVarNameInTable="columnDepName" msprop:Generator_ColumnPropNameInRow="DepName" msprop:Generator_ColumnPropNameInTable="DepNameColumn" msprop:Generator_UserColumnName="DepName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EmpNo" msprop:Generator_ColumnVarNameInTable="columnEmpNo" msprop:Generator_ColumnPropNameInRow="EmpNo" msprop:Generator_ColumnPropNameInTable="EmpNoColumn" msprop:Generator_UserColumnName="EmpNo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EmpName" msprop:Generator_ColumnVarNameInTable="columnEmpName" msprop:Generator_ColumnPropNameInRow="EmpName" msprop:Generator_ColumnPropNameInTable="EmpNameColumn" msprop:Generator_UserColumnName="EmpName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Title" msprop:Generator_ColumnVarNameInTable="columnTitle" msprop:Generator_ColumnPropNameInRow="Title" msprop:Generator_ColumnPropNameInTable="TitleColumn" msprop:Generator_UserColumnName="Title" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="4" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WorkDays" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWorkDays" msprop:Generator_ColumnPropNameInRow="WorkDays" msprop:Generator_ColumnPropNameInTable="WorkDaysColumn" msprop:Generator_UserColumnName="WorkDays" type="xs:int" minOccurs="0" />
+              <xs:element name="RowID" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRowID" msprop:Generator_ColumnPropNameInRow="RowID" msprop:Generator_ColumnPropNameInTable="RowIDColumn" msprop:Generator_UserColumnName="RowID" type="xs:int" minOccurs="0" />
+              <xs:element name="MonthDays" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnMonthDays" msprop:Generator_ColumnPropNameInRow="MonthDays" msprop:Generator_ColumnPropNameInTable="MonthDaysColumn" msprop:Generator_UserColumnName="MonthDays" type="xs:double" minOccurs="0" />
+              <xs:element name="BaseAmounts" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBaseAmounts" msprop:Generator_ColumnPropNameInRow="BaseAmounts" msprop:Generator_ColumnPropNameInTable="BaseAmountsColumn" msprop:Generator_UserColumnName="BaseAmounts" type="xs:double" minOccurs="0" />
+              <xs:element name="Holidays" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnHolidays" msprop:Generator_ColumnPropNameInRow="Holidays" msprop:Generator_ColumnPropNameInTable="HolidaysColumn" msprop:Generator_UserColumnName="Holidays" type="xs:double" minOccurs="0" />
+              <xs:element name="ESCDays" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnESCDays" msprop:Generator_ColumnPropNameInRow="ESCDays" msprop:Generator_ColumnPropNameInTable="ESCDaysColumn" msprop:Generator_UserColumnName="ESCDays" type="xs:double" minOccurs="0" />
+              <xs:element name="BoundsRatio" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBoundsRatio" msprop:Generator_ColumnPropNameInRow="BoundsRatio" msprop:Generator_ColumnPropNameInTable="BoundsRatioColumn" msprop:Generator_UserColumnName="BoundsRatio" type="xs:double" minOccurs="0" />
+              <xs:element name="Bounds" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBounds" msprop:Generator_ColumnPropNameInRow="Bounds" msprop:Generator_ColumnPropNameInTable="BoundsColumn" msprop:Generator_UserColumnName="Bounds" type="xs:double" minOccurs="0" />
+              <xs:element name="IDCardNo" msprop:Generator_ColumnVarNameInTable="columnIDCardNo" msprop:Generator_ColumnPropNameInRow="IDCardNo" msprop:Generator_ColumnPropNameInTable="IDCardNoColumn" msprop:Generator_UserColumnName="IDCardNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WorkType" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWorkType" msprop:Generator_ColumnPropNameInRow="WorkType" msprop:Generator_ColumnPropNameInTable="WorkTypeColumn" msprop:Generator_UserColumnName="WorkType" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:dtEmpWorkListP" />
+      <xs:field xpath="mstns:EmpNo" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

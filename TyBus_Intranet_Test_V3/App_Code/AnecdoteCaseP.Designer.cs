@@ -20,17 +20,17 @@ namespace TyBus_Intranet_Test_V3.App_Code {
     [global::System.ComponentModel.DesignerCategoryAttribute("code")]
     [global::System.ComponentModel.ToolboxItem(true)]
     [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema")]
-    [global::System.Xml.Serialization.XmlRootAttribute("EmpOverList")]
+    [global::System.Xml.Serialization.XmlRootAttribute("AnecdoteCaseP")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
-    public partial class EmpOverList : global::System.Data.DataSet {
+    public partial class AnecdoteCaseP : global::System.Data.DataSet {
         
-        private EmpOverListPDataTable tableEmpOverListP;
+        private AnecdoteCasePDataTable tableAnecdoteCaseP;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        public EmpOverList() {
+        public AnecdoteCaseP() {
             this.BeginInit();
             this.InitClass();
             global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
@@ -41,7 +41,7 @@ namespace TyBus_Intranet_Test_V3.App_Code {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        protected EmpOverList(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+        protected AnecdoteCaseP(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                 base(info, context, false) {
             if ((this.IsBinarySerialized(info, context) == true)) {
                 this.InitVars(false);
@@ -54,8 +54,8 @@ namespace TyBus_Intranet_Test_V3.App_Code {
             if ((this.DetermineSchemaSerializationMode(info, context) == global::System.Data.SchemaSerializationMode.IncludeSchema)) {
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXmlSchema(new global::System.Xml.XmlTextReader(new global::System.IO.StringReader(strSchema)));
-                if ((ds.Tables["EmpOverListP"] != null)) {
-                    base.Tables.Add(new EmpOverListPDataTable(ds.Tables["EmpOverListP"]));
+                if ((ds.Tables["AnecdoteCaseP"] != null)) {
+                    base.Tables.Add(new AnecdoteCasePDataTable(ds.Tables["AnecdoteCaseP"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -79,9 +79,9 @@ namespace TyBus_Intranet_Test_V3.App_Code {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public EmpOverListPDataTable EmpOverListP {
+        public AnecdoteCasePDataTable _AnecdoteCaseP {
             get {
-                return this.tableEmpOverListP;
+                return this.tableAnecdoteCaseP;
             }
         }
         
@@ -127,7 +127,7 @@ namespace TyBus_Intranet_Test_V3.App_Code {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         public override global::System.Data.DataSet Clone() {
-            EmpOverList cln = ((EmpOverList)(base.Clone()));
+            AnecdoteCaseP cln = ((AnecdoteCaseP)(base.Clone()));
             cln.InitVars();
             cln.SchemaSerializationMode = this.SchemaSerializationMode;
             return cln;
@@ -152,8 +152,8 @@ namespace TyBus_Intranet_Test_V3.App_Code {
                 this.Reset();
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXml(reader);
-                if ((ds.Tables["EmpOverListP"] != null)) {
-                    base.Tables.Add(new EmpOverListPDataTable(ds.Tables["EmpOverListP"]));
+                if ((ds.Tables["AnecdoteCaseP"] != null)) {
+                    base.Tables.Add(new AnecdoteCasePDataTable(ds.Tables["AnecdoteCaseP"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -188,10 +188,10 @@ namespace TyBus_Intranet_Test_V3.App_Code {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         internal void InitVars(bool initTable) {
-            this.tableEmpOverListP = ((EmpOverListPDataTable)(base.Tables["EmpOverListP"]));
+            this.tableAnecdoteCaseP = ((AnecdoteCasePDataTable)(base.Tables["AnecdoteCaseP"]));
             if ((initTable == true)) {
-                if ((this.tableEmpOverListP != null)) {
-                    this.tableEmpOverListP.InitVars();
+                if ((this.tableAnecdoteCaseP != null)) {
+                    this.tableAnecdoteCaseP.InitVars();
                 }
             }
         }
@@ -199,18 +199,18 @@ namespace TyBus_Intranet_Test_V3.App_Code {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         private void InitClass() {
-            this.DataSetName = "EmpOverList";
+            this.DataSetName = "AnecdoteCaseP";
             this.Prefix = "";
-            this.Namespace = "http://tempuri.org/EmpOverList.xsd";
+            this.Namespace = "http://tempuri.org/AnecdoteCaseP.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
-            this.tableEmpOverListP = new EmpOverListPDataTable();
-            base.Tables.Add(this.tableEmpOverListP);
+            this.tableAnecdoteCaseP = new AnecdoteCasePDataTable();
+            base.Tables.Add(this.tableAnecdoteCaseP);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        private bool ShouldSerializeEmpOverListP() {
+        private bool ShouldSerialize_AnecdoteCaseP() {
             return false;
         }
         
@@ -225,7 +225,7 @@ namespace TyBus_Intranet_Test_V3.App_Code {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedDataSetSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-            EmpOverList ds = new EmpOverList();
+            AnecdoteCaseP ds = new AnecdoteCaseP();
             global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
             global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
             global::System.Xml.Schema.XmlSchemaAny any = new global::System.Xml.Schema.XmlSchemaAny();
@@ -270,45 +270,39 @@ namespace TyBus_Intranet_Test_V3.App_Code {
         }
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        public delegate void EmpOverListPRowChangeEventHandler(object sender, EmpOverListPRowChangeEvent e);
+        public delegate void AnecdoteCasePRowChangeEventHandler(object sender, AnecdoteCasePRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class EmpOverListPDataTable : global::System.Data.TypedTableBase<EmpOverListPRow> {
-            
-            private global::System.Data.DataColumn columnapplyman;
-            
-            private global::System.Data.DataColumn columnApplyName;
-            
-            private global::System.Data.DataColumn columndepno;
+        public partial class AnecdoteCasePDataTable : global::System.Data.TypedTableBase<AnecdoteCasePRow> {
             
             private global::System.Data.DataColumn columnDepName;
             
-            private global::System.Data.DataColumn columnrealday;
+            private global::System.Data.DataColumn columnCar_ID;
             
-            private global::System.Data.DataColumn columnapplytype;
+            private global::System.Data.DataColumn columnDriver;
             
-            private global::System.Data.DataColumn columnApplyType_C;
+            private global::System.Data.DataColumn columnDriverName;
             
-            private global::System.Data.DataColumn columnhours;
+            private global::System.Data.DataColumn columnIsExemption;
             
-            private global::System.Data.DataColumn columnOver100;
+            private global::System.Data.DataColumn columnPaidAmount;
             
-            private global::System.Data.DataColumn columnOver133;
+            private global::System.Data.DataColumn columnInsuAmount;
             
-            private global::System.Data.DataColumn columnOver166;
+            private global::System.Data.DataColumn columnPenaltyRatio;
             
-            private global::System.Data.DataColumn columnOver266;
+            private global::System.Data.DataColumn columnPenalty;
             
-            private global::System.Data.DataColumn columnTitle;
+            private global::System.Data.DataColumn columnCaseOccurrence;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public EmpOverListPDataTable() {
-                this.TableName = "EmpOverListP";
+            public AnecdoteCasePDataTable() {
+                this.TableName = "AnecdoteCaseP";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -316,7 +310,7 @@ namespace TyBus_Intranet_Test_V3.App_Code {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            internal EmpOverListPDataTable(global::System.Data.DataTable table) {
+            internal AnecdoteCasePDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -333,33 +327,9 @@ namespace TyBus_Intranet_Test_V3.App_Code {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            protected EmpOverListPDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected AnecdoteCasePDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn applymanColumn {
-                get {
-                    return this.columnapplyman;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn ApplyNameColumn {
-                get {
-                    return this.columnApplyName;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn depnoColumn {
-                get {
-                    return this.columndepno;
-                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -372,73 +342,73 @@ namespace TyBus_Intranet_Test_V3.App_Code {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn realdayColumn {
+            public global::System.Data.DataColumn Car_IDColumn {
                 get {
-                    return this.columnrealday;
+                    return this.columnCar_ID;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn applytypeColumn {
+            public global::System.Data.DataColumn DriverColumn {
                 get {
-                    return this.columnapplytype;
+                    return this.columnDriver;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn ApplyType_CColumn {
+            public global::System.Data.DataColumn DriverNameColumn {
                 get {
-                    return this.columnApplyType_C;
+                    return this.columnDriverName;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn hoursColumn {
+            public global::System.Data.DataColumn IsExemptionColumn {
                 get {
-                    return this.columnhours;
+                    return this.columnIsExemption;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn Over100Column {
+            public global::System.Data.DataColumn PaidAmountColumn {
                 get {
-                    return this.columnOver100;
+                    return this.columnPaidAmount;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn Over133Column {
+            public global::System.Data.DataColumn InsuAmountColumn {
                 get {
-                    return this.columnOver133;
+                    return this.columnInsuAmount;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn Over166Column {
+            public global::System.Data.DataColumn PenaltyRatioColumn {
                 get {
-                    return this.columnOver166;
+                    return this.columnPenaltyRatio;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn Over266Column {
+            public global::System.Data.DataColumn PenaltyColumn {
                 get {
-                    return this.columnOver266;
+                    return this.columnPenalty;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn TitleColumn {
+            public global::System.Data.DataColumn CaseOccurrenceColumn {
                 get {
-                    return this.columnTitle;
+                    return this.columnCaseOccurrence;
                 }
             }
             
@@ -453,57 +423,54 @@ namespace TyBus_Intranet_Test_V3.App_Code {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public EmpOverListPRow this[int index] {
+            public AnecdoteCasePRow this[int index] {
                 get {
-                    return ((EmpOverListPRow)(this.Rows[index]));
+                    return ((AnecdoteCasePRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public event EmpOverListPRowChangeEventHandler EmpOverListPRowChanging;
+            public event AnecdoteCasePRowChangeEventHandler AnecdoteCasePRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public event EmpOverListPRowChangeEventHandler EmpOverListPRowChanged;
+            public event AnecdoteCasePRowChangeEventHandler AnecdoteCasePRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public event EmpOverListPRowChangeEventHandler EmpOverListPRowDeleting;
+            public event AnecdoteCasePRowChangeEventHandler AnecdoteCasePRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public event EmpOverListPRowChangeEventHandler EmpOverListPRowDeleted;
+            public event AnecdoteCasePRowChangeEventHandler AnecdoteCasePRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void AddEmpOverListPRow(EmpOverListPRow row) {
+            public void AddAnecdoteCasePRow(AnecdoteCasePRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public EmpOverListPRow AddEmpOverListPRow(string applyman, string ApplyName, string depno, string DepName, System.DateTime realday, string applytype, string ApplyType_C, double hours, double Over100, double Over133, double Over166, double Over266, string Title) {
-                EmpOverListPRow rowEmpOverListPRow = ((EmpOverListPRow)(this.NewRow()));
+            public AnecdoteCasePRow AddAnecdoteCasePRow(string DepName, string Car_ID, string Driver, string DriverName, string IsExemption, double PaidAmount, double InsuAmount, double PenaltyRatio, double Penalty, string CaseOccurrence) {
+                AnecdoteCasePRow rowAnecdoteCasePRow = ((AnecdoteCasePRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        applyman,
-                        ApplyName,
-                        depno,
                         DepName,
-                        realday,
-                        applytype,
-                        ApplyType_C,
-                        hours,
-                        Over100,
-                        Over133,
-                        Over166,
-                        Over266,
-                        Title};
-                rowEmpOverListPRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowEmpOverListPRow);
-                return rowEmpOverListPRow;
+                        Car_ID,
+                        Driver,
+                        DriverName,
+                        IsExemption,
+                        PaidAmount,
+                        InsuAmount,
+                        PenaltyRatio,
+                        Penalty,
+                        CaseOccurrence};
+                rowAnecdoteCasePRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowAnecdoteCasePRow);
+                return rowAnecdoteCasePRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                EmpOverListPDataTable cln = ((EmpOverListPDataTable)(base.Clone()));
+                AnecdoteCasePDataTable cln = ((AnecdoteCasePDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -511,97 +478,82 @@ namespace TyBus_Intranet_Test_V3.App_Code {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new EmpOverListPDataTable();
+                return new AnecdoteCasePDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             internal void InitVars() {
-                this.columnapplyman = base.Columns["applyman"];
-                this.columnApplyName = base.Columns["ApplyName"];
-                this.columndepno = base.Columns["depno"];
                 this.columnDepName = base.Columns["DepName"];
-                this.columnrealday = base.Columns["realday"];
-                this.columnapplytype = base.Columns["applytype"];
-                this.columnApplyType_C = base.Columns["ApplyType_C"];
-                this.columnhours = base.Columns["hours"];
-                this.columnOver100 = base.Columns["Over100"];
-                this.columnOver133 = base.Columns["Over133"];
-                this.columnOver166 = base.Columns["Over166"];
-                this.columnOver266 = base.Columns["Over266"];
-                this.columnTitle = base.Columns["Title"];
+                this.columnCar_ID = base.Columns["Car_ID"];
+                this.columnDriver = base.Columns["Driver"];
+                this.columnDriverName = base.Columns["DriverName"];
+                this.columnIsExemption = base.Columns["IsExemption"];
+                this.columnPaidAmount = base.Columns["PaidAmount"];
+                this.columnInsuAmount = base.Columns["InsuAmount"];
+                this.columnPenaltyRatio = base.Columns["PenaltyRatio"];
+                this.columnPenalty = base.Columns["Penalty"];
+                this.columnCaseOccurrence = base.Columns["CaseOccurrence"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             private void InitClass() {
-                this.columnapplyman = new global::System.Data.DataColumn("applyman", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnapplyman);
-                this.columnApplyName = new global::System.Data.DataColumn("ApplyName", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnApplyName);
-                this.columndepno = new global::System.Data.DataColumn("depno", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columndepno);
                 this.columnDepName = new global::System.Data.DataColumn("DepName", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDepName);
-                this.columnrealday = new global::System.Data.DataColumn("realday", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnrealday);
-                this.columnapplytype = new global::System.Data.DataColumn("applytype", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnapplytype);
-                this.columnApplyType_C = new global::System.Data.DataColumn("ApplyType_C", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnApplyType_C);
-                this.columnhours = new global::System.Data.DataColumn("hours", typeof(double), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnhours);
-                this.columnOver100 = new global::System.Data.DataColumn("Over100", typeof(double), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnOver100);
-                this.columnOver133 = new global::System.Data.DataColumn("Over133", typeof(double), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnOver133);
-                this.columnOver166 = new global::System.Data.DataColumn("Over166", typeof(double), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnOver166);
-                this.columnOver266 = new global::System.Data.DataColumn("Over266", typeof(double), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnOver266);
-                this.columnTitle = new global::System.Data.DataColumn("Title", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnTitle);
-                this.columnapplyman.MaxLength = 12;
-                this.columnApplyName.ReadOnly = true;
-                this.columnApplyName.MaxLength = 64;
-                this.columndepno.MaxLength = 12;
-                this.columnDepName.ReadOnly = true;
+                this.columnCar_ID = new global::System.Data.DataColumn("Car_ID", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCar_ID);
+                this.columnDriver = new global::System.Data.DataColumn("Driver", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDriver);
+                this.columnDriverName = new global::System.Data.DataColumn("DriverName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDriverName);
+                this.columnIsExemption = new global::System.Data.DataColumn("IsExemption", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnIsExemption);
+                this.columnPaidAmount = new global::System.Data.DataColumn("PaidAmount", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPaidAmount);
+                this.columnInsuAmount = new global::System.Data.DataColumn("InsuAmount", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnInsuAmount);
+                this.columnPenaltyRatio = new global::System.Data.DataColumn("PenaltyRatio", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPenaltyRatio);
+                this.columnPenalty = new global::System.Data.DataColumn("Penalty", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPenalty);
+                this.columnCaseOccurrence = new global::System.Data.DataColumn("CaseOccurrence", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCaseOccurrence);
+                this.columnDepName.AllowDBNull = false;
                 this.columnDepName.MaxLength = 30;
-                this.columnapplytype.MaxLength = 4;
-                this.columnApplyType_C.ReadOnly = true;
-                this.columnApplyType_C.MaxLength = 32;
-                this.columnOver100.ReadOnly = true;
-                this.columnOver133.ReadOnly = true;
-                this.columnOver166.ReadOnly = true;
-                this.columnOver266.ReadOnly = true;
-                this.columnTitle.ReadOnly = true;
-                this.columnTitle.MaxLength = 32;
+                this.columnCar_ID.MaxLength = 12;
+                this.columnDriver.MaxLength = 12;
+                this.columnDriverName.MaxLength = 64;
+                this.columnIsExemption.MaxLength = 2;
+                this.columnCaseOccurrence.MaxLength = 2147483647;
+                this.ExtendedProperties.Add("Generator_TablePropName", "_AnecdoteCaseP");
+                this.ExtendedProperties.Add("Generator_UserTableName", "AnecdoteCaseP");
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public EmpOverListPRow NewEmpOverListPRow() {
-                return ((EmpOverListPRow)(this.NewRow()));
+            public AnecdoteCasePRow NewAnecdoteCasePRow() {
+                return ((AnecdoteCasePRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new EmpOverListPRow(builder);
+                return new AnecdoteCasePRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(EmpOverListPRow);
+                return typeof(AnecdoteCasePRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.EmpOverListPRowChanged != null)) {
-                    this.EmpOverListPRowChanged(this, new EmpOverListPRowChangeEvent(((EmpOverListPRow)(e.Row)), e.Action));
+                if ((this.AnecdoteCasePRowChanged != null)) {
+                    this.AnecdoteCasePRowChanged(this, new AnecdoteCasePRowChangeEvent(((AnecdoteCasePRow)(e.Row)), e.Action));
                 }
             }
             
@@ -609,8 +561,8 @@ namespace TyBus_Intranet_Test_V3.App_Code {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.EmpOverListPRowChanging != null)) {
-                    this.EmpOverListPRowChanging(this, new EmpOverListPRowChangeEvent(((EmpOverListPRow)(e.Row)), e.Action));
+                if ((this.AnecdoteCasePRowChanging != null)) {
+                    this.AnecdoteCasePRowChanging(this, new AnecdoteCasePRowChangeEvent(((AnecdoteCasePRow)(e.Row)), e.Action));
                 }
             }
             
@@ -618,8 +570,8 @@ namespace TyBus_Intranet_Test_V3.App_Code {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.EmpOverListPRowDeleted != null)) {
-                    this.EmpOverListPRowDeleted(this, new EmpOverListPRowChangeEvent(((EmpOverListPRow)(e.Row)), e.Action));
+                if ((this.AnecdoteCasePRowDeleted != null)) {
+                    this.AnecdoteCasePRowDeleted(this, new AnecdoteCasePRowChangeEvent(((AnecdoteCasePRow)(e.Row)), e.Action));
                 }
             }
             
@@ -627,14 +579,14 @@ namespace TyBus_Intranet_Test_V3.App_Code {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.EmpOverListPRowDeleting != null)) {
-                    this.EmpOverListPRowDeleting(this, new EmpOverListPRowChangeEvent(((EmpOverListPRow)(e.Row)), e.Action));
+                if ((this.AnecdoteCasePRowDeleting != null)) {
+                    this.AnecdoteCasePRowDeleting(this, new AnecdoteCasePRowChangeEvent(((AnecdoteCasePRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void RemoveEmpOverListPRow(EmpOverListPRow row) {
+            public void RemoveAnecdoteCasePRow(AnecdoteCasePRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -643,7 +595,7 @@ namespace TyBus_Intranet_Test_V3.App_Code {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                EmpOverList ds = new EmpOverList();
+                AnecdoteCaseP ds = new AnecdoteCaseP();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -661,7 +613,7 @@ namespace TyBus_Intranet_Test_V3.App_Code {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "EmpOverListPDataTable";
+                attribute2.FixedValue = "AnecdoteCasePDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -705,379 +657,278 @@ namespace TyBus_Intranet_Test_V3.App_Code {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class EmpOverListPRow : global::System.Data.DataRow {
+        public partial class AnecdoteCasePRow : global::System.Data.DataRow {
             
-            private EmpOverListPDataTable tableEmpOverListP;
+            private AnecdoteCasePDataTable tableAnecdoteCaseP;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            internal EmpOverListPRow(global::System.Data.DataRowBuilder rb) : 
+            internal AnecdoteCasePRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tableEmpOverListP = ((EmpOverListPDataTable)(this.Table));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string applyman {
-                get {
-                    try {
-                        return ((string)(this[this.tableEmpOverListP.applymanColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'EmpOverListP\' 中資料行 \'applyman\' 的值是 DBNull。", e);
-                    }
-                }
-                set {
-                    this[this.tableEmpOverListP.applymanColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string ApplyName {
-                get {
-                    try {
-                        return ((string)(this[this.tableEmpOverListP.ApplyNameColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'EmpOverListP\' 中資料行 \'ApplyName\' 的值是 DBNull。", e);
-                    }
-                }
-                set {
-                    this[this.tableEmpOverListP.ApplyNameColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string depno {
-                get {
-                    try {
-                        return ((string)(this[this.tableEmpOverListP.depnoColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'EmpOverListP\' 中資料行 \'depno\' 的值是 DBNull。", e);
-                    }
-                }
-                set {
-                    this[this.tableEmpOverListP.depnoColumn] = value;
-                }
+                this.tableAnecdoteCaseP = ((AnecdoteCasePDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public string DepName {
                 get {
-                    try {
-                        return ((string)(this[this.tableEmpOverListP.DepNameColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'EmpOverListP\' 中資料行 \'DepName\' 的值是 DBNull。", e);
-                    }
+                    return ((string)(this[this.tableAnecdoteCaseP.DepNameColumn]));
                 }
                 set {
-                    this[this.tableEmpOverListP.DepNameColumn] = value;
+                    this[this.tableAnecdoteCaseP.DepNameColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public System.DateTime realday {
+            public string Car_ID {
                 get {
                     try {
-                        return ((global::System.DateTime)(this[this.tableEmpOverListP.realdayColumn]));
+                        return ((string)(this[this.tableAnecdoteCaseP.Car_IDColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'EmpOverListP\' 中資料行 \'realday\' 的值是 DBNull。", e);
+                        throw new global::System.Data.StrongTypingException("資料表 \'AnecdoteCaseP\' 中資料行 \'Car_ID\' 的值是 DBNull。", e);
                     }
                 }
                 set {
-                    this[this.tableEmpOverListP.realdayColumn] = value;
+                    this[this.tableAnecdoteCaseP.Car_IDColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string applytype {
+            public string Driver {
                 get {
                     try {
-                        return ((string)(this[this.tableEmpOverListP.applytypeColumn]));
+                        return ((string)(this[this.tableAnecdoteCaseP.DriverColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'EmpOverListP\' 中資料行 \'applytype\' 的值是 DBNull。", e);
+                        throw new global::System.Data.StrongTypingException("資料表 \'AnecdoteCaseP\' 中資料行 \'Driver\' 的值是 DBNull。", e);
                     }
                 }
                 set {
-                    this[this.tableEmpOverListP.applytypeColumn] = value;
+                    this[this.tableAnecdoteCaseP.DriverColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string ApplyType_C {
+            public string DriverName {
                 get {
                     try {
-                        return ((string)(this[this.tableEmpOverListP.ApplyType_CColumn]));
+                        return ((string)(this[this.tableAnecdoteCaseP.DriverNameColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'EmpOverListP\' 中資料行 \'ApplyType_C\' 的值是 DBNull。", e);
+                        throw new global::System.Data.StrongTypingException("資料表 \'AnecdoteCaseP\' 中資料行 \'DriverName\' 的值是 DBNull。", e);
                     }
                 }
                 set {
-                    this[this.tableEmpOverListP.ApplyType_CColumn] = value;
+                    this[this.tableAnecdoteCaseP.DriverNameColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public double hours {
+            public string IsExemption {
                 get {
                     try {
-                        return ((double)(this[this.tableEmpOverListP.hoursColumn]));
+                        return ((string)(this[this.tableAnecdoteCaseP.IsExemptionColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'EmpOverListP\' 中資料行 \'hours\' 的值是 DBNull。", e);
+                        throw new global::System.Data.StrongTypingException("資料表 \'AnecdoteCaseP\' 中資料行 \'IsExemption\' 的值是 DBNull。", e);
                     }
                 }
                 set {
-                    this[this.tableEmpOverListP.hoursColumn] = value;
+                    this[this.tableAnecdoteCaseP.IsExemptionColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public double Over100 {
+            public double PaidAmount {
                 get {
                     try {
-                        return ((double)(this[this.tableEmpOverListP.Over100Column]));
+                        return ((double)(this[this.tableAnecdoteCaseP.PaidAmountColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'EmpOverListP\' 中資料行 \'Over100\' 的值是 DBNull。", e);
+                        throw new global::System.Data.StrongTypingException("資料表 \'AnecdoteCaseP\' 中資料行 \'PaidAmount\' 的值是 DBNull。", e);
                     }
                 }
                 set {
-                    this[this.tableEmpOverListP.Over100Column] = value;
+                    this[this.tableAnecdoteCaseP.PaidAmountColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public double Over133 {
+            public double InsuAmount {
                 get {
                     try {
-                        return ((double)(this[this.tableEmpOverListP.Over133Column]));
+                        return ((double)(this[this.tableAnecdoteCaseP.InsuAmountColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'EmpOverListP\' 中資料行 \'Over133\' 的值是 DBNull。", e);
+                        throw new global::System.Data.StrongTypingException("資料表 \'AnecdoteCaseP\' 中資料行 \'InsuAmount\' 的值是 DBNull。", e);
                     }
                 }
                 set {
-                    this[this.tableEmpOverListP.Over133Column] = value;
+                    this[this.tableAnecdoteCaseP.InsuAmountColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public double Over166 {
+            public double PenaltyRatio {
                 get {
                     try {
-                        return ((double)(this[this.tableEmpOverListP.Over166Column]));
+                        return ((double)(this[this.tableAnecdoteCaseP.PenaltyRatioColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'EmpOverListP\' 中資料行 \'Over166\' 的值是 DBNull。", e);
+                        throw new global::System.Data.StrongTypingException("資料表 \'AnecdoteCaseP\' 中資料行 \'PenaltyRatio\' 的值是 DBNull。", e);
                     }
                 }
                 set {
-                    this[this.tableEmpOverListP.Over166Column] = value;
+                    this[this.tableAnecdoteCaseP.PenaltyRatioColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public double Over266 {
+            public double Penalty {
                 get {
                     try {
-                        return ((double)(this[this.tableEmpOverListP.Over266Column]));
+                        return ((double)(this[this.tableAnecdoteCaseP.PenaltyColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'EmpOverListP\' 中資料行 \'Over266\' 的值是 DBNull。", e);
+                        throw new global::System.Data.StrongTypingException("資料表 \'AnecdoteCaseP\' 中資料行 \'Penalty\' 的值是 DBNull。", e);
                     }
                 }
                 set {
-                    this[this.tableEmpOverListP.Over266Column] = value;
+                    this[this.tableAnecdoteCaseP.PenaltyColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string Title {
+            public string CaseOccurrence {
                 get {
                     try {
-                        return ((string)(this[this.tableEmpOverListP.TitleColumn]));
+                        return ((string)(this[this.tableAnecdoteCaseP.CaseOccurrenceColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'EmpOverListP\' 中資料行 \'Title\' 的值是 DBNull。", e);
+                        throw new global::System.Data.StrongTypingException("資料表 \'AnecdoteCaseP\' 中資料行 \'CaseOccurrence\' 的值是 DBNull。", e);
                     }
                 }
                 set {
-                    this[this.tableEmpOverListP.TitleColumn] = value;
+                    this[this.tableAnecdoteCaseP.CaseOccurrenceColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsapplymanNull() {
-                return this.IsNull(this.tableEmpOverListP.applymanColumn);
+            public bool IsCar_IDNull() {
+                return this.IsNull(this.tableAnecdoteCaseP.Car_IDColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetapplymanNull() {
-                this[this.tableEmpOverListP.applymanColumn] = global::System.Convert.DBNull;
+            public void SetCar_IDNull() {
+                this[this.tableAnecdoteCaseP.Car_IDColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsApplyNameNull() {
-                return this.IsNull(this.tableEmpOverListP.ApplyNameColumn);
+            public bool IsDriverNull() {
+                return this.IsNull(this.tableAnecdoteCaseP.DriverColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetApplyNameNull() {
-                this[this.tableEmpOverListP.ApplyNameColumn] = global::System.Convert.DBNull;
+            public void SetDriverNull() {
+                this[this.tableAnecdoteCaseP.DriverColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsdepnoNull() {
-                return this.IsNull(this.tableEmpOverListP.depnoColumn);
+            public bool IsDriverNameNull() {
+                return this.IsNull(this.tableAnecdoteCaseP.DriverNameColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetdepnoNull() {
-                this[this.tableEmpOverListP.depnoColumn] = global::System.Convert.DBNull;
+            public void SetDriverNameNull() {
+                this[this.tableAnecdoteCaseP.DriverNameColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsDepNameNull() {
-                return this.IsNull(this.tableEmpOverListP.DepNameColumn);
+            public bool IsIsExemptionNull() {
+                return this.IsNull(this.tableAnecdoteCaseP.IsExemptionColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetDepNameNull() {
-                this[this.tableEmpOverListP.DepNameColumn] = global::System.Convert.DBNull;
+            public void SetIsExemptionNull() {
+                this[this.tableAnecdoteCaseP.IsExemptionColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsrealdayNull() {
-                return this.IsNull(this.tableEmpOverListP.realdayColumn);
+            public bool IsPaidAmountNull() {
+                return this.IsNull(this.tableAnecdoteCaseP.PaidAmountColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetrealdayNull() {
-                this[this.tableEmpOverListP.realdayColumn] = global::System.Convert.DBNull;
+            public void SetPaidAmountNull() {
+                this[this.tableAnecdoteCaseP.PaidAmountColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsapplytypeNull() {
-                return this.IsNull(this.tableEmpOverListP.applytypeColumn);
+            public bool IsInsuAmountNull() {
+                return this.IsNull(this.tableAnecdoteCaseP.InsuAmountColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetapplytypeNull() {
-                this[this.tableEmpOverListP.applytypeColumn] = global::System.Convert.DBNull;
+            public void SetInsuAmountNull() {
+                this[this.tableAnecdoteCaseP.InsuAmountColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsApplyType_CNull() {
-                return this.IsNull(this.tableEmpOverListP.ApplyType_CColumn);
+            public bool IsPenaltyRatioNull() {
+                return this.IsNull(this.tableAnecdoteCaseP.PenaltyRatioColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetApplyType_CNull() {
-                this[this.tableEmpOverListP.ApplyType_CColumn] = global::System.Convert.DBNull;
+            public void SetPenaltyRatioNull() {
+                this[this.tableAnecdoteCaseP.PenaltyRatioColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IshoursNull() {
-                return this.IsNull(this.tableEmpOverListP.hoursColumn);
+            public bool IsPenaltyNull() {
+                return this.IsNull(this.tableAnecdoteCaseP.PenaltyColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SethoursNull() {
-                this[this.tableEmpOverListP.hoursColumn] = global::System.Convert.DBNull;
+            public void SetPenaltyNull() {
+                this[this.tableAnecdoteCaseP.PenaltyColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsOver100Null() {
-                return this.IsNull(this.tableEmpOverListP.Over100Column);
+            public bool IsCaseOccurrenceNull() {
+                return this.IsNull(this.tableAnecdoteCaseP.CaseOccurrenceColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetOver100Null() {
-                this[this.tableEmpOverListP.Over100Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsOver133Null() {
-                return this.IsNull(this.tableEmpOverListP.Over133Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetOver133Null() {
-                this[this.tableEmpOverListP.Over133Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsOver166Null() {
-                return this.IsNull(this.tableEmpOverListP.Over166Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetOver166Null() {
-                this[this.tableEmpOverListP.Over166Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsOver266Null() {
-                return this.IsNull(this.tableEmpOverListP.Over266Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetOver266Null() {
-                this[this.tableEmpOverListP.Over266Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsTitleNull() {
-                return this.IsNull(this.tableEmpOverListP.TitleColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetTitleNull() {
-                this[this.tableEmpOverListP.TitleColumn] = global::System.Convert.DBNull;
+            public void SetCaseOccurrenceNull() {
+                this[this.tableAnecdoteCaseP.CaseOccurrenceColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -1085,22 +936,22 @@ namespace TyBus_Intranet_Test_V3.App_Code {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        public class EmpOverListPRowChangeEvent : global::System.EventArgs {
+        public class AnecdoteCasePRowChangeEvent : global::System.EventArgs {
             
-            private EmpOverListPRow eventRow;
+            private AnecdoteCasePRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public EmpOverListPRowChangeEvent(EmpOverListPRow row, global::System.Data.DataRowAction action) {
+            public AnecdoteCasePRowChangeEvent(AnecdoteCasePRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public EmpOverListPRow Row {
+            public AnecdoteCasePRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -1116,7 +967,7 @@ namespace TyBus_Intranet_Test_V3.App_Code {
         }
     }
 }
-namespace TyBus_Intranet_Test_V3.App_Code.EmpOverListTableAdapters {
+namespace TyBus_Intranet_Test_V3.App_Code.AnecdoteCasePTableAdapters {
     
     
     /// <summary>
@@ -1128,7 +979,7 @@ namespace TyBus_Intranet_Test_V3.App_Code.EmpOverListTableAdapters {
     [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
         ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class EmpOverListPTableAdapter : global::System.ComponentModel.Component {
+    public partial class AnecdoteCasePTableAdapter : global::System.ComponentModel.Component {
         
         private global::System.Data.SqlClient.SqlDataAdapter _adapter;
         
@@ -1142,7 +993,7 @@ namespace TyBus_Intranet_Test_V3.App_Code.EmpOverListTableAdapters {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        public EmpOverListPTableAdapter() {
+        public AnecdoteCasePTableAdapter() {
             this.ClearBeforeFill = true;
         }
         
@@ -1239,20 +1090,17 @@ namespace TyBus_Intranet_Test_V3.App_Code.EmpOverListTableAdapters {
             this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "EmpOverListP";
-            tableMapping.ColumnMappings.Add("applyman", "applyman");
-            tableMapping.ColumnMappings.Add("ApplyName", "ApplyName");
-            tableMapping.ColumnMappings.Add("depno", "depno");
+            tableMapping.DataSetTable = "AnecdoteCaseP";
             tableMapping.ColumnMappings.Add("DepName", "DepName");
-            tableMapping.ColumnMappings.Add("realday", "realday");
-            tableMapping.ColumnMappings.Add("applytype", "applytype");
-            tableMapping.ColumnMappings.Add("ApplyType_C", "ApplyType_C");
-            tableMapping.ColumnMappings.Add("hours", "hours");
-            tableMapping.ColumnMappings.Add("Over100", "Over100");
-            tableMapping.ColumnMappings.Add("Over133", "Over133");
-            tableMapping.ColumnMappings.Add("Over166", "Over166");
-            tableMapping.ColumnMappings.Add("Over266", "Over266");
-            tableMapping.ColumnMappings.Add("Title", "Title");
+            tableMapping.ColumnMappings.Add("Car_ID", "Car_ID");
+            tableMapping.ColumnMappings.Add("Driver", "Driver");
+            tableMapping.ColumnMappings.Add("DriverName", "DriverName");
+            tableMapping.ColumnMappings.Add("IsExemption", "IsExemption");
+            tableMapping.ColumnMappings.Add("PaidAmount", "PaidAmount");
+            tableMapping.ColumnMappings.Add("InsuAmount", "InsuAmount");
+            tableMapping.ColumnMappings.Add("PenaltyRatio", "PenaltyRatio");
+            tableMapping.ColumnMappings.Add("Penalty", "Penalty");
+            tableMapping.ColumnMappings.Add("CaseOccurrence", "CaseOccurrence");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -1269,25 +1117,9 @@ namespace TyBus_Intranet_Test_V3.App_Code.EmpOverListTableAdapters {
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = @"SELECT          a.applyman, e.NAME AS ApplyName, a.depno,
-                                (SELECT          NAME
-                                  FROM               DEPARTMENT
-                                  WHERE           (DEPNO = a.depno)) AS DepName,
-                                (SELECT          CLASSTXT
-                                  FROM               DBDICB
-                                  WHERE           (CLASSNO = e.TITLE) AND (FKEY = '員工資料        EMPLOYEE        TITLE')) AS Title, a.realday, 
-                            a.applytype,
-                                (SELECT          CLASSTXT
-                                  FROM               DBDICB AS DBDICB_1
-                                  WHERE           (CLASSNO = a.applytype) AND (FKEY = '加班資料檔      OVERDUTY        APPLYTYPE')) 
-                            AS ApplyType_C, a.hours, CASE WHEN a.ApplyType IN ('02', '04') 
-                            THEN a.[Hours] - a.FeedNum - a.BackNum ELSE 0 END AS Over100, ISNULL(a.feednum, 0) + ISNULL(a.FRONTOVER2, 
-                            0) AS Over133, ISNULL(a.backnum, 0) + ISNULL(a.POSTOVER2, 0) AS Over166, ISNULL(a.POSTOVER22, 0) 
-                            AS Over266
-FROM              OVERDUTY AS a LEFT OUTER JOIN
-                            EMPLOYEE AS e ON e.EMPNO = a.applyman
-WHERE          (1 <> 1)
-ORDER BY   a.depno, a.applyman, a.realday";
+            this._commandCollection[0].CommandText = "SELECT          DepName, Car_ID, CaseOccurrence, Driver, DriverName, IsExemption," +
+                " PaidAmount, InsuAmount, PenaltyRatio, \r\n                            Penalty\r\nFR" +
+                "OM              AnecdoteCase\r\nWHERE          (CaseNo = \'\')";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -1295,7 +1127,7 @@ ORDER BY   a.depno, a.applyman, a.realday";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(EmpOverList.EmpOverListPDataTable dataTable) {
+        public virtual int Fill(AnecdoteCaseP.AnecdoteCasePDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -1308,9 +1140,9 @@ ORDER BY   a.depno, a.applyman, a.realday";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual EmpOverList.EmpOverListPDataTable GetData() {
+        public virtual AnecdoteCaseP.AnecdoteCasePDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            EmpOverList.EmpOverListPDataTable dataTable = new EmpOverList.EmpOverListPDataTable();
+            AnecdoteCaseP.AnecdoteCasePDataTable dataTable = new AnecdoteCaseP.AnecdoteCasePDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -1384,7 +1216,7 @@ ORDER BY   a.depno, a.applyman, a.realday";
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        private int UpdateUpdatedRows(EmpOverList dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateUpdatedRows(AnecdoteCaseP dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
             return result;
         }
@@ -1394,7 +1226,7 @@ ORDER BY   a.depno, a.applyman, a.realday";
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        private int UpdateInsertedRows(EmpOverList dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateInsertedRows(AnecdoteCaseP dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
             return result;
         }
@@ -1404,7 +1236,7 @@ ORDER BY   a.depno, a.applyman, a.realday";
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        private int UpdateDeletedRows(EmpOverList dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
+        private int UpdateDeletedRows(AnecdoteCaseP dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
             return result;
         }
@@ -1438,7 +1270,7 @@ ORDER BY   a.depno, a.applyman, a.realday";
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        public virtual int UpdateAll(EmpOverList dataSet) {
+        public virtual int UpdateAll(AnecdoteCaseP dataSet) {
             if ((dataSet == null)) {
                 throw new global::System.ArgumentNullException("dataSet");
             }

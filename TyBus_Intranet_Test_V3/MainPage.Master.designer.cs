@@ -330,6 +330,15 @@ namespace TyBus_Intranet_Test_V3
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl ExportRSPre;
 
         /// <summary>
+        /// DuplicationRuns 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DuplicationRuns;
+
+        /// <summary>
         /// G004 控制項。
         /// </summary>
         /// <remarks>
@@ -724,6 +733,15 @@ namespace TyBus_Intranet_Test_V3
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl EmpESCList;
+
+        /// <summary>
+        /// EmpWorkList 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl EmpWorkList;
 
         /// <summary>
         /// G008 控制項。
@@ -1185,6 +1203,15 @@ namespace TyBus_Intranet_Test_V3
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl EmpCardIDChange;
 
         /// <summary>
+        /// EmpHealthCheckList 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl EmpHealthCheckList;
+
+        /// <summary>
         /// G013 控制項。
         /// </summary>
         /// <remarks>
@@ -1444,6 +1471,15 @@ namespace TyBus_Intranet_Test_V3
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl PermissionSetting;
+
+        /// <summary>
+        /// AnnSignList 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl AnnSignList;
 
         /// <summary>
         /// ContentPlaceHolder1 控制項。

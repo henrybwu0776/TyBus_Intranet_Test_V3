@@ -1,5 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MainPage.Master" AutoEventWireup="true" CodeBehind="AnecdoteCase.aspx.cs" Inherits="TyBus_Intranet_Test_V3.AnecdoteCase" %>
 
+<%@ Register Assembly="Microsoft.ReportViewer.WebForms" Namespace="Microsoft.Reporting.WebForms" TagPrefix="rsweb" %>
+
 <asp:Content ID="AnecdoteCaseForm" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div>
         <a class="titleText-Red">肇事案件處理</a>
@@ -201,6 +203,37 @@
                                     <asp:TextBox ID="eRemark_Edit" runat="server" CssClass="text-Left-Black" TextMode="MultiLine" Text='<%# Eval("Remark") %>' Width="95%" Height="97%" />
                                 </td>
                             </tr>
+                    <tr>
+                        <td class="ColHeight ColBorder ColWidth-8Col" colspan="8">
+                            <asp:Label ID="lbSubTitle_Edit" runat="server" CssClass="titleText-S-Blue" Text="鑑定會審議結果" Width="97%" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="ColHeight ColBorder ColWidth-8Col">
+                            <asp:CheckBox ID="cbIsExemption_Edit" runat="server" CssClass="text-Left-Black" Text="裁定免責" AutoPostBack="true" OnCheckedChanged="cbIsExemption_Edit_CheckedChanged" />
+                            <asp:Label ID="eIsExemption_Edit" runat="server" Text='<%# Eval("IsExemption") %>' Visible="false" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-8Col">
+                            <asp:Label ID="lbPaidAmount_Edit" runat="server" CssClass="text-Right-Blue" Text="已自付總額" Width="95%" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-8Col">
+                            <asp:TextBox ID="ePaidAmount_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("PaidAmount") %>' Width="95%" AutoPostBack="true" OnTextChanged="ePaidAmount_Edit_TextChanged" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-8Col">
+                            <asp:Label ID="lbInsuAmount_Edit" runat="server" CssClass="text-Right-Blue" Text="保險理賠金" Width="95%" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-8Col">
+                            <asp:TextBox ID="eInsuAmount_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("InsuAmount") %>' Width="95%" AutoPostBack="true" OnTextChanged="ePaidAmount_Edit_TextChanged" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-8Col">
+                            <asp:Label ID="lbPenalty_Edit" runat="server" CssClass="text-Right-Blue" Text="罰款比例及分擔額" Width="95%" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-8Col" colspan="2">
+                            <asp:TextBox ID="ePenaltyRatio_Edit" runat="server" CssClass="text-Right-Black" Text='<%# Eval("PenaltyRatio") %>' Width="30%" AutoPostBack="true" OnTextChanged="ePaidAmount_Edit_TextChanged" />
+                            <asp:Label ID="lbSplit_Edit" runat="server" CssClass="text-Left-Black" Text="％" Width="15%" />
+                            <asp:Label ID="ePenalty_Edit" runat="server" CssClass="text-Left-Black" Text='<%#Eval("Penalty") %>' Width="45%" /> 
+                        </td>
+                    </tr>
                             <tr>
                                 <td class="ColWidth-8Col" />
                                 <td class="ColWidth-8Col" />
@@ -314,6 +347,37 @@
                                     <asp:TextBox ID="eRemark_INS" runat="server" CssClass="text-Left-Black" TextMode="MultiLine" Text='<%# Eval("Remark") %>' Width="95%" Height="97%" />
                                 </td>
                             </tr>
+                    <tr>
+                        <td class="ColHeight ColBorder ColWidth-8Col" colspan="8">
+                            <asp:Label ID="lbSubTitle_INS" runat="server" CssClass="titleText-S-Blue" Text="鑑定會審議結果" Width="97%" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="ColHeight ColBorder ColWidth-8Col">
+                            <asp:CheckBox ID="cbIsExemption_INS" runat="server" CssClass="text-Left-Black" Text="裁定免責" AutoPostBack="true" OnCheckedChanged="cbIsExemption_INS_CheckedChanged" />
+                            <asp:Label ID="eIsExemption_INS" runat="server" Text='<%# Eval("IsExemption") %>' Visible="false" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-8Col">
+                            <asp:Label ID="lbPaidAmount_INS" runat="server" CssClass="text-Right-Blue" Text="已自付總額" Width="95%" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-8Col">
+                            <asp:TextBox ID="ePaidAmount_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("PaidAmount") %>' Width="95%" AutoPostBack="true" OnTextChanged="ePaidAmount_INS_TextChanged" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-8Col">
+                            <asp:Label ID="lbInsuAmount_INS" runat="server" CssClass="text-Right-Blue" Text="保險理賠金" Width="95%" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-8Col">
+                            <asp:TextBox ID="eInsuAmount_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("InsuAmount") %>' Width="95%" AutoPostBack="true" OnTextChanged="ePaidAmount_INS_TextChanged" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-8Col">
+                            <asp:Label ID="lbPenalty_INS" runat="server" CssClass="text-Right-Blue" Text="罰款比例及分擔額" Width="95%" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-8Col" colspan="2">
+                            <asp:TextBox ID="ePenaltyRatio_INS" runat="server" CssClass="text-Right-Black" Text='<%# Eval("PenaltyRatio") %>' Width="30%" AutoPostBack="true" OnTextChanged="ePaidAmount_INS_TextChanged" />
+                            <asp:Label ID="lbSplit_INS" runat="server" CssClass="text-Left-Black" Text="％" Width="15%" />
+                            <asp:Label ID="ePenalty_INS" runat="server" CssClass="text-Left-Black" Text='<%#Eval("Penalty") %>' Width="45%" /> 
+                        </td>
+                    </tr>
                             <tr>
                                 <td class="ColWidth-8Col" />
                                 <td class="ColWidth-8Col" />
@@ -334,6 +398,7 @@
                 &nbsp;<asp:Button ID="bbDelete_Edit" runat="server" CausesValidation="False" OnClick="bbDelete_Edit_Click" CssClass="button-Red" Text="刪除" Width="90px" />
                 &nbsp;<asp:Button ID="bbExportERP_List" runat="server" CausesValidation="false" OnClick="bbExportERP_Click" CssClass="button-Blue" Text="ERP同步" Width="120px" />
                 &nbsp;<asp:Button ID="bbDelERP_List" runat="server" CausesValidation="false" OnClick="bbDelERP_List_Click" CssClass="button-Red" Text="取消同步" Width="120px" />
+                &nbsp;<asp:Button ID="bbReport" runat="server" CausesValidation="false" OnClick="bbReport_Click" CssClass="button-Black" Text="列印審議通知" Width="120px" />
                 <table class="TableSetting">
                     <tr>
                         <td class="ColHeight ColBorder ColWidth-8Col">
@@ -425,6 +490,37 @@
                         </td>
                     </tr>
                     <tr>
+                        <td class="ColHeight ColBorder ColWidth-8Col" colspan="8">
+                            <asp:Label ID="lbSubTitle_List" runat="server" CssClass="titleText-S-Blue" Text="鑑定會審議結果" Width="97%" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="ColHeight ColBorder ColWidth-8Col">
+                            <asp:CheckBox ID="cbIsExemption_List" runat="server" CssClass="text-Left-Black" Text="裁定免責" />
+                            <asp:Label ID="eIsExemption_List" runat="server" Text='<%# Eval("IsExemption") %>' Visible="false" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-8Col">
+                            <asp:Label ID="lbPaidAmount_List" runat="server" CssClass="text-Right-Blue" Text="已自付總額" Width="95%" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-8Col">
+                            <asp:Label ID="ePaidAmount_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("PaidAmount") %>' Width="95%" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-8Col">
+                            <asp:Label ID="lbInsuAmount_List" runat="server" CssClass="text-Right-Blue" Text="保險理賠金" Width="95%" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-8Col">
+                            <asp:Label ID="eInsuAmount_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("InsuAmount") %>' Width="95%" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-8Col">
+                            <asp:Label ID="lbPenalty_List" runat="server" CssClass="text-Right-Blue" Text="罰款比例及分擔額" Width="95%" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-8Col" colspan="2">
+                            <asp:Label ID="ePenaltyRatio_List" runat="server" CssClass="text-Right-Black" Text='<%# Eval("PenaltyRatio") %>' Width="30%" />
+                            <asp:Label ID="lbSplit_List" runat="server" CssClass="text-Left-Black" Text="％" Width="15%" />
+                            <asp:Label ID="ePenalty_List" runat="server" CssClass="text-Left-Black" Text='<%#Eval("Penalty") %>' Width="45%" /> 
+                        </td>
+                    </tr>
+                    <tr>
                         <td class="ColWidth-8Col" />
                         <td class="ColWidth-8Col" />
                         <td class="ColWidth-8Col" />
@@ -439,11 +535,11 @@
         </asp:FormView>
     </asp:Panel>
     <asp:SqlDataSource ID="sdsAnecdoteCaseA_List" runat="server" ConnectionString="<%$ ConnectionStrings:connERPSQL %>"
-        SelectCommand="SELECT CaseNo, HasInsurance, DepName, BuildDate, (SELECT NAME FROM EMPLOYEE WHERE (EMPNO = a.BuildMan)) AS BuildManName, Car_ID, DriverName, InsuMan, AnecdotalResRatio, IsNoDeduction, DeductionDate, Remark, ERPCouseNo,CaseClose FROM AnecdoteCase AS a WHERE (1 &lt;&gt; 1)"></asp:SqlDataSource>
+        SelectCommand="SELECT CaseNo, HasInsurance, DepName, BuildDate, (SELECT NAME FROM EMPLOYEE WHERE (EMPNO = a.BuildMan)) AS BuildManName, Car_ID, DriverName, InsuMan, AnecdotalResRatio, IsNoDeduction, DeductionDate, Remark, ERPCouseNo, CaseClose, IsExemption, PaidAmount, InsuAmount, Penalty, PenaltyRatio FROM AnecdoteCase AS a WHERE (1 &lt;&gt; 1)"></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsAnecdoteCaseA_Data" runat="server" ConnectionString="<%$ ConnectionStrings:connERPSQL %>" 
         DeleteCommand="DELETE FROM AnecdoteCase WHERE (CaseNo = @CaseNo)" 
         InsertCommand="INSERT INTO AnecdoteCase(CaseNo, HasInsurance, DepNo, DepName, BuildDate, BuildMan, Car_ID, Driver, DriverName, InsuMan, AnecdotalResRatio, IsNoDeduction, DeductionDate, Remark, CaseOccurrence,CaseClose) VALUES (@CaseNo, @HasInsurance, @DepNo, @DepName, @BuildDate, @BuildMan, @Car_ID, @Driver, @DriverName, @InsuMan, @AnecdotalResRatio, @IsNoDeduction, @DeductionDate, @Remark, @CaseOccurrence,@CaseClose)" 
-        SelectCommand="SELECT CaseNo, HasInsurance, DepNo, DepName, BuildDate, BuildMan, (SELECT NAME FROM EMPLOYEE WHERE (EMPNO = a.BuildMan)) AS BuildManName, Car_ID, Driver, DriverName, InsuMan, AnecdotalResRatio, IsNoDeduction, DeductionDate, Remark, CaseOccurrence, ERPCouseNo,CaseClose FROM AnecdoteCase AS a WHERE (CaseNo = @CaseNo)" 
+        SelectCommand="SELECT CaseNo, HasInsurance, DepNo, DepName, BuildDate, BuildMan, (SELECT NAME FROM EMPLOYEE WHERE (EMPNO = a.BuildMan)) AS BuildManName, Car_ID, Driver, DriverName, InsuMan, AnecdotalResRatio, IsNoDeduction, DeductionDate, Remark, CaseOccurrence, ERPCouseNo, CaseClose, InsuAmount, PenaltyRatio, Penalty, PaidAmount, IsExemption FROM AnecdoteCase AS a WHERE (CaseNo = @CaseNo)" 
         UpdateCommand="UPDATE AnecdoteCase SET HasInsurance = @HasInsurance, DepNo = @DepNo, DepName = @DepName, Car_ID = @Car_ID, Driver = @Driver, DriverName = @DriverName, InsuMan = @InsuMan, AnecdotalResRatio = @AnecdotalResRatio, IsNoDeduction = @IsNoDeduction, DeductionDate = @DeductionDate, Remark = @Remark, BuildDate = @BuildDate, CaseOccurrence = @CaseOccurrence,CaseClose=@CaseClose WHERE (CaseNo = @CaseNo)">
         <DeleteParameters>
             <asp:Parameter Name="CaseNo" />
@@ -861,6 +957,23 @@
                 </table>
             </ItemTemplate>
         </asp:FormView>
+    </asp:Panel>
+    <asp:Panel ID="plPrint" runat="server" CssClass="PrintPanel">
+        <asp:Button ID="bbCloseReport" runat="server" CssClass="button-Red" OnClick="bbCloseReport_Click" Text="結束預覽" Width="120px" />
+        <rsweb:ReportViewer ID="rvPrint" runat="server" BackColor="" ClientIDMode="AutoID" HighlightBackgroundColor=""
+            InternalBorderColor="204, 204, 204" InternalBorderStyle="Solid" InternalBorderWidth="1px"
+            LinkActiveColor="" LinkActiveHoverColor="" LinkDisabledColor=""
+            PrimaryButtonBackgroundColor="" PrimaryButtonForegroundColor="" PrimaryButtonHoverBackgroundColor="" PrimaryButtonHoverForegroundColor=""
+            SecondaryButtonBackgroundColor="" SecondaryButtonForegroundColor="" SecondaryButtonHoverBackgroundColor="" SecondaryButtonHoverForegroundColor=""
+            SplitterBackColor=""
+            ToolbarDividerColor="" ToolbarForegroundColor="" ToolbarForegroundDisabledColor=""
+            ToolbarHoverBackgroundColor="" ToolbarHoverForegroundColor=""
+            ToolBarItemBorderColor="" ToolBarItemBorderStyle="Solid" ToolBarItemBorderWidth="1px" ToolBarItemHoverBackColor=""
+            ToolBarItemPressedBorderColor="51, 102, 153" ToolBarItemPressedBorderStyle="Solid" ToolBarItemPressedBorderWidth="1px"
+            ToolBarItemPressedHoverBackColor="153, 187, 226" Height="600px" Width="100%" PageCountMode="Actual">
+            <LocalReport ReportPath="Report\AnecdoteCaseP2.rdlc">
+            </LocalReport>
+        </rsweb:ReportViewer>
     </asp:Panel>
     <asp:SqlDataSource ID="sdsAnecdoteCaseB_List" runat="server" ConnectionString="<%$ ConnectionStrings:connERPSQL %>" ProviderName="<%$ ConnectionStrings:connERPSQL.ProviderName %>" SelectCommand="SELECT CaseNo, Items, CaseNoItems, Relationship, RelCar_ID, EstimatedAmount, ThirdInsurance, CompInsurance, DriverSharing, CompanySharing, CarDamageAMT, PersonDamageAMT, RelationComp, ReconciliationDate, PassengerInsu, Remark FROM AnecdoteCaseB WHERE (CaseNo = @CaseNo)">
         <SelectParameters>

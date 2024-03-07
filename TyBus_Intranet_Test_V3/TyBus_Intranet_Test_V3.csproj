@@ -131,6 +131,7 @@
     <Content Include="AnecdoteCaseP.aspx" />
     <Content Include="AnnList.aspx" />
     <Content Include="AnnSearch.aspx" />
+    <Content Include="AnnSignList.aspx" />
     <Content Include="App_Code\AdviceReportP.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -499,6 +500,7 @@
     <Content Include="DriverWorkStateBatch.aspx" />
     <Content Include="DriverWorkStateList.aspx" />
     <Content Include="DriverYearSummary.aspx" />
+    <Content Include="DuplicationRuns.aspx" />
     <Content Include="EditOfficialDocument.aspx" />
     <Content Include="EducationList.aspx" />
     <Content Include="EmpAltersReport.aspx" />
@@ -507,12 +509,14 @@
     <Content Include="EmpDutyHours.aspx" />
     <Content Include="EmpDutyHoursP.aspx" />
     <Content Include="EmpESCList.aspx" />
+    <Content Include="EmpHealthCheckList.aspx" />
     <Content Include="EmployeeYearMerits.aspx" />
     <Content Include="EmpMeritsPrint.aspx" />
     <Content Include="EmpMultiDep.aspx" />
     <Content Include="EmpOverList.aspx" />
     <Content Include="EmpPayList.aspx" />
     <Content Include="EmpPayRangeList.aspx" />
+    <Content Include="EmpWorkList.aspx" />
     <Content Include="Error.aspx" />
     <Content Include="ExceedSpeedReport.aspx" />
     <Content Include="ExportRealCompanyPay.aspx" />
@@ -548,6 +552,17 @@
     <Content Include="RetireFreeTicketList.aspx" />
     <Content Include="App_Code\DriverWorkHourAnalysisP.xsc">
       <DependentUpon>DriverWorkHourAnalysisP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\AnecdoteCaseP.xsc">
+      <DependentUpon>AnecdoteCaseP.xsd</DependentUpon>
+    </Content>
+    <None Include="App_Code\AnecdoteCaseP.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>AnecdoteCaseP.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="App_Code\AnecdoteCaseP.xss">
+      <DependentUpon>AnecdoteCaseP.xsd</DependentUpon>
     </Content>
     <None Include="App_Code\DriverWorkHourAnalysisP.xsd" />
     <Content Include="App_Code\DriverWorkHourAnalysisP.xss">
@@ -602,6 +617,17 @@
     </Content>
     <Content Include="App_Code\ExportRentCarData.xsc">
       <DependentUpon>ExportRentCarData.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\EmpWorkList.xsc">
+      <DependentUpon>EmpWorkList.xsd</DependentUpon>
+    </Content>
+    <None Include="App_Code\EmpWorkList.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>EmpWorkList.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="App_Code\EmpWorkList.xss">
+      <DependentUpon>EmpWorkList.xsd</DependentUpon>
     </Content>
     <None Include="App_Code\ExportRentCarData.xsd">
       <SubType>Designer</SubType>
@@ -871,6 +897,23 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EducationListP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\EmpWorkList.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmpWorkList.xsd</DependentUpon>
+    </Content>
+    <Compile Include="AnnSignList.aspx.cs">
+      <DependentUpon>AnnSignList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AnnSignList.aspx.designer.cs">
+      <DependentUpon>AnnSignList.aspx</DependentUpon>
+    </Compile>
+    <Content Include="App_Code\AnecdoteCaseP.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AnecdoteCaseP.xsd</DependentUpon>
     </Content>
     <Compile Include="AssetReportList.aspx.cs">
       <DependentUpon>AssetReportList.aspx</DependentUpon>
@@ -1215,6 +1258,13 @@
     <Compile Include="DriverYearSummary.aspx.designer.cs">
       <DependentUpon>DriverYearSummary.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DuplicationRuns.aspx.cs">
+      <DependentUpon>DuplicationRuns.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DuplicationRuns.aspx.designer.cs">
+      <DependentUpon>DuplicationRuns.aspx</DependentUpon>
+    </Compile>
     <Compile Include="EditOfficialDocument.aspx.cs">
       <DependentUpon>EditOfficialDocument.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1271,6 +1321,13 @@
     <Compile Include="EmpESCList.aspx.designer.cs">
       <DependentUpon>EmpESCList.aspx</DependentUpon>
     </Compile>
+    <Compile Include="EmpHealthCheckList.aspx.cs">
+      <DependentUpon>EmpHealthCheckList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EmpHealthCheckList.aspx.designer.cs">
+      <DependentUpon>EmpHealthCheckList.aspx</DependentUpon>
+    </Compile>
     <Compile Include="EmployeeYearMerits.aspx.cs">
       <DependentUpon>EmployeeYearMerits.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1312,6 +1369,13 @@
     </Compile>
     <Compile Include="EmpPayRangeList.aspx.designer.cs">
       <DependentUpon>EmpPayRangeList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EmpWorkList.aspx.cs">
+      <DependentUpon>EmpWorkList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EmpWorkList.aspx.designer.cs">
+      <DependentUpon>EmpWorkList.aspx</DependentUpon>
     </Compile>
     <Compile Include="Error.aspx.cs">
       <DependentUpon>Error.aspx</DependentUpon>
@@ -1943,7 +2007,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="EmpMeritsP_Detail.rdlc" />
+    <EmbeddedResource Include="Report\AnecdoteCaseP2.rdlc" />
+    <EmbeddedResource Include="Report\EmpMeritsP_Detail.rdlc" />
     <EmbeddedResource Include="Report\AdviceReportP.rdlc" />
     <EmbeddedResource Include="Report\AnecdoteCaseP.rdlc" />
     <EmbeddedResource Include="Report\AnecdoteCaseP_DepNo.rdlc" />
@@ -1966,6 +2031,7 @@
     <EmbeddedResource Include="Report\EmpESCListP.rdlc" />
     <EmbeddedResource Include="Report\EmpMeritsPrint.rdlc" />
     <EmbeddedResource Include="Report\EmpOverListP.rdlc" />
+    <EmbeddedResource Include="Report\EmpWorkListP.rdlc" />
     <EmbeddedResource Include="Report\ExceedSpeedReportP.rdlc" />
     <EmbeddedResource Include="Report\FixRequestP.rdlc" />
     <EmbeddedResource Include="Report\FixSheetP.rdlc" />

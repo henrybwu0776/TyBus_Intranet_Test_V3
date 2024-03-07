@@ -9,11 +9,13 @@ using System.Data.SqlClient;
 using System.Globalization;
 using System.IO;
 using System.Web;
+using System.Web.UI;
 using System.Web.UI.WebControls;
+using Microsoft.Reporting.WebForms;
 
 namespace TyBus_Intranet_Test_V3
 {
-    public partial class AnecdoteCase : System.Web.UI.Page
+    public partial class AnecdoteCase : Page
     {
         PublicFunction PF = new PublicFunction(); //加入公用程式碼參考
         private string vLoginID = "";
@@ -75,6 +77,11 @@ namespace TyBus_Intranet_Test_V3
                         eDepNo_End_Search.Text = "";
                         eDepNo_Start_Search.Enabled = (vStationNo == "");
                         eDepNo_End_Search.Enabled = (vStationNo == "");
+
+                        plPrint.Visible = false;
+                        plSearch.Visible = true;
+                        plMainDataShow.Visible = true;
+                        plDetailDataShow.Visible = true;
                     }
                     else
                     {
@@ -117,7 +124,10 @@ namespace TyBus_Intranet_Test_V3
             string vResultStr = "SELECT CaseNo, HasInsurance, DepNo, DepName, BuildDate, BuildMan, " + Environment.NewLine +
                                 "       (SELECT NAME FROM Employee WHERE (EMPNO = AnecdoteCase.BuildMan)) AS BuildManName, " + Environment.NewLine +
                                 "       Car_ID, Driver, DriverName, InsuMan, AnecdotalResRatio, " + Environment.NewLine +
-                                "       IsNoDeduction, DeductionDate, Remark, CaseOccurrence, ERPCouseNo, CaseClose " + Environment.NewLine +
+                                //2024.05.08 新增欄位
+                                //"       IsNoDeduction, DeductionDate, Remark, CaseOccurrence, ERPCouseNo, CaseClose " + Environment.NewLine +
+                                "       IsNoDeduction, DeductionDate, Remark, CaseOccurrence, ERPCouseNo, CaseClose, " + Environment.NewLine +
+                                "       IsExemption, PaidAmount, InsuAmount, Penalty, PenaltyRatio " + Environment.NewLine +
                                 "  FROM AnecdoteCase " + Environment.NewLine +
                                 " where isnull(CaseNo, '') <> '' " + Environment.NewLine +
                                 vHasInsuStr +
@@ -157,7 +167,10 @@ namespace TyBus_Intranet_Test_V3
                                 "       (SELECT NAME FROM Employee WHERE (EMPNO = AnecdoteCase.BuildMan)) AS BuildManName, " + Environment.NewLine +
                                 "       Car_ID, Driver, DriverName, InsuMan, AnecdotalResRatio, " + Environment.NewLine +
                                 "       case when IsNoDeduction = 1 then '是' else '否' end IsNoDeduction, " + Environment.NewLine +
-                                "       DeductionDate, Remark, CaseOccurrence, ERPCouseNo, CaseClose " + Environment.NewLine +
+                                //2024.05.08 新增欄位
+                                //"       DeductionDate, Remark, CaseOccurrence, ERPCouseNo, CaseClose " + Environment.NewLine +
+                                "       DeductionDate, Remark, CaseOccurrence, ERPCouseNo, CaseClose, " + Environment.NewLine +
+                                "       IsExemption, PaidAmount, InsuAmount, Penalty, PenaltyRatio " + Environment.NewLine +
                                 "  FROM AnecdoteCase " + Environment.NewLine +
                                 " where isnull(CaseNo, '') <> '' " + Environment.NewLine +
                                 vHasInsuStr +
@@ -516,7 +529,7 @@ namespace TyBus_Intranet_Test_V3
                             vTempStr = vTempStr.Replace("自行", "");
                             vPassengerInsu = "0"; //乘客險先用 0 轉入
                             vReconciliationDate = (vTempStr != "") ? (DateTime.ParseExact(vTempStr, "yyy.MM.dd", CultureInfo.InvariantCulture).AddYears(1911)).ToString("yyyy/MM/dd") : vTempStr;
-                            //*/ 
+                            //*/
 
                             using (SqlDataSource dsTempB = new SqlDataSource())
                             {
@@ -885,10 +898,12 @@ namespace TyBus_Intranet_Test_V3
                     vSQLStr_Temp = "INSERT INTO [dbo].[AnecdoteCaseHistory] " + Environment.NewLine +
                                    "            ([HistoryNo],[CaseNo],[HasInsurance],[DepNo],[DepName],[BuildDate],[BuildMan],[Car_ID],[Driver], " + Environment.NewLine +
                                    "             [DriverName],[InsuMan],[AnecdotalResRatio],[IsNoDeduction],[DeductionDate],[Remark]," + Environment.NewLine +
-                                   "             [ModifyType],[ModifyDate],[ModifyMan],[CaseOccurrence],[ERPCouseNo],[CaseClose]) " + Environment.NewLine +
+                                   "             [ModifyType],[ModifyDate],[ModifyMan],[CaseOccurrence],[ERPCouseNo],[CaseClose], " + Environment.NewLine +
+                                   "             [IsExemption], [PaidAmount], [InsuAmount], [PenaltyRatio], [Penalty]) " + Environment.NewLine +
                                    "select '" + vNewHistoryNo + "',[CaseNo],[HasInsurance],[DepNo],[DepName],[BuildDate],[BuildMan],[Car_ID],[Driver], " + Environment.NewLine +
                                    "       [DriverName],[InsuMan],[AnecdotalResRatio],[IsNoDeduction],[DeductionDate],[Remark]," + Environment.NewLine +
-                                   "       'EDIT',GetDate(),'" + vLoginID + "',[CaseOccurrence],[ERPCouseNo],[CaseClose] " + Environment.NewLine +
+                                   "       'EDIT',GetDate(),'" + vLoginID + "',[CaseOccurrence],[ERPCouseNo],[CaseClose], " + Environment.NewLine +
+                                   "       [IsExemption], [PaidAmount], [InsuAmount], [PenaltyRatio], [Penalty] " + Environment.NewLine +
                                    "  from [dbo].[AnecdoteCase] " + Environment.NewLine +
                                    " where CaseNo = '" + vCaseNo_Temp + "' ";
                     PF.ExecSQL(vConnStr, vSQLStr_Temp);
@@ -908,6 +923,11 @@ namespace TyBus_Intranet_Test_V3
                     TextBox eBuildDate_Edit = (TextBox)fvAnecdoteCaseA_Data.FindControl("eBuildDate_Edit");
                     TextBox eCaseOccurrence_Edit = (TextBox)fvAnecdoteCaseA_Data.FindControl("eCaseOccurrence_Edit");
                     Label eCaseCloseTitle_Edit = (Label)fvAnecdoteCaseA_Data.FindControl("eCaseCloseTitle_Edit");
+                    Label eIsExemption_Edit = (Label)fvAnecdoteCaseA_Data.FindControl("eIsExemption_Edit");
+                    TextBox ePaidAmount_Edit = (TextBox)fvAnecdoteCaseA_Data.FindControl("ePaidAmount_Edit");
+                    TextBox eInsuAmount_Edit = (TextBox)fvAnecdoteCaseA_Data.FindControl("eInsuAmount_Edit");
+                    TextBox ePenaltyRatio_Edit = (TextBox)fvAnecdoteCaseA_Data.FindControl("ePenaltyRatio_Edit");
+                    Label ePenalty_Edit = (Label)fvAnecdoteCaseA_Data.FindControl("ePenalty_Edit");
 
                     string vHasInsurance_Temp = (eHasInsuranceTitle_Edit.Text.Trim() != "") ? eHasInsuranceTitle_Edit.Text.Trim() : "False";
                     string vDepNo_Temp = eDepNo_Edit.Text.Trim();
@@ -923,11 +943,22 @@ namespace TyBus_Intranet_Test_V3
                     string vBuildDate_Temp = (eBuildDate_Edit.Text.Trim() != "") ? DateTime.Parse(eBuildDate_Edit.Text.Trim()).ToShortDateString() : "";
                     string vCaseOccurrence_Temp = eCaseOccurrence_Edit.Text.Trim();
                     string vCaseClose_Temp = (eCaseCloseTitle_Edit.Text.Trim() != "") ? eCaseCloseTitle_Edit.Text.Trim() : "False";
+                    string vIsExemption_Temp = (eIsExemption_Edit.Text.Trim() != "") ? eIsExemption_Edit.Text.Trim() : "N";
+                    double vPaidAmount_D = 0.0;
+                    string vPaidAmount_Temp = (Double.TryParse(ePaidAmount_Edit.Text.Trim(), out vPaidAmount_D)) ? vPaidAmount_D.ToString() : "0.0";
+                    double vInsuAmount_D = 0.0;
+                    string vInsuAmount_Temp = (double.TryParse(eInsuAmount_Edit.Text.Trim(), out vInsuAmount_D)) ? vInsuAmount_D.ToString() : "0.0";
+                    double vPenaltyRatio_D = 0.0;
+                    string vPenaltyRatio_Temp = (double.TryParse(ePenaltyRatio_Edit.Text.Trim(), out vPenaltyRatio_D)) ? vPenaltyRatio_D.ToString() : "0.0";
+                    double vPenalty_D = 0.0;
+                    string vPenalty_Temp = (double.TryParse(ePenalty_Edit.Text.Trim(), out vPenalty_D)) ? vPenalty_D.ToString() : "0.0";
+
 
                     sdsAnecdoteCaseA_Data.UpdateCommand = "UPDATE AnecdoteCase " + Environment.NewLine +
                                                           "   SET HasInsurance = @HasInsurance, DepNo = @DepNo, DepName = @DepName, Car_ID = @Car_ID, Driver = @Driver, " + Environment.NewLine +
                                                           "       DriverName = @DriverName, InsuMan = @InsuMan, AnecdotalResRatio = @AnecdotalResRatio, IsNoDeduction = @IsNoDeduction, " + Environment.NewLine +
-                                                          "       DeductionDate = @DeductionDate, Remark = @Remark, BuildDate = @BuildDate, CaseOccurrence = @CaseOccurrence, CaseClose = @CaseClose " + Environment.NewLine +
+                                                          "       DeductionDate = @DeductionDate, Remark = @Remark, BuildDate = @BuildDate, CaseOccurrence = @CaseOccurrence, CaseClose = @CaseClose, " + Environment.NewLine +
+                                                          "       IsExemption = @IsExemption, PaidAmount = @PaidAmount, InsuAmount = @InsuAmount, PenaltyRatio = @PenaltyRatio, Penalty = @Penalty " + Environment.NewLine +
                                                           " WHERE (CaseNo = @CaseNo)";
                     sdsAnecdoteCaseA_Data.UpdateParameters.Clear();
                     sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("CaseNo", DbType.String, vCaseNo_Temp));
@@ -945,6 +976,11 @@ namespace TyBus_Intranet_Test_V3
                     sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("BuildDate", DbType.Date, (vBuildDate_Temp != "") ? vBuildDate_Temp : string.Empty));
                     sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("CaseOccurrence", DbType.String, (vCaseOccurrence_Temp != "") ? vCaseOccurrence_Temp : string.Empty));
                     sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("CaseClose", DbType.Boolean, vCaseClose_Temp));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("IsExemption", DbType.String, vIsExemption_Temp));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("PaidAmount", DbType.Double, vPaidAmount_Temp));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("InsuAmount", DbType.Double, vInsuAmount_Temp));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("PenaltyRatio", DbType.Double, vPenaltyRatio_Temp));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("Penalty", DbType.Double, vPenalty_Temp));
 
                     sdsAnecdoteCaseA_Data.Update();
                     fvAnecdoteCaseA_Data.ChangeMode(FormViewMode.ReadOnly);
@@ -1090,12 +1126,28 @@ namespace TyBus_Intranet_Test_V3
                     string vCaseOccurrence_Temp = eCaseOccurrence_INS.Text.Trim();
                     Label eCaseCloseTitle_INS = (Label)fvAnecdoteCaseA_Data.FindControl("eCaseCloseTitle_INS");
                     string vCaseClose_Temp = (eCaseCloseTitle_INS.Text.Trim() != "") ? eCaseCloseTitle_INS.Text.Trim() : "False";
+                    Label eIsExemption_INS = (Label)fvAnecdoteCaseA_Data.FindControl("eIsExemption_INS");
+                    string vIsExemption_Temp = (eIsExemption_INS.Text.Trim() != "") ? eIsExemption_INS.Text.Trim() : "N";
+                    TextBox ePaidAmount_INS = (TextBox)fvAnecdoteCaseA_Data.FindControl("ePaidAmount_INS");
+                    double vPaidAmount_D = 0.0;
+                    string vPaidAmount_Temp = (Double.TryParse(ePaidAmount_INS.Text.Trim(), out vPaidAmount_D)) ? vPaidAmount_D.ToString() : "0.0";
+                    TextBox eInsuAmount_INS = (TextBox)fvAnecdoteCaseA_Data.FindControl("eInsuAmount_INS");
+                    double vInsuAmount_D = 0.0;
+                    string vInsuAmount_Temp = (double.TryParse(eInsuAmount_INS.Text.Trim(), out vInsuAmount_D)) ? vInsuAmount_D.ToString() : "0.0";
+                    TextBox ePenaltyRatio_INS = (TextBox)fvAnecdoteCaseA_Data.FindControl("ePenaltyRatio_INS");
+                    double vPenaltyRatio_D = 0.0;
+                    string vPenaltyRatio_Temp = (double.TryParse(ePenaltyRatio_INS.Text.Trim(), out vPenaltyRatio_D)) ? vPenaltyRatio_D.ToString() : "0.0";
+                    Label ePenalty_INS = (Label)fvAnecdoteCaseA_Data.FindControl("ePenalty_INS");
+                    double vPenalty_D = 0.0;
+                    string vPenalty_Temp = (double.TryParse(ePenalty_INS.Text.Trim(), out vPenalty_D)) ? vPenalty_D.ToString() : "0.0";
 
                     sdsAnecdoteCaseA_Data.InsertCommand = "INSERT INTO AnecdoteCase " + Environment.NewLine +
                                                           "       (CaseNo, HasInsurance, DepNo, DepName, BuildDate, BuildMan, Car_ID, Driver, DriverName, " + Environment.NewLine +
-                                                          "        InsuMan, AnecdotalResRatio, IsNoDeduction, DeductionDate, Remark, CaseOccurrence, CaseClose) " + Environment.NewLine +
+                                                          "        InsuMan, AnecdotalResRatio, IsNoDeduction, DeductionDate, Remark, CaseOccurrence, CaseClose, " + Environment.NewLine +
+                                                          "        IsExemption, PaidAmount, InsuAmount, PenaltyRatio, Penalty) " + Environment.NewLine +
                                                           "VALUES (@CaseNo, @HasInsurance, @DepNo, @DepName, @BuildDate, @BuildMan, @Car_ID, @Driver, @DriverName, " + Environment.NewLine +
-                                                          "        @InsuMan, @AnecdotalResRatio, @IsNoDeduction, @DeductionDate, @Remark, @CaseOccurrence, @CaseClose)";
+                                                          "        @InsuMan, @AnecdotalResRatio, @IsNoDeduction, @DeductionDate, @Remark, @CaseOccurrence, @CaseClose, " + Environment.NewLine +
+                                                          "        @IsExemption, @PaidAmount, @InsuAmount, @PenaltyRatio, @Penalty)";
                     sdsAnecdoteCaseA_Data.InsertParameters.Clear();
                     sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("CaseNo", DbType.String, vCaseNo_Temp.Trim()));
                     sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("HasInsurance", DbType.Boolean, vHasInsurance_Temp));
@@ -1113,6 +1165,11 @@ namespace TyBus_Intranet_Test_V3
                     sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("Remark", DbType.String, (vRemark_Temp != "") ? vRemark_Temp : String.Empty));
                     sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("CaseOccurrence", DbType.String, (vCaseOccurrence_Temp != "") ? vCaseOccurrence_Temp : String.Empty));
                     sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("CaseClose", DbType.Boolean, (vCaseClose_Temp != "") ? vCaseClose_Temp : "False"));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("IsExemption", DbType.String, vIsExemption_Temp));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("PaidAmount", DbType.Double, vPaidAmount_Temp));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("InsuAmount", DbType.Double, vInsuAmount_Temp));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("PenaltyRatio", DbType.Double, vPenaltyRatio_Temp));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("Penalty", DbType.Double, vPenalty_Temp));
                     sdsAnecdoteCaseA_Data.Insert();
                     fvAnecdoteCaseA_Data.ChangeMode(FormViewMode.ReadOnly);
                     gridAnecdoteCaseA_List.DataBind();
@@ -1315,6 +1372,12 @@ namespace TyBus_Intranet_Test_V3
                         Button bbDelERP_Temp = (Button)fvAnecdoteCaseA_Data.FindControl("bbDelERP_List");
                         bbExportERP_Temp.Visible = ((vAllowDep) && (eERPCouseNo_Temp.Text.Trim() == ""));
                         bbDelERP_Temp.Visible = ((vAllowDep) && (eERPCouseNo_Temp.Text.Trim() != ""));
+                        Label eIsExemption_Temp = (Label)fvAnecdoteCaseA_Data.FindControl("eIsExemption_List");
+                        if (eIsExemption_Temp != null)
+                        {
+                            CheckBox cbIsExemption_Temp = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbIsExemption_List");
+                            cbIsExemption_Temp.Checked = (eIsExemption_Temp.Text.Trim().ToUpper() == "Y");
+                        }
                     }
                     /* 以下是用來限制各車站人員登入之後的權限用的...現在都先開放不限制
                     if (vConnStr == "")
@@ -1361,6 +1424,12 @@ namespace TyBus_Intranet_Test_V3
                         string vBuildDate_EditScript = "window.open('" + vBuildDate_EditURL + "','','height=315, width=350,status=no,toolbar=no,menubar=no,location=no','')";
                         eBuildDate_Edit.Attributes["onClick"] = vBuildDate_EditScript;
                     }
+                    Label eIsExemption_Edit = (Label)fvAnecdoteCaseA_Data.FindControl("eIsExemption_Edit");
+                    if (eIsExemption_Edit != null)
+                    {
+                        CheckBox cbIsExemption_Edit = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbIsExemption_Edit");
+                        cbIsExemption_Edit.Checked = (eIsExemption_Edit.Text.Trim().ToUpper() == "Y");
+                    }
                     break;
                 case FormViewMode.Insert:
                     //plSearch.Visible = false;
@@ -1384,6 +1453,12 @@ namespace TyBus_Intranet_Test_V3
                         string vDeductionDate_INSURL = "InputDate_ChineseYears.aspx?TextboxID=" + eDeductionDate_INS.ClientID;
                         string vDeductionDate_INSScript = "window.open('" + vDeductionDate_INSURL + "','','height=315, width=350,status=no,toolbar=no,menubar=no,location=no','')";
                         eDeductionDate_INS.Attributes["onClick"] = vDeductionDate_INSScript;
+                    }
+                    Label eIsExemption_INS = (Label)fvAnecdoteCaseA_Data.FindControl("eIsExemption_INS");
+                    if (eIsExemption_INS != null)
+                    {
+                        CheckBox cbIsExemption_INS = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbIsExemption_INS");
+                        cbIsExemption_INS.Checked = (eIsExemption_INS.Text.Trim().ToUpper() == "Y");
                     }
                     break;
             }
@@ -2040,7 +2115,7 @@ namespace TyBus_Intranet_Test_V3
                         cmdDelete.ExecuteNonQuery();
                     }
                     vSQLStr_Temp = "update AnecdoteCase set ERPCouseNo = null where CaseNo = @CaseNo";
-                    using (SqlConnection connUpdate=new SqlConnection(vConnStr))
+                    using (SqlConnection connUpdate = new SqlConnection(vConnStr))
                     {
                         SqlCommand cmdUpdate = new SqlCommand(vSQLStr_Temp, connUpdate);
                         cmdUpdate.Parameters.Clear();
@@ -2063,6 +2138,161 @@ namespace TyBus_Intranet_Test_V3
                     Response.Write("</" + "Script>");
                 }
             }
+        }
+
+        protected void cbIsExemption_Edit_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox cbIsExemption = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbIsExemption_Edit");
+            if (cbIsExemption != null)
+            {
+                Label eIsExemption = (Label)fvAnecdoteCaseA_Data.FindControl("eIsExemption_Edit");
+                eIsExemption.Text = (cbIsExemption.Checked) ? "Y" : "N";
+            }
+        }
+
+        protected void ePaidAmount_Edit_TextChanged(object sender, EventArgs e)
+        {
+            TextBox ePaidAmount = (TextBox)fvAnecdoteCaseA_Data.FindControl("ePaidAmount_Edit");
+            if (ePaidAmount != null)
+            {
+                TextBox eInsuAmount = (TextBox)fvAnecdoteCaseA_Data.FindControl("eInsuAmount_Edit");
+                TextBox ePenaltyRatio = (TextBox)fvAnecdoteCaseA_Data.FindControl("ePenaltyRatio_Edit");
+                Label ePenalty = (Label)fvAnecdoteCaseA_Data.FindControl("ePenalty_Edit");
+                double vPenaltyRatio;
+                double vInsuAmount;
+                if ((double.TryParse(eInsuAmount.Text.Trim(), out vInsuAmount)) && (double.TryParse(ePenaltyRatio.Text.Trim(), out vPenaltyRatio)))
+                {
+                    ePenalty.Text = CalPenaltyAmount(vInsuAmount, vPenaltyRatio).ToString();
+                }
+            }
+        }
+
+        protected void cbIsExemption_INS_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox cbIsExemption = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbIsExemption_INS");
+            if (cbIsExemption != null)
+            {
+                Label eIsExemption = (Label)fvAnecdoteCaseA_Data.FindControl("eIsExemption_INS");
+                eIsExemption.Text = (cbIsExemption.Checked) ? "Y" : "N";
+            }
+        }
+
+        protected void ePaidAmount_INS_TextChanged(object sender, EventArgs e)
+        {
+            TextBox ePaidAmount = (TextBox)fvAnecdoteCaseA_Data.FindControl("ePaidAmount_INS");
+            if (ePaidAmount != null)
+            {
+                TextBox eInsuAmount = (TextBox)fvAnecdoteCaseA_Data.FindControl("eInsuAmount_INS");
+                TextBox ePenaltyRatio = (TextBox)fvAnecdoteCaseA_Data.FindControl("ePenaltyRatio_INS");
+                Label ePenalty = (Label)fvAnecdoteCaseA_Data.FindControl("ePenalty_INS");
+                double vPenaltyRatio;
+                double vInsuAmount;
+                if ((double.TryParse(eInsuAmount.Text.Trim(), out vInsuAmount)) && (double.TryParse(ePenaltyRatio.Text.Trim(), out vPenaltyRatio)))
+                {
+                    ePenalty.Text = CalPenaltyAmount(vInsuAmount, vPenaltyRatio).ToString();
+                }
+            }
+        }
+
+        protected void bbReport_Click(object sender, EventArgs e)
+        {
+            DataTable dtReport = GetReportData(); 
+            ReportDataSource rdsPrint = new ReportDataSource("AnecdoteCaseP", dtReport);
+
+            rvPrint.LocalReport.DataSources.Clear();
+            rvPrint.LocalReport.ReportPath = @"Report\AnecdoteCaseP2.rdlc";
+            rvPrint.LocalReport.DataSources.Add(rdsPrint);
+            rvPrint.LocalReport.Refresh();
+            plPrint.Visible = true;
+            plMainDataShow.Visible = false;
+            plDetailDataShow.Visible = false;
+            plSearch.Visible = false;
+        }
+
+        protected void bbCloseReport_Click(object sender, EventArgs e)
+        {
+            plPrint.Visible = false;
+            plSearch.Visible = true;
+            plMainDataShow.Visible = true;
+            plDetailDataShow.Visible = true;
+        }
+
+        private DataTable GetReportData()
+        {
+            if (vConnStr == "")
+            {
+                vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
+            }
+            DataTable dtResult = new DataTable();
+            Label eCaseNo_Temp = (Label)fvAnecdoteCaseA_Data.FindControl("eCaseNo_List");
+            string vResultStr = (eCaseNo_Temp != null) ?
+                                "select DepName, Car_ID, CaseOccurrence, Driver, DriverName, IsExemption, PaidAmount, InsuAmount, PenaltyRatio, Penalty " + Environment.NewLine +
+                                "  from AnecdoteCase " + Environment.NewLine +
+                                " where CaseNo = @CaseNo " : "";
+            if (vResultStr != "")
+            {
+                using (SqlConnection connTemp = new SqlConnection(vConnStr))
+                {
+                    SqlDataAdapter daTemp = new SqlDataAdapter(vResultStr, connTemp);
+                    daTemp.SelectCommand.Parameters.Clear();
+                    daTemp.SelectCommand.Parameters.Add(new SqlParameter("CaseNo", eCaseNo_Temp.Text.Trim()));
+                    connTemp.Open();
+                    daTemp.Fill(dtResult);
+                }
+            }
+            return dtResult;
+        }
+
+        private double CalPenaltyAmount(double fInsuAmount, double fPenaltyRatio)
+        {
+            double vPenalty = 0.0;
+            double vBaseAmount = fInsuAmount / 4.0;
+            double vBaseAmount2 = (fInsuAmount - 200000) / 4.0;
+            double vCalRatio_Low = 0.0;
+            double vCalRatio_High = 0.0;
+
+            if (fPenaltyRatio <= 20.0)
+            {
+                vCalRatio_Low = 0.1;
+                vCalRatio_High = 0.05;
+            }
+            else if ((fPenaltyRatio > 20.0) && (fPenaltyRatio <= 30.0))
+            {
+                vCalRatio_Low = 0.1;
+                vCalRatio_High = 0.05;
+            }
+            else if ((fPenaltyRatio > 30.0) && (fPenaltyRatio <= 40.0))
+            {
+                vCalRatio_Low = 0.15;
+                vCalRatio_High = 0.1;
+            }
+            else if ((fPenaltyRatio > 40.0) && (fPenaltyRatio <= 50.0))
+            {
+                vCalRatio_Low = 0.15;
+                vCalRatio_High = 0.1;
+            }
+            else if ((fPenaltyRatio > 50.0) && (fPenaltyRatio <= 60.0))
+            {
+                vCalRatio_Low = 0.2;
+                vCalRatio_High = 0.1;
+            }
+            else if ((fPenaltyRatio > 60.0) && (fPenaltyRatio <= 70.0))
+            {
+                vCalRatio_Low = 0.25;
+                vCalRatio_High = 0.15;
+            }
+            else if ((fPenaltyRatio > 70.0) && (fPenaltyRatio <= 80.0))
+            {
+                vCalRatio_Low = 0.25;
+                vCalRatio_High = 0.15;
+            }
+            else if (fPenaltyRatio > 80.0)
+            {
+                vCalRatio_Low = 0.25;
+                vCalRatio_High = 0.15;
+            }
+            vPenalty = (fInsuAmount <= 200000) ? vBaseAmount * vCalRatio_Low : ((50000 * vCalRatio_Low) + (vBaseAmount2 * vCalRatio_High));
+            return vPenalty;
         }
     }
 }

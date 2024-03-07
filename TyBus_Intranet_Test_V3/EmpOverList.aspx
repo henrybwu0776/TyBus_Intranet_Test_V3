@@ -68,6 +68,7 @@
                 <asp:BoundField DataField="ApplyName" HeaderText="員工姓名" ReadOnly="True" SortExpression="ApplyName" />
                 <asp:BoundField DataField="depno" HeaderText="depno" SortExpression="depno" Visible="False" />
                 <asp:BoundField DataField="DepName" HeaderText="部門" ReadOnly="True" SortExpression="DepName" />
+                <asp:BoundField DataField="Title" HeaderText="職稱" ReadOnly="True" SortExpression="Title" />
                 <asp:BoundField DataField="realday" DataFormatString="{0:d}" HeaderText="加班日期" SortExpression="realday" />
                 <asp:BoundField DataField="applytype" HeaderText="applytype" SortExpression="applytype" Visible="False" />
                 <asp:BoundField DataField="ApplyType_C" HeaderText="加班類別" ReadOnly="True" SortExpression="ApplyType_C" />
