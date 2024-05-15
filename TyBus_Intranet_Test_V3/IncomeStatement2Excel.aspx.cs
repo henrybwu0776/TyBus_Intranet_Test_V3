@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Amaterasu_Function;
+﻿using Amaterasu_Function;
 using NPOI.HSSF.UserModel;
-using NPOI.SS.UserModel;
 using NPOI.HSSF.Util;
-using System.Data;
+using NPOI.SS.UserModel;
+using System;
 using System.Data.SqlClient;
 using System.IO;
+using System.Web;
+using System.Web.UI;
 
 namespace TyBus_Intranet_Test_V3
 {
-    public partial class IncomeStatement2Excel : System.Web.UI.Page
+    public partial class IncomeStatement2Excel : Page
     {
         PublicFunction PF = new PublicFunction(); //加入公用程式碼參考
         private string vLoginID = "";
@@ -159,7 +155,7 @@ namespace TyBus_Intranet_Test_V3
                     HSSFDataFormat format_Float = (HSSFDataFormat)wbExcel.CreateDataFormat();
                     csData_Float.DataFormat = format_Float.GetFormat("###,##0.00");
 
-                    string vHeaderText = "";
+                    //string vHeaderText = "";
                     int vLinesNo = 0;
                     int vColNo = 0;
                     string vFileName = eCalYear.Text.Trim() + "年" + eCalMonth.Text.Trim() + "月份月損益表";
@@ -226,8 +222,16 @@ namespace TyBus_Intranet_Test_V3
                             SqlDataReader drAmount = cmdAmount.ExecuteReader();
                             while (drAmount.Read())
                             {
-                                vAmountM = double.TryParse(drAmount[0].ToString().Trim(), out double vTempAmountM) ? Math.Abs(vTempAmountM) : 0.0;
-                                vAmountT = double.TryParse(drAmount[1].ToString().Trim(), out double vTempAmountT) ? Math.Abs(vTempAmountT) : 0.0;
+                                if ((vClassGroup.ToUpper() == "A") || (vClassGroup.ToUpper() == "B"))
+                                {
+                                    vAmountM = double.TryParse(drAmount[0].ToString().Trim(), out double vTempAmountM) ? vTempAmountM : 0.0;
+                                    vAmountT = double.TryParse(drAmount[1].ToString().Trim(), out double vTempAmountT) ? vTempAmountT : 0.0;
+                                }
+                                else if ((vClassGroup.ToUpper() == "C") || (vClassGroup.ToUpper() == "D"))
+                                {
+                                    vAmountM = double.TryParse(drAmount[0].ToString().Trim(), out double vTempAmountM) ? vTempAmountM * -1 : 0.0;
+                                    vAmountT = double.TryParse(drAmount[1].ToString().Trim(), out double vTempAmountT) ? vTempAmountT * -1 : 0.0;
+                                }
                             }
                         }
                         vDataLineNo = (vPageM == 1) ? vPCount2 : vPCount2 + vMaxColCount;
