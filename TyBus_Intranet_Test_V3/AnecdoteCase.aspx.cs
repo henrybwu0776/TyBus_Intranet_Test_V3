@@ -2291,7 +2291,9 @@ namespace TyBus_Intranet_Test_V3
                 vCalRatio_Low = 0.25;
                 vCalRatio_High = 0.15;
             }
-            vPenalty = (fInsuAmount <= 200000) ? vBaseAmount * vCalRatio_Low : ((50000 * vCalRatio_Low) + (vBaseAmount2 * vCalRatio_High));
+            vPenalty = (fInsuAmount <= 200000) ?
+                       (double)Math.Round(vBaseAmount * vCalRatio_Low, 0, MidpointRounding.AwayFromZero) :
+                       (double)Math.Round(((50000 * vCalRatio_Low) + (vBaseAmount2 * vCalRatio_High)), 0, MidpointRounding.AwayFromZero);
             return vPenalty;
         }
     }
