@@ -86,6 +86,7 @@ namespace TyBus_Intranet_Test_V3
                         }
                         rvPrint.LocalReport.DataSources.Clear();
                         rvPrint.Visible = false;
+                        plShowData.Visible = false;
                     }
                     else
                     {
