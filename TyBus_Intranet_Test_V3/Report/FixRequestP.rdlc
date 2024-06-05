@@ -1038,7 +1038,6 @@
                       </Style>
                     </Textbox>
                     <ColSpan>6</ColSpan>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell />
@@ -1614,7 +1613,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>總經理</Value>
+                      <Value>副總經理</Value>
                       <Style>
                         <FontFamily>標楷體</FontFamily>
                         <FontSize>12pt</FontSize>
