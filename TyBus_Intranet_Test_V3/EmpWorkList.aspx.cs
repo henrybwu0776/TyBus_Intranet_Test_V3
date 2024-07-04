@@ -133,6 +133,7 @@ namespace TyBus_Intranet_Test_V3
             string vCalDate = eCalYM.Text.Trim().Substring(0, 4) + "/" + eCalYM.Text.Trim().Substring(4, 2) + "/01";
             string vCalLastDay = PF.GetMonthLastDay(DateTime.Parse(vCalDate), "B");
             string vCalDays = PF.GetMonthDays(DateTime.Parse(vCalDate)).ToString();
+            string vSelectStr = "";
             /* 2024.04.30 改成不管當月在職幾天都給全額
             string vSelectStr = "select ROW_NUMBER() OVER(PARTITION BY e.DepNo  order by e.DepNo, e.Title, e.EmpNo) RowID, " + Environment.NewLine +
                                 "       e.DepNo, d.[Name] DepName, e.EmpNo, e.[Name] EmpName, e.Title, a.ClassTxt, isnull(e.Leaveday, '') Leaveday, " + Environment.NewLine +
@@ -144,6 +145,7 @@ namespace TyBus_Intranet_Test_V3
                                 " where e.AssumeDay < '" + vCalDate + "' " + Environment.NewLine +
                                 "   and (isnull(e.LeaveDay, '') = '' or e.LeaveDay >= '" + vCalDate + "') " + Environment.NewLine +
                                 "   and (e.DepNo between '01' and '10' or(e.DepNo > '11' and e.Type != '20')) "; //*/
+            /* 2024.07.04 修改條件，須當月全月在職人員才給
             string vSelectStr = "select ROW_NUMBER() OVER(PARTITION BY e.DepNo  order by e.DepNo, e.Title, e.EmpNo) RowID, e.IDCardNo, e.WorkType, " + Environment.NewLine +
                                 "       e.DepNo, d.[Name] DepName, e.EmpNo, e.[Name] EmpName, e.Title, a.ClassTxt, isnull(e.Leaveday, '') Leaveday, " + Environment.NewLine +
                                 "       case when isnull(e.LeaveDay, '') = '' then " + vCalDays + Environment.NewLine +
@@ -154,7 +156,21 @@ namespace TyBus_Intranet_Test_V3
                                 " where e.AssumeDay <= '" + vCalLastDay + " 23:59:59' " + Environment.NewLine +
                                 "   and (isnull(e.LeaveDay, '') = '' or e.LeaveDay >= '" + vCalDate + " 00:00:00') " + Environment.NewLine +
                                 "   and e.DepNo > '00' " + Environment.NewLine +
-                                "   and e.Title != '271' ";
+                                "   and e.Title != '271' "; //*/
+            vSelectStr = "select ROW_NUMBER() OVER(PARTITION BY e.DepNo  order by e.DepNo, e.Title, e.EmpNo) RowID, e.IDCardNo, e.WorkType, " + Environment.NewLine +
+                         "       e.DepNo, d.[Name] DepName, e.EmpNo, e.[Name] EmpName, e.Title, a.ClassTxt, isnull(e.Leaveday, '') Leaveday, " + Environment.NewLine +
+                         "       " + vCalDays + " as WorkDays " + Environment.NewLine +
+                         "  from Employee as e left join Department as d on d.DepNo = e.DepNo " + Environment.NewLine +
+                         "                     left join DBDICB as a on a.ClassNo = e.Title and a.FKey = '人事資料檔      EMPLOYEE        TITLE' " + Environment.NewLine +
+                         " where e.Title != '271' " + Environment.NewLine +
+                         "   and e.DepNo > '00' " + Environment.NewLine +
+                         "   and e.Assumeday <= '" + vCalDate + " 23:59:59' " + Environment.NewLine +
+                         "   and (isnull(e.LeaveDay, '') = '' or e.LeaveDay > '" + vCalLastDay + " 00:00:00' )" + Environment.NewLine +
+                         "   and (isnull(e.BeginDay, '') = '' " + Environment.NewLine +
+                         "       or (isnull(e.BeginDay, '') > '" + vCalLastDay + "') " + Environment.NewLine +
+                         "       or (isnull(e.StopDay, '') < '" + vCalDate + "')) " + Environment.NewLine +
+                         "   and (select count(ESCType) from ESCDuty where ApplyMan = e.EmpNo and RealDay between '" + vCalDate + " 00:00:00' and '" + vCalLastDay + " 23:59:59' and ESCType in ('03', '13')) = 0";
+
             return vSelectStr;
         }
 
