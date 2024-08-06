@@ -4,7 +4,7 @@
 
 <asp:Content ID="EmpWorkListForm" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div>
-        <a class="titleText-Red">票價補助發放名冊(內勤)</a>
+        <a class="titleText-Red">票價補助發放名冊</a>
     </div>
     <br />
     <asp:Panel ID="plCalculater" runat="server" CssClass="ShowPanel">

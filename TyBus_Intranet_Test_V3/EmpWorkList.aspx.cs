@@ -73,8 +73,11 @@ namespace TyBus_Intranet_Test_V3
         {
             DataTable dtResult = new DataTable();
 
-            DataColumn dcRowID = new DataColumn("RowID", typeof(Int32));
-            dtResult.Columns.Add(dcRowID);
+            DataColumn dcGetPayMode = new DataColumn("GetPayMode", typeof(String));
+            dtResult.Columns.Add(dcGetPayMode);
+
+            //DataColumn dcRowID = new DataColumn("RowID", typeof(Int32));
+            //dtResult.Columns.Add(dcRowID);
 
             DataColumn dcIndexNo = new DataColumn("IndexNo", typeof(String));
             dtResult.Columns.Add(dcIndexNo);
@@ -121,6 +124,9 @@ namespace TyBus_Intranet_Test_V3
             DataColumn dcWorkType = new DataColumn("WorkType", typeof(String));
             dtResult.Columns.Add(dcWorkType);
 
+            DataColumn dcRemark = new DataColumn("Remark", typeof(String));
+            dtResult.Columns.Add(dcRemark);
+
             return dtResult;
         }
 
@@ -157,6 +163,7 @@ namespace TyBus_Intranet_Test_V3
                                 "   and (isnull(e.LeaveDay, '') = '' or e.LeaveDay >= '" + vCalDate + " 00:00:00') " + Environment.NewLine +
                                 "   and e.DepNo > '00' " + Environment.NewLine +
                                 "   and e.Title != '271' "; //*/
+            /* 2024.07.09 新增未發放名單
             vSelectStr = "select ROW_NUMBER() OVER(PARTITION BY e.DepNo  order by e.DepNo, e.Title, e.EmpNo) RowID, e.IDCardNo, e.WorkType, " + Environment.NewLine +
                          "       e.DepNo, d.[Name] DepName, e.EmpNo, e.[Name] EmpName, e.Title, a.ClassTxt, isnull(e.Leaveday, '') Leaveday, " + Environment.NewLine +
                          "       " + vCalDays + " as WorkDays " + Environment.NewLine +
@@ -169,8 +176,77 @@ namespace TyBus_Intranet_Test_V3
                          "   and (isnull(e.BeginDay, '') = '' " + Environment.NewLine +
                          "       or (isnull(e.BeginDay, '') > '" + vCalLastDay + "') " + Environment.NewLine +
                          "       or (isnull(e.StopDay, '') < '" + vCalDate + "')) " + Environment.NewLine +
-                         "   and (select count(ESCType) from ESCDuty where ApplyMan = e.EmpNo and RealDay between '" + vCalDate + " 00:00:00' and '" + vCalLastDay + " 23:59:59' and ESCType in ('03', '13')) = 0";
-
+                         "   and (select count(ESCType) from ESCDuty where ApplyMan = e.EmpNo and RealDay between '" + vCalDate + " 00:00:00' and '" + vCalLastDay + " 23:59:59' and ESCType in ('03', '13')) = 0"; //*/
+            vSelectStr = "select Distinct * from ( " + Environment.NewLine +
+                         "       select '1' as GetPayMode, e.IDCardNo, e.WorkType, e.DepNo, d.[Name] DepName, e.EmpNo, e.[Name] EmpName, e.Title, " + Environment.NewLine +
+                         "              a.ClassTxt, isnull(e.Leaveday, '') Leaveday, NULL as WorkDays, NULL as Remark " + Environment.NewLine +
+                         "         from Employee as e left join Department as d on d.DepNo = e.DepNo " + Environment.NewLine +
+                         "                            left join DBDICB as a on a.ClassNo = e.Title and a.FKey = '人事資料檔      EMPLOYEE        TITLE' " + Environment.NewLine +
+                         "        where e.Title != '271' " + Environment.NewLine +
+                         "          and e.DepNo > '00' " + Environment.NewLine +
+                         "          and e.Assumeday <= '" + vCalDate + " 23:59:59' " + Environment.NewLine +
+                         "          and (isnull(e.LeaveDay, '') = '' or e.LeaveDay > '" + vCalLastDay + " 00:00:00') " + Environment.NewLine +
+                         "          and (isnull(e.BeginDay, '') = '' " + Environment.NewLine +
+                         "              or (isnull(e.BeginDay, '') > '" + vCalLastDay + "') " + Environment.NewLine +
+                         "              or (isnull(e.StopDay, '" + vCalLastDay + "') < '" + vCalDate + "')) " + Environment.NewLine +
+                         "          and (select count(ESCType) from ESCDuty where ApplyMan = e.EmpNo and RealDay between '" + vCalDate + " 00:00:00' and '" + vCalLastDay + " 23:59:59' and ESCType in ('03', '13')) = 0 " + Environment.NewLine +
+                         "          and (select count(AssignNo) RCount from RunSheetB where LinesNo in ('952', '03560') and AssignNo in (select AssignNo from RunSheetA where Driver = e.EmpNo and BuDate between '" + vCalDate + "' and '" + vCalLastDay + "')) = 0 " + Environment.NewLine +
+                         "        union all " + Environment.NewLine +
+                         "       select '0' as GetPayMode, e.IDCardNo, e.WorkType, e.DepNo, d.[Name] DepName, e.EmpNo, e.[Name] EmpName, e.Title, " + Environment.NewLine +
+                         "              a.ClassTxt, isnull(e.Leaveday, '') Leaveday, NULL as WorkDays, 'MOU員工' as Remark " + Environment.NewLine +
+                         "         from Employee as e left join Department as d on d.DepNo = e.DepNo " + Environment.NewLine +
+                         "                            left join DBDICB as a on a.ClassNo = e.Title and a.FKey = '人事資料檔      EMPLOYEE        TITLE' " + Environment.NewLine +
+                         "        where e.Title = '271' " + Environment.NewLine +
+                         "          and e.DepNo > '00' " + Environment.NewLine +
+                         "        union all " + Environment.NewLine +
+                         "       select '0' as GetPayMode, e.IDCardNo, e.WorkType, e.DepNo, d.[Name] DepName, e.EmpNo, e.[Name] EmpName, e.Title, " + Environment.NewLine +
+                         "              a.ClassTxt, isnull(e.Leaveday, '') Leaveday, NULL as WorkDays, '本月到職' as Remark " + Environment.NewLine +
+                         "         from Employee as e left join Department as d on d.DepNo = e.DepNo " + Environment.NewLine +
+                         "                            left join DBDICB as a on a.ClassNo = e.Title and a.FKey = '人事資料檔      EMPLOYEE        TITLE' " + Environment.NewLine +
+                         "        where e.Title != '271' " + Environment.NewLine +
+                         "          and e.DepNo > '00' " + Environment.NewLine +
+                         "          and e.Assumeday > '" + vCalDate + " 23:59:59' " + Environment.NewLine +
+                         "        union all " + Environment.NewLine +
+                         "       select '0' as GetPayMode, e.IDCardNo, e.WorkType, e.DepNo, d.[Name] DepName, e.EmpNo, e.[Name] EmpName, e.Title, " + Environment.NewLine +
+                         "              a.ClassTxt, isnull(e.Leaveday, '') Leaveday, NULL as WorkDays, '本月離職' as Remark " + Environment.NewLine +
+                         "         from Employee as e left join Department as d on d.DepNo = e.DepNo " + Environment.NewLine +
+                         "                            left join DBDICB as a on a.ClassNo = e.Title and a.FKey = '人事資料檔      EMPLOYEE        TITLE' " + Environment.NewLine +
+                         "        where e.Title != '271' " + Environment.NewLine +
+                         "          and e.DepNo > '00' " + Environment.NewLine +
+                         "          and isnull(e.LeaveDay, '') > '" + vCalDate + " 00:00:00' " + Environment.NewLine +
+                         "        union all " + Environment.NewLine +
+                         "       select '0' as GetPayMode, e.IDCardNo, e.WorkType, e.DepNo, d.[Name] DepName, e.EmpNo, e.[Name] EmpName, e.Title, " + Environment.NewLine +
+                         "              a.ClassTxt, isnull(e.Leaveday, '') Leaveday, NULL as WorkDays, '有留職停薪' as Remark " + Environment.NewLine +
+                         "         from Employee as e left join Department as d on d.DepNo = e.DepNo " + Environment.NewLine +
+                         "                            left join DBDICB as a on a.ClassNo = e.Title and a.FKey = '人事資料檔      EMPLOYEE        TITLE' " + Environment.NewLine +
+                         "        where e.Title != '271' " + Environment.NewLine +
+                         "          and e.DepNo > '00' " + Environment.NewLine +
+                         "          and ((isnull(e.BeginDay, '') != '') and(isnull(e.StopDay, '') = '') " + Environment.NewLine +
+                         "              or (isnull(e.BeginDay, '') between '" + vCalDate + "' and '" + vCalLastDay + "') " + Environment.NewLine +
+                         "              or (isnull(e.StopDay, '') between '" + vCalDate + "' and '" + vCalLastDay + "')) " + Environment.NewLine +
+                         "        union all " + Environment.NewLine +
+                         "       select '0' as GetPayMode, e.IDCardNo, e.WorkType, e.DepNo, d.[Name] DepName, e.EmpNo, e.[Name] EmpName, e.Title, " + Environment.NewLine +
+                         "              a.ClassTxt, isnull(e.Leaveday, '') Leaveday, NULL as WorkDays, '有公傷假' as Remark " + Environment.NewLine +
+                         "         from Employee as e left join Department as d on d.DepNo = e.DepNo " + Environment.NewLine +
+                         "                            left join DBDICB as a on a.ClassNo = e.Title and a.FKey = '人事資料檔      EMPLOYEE        TITLE' " + Environment.NewLine +
+                         "        where e.Title != '271' " + Environment.NewLine +
+                         "          and e.DepNo > '00' " + Environment.NewLine +
+                         "          and (select count(ESCType) from ESCDuty where ApplyMan = e.EmpNo and RealDay between '" + vCalDate + " 00:00:00' and '" + vCalLastDay + " 23:59:59' and ESCType = '03') > 0 " + Environment.NewLine +
+                         "        union all " + Environment.NewLine +
+                         "       select '0' as GetPayMode, e.IDCardNo, e.WorkType, e.DepNo, d.[Name] DepName, e.EmpNo, e.[Name] EmpName, e.Title, " + Environment.NewLine +
+                         "              a.ClassTxt, isnull(e.Leaveday, '') Leaveday, NULL as WorkDays, '有曠職' as Remark " + Environment.NewLine +
+                         "         from Employee as e left join Department as d on d.DepNo = e.DepNo " + Environment.NewLine +
+                         "                            left join DBDICB as a on a.ClassNo = e.Title and a.FKey = '人事資料檔      EMPLOYEE        TITLE' " + Environment.NewLine +
+                         "        where e.Title != '271' " + Environment.NewLine +
+                         "          and e.DepNo > '00' " + Environment.NewLine +
+                         "          and (select count(ESCType) from ESCDuty where ApplyMan = e.EmpNo and RealDay between '" + vCalDate + " 00:00:00' and '" + vCalLastDay + " 23:59:59' and ESCType = '13') > 0 " + Environment.NewLine +
+                         "        union all " + Environment.NewLine +
+                         "       select '0' as GetPayMode, e.IDCardNo, e.WorkType, e.DepNo, d.[Name] DepName, e.EmpNo, e.[Name] EmpName, e.Title, " + Environment.NewLine +
+                         "              a.ClassTxt, isnull(e.Leaveday, '') Leaveday, NULL as WorkDays, '952 路線駕駛' as Remark " + Environment.NewLine +
+                         "         from Employee as e left join Department as d on d.DepNo = e.DepNo " + Environment.NewLine +
+                         "                            left join DBDICB as a on a.ClassNo = e.Title and a.FKey = '人事資料檔      EMPLOYEE        TITLE' " + Environment.NewLine +
+                         "        where (select count(AssignNo) RCount from RunSheetB where LinesNo in ('952', '03560') and AssignNo in (select AssignNo from RunSheetA where Driver = e.EmpNo and BuDate between '" + vCalDate + "' and '" + vCalLastDay + "')) > 0 " + Environment.NewLine +
+                         ") as t order by t.GetPayMode DESC, t.DepNo, t.Title, t.EmpNo";
             return vSelectStr;
         }
 
@@ -223,7 +299,7 @@ namespace TyBus_Intranet_Test_V3
                                "   and ApplyMan = '" + vEmpNo + "' ";
                     vESCDays = PF.GetValue(vConnStr, vTempStr, "ESCDays");
                     DataRow rowTemp = dtTarget.NewRow();
-                    rowTemp["RowID"] = drGetEmpList["RowID"];
+                    rowTemp["GetPayMode"] = drGetEmpList["GetPayMode"];
                     rowTemp["IndexNo"] = vCalYM + vEmpNo;
                     rowTemp["DepNo"] = vDepNo;
                     rowTemp["DepName"] = drGetEmpList["DepName"];
@@ -239,9 +315,12 @@ namespace TyBus_Intranet_Test_V3
                     //vBoundsRatio_D = ((vCalDays_D - vHolidays_D - vESCDays_D < 15.0) || (double.Parse(drGetEmpList["WorkDays"].ToString().Trim()) < 15.0)) ? 0 : 1;
                     vBoundsRatio_D = 1;
                     rowTemp["BoundsRatio"] = vBoundsRatio_D.ToString();
-                    vBounds_D = (drGetEmpList["Title"].ToString().Trim() == "300") ? vBoundsRatio_D * Double.Parse(vBaseAmount_D) : vBoundsRatio_D * Double.Parse(vBaseAmount);
+                    vBounds_D = (drGetEmpList["GetPayMode"].ToString().Trim() == "0") ? 0.0 :
+                                (drGetEmpList["Title"].ToString().Trim() == "300") ? vBoundsRatio_D * Double.Parse(vBaseAmount_D) :
+                                vBoundsRatio_D * Double.Parse(vBaseAmount);
                     rowTemp["Bounds"] = vBounds_D.ToString();
                     rowTemp["WorkType"] = drGetEmpList["WorkType"];
+                    rowTemp["Remark"] = drGetEmpList["Remark"];
                     dtTarget.Rows.Add(rowTemp);
                 }
             }
@@ -293,6 +372,9 @@ namespace TyBus_Intranet_Test_V3
             string vTitle = "";
             string vBounds = "";
             string vFileName = "票價補助發放名冊";
+            string vGetPayMode = "";
+            string vModeStr = "";
+            string vHeaderStr = "";
 
             CalData();
             if (dtTarget.Rows.Count > 0)
@@ -330,8 +412,33 @@ namespace TyBus_Intranet_Test_V3
                 csData.SetFont(fontData);
                 csDoubleData.SetFont(fontData);
 
+                // 2024.07.04 改成不分頁
+                /* 2024.07.10 再改回分兩頁，有發跟不發
+                vLinesNo = 0;
+                //新增一個工作表
+                wsExcel = (XSSFSheet)wbExcel.CreateSheet(vFileName);
+                //新增標題列
+                wsExcel.CreateRow(vLinesNo);
+                wsExcel.GetRow(vLinesNo).CreateCell(0).SetCellValue("部門編號");
+                wsExcel.GetRow(vLinesNo).GetCell(0).CellStyle = csTitle;
+                wsExcel.GetRow(vLinesNo).CreateCell(1).SetCellValue("部門");
+                wsExcel.GetRow(vLinesNo).GetCell(1).CellStyle = csTitle;
+                wsExcel.GetRow(vLinesNo).CreateCell(2).SetCellValue("工號");
+                wsExcel.GetRow(vLinesNo).GetCell(2).CellStyle = csTitle;
+                wsExcel.GetRow(vLinesNo).CreateCell(3).SetCellValue("姓名");
+                wsExcel.GetRow(vLinesNo).GetCell(3).CellStyle = csTitle;
+                wsExcel.GetRow(vLinesNo).CreateCell(4).SetCellValue("身分證字號");
+                wsExcel.GetRow(vLinesNo).GetCell(4).CellStyle = csTitle;
+                wsExcel.GetRow(vLinesNo).CreateCell(5).SetCellValue("職稱");
+                wsExcel.GetRow(vLinesNo).GetCell(5).CellStyle = csTitle;
+                wsExcel.GetRow(vLinesNo).CreateCell(6).SetCellValue("金額");
+                wsExcel.GetRow(vLinesNo).GetCell(6).CellStyle = csTitle;
+                wsExcel.GetRow(vLinesNo).CreateCell(7).SetCellValue("備註");
+                wsExcel.GetRow(vLinesNo).GetCell(7).CellStyle = csTitle; //*/
+
                 for (int RowsNo = 0; RowsNo < dtTarget.Rows.Count; RowsNo++)
                 {
+                    /* 2024.07.04 改成不分頁
                     if (dtTarget.Rows[RowsNo]["DepNo"].ToString().Trim() != vDepNo)
                     {
                         vLinesNo = 0;
@@ -357,11 +464,43 @@ namespace TyBus_Intranet_Test_V3
                         wsExcel.GetRow(vLinesNo).GetCell(6).CellStyle = csTitle;
                         wsExcel.GetRow(vLinesNo).CreateCell(7).SetCellValue("備註");
                         wsExcel.GetRow(vLinesNo).GetCell(7).CellStyle = csTitle;                        
+                    } //*/
+                    //2024.07.10 再改回分兩頁，有發跟不發
+                    if (dtTarget.Rows[RowsNo]["GetPayMode"].ToString().Trim() != vGetPayMode)
+                    {
+                        vLinesNo = 0;
+                        //新增一個工作表
+                        vGetPayMode = dtTarget.Rows[RowsNo]["GetPayMode"].ToString().Trim();
+                        vModeStr = (vGetPayMode == "1") ? "發放名冊" : "未發放名冊";
+                        wsExcel = (XSSFSheet)wbExcel.CreateSheet(vModeStr);
+                        
+                        //新增標題列
+                        wsExcel.CreateRow(vLinesNo);
+                        wsExcel.GetRow(vLinesNo).CreateCell(0).SetCellValue("部門編號");
+                        wsExcel.GetRow(vLinesNo).GetCell(0).CellStyle = csTitle;
+                        wsExcel.GetRow(vLinesNo).CreateCell(1).SetCellValue("部門");
+                        wsExcel.GetRow(vLinesNo).GetCell(1).CellStyle = csTitle;
+                        wsExcel.GetRow(vLinesNo).CreateCell(2).SetCellValue("工號");
+                        wsExcel.GetRow(vLinesNo).GetCell(2).CellStyle = csTitle;
+                        wsExcel.GetRow(vLinesNo).CreateCell(3).SetCellValue("姓名");
+                        wsExcel.GetRow(vLinesNo).GetCell(3).CellStyle = csTitle;
+                        wsExcel.GetRow(vLinesNo).CreateCell(4).SetCellValue("身分證字號");
+                        wsExcel.GetRow(vLinesNo).GetCell(4).CellStyle = csTitle;
+                        wsExcel.GetRow(vLinesNo).CreateCell(5).SetCellValue("職稱");
+                        wsExcel.GetRow(vLinesNo).GetCell(5).CellStyle = csTitle;
+                        wsExcel.GetRow(vLinesNo).CreateCell(6).SetCellValue("金額");
+                        wsExcel.GetRow(vLinesNo).GetCell(6).CellStyle = csTitle;
+                        wsExcel.GetRow(vLinesNo).CreateCell(7).SetCellValue("在職狀況");
+                        wsExcel.GetRow(vLinesNo).GetCell(7).CellStyle = csTitle;
+                        wsExcel.GetRow(vLinesNo).CreateCell(8).SetCellValue("備註");
+                        wsExcel.GetRow(vLinesNo).GetCell(8).CellStyle = csTitle;
                     }
                     //開始新增資料
                     vLinesNo++;
+                    vDepNo = dtTarget.Rows[RowsNo]["DepNo"].ToString().Trim();
+                    vDepName = dtTarget.Rows[RowsNo]["DepName"].ToString().Trim();
                     vTitle = dtTarget.Rows[RowsNo]["Title"].ToString().Trim().Substring(0, 3);
-                    vBounds = (vTitle == "300") ? vBaseAmount_D : vBaseAmount;
+                    vBounds = dtTarget.Rows[RowsNo]["Bounds"].ToString().Trim();
                     wsExcel.CreateRow(vLinesNo).CreateCell(0).SetCellValue(vDepNo);
                     wsExcel.GetRow(vLinesNo).GetCell(0).CellStyle = csData;
                     wsExcel.GetRow(vLinesNo).CreateCell(1).SetCellValue(vDepName);
@@ -378,6 +517,8 @@ namespace TyBus_Intranet_Test_V3
                     wsExcel.GetRow(vLinesNo).GetCell(6).CellStyle = csDoubleData;
                     wsExcel.GetRow(vLinesNo).CreateCell(7).SetCellValue(dtTarget.Rows[RowsNo]["WorkType"].ToString().Trim());
                     wsExcel.GetRow(vLinesNo).GetCell(7).CellStyle = csData;
+                    wsExcel.GetRow(vLinesNo).CreateCell(8).SetCellValue(dtTarget.Rows[RowsNo]["Remark"].ToString().Trim());
+                    wsExcel.GetRow(vLinesNo).GetCell(8).CellStyle = csData;
                 }
                 try
                 {
@@ -390,7 +531,7 @@ namespace TyBus_Intranet_Test_V3
 
                     if (msTarget.Length > 0)
                     {
-                        string vRecordCalYMStr = eCalYM.Text.Trim().Substring(0,4) + "年" + eCalYM.Text.Trim().Substring(4, 2) + "月";
+                        string vRecordCalYMStr = eCalYM.Text.Trim().Substring(0, 4) + "年" + eCalYM.Text.Trim().Substring(4, 2) + "月";
                         string vRecordNote = "匯出檔案_票價補助發放名冊" + Environment.NewLine +
                                              "EmpWorkList.aspx" + Environment.NewLine +
                                              "計算年月：" + vRecordCalYMStr;

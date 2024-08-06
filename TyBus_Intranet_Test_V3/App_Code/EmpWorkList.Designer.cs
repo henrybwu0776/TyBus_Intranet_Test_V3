@@ -279,35 +279,31 @@ namespace TyBus_Intranet_Test_V3.App_Code {
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class dtEmpWorkListPDataTable : global::System.Data.TypedTableBase<dtEmpWorkListPRow> {
             
-            private global::System.Data.DataColumn columnDepNo;
-            
             private global::System.Data.DataColumn columnDepName;
-            
-            private global::System.Data.DataColumn columnEmpNo;
             
             private global::System.Data.DataColumn columnEmpName;
             
-            private global::System.Data.DataColumn columnTitle;
-            
             private global::System.Data.DataColumn columnWorkDays;
             
-            private global::System.Data.DataColumn columnRowID;
+            private global::System.Data.DataColumn columnGetPayMode;
             
-            private global::System.Data.DataColumn columnMonthDays;
+            private global::System.Data.DataColumn columnLeaveday;
             
-            private global::System.Data.DataColumn columnBaseAmounts;
+            private global::System.Data.DataColumn columnRemark;
             
-            private global::System.Data.DataColumn columnHolidays;
+            private global::System.Data.DataColumn columnworktype;
             
-            private global::System.Data.DataColumn columnESCDays;
-            
-            private global::System.Data.DataColumn columnBoundsRatio;
+            private global::System.Data.DataColumn columnCLASSTXT;
             
             private global::System.Data.DataColumn columnBounds;
             
             private global::System.Data.DataColumn columnIDCardNo;
             
-            private global::System.Data.DataColumn columnWorkType;
+            private global::System.Data.DataColumn columnDepNo;
+            
+            private global::System.Data.DataColumn columnEmpNo;
+            
+            private global::System.Data.DataColumn columnTitle;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
@@ -344,25 +340,9 @@ namespace TyBus_Intranet_Test_V3.App_Code {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn DepNoColumn {
-                get {
-                    return this.columnDepNo;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public global::System.Data.DataColumn DepNameColumn {
                 get {
                     return this.columnDepName;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn EmpNoColumn {
-                get {
-                    return this.columnEmpNo;
                 }
             }
             
@@ -376,14 +356,6 @@ namespace TyBus_Intranet_Test_V3.App_Code {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn TitleColumn {
-                get {
-                    return this.columnTitle;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public global::System.Data.DataColumn WorkDaysColumn {
                 get {
                     return this.columnWorkDays;
@@ -392,49 +364,41 @@ namespace TyBus_Intranet_Test_V3.App_Code {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn RowIDColumn {
+            public global::System.Data.DataColumn GetPayModeColumn {
                 get {
-                    return this.columnRowID;
+                    return this.columnGetPayMode;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn MonthDaysColumn {
+            public global::System.Data.DataColumn LeavedayColumn {
                 get {
-                    return this.columnMonthDays;
+                    return this.columnLeaveday;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn BaseAmountsColumn {
+            public global::System.Data.DataColumn RemarkColumn {
                 get {
-                    return this.columnBaseAmounts;
+                    return this.columnRemark;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn HolidaysColumn {
+            public global::System.Data.DataColumn worktypeColumn {
                 get {
-                    return this.columnHolidays;
+                    return this.columnworktype;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn ESCDaysColumn {
+            public global::System.Data.DataColumn CLASSTXTColumn {
                 get {
-                    return this.columnESCDays;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn BoundsRatioColumn {
-                get {
-                    return this.columnBoundsRatio;
+                    return this.columnCLASSTXT;
                 }
             }
             
@@ -456,9 +420,25 @@ namespace TyBus_Intranet_Test_V3.App_Code {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn WorkTypeColumn {
+            public global::System.Data.DataColumn DepNoColumn {
                 get {
-                    return this.columnWorkType;
+                    return this.columnDepNo;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn EmpNoColumn {
+                get {
+                    return this.columnEmpNo;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn TitleColumn {
+                get {
+                    return this.columnTitle;
                 }
             }
             
@@ -499,24 +479,22 @@ namespace TyBus_Intranet_Test_V3.App_Code {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public dtEmpWorkListPRow AdddtEmpWorkListPRow(string DepNo, string DepName, string EmpNo, string EmpName, string Title, int WorkDays, int RowID, double MonthDays, double BaseAmounts, double Holidays, double ESCDays, double BoundsRatio, double Bounds, string IDCardNo, string WorkType) {
+            public dtEmpWorkListPRow AdddtEmpWorkListPRow(string DepName, string EmpName, int WorkDays, string GetPayMode, System.DateTime Leaveday, int Remark, string worktype, string CLASSTXT, double Bounds, string IDCardNo, string DepNo, string EmpNo, string Title) {
                 dtEmpWorkListPRow rowdtEmpWorkListPRow = ((dtEmpWorkListPRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        DepNo,
                         DepName,
-                        EmpNo,
                         EmpName,
-                        Title,
                         WorkDays,
-                        RowID,
-                        MonthDays,
-                        BaseAmounts,
-                        Holidays,
-                        ESCDays,
-                        BoundsRatio,
+                        GetPayMode,
+                        Leaveday,
+                        Remark,
+                        worktype,
+                        CLASSTXT,
                         Bounds,
                         IDCardNo,
-                        WorkType};
+                        DepNo,
+                        EmpNo,
+                        Title};
                 rowdtEmpWorkListPRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowdtEmpWorkListPRow);
                 return rowdtEmpWorkListPRow;
@@ -546,76 +524,68 @@ namespace TyBus_Intranet_Test_V3.App_Code {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             internal void InitVars() {
-                this.columnDepNo = base.Columns["DepNo"];
                 this.columnDepName = base.Columns["DepName"];
-                this.columnEmpNo = base.Columns["EmpNo"];
                 this.columnEmpName = base.Columns["EmpName"];
-                this.columnTitle = base.Columns["Title"];
                 this.columnWorkDays = base.Columns["WorkDays"];
-                this.columnRowID = base.Columns["RowID"];
-                this.columnMonthDays = base.Columns["MonthDays"];
-                this.columnBaseAmounts = base.Columns["BaseAmounts"];
-                this.columnHolidays = base.Columns["Holidays"];
-                this.columnESCDays = base.Columns["ESCDays"];
-                this.columnBoundsRatio = base.Columns["BoundsRatio"];
+                this.columnGetPayMode = base.Columns["GetPayMode"];
+                this.columnLeaveday = base.Columns["Leaveday"];
+                this.columnRemark = base.Columns["Remark"];
+                this.columnworktype = base.Columns["worktype"];
+                this.columnCLASSTXT = base.Columns["CLASSTXT"];
                 this.columnBounds = base.Columns["Bounds"];
                 this.columnIDCardNo = base.Columns["IDCardNo"];
-                this.columnWorkType = base.Columns["WorkType"];
+                this.columnDepNo = base.Columns["DepNo"];
+                this.columnEmpNo = base.Columns["EmpNo"];
+                this.columnTitle = base.Columns["Title"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             private void InitClass() {
-                this.columnDepNo = new global::System.Data.DataColumn("DepNo", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnDepNo);
                 this.columnDepName = new global::System.Data.DataColumn("DepName", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDepName);
-                this.columnEmpNo = new global::System.Data.DataColumn("EmpNo", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnEmpNo);
                 this.columnEmpName = new global::System.Data.DataColumn("EmpName", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnEmpName);
-                this.columnTitle = new global::System.Data.DataColumn("Title", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnTitle);
                 this.columnWorkDays = new global::System.Data.DataColumn("WorkDays", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnWorkDays);
-                this.columnRowID = new global::System.Data.DataColumn("RowID", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnRowID);
-                this.columnMonthDays = new global::System.Data.DataColumn("MonthDays", typeof(double), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnMonthDays);
-                this.columnBaseAmounts = new global::System.Data.DataColumn("BaseAmounts", typeof(double), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnBaseAmounts);
-                this.columnHolidays = new global::System.Data.DataColumn("Holidays", typeof(double), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnHolidays);
-                this.columnESCDays = new global::System.Data.DataColumn("ESCDays", typeof(double), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnESCDays);
-                this.columnBoundsRatio = new global::System.Data.DataColumn("BoundsRatio", typeof(double), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnBoundsRatio);
+                this.columnGetPayMode = new global::System.Data.DataColumn("GetPayMode", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnGetPayMode);
+                this.columnLeaveday = new global::System.Data.DataColumn("Leaveday", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnLeaveday);
+                this.columnRemark = new global::System.Data.DataColumn("Remark", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRemark);
+                this.columnworktype = new global::System.Data.DataColumn("worktype", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnworktype);
+                this.columnCLASSTXT = new global::System.Data.DataColumn("CLASSTXT", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCLASSTXT);
                 this.columnBounds = new global::System.Data.DataColumn("Bounds", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnBounds);
                 this.columnIDCardNo = new global::System.Data.DataColumn("IDCardNo", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnIDCardNo);
-                this.columnWorkType = new global::System.Data.DataColumn("WorkType", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnWorkType);
+                this.columnDepNo = new global::System.Data.DataColumn("DepNo", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDepNo);
+                this.columnEmpNo = new global::System.Data.DataColumn("EmpNo", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnEmpNo);
+                this.columnTitle = new global::System.Data.DataColumn("Title", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnTitle);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnEmpNo}, true));
-                this.columnDepNo.MaxLength = 12;
                 this.columnDepName.MaxLength = 30;
+                this.columnEmpName.MaxLength = 64;
+                this.columnWorkDays.ReadOnly = true;
+                this.columnGetPayMode.ReadOnly = true;
+                this.columnGetPayMode.MaxLength = 1;
+                this.columnLeaveday.ReadOnly = true;
+                this.columnRemark.ReadOnly = true;
+                this.columnworktype.MaxLength = 10;
+                this.columnCLASSTXT.MaxLength = 32;
+                this.columnBounds.ReadOnly = true;
+                this.columnIDCardNo.MaxLength = 10;
+                this.columnDepNo.MaxLength = 12;
                 this.columnEmpNo.AllowDBNull = false;
                 this.columnEmpNo.Unique = true;
                 this.columnEmpNo.MaxLength = 12;
-                this.columnEmpName.MaxLength = 64;
                 this.columnTitle.MaxLength = 4;
-                this.columnWorkDays.ReadOnly = true;
-                this.columnRowID.ReadOnly = true;
-                this.columnMonthDays.ReadOnly = true;
-                this.columnBaseAmounts.ReadOnly = true;
-                this.columnHolidays.ReadOnly = true;
-                this.columnESCDays.ReadOnly = true;
-                this.columnBoundsRatio.ReadOnly = true;
-                this.columnBounds.ReadOnly = true;
-                this.columnIDCardNo.MaxLength = 10;
-                this.columnWorkType.ReadOnly = true;
-                this.columnWorkType.MaxLength = 30;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -758,22 +728,6 @@ namespace TyBus_Intranet_Test_V3.App_Code {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string DepNo {
-                get {
-                    try {
-                        return ((string)(this[this.tabledtEmpWorkListP.DepNoColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'dtEmpWorkListP\' 中資料行 \'DepNo\' 的值是 DBNull。", e);
-                    }
-                }
-                set {
-                    this[this.tabledtEmpWorkListP.DepNoColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public string DepName {
                 get {
                     try {
@@ -785,17 +739,6 @@ namespace TyBus_Intranet_Test_V3.App_Code {
                 }
                 set {
                     this[this.tabledtEmpWorkListP.DepNameColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string EmpNo {
-                get {
-                    return ((string)(this[this.tabledtEmpWorkListP.EmpNoColumn]));
-                }
-                set {
-                    this[this.tabledtEmpWorkListP.EmpNoColumn] = value;
                 }
             }
             
@@ -817,22 +760,6 @@ namespace TyBus_Intranet_Test_V3.App_Code {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string Title {
-                get {
-                    try {
-                        return ((string)(this[this.tabledtEmpWorkListP.TitleColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'dtEmpWorkListP\' 中資料行 \'Title\' 的值是 DBNull。", e);
-                    }
-                }
-                set {
-                    this[this.tabledtEmpWorkListP.TitleColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public int WorkDays {
                 get {
                     try {
@@ -849,97 +776,81 @@ namespace TyBus_Intranet_Test_V3.App_Code {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public int RowID {
+            public string GetPayMode {
                 get {
                     try {
-                        return ((int)(this[this.tabledtEmpWorkListP.RowIDColumn]));
+                        return ((string)(this[this.tabledtEmpWorkListP.GetPayModeColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'dtEmpWorkListP\' 中資料行 \'RowID\' 的值是 DBNull。", e);
+                        throw new global::System.Data.StrongTypingException("資料表 \'dtEmpWorkListP\' 中資料行 \'GetPayMode\' 的值是 DBNull。", e);
                     }
                 }
                 set {
-                    this[this.tabledtEmpWorkListP.RowIDColumn] = value;
+                    this[this.tabledtEmpWorkListP.GetPayModeColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public double MonthDays {
+            public System.DateTime Leaveday {
                 get {
                     try {
-                        return ((double)(this[this.tabledtEmpWorkListP.MonthDaysColumn]));
+                        return ((global::System.DateTime)(this[this.tabledtEmpWorkListP.LeavedayColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'dtEmpWorkListP\' 中資料行 \'MonthDays\' 的值是 DBNull。", e);
+                        throw new global::System.Data.StrongTypingException("資料表 \'dtEmpWorkListP\' 中資料行 \'Leaveday\' 的值是 DBNull。", e);
                     }
                 }
                 set {
-                    this[this.tabledtEmpWorkListP.MonthDaysColumn] = value;
+                    this[this.tabledtEmpWorkListP.LeavedayColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public double BaseAmounts {
+            public int Remark {
                 get {
                     try {
-                        return ((double)(this[this.tabledtEmpWorkListP.BaseAmountsColumn]));
+                        return ((int)(this[this.tabledtEmpWorkListP.RemarkColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'dtEmpWorkListP\' 中資料行 \'BaseAmounts\' 的值是 DBNull。", e);
+                        throw new global::System.Data.StrongTypingException("資料表 \'dtEmpWorkListP\' 中資料行 \'Remark\' 的值是 DBNull。", e);
                     }
                 }
                 set {
-                    this[this.tabledtEmpWorkListP.BaseAmountsColumn] = value;
+                    this[this.tabledtEmpWorkListP.RemarkColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public double Holidays {
+            public string worktype {
                 get {
                     try {
-                        return ((double)(this[this.tabledtEmpWorkListP.HolidaysColumn]));
+                        return ((string)(this[this.tabledtEmpWorkListP.worktypeColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'dtEmpWorkListP\' 中資料行 \'Holidays\' 的值是 DBNull。", e);
+                        throw new global::System.Data.StrongTypingException("資料表 \'dtEmpWorkListP\' 中資料行 \'worktype\' 的值是 DBNull。", e);
                     }
                 }
                 set {
-                    this[this.tabledtEmpWorkListP.HolidaysColumn] = value;
+                    this[this.tabledtEmpWorkListP.worktypeColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public double ESCDays {
+            public string CLASSTXT {
                 get {
                     try {
-                        return ((double)(this[this.tabledtEmpWorkListP.ESCDaysColumn]));
+                        return ((string)(this[this.tabledtEmpWorkListP.CLASSTXTColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'dtEmpWorkListP\' 中資料行 \'ESCDays\' 的值是 DBNull。", e);
+                        throw new global::System.Data.StrongTypingException("資料表 \'dtEmpWorkListP\' 中資料行 \'CLASSTXT\' 的值是 DBNull。", e);
                     }
                 }
                 set {
-                    this[this.tabledtEmpWorkListP.ESCDaysColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public double BoundsRatio {
-                get {
-                    try {
-                        return ((double)(this[this.tabledtEmpWorkListP.BoundsRatioColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'dtEmpWorkListP\' 中資料行 \'BoundsRatio\' 的值是 DBNull。", e);
-                    }
-                }
-                set {
-                    this[this.tabledtEmpWorkListP.BoundsRatioColumn] = value;
+                    this[this.tabledtEmpWorkListP.CLASSTXTColumn] = value;
                 }
             }
             
@@ -977,30 +888,45 @@ namespace TyBus_Intranet_Test_V3.App_Code {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string WorkType {
+            public string DepNo {
                 get {
                     try {
-                        return ((string)(this[this.tabledtEmpWorkListP.WorkTypeColumn]));
+                        return ((string)(this[this.tabledtEmpWorkListP.DepNoColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("資料表 \'dtEmpWorkListP\' 中資料行 \'WorkType\' 的值是 DBNull。", e);
+                        throw new global::System.Data.StrongTypingException("資料表 \'dtEmpWorkListP\' 中資料行 \'DepNo\' 的值是 DBNull。", e);
                     }
                 }
                 set {
-                    this[this.tabledtEmpWorkListP.WorkTypeColumn] = value;
+                    this[this.tabledtEmpWorkListP.DepNoColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsDepNoNull() {
-                return this.IsNull(this.tabledtEmpWorkListP.DepNoColumn);
+            public string EmpNo {
+                get {
+                    return ((string)(this[this.tabledtEmpWorkListP.EmpNoColumn]));
+                }
+                set {
+                    this[this.tabledtEmpWorkListP.EmpNoColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetDepNoNull() {
-                this[this.tabledtEmpWorkListP.DepNoColumn] = global::System.Convert.DBNull;
+            public string Title {
+                get {
+                    try {
+                        return ((string)(this[this.tabledtEmpWorkListP.TitleColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("資料表 \'dtEmpWorkListP\' 中資料行 \'Title\' 的值是 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tabledtEmpWorkListP.TitleColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1029,18 +955,6 @@ namespace TyBus_Intranet_Test_V3.App_Code {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsTitleNull() {
-                return this.IsNull(this.tabledtEmpWorkListP.TitleColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetTitleNull() {
-                this[this.tabledtEmpWorkListP.TitleColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsWorkDaysNull() {
                 return this.IsNull(this.tabledtEmpWorkListP.WorkDaysColumn);
             }
@@ -1053,74 +967,62 @@ namespace TyBus_Intranet_Test_V3.App_Code {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsRowIDNull() {
-                return this.IsNull(this.tabledtEmpWorkListP.RowIDColumn);
+            public bool IsGetPayModeNull() {
+                return this.IsNull(this.tabledtEmpWorkListP.GetPayModeColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetRowIDNull() {
-                this[this.tabledtEmpWorkListP.RowIDColumn] = global::System.Convert.DBNull;
+            public void SetGetPayModeNull() {
+                this[this.tabledtEmpWorkListP.GetPayModeColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsMonthDaysNull() {
-                return this.IsNull(this.tabledtEmpWorkListP.MonthDaysColumn);
+            public bool IsLeavedayNull() {
+                return this.IsNull(this.tabledtEmpWorkListP.LeavedayColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetMonthDaysNull() {
-                this[this.tabledtEmpWorkListP.MonthDaysColumn] = global::System.Convert.DBNull;
+            public void SetLeavedayNull() {
+                this[this.tabledtEmpWorkListP.LeavedayColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsBaseAmountsNull() {
-                return this.IsNull(this.tabledtEmpWorkListP.BaseAmountsColumn);
+            public bool IsRemarkNull() {
+                return this.IsNull(this.tabledtEmpWorkListP.RemarkColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetBaseAmountsNull() {
-                this[this.tabledtEmpWorkListP.BaseAmountsColumn] = global::System.Convert.DBNull;
+            public void SetRemarkNull() {
+                this[this.tabledtEmpWorkListP.RemarkColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsHolidaysNull() {
-                return this.IsNull(this.tabledtEmpWorkListP.HolidaysColumn);
+            public bool IsworktypeNull() {
+                return this.IsNull(this.tabledtEmpWorkListP.worktypeColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetHolidaysNull() {
-                this[this.tabledtEmpWorkListP.HolidaysColumn] = global::System.Convert.DBNull;
+            public void SetworktypeNull() {
+                this[this.tabledtEmpWorkListP.worktypeColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsESCDaysNull() {
-                return this.IsNull(this.tabledtEmpWorkListP.ESCDaysColumn);
+            public bool IsCLASSTXTNull() {
+                return this.IsNull(this.tabledtEmpWorkListP.CLASSTXTColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetESCDaysNull() {
-                this[this.tabledtEmpWorkListP.ESCDaysColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsBoundsRatioNull() {
-                return this.IsNull(this.tabledtEmpWorkListP.BoundsRatioColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetBoundsRatioNull() {
-                this[this.tabledtEmpWorkListP.BoundsRatioColumn] = global::System.Convert.DBNull;
+            public void SetCLASSTXTNull() {
+                this[this.tabledtEmpWorkListP.CLASSTXTColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1149,14 +1051,26 @@ namespace TyBus_Intranet_Test_V3.App_Code {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsWorkTypeNull() {
-                return this.IsNull(this.tabledtEmpWorkListP.WorkTypeColumn);
+            public bool IsDepNoNull() {
+                return this.IsNull(this.tabledtEmpWorkListP.DepNoColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetWorkTypeNull() {
-                this[this.tabledtEmpWorkListP.WorkTypeColumn] = global::System.Convert.DBNull;
+            public void SetDepNoNull() {
+                this[this.tabledtEmpWorkListP.DepNoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsTitleNull() {
+                return this.IsNull(this.tabledtEmpWorkListP.TitleColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetTitleNull() {
+                this[this.tabledtEmpWorkListP.TitleColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -1319,21 +1233,19 @@ namespace TyBus_Intranet_Test_V3.App_Code.EmpWorkListTableAdapters {
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "dtEmpWorkListP";
-            tableMapping.ColumnMappings.Add("DepNo", "DepNo");
             tableMapping.ColumnMappings.Add("DepName", "DepName");
-            tableMapping.ColumnMappings.Add("EmpNo", "EmpNo");
             tableMapping.ColumnMappings.Add("EmpName", "EmpName");
-            tableMapping.ColumnMappings.Add("Title", "Title");
             tableMapping.ColumnMappings.Add("WorkDays", "WorkDays");
-            tableMapping.ColumnMappings.Add("RowID", "RowID");
-            tableMapping.ColumnMappings.Add("MonthDays", "MonthDays");
-            tableMapping.ColumnMappings.Add("BaseAmounts", "BaseAmounts");
-            tableMapping.ColumnMappings.Add("Holidays", "Holidays");
-            tableMapping.ColumnMappings.Add("ESCDays", "ESCDays");
-            tableMapping.ColumnMappings.Add("BoundsRatio", "BoundsRatio");
+            tableMapping.ColumnMappings.Add("GetPayMode", "GetPayMode");
+            tableMapping.ColumnMappings.Add("Leaveday", "Leaveday");
+            tableMapping.ColumnMappings.Add("Remark", "Remark");
+            tableMapping.ColumnMappings.Add("worktype", "worktype");
+            tableMapping.ColumnMappings.Add("CLASSTXT", "CLASSTXT");
             tableMapping.ColumnMappings.Add("Bounds", "Bounds");
             tableMapping.ColumnMappings.Add("IDCardNo", "IDCardNo");
-            tableMapping.ColumnMappings.Add("WorkType", "WorkType");
+            tableMapping.ColumnMappings.Add("DepNo", "DepNo");
+            tableMapping.ColumnMappings.Add("EmpNo", "EmpNo");
+            tableMapping.ColumnMappings.Add("Title", "Title");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -1350,10 +1262,13 @@ namespace TyBus_Intranet_Test_V3.App_Code.EmpWorkListTableAdapters {
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = @"select cast(0 as Int) RowID, e.IDCardNo, e.DepNo, d.[Name] DepName, e.EmpNo, e.[Name] EmpName, e.Title, cast(0 as float) MonthDays, cast(0 as float) BaseAmounts, cast(0 as float) Holidays, cast(0 as float) ESCDays,cast(0 as int) WorkDays, cast(0 as float) BoundsRatio, cast(0 as float) Bounds, cast(null as nvarchar) WorkType 
-  from Employee e left join Department d on d.DepNo = e.DepNo 
-                  left join DBDICB a on a.ClassNo = e.Title and a.Fkey = '人事資料檔      EMPLOYEE        TITLE' 
- where 1 <> 1";
+            this._commandCollection[0].CommandText = @"SELECT          '1' AS GetPayMode, e.IDCARDNO as IDCardNo, e.worktype, e.DEPNO as DepNo, d.NAME AS DepName, e.EMPNO as EmpNo, e.NAME AS EmpName, 
+                            e.TITLE as Title, a.CLASSTXT, ISNULL(e.LEAVEDAY, '') AS Leaveday, NULL AS WorkDays, NULL AS Remark, CAST(NULL 
+                            AS float) AS Bounds
+FROM              EMPLOYEE AS e LEFT OUTER JOIN
+                            DEPARTMENT AS d ON d.DEPNO = e.DEPNO LEFT OUTER JOIN
+                            DBDICB AS a ON a.CLASSNO = e.TITLE AND a.FKEY = '人事資料檔      EMPLOYEE        TITLE'
+WHERE          (1 <> 1)";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
