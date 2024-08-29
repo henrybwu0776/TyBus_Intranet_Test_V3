@@ -231,34 +231,27 @@ namespace TyBus_Intranet_Test_V3
                     }
                     break;
                 case "5"://月餅發放
-                    if (eMoneyPay.Text.Trim() != "")
-                    {
-                        vResultStr = "select DepNo, (select [Name] from Department where DepNo = e.DepNo) DepName, " + Environment.NewLine +
-                                     "       EmpNo, [Name], " + Environment.NewLine +
-                                     "       Title, (select ClassTxt from DBDICB where ClassNo = e.Title and FKey = '員工資料        EMPLOYEE        TITLE') Title_C, " + Environment.NewLine +
-                                     "       AssumeDay, cast('" + eNote.Text.Trim() + "' as nvarchar) GiftNote, " + Environment.NewLine +
-                                     "       cast('" + vGiftTitle.Trim() + "' as nvarchar) GiftTitle, cast('' as nvarchar) as StampPlace " + Environment.NewLine +
-                                     "  from ( " + Environment.NewLine +
-                                     "        select DepNo, EmpNo, [Name], Title, AssumeDay " + Environment.NewLine +
-                                     "          from Employee " + Environment.NewLine +
-                                     "         where LeaveDay is null " + Environment.NewLine +
-                                     "           and WorkType = '在職'" + Environment.NewLine +
-                                     "           and isnull(DepNo, '00') <> '00' " + Environment.NewLine +
-                                     "         union all " + Environment.NewLine +
-                                     "        select DepNo, EmpNo, [Name], Title, AssumeDay " + Environment.NewLine +
-                                     "          from Employee " + Environment.NewLine +
-                                     "         where LeaveDay is null " + Environment.NewLine +
-                                     "           and WorkType = '在職'" + Environment.NewLine +
-                                     "           and isnull(DepNo, '00') = '00' " + Environment.NewLine +
-                                     "           and Title in ('010', '020', '030', '070') " + Environment.NewLine +
-                                     "       ) e " + Environment.NewLine +
-                                     " where e.EmpNo <> 'supervisor' " + Environment.NewLine +
-                                     " order by e.DepNo, e.Title, e.EmpNo";
-                    }
-                    else
-                    {
-                        vResultStr = "";
-                    }
+                    vResultStr = "select DepNo, (select [Name] from Department where DepNo = e.DepNo) DepName, " + Environment.NewLine +
+                                 "       EmpNo, [Name], " + Environment.NewLine +
+                                 "       Title, (select ClassTxt from DBDICB where ClassNo = e.Title and FKey = '員工資料        EMPLOYEE        TITLE') Title_C, " + Environment.NewLine +
+                                 "       AssumeDay, cast('" + eNote.Text.Trim() + "' as nvarchar) GiftNote, " + Environment.NewLine +
+                                 "       cast('" + vGiftTitle.Trim() + "' as nvarchar) GiftTitle, cast('' as nvarchar) as StampPlace " + Environment.NewLine +
+                                 "  from ( " + Environment.NewLine +
+                                 "        select DepNo, EmpNo, [Name], Title, AssumeDay " + Environment.NewLine +
+                                 "          from Employee " + Environment.NewLine +
+                                 "         where LeaveDay is null " + Environment.NewLine +
+                                 "           and WorkType = '在職'" + Environment.NewLine +
+                                 "           and isnull(DepNo, '00') <> '00' " + Environment.NewLine +
+                                 "         union all " + Environment.NewLine +
+                                 "        select DepNo, EmpNo, [Name], Title, AssumeDay " + Environment.NewLine +
+                                 "          from Employee " + Environment.NewLine +
+                                 "         where LeaveDay is null " + Environment.NewLine +
+                                 "           and WorkType = '在職'" + Environment.NewLine +
+                                 "           and isnull(DepNo, '00') = '00' " + Environment.NewLine +
+                                 "           and Title in ('010', '020', '030', '070') " + Environment.NewLine +
+                                 "       ) e " + Environment.NewLine +
+                                 " where e.EmpNo <> 'supervisor' " + Environment.NewLine +
+                                 " order by e.DepNo, e.Title, e.EmpNo";
                     break;
                 case "6":
                     //制服發放

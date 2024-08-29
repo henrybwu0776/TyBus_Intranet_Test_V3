@@ -114,6 +114,8 @@ namespace TyBus_Intranet_Test_V3
         protected void bbPrint_Click(object sender, EventArgs e)
         {
             string vReportName = ePayYear_Search.Text.Trim() + "年" + ePayMonth_Search.Text.Trim() + "月到離員工應發薪資清冊";
+            string vTempStr = "select [Name] from Custom where Types = 'O' and Code = 'A000' ";
+            string vCompanyName = PF.GetValue(vConnStr, vTempStr, "Name");
             //統計報表
             string vSelectStr = GetSelectStr();
             if (vConnStr == "")
@@ -132,7 +134,7 @@ namespace TyBus_Intranet_Test_V3
                 rvPrint.LocalReport.DataSources.Clear();
                 rvPrint.LocalReport.ReportPath = @"Report\EmpPayListP.rdlc";
                 rvPrint.LocalReport.DataSources.Add(rdsPrint);
-                rvPrint.LocalReport.SetParameters(new ReportParameter("CompanyName", "桃園汽車客運股份有限公司"));
+                rvPrint.LocalReport.SetParameters(new ReportParameter("CompanyName", vCompanyName));
                 rvPrint.LocalReport.SetParameters(new ReportParameter("ReportName", vReportName));
                 rvPrint.LocalReport.SetParameters(new ReportParameter("CalYM", ePayYear_Search.Text.Trim() + "年" + ePayMonth_Search.Text.Trim() + "月"));
                 rvPrint.LocalReport.Refresh();

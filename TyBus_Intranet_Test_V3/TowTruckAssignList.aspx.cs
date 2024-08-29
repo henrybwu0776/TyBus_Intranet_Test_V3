@@ -395,6 +395,8 @@ namespace TyBus_Intranet_Test_V3
             {
                 vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
             }
+            string vTempStr = "select [Name] from Custom where Types = 'O' and Code = 'A000' ";
+            string vCompanyName = PF.GetValue(vConnStr, vTempStr, "Name");
             using (SqlConnection connTempPrint = new SqlConnection(vConnStr))
             {
                 SqlDataAdapter daPrintPoint = new SqlDataAdapter(vSelStr, connTempPrint);
@@ -408,7 +410,7 @@ namespace TyBus_Intranet_Test_V3
                     rvPrint.LocalReport.DataSources.Clear();
                     rvPrint.LocalReport.ReportPath = @"Report\TowTruckAssignRecordP.rdlc";
                     rvPrint.LocalReport.DataSources.Add(rdsPrint);
-                    rvPrint.LocalReport.SetParameters(new ReportParameter("CompanyName", "桃園汽車客運股份有限公司"));
+                    rvPrint.LocalReport.SetParameters(new ReportParameter("CompanyName", vCompanyName));
                     rvPrint.LocalReport.SetParameters(new ReportParameter("ReportName", "拖吊車記錄表"));
                     rvPrint.LocalReport.Refresh();
                     plPrint.Visible = true;
@@ -451,6 +453,8 @@ namespace TyBus_Intranet_Test_V3
                 //string vSelStr = GetPrintSelectStr();
                 string vSelStr = GetPrintSelectStr_2();
                 string vReportName = (DateTime.Parse(eCaseDate_S_Search.Text.Trim()).Year - 1911).ToString() + " 年 " + DateTime.Parse(eCaseDate_S_Search.Text.Trim()).Month.ToString("D2") + " 月 拖吊維修費用月統計表";
+                string vTempStr = "select [Name] from Custom where Types = 'O' and Code = 'A000' ";
+                string vCompanyName = PF.GetValue(vConnStr, vTempStr, "Name");
 
                 if (vConnStr == "")
                 {
@@ -469,7 +473,7 @@ namespace TyBus_Intranet_Test_V3
                         rvPrint.LocalReport.DataSources.Clear();
                         rvPrint.LocalReport.ReportPath = @"Report\TowTruckCostListP.rdlc";
                         rvPrint.LocalReport.DataSources.Add(rdsPrint);
-                        rvPrint.LocalReport.SetParameters(new ReportParameter("CompanyName", "桃園汽車客運股份有限公司"));
+                        rvPrint.LocalReport.SetParameters(new ReportParameter("CompanyName", vCompanyName));
                         rvPrint.LocalReport.SetParameters(new ReportParameter("ReportName", vReportName));
                         rvPrint.LocalReport.Refresh();
                         plPrint.Visible = true;

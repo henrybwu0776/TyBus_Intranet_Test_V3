@@ -606,6 +606,8 @@ namespace TyBus_Intranet_Test_V3
                                  (vPrintDate_S.Year - 1911).ToString("D3") + vPrintDate_S.Month.ToString("D2") + vPrintDate_S.Day.ToString("D2") + "路線時刻表" :
                                  ((eBuDate_S.Text.Trim() == "") && (eBuDate_E.Text.Trim() != "")) ?
                                  (vPrintDate_E.Year - 1911).ToString("D3") + vPrintDate_E.Month.ToString("D2") + vPrintDate_E.Day.ToString("D2") + "路線時刻表" : "";
+            string vTempStr = "select [Name] from Custom where Types = 'O' and Code = 'A000' ";
+            string vCompanyName = PF.GetValue(vConnStr, vTempStr, "Name");
             //統計報表
             string vSelectStr = GetSelStr();
             if (vConnStr == "")
@@ -624,7 +626,7 @@ namespace TyBus_Intranet_Test_V3
                 rvPrint.LocalReport.DataSources.Clear();
                 rvPrint.LocalReport.ReportPath = @"Report\TimeTableP.rdlc";
                 rvPrint.LocalReport.DataSources.Add(rdsPrint);
-                rvPrint.LocalReport.SetParameters(new ReportParameter("CompanyName", "桃園汽車客運股份有限公司"));
+                rvPrint.LocalReport.SetParameters(new ReportParameter("CompanyName", vCompanyName));
                 rvPrint.LocalReport.SetParameters(new ReportParameter("ReportName", vReportName));
                 rvPrint.LocalReport.Refresh();
                 plShowData.Visible = false;

@@ -784,6 +784,8 @@ namespace TyBus_Intranet_Test_V3
         private void PrintReport_Main()
         {
             string vFileName = "駕駛員工時統計分析總表";
+            string vTempStr = "select [Name] from Custom where Types = 'O' and Code = 'A000' ";
+            string vCompanyName = PF.GetValue(vConnStr, vTempStr, "Name");
             DataTable tbPrint = CalWorkHourDataMain();
             if (tbPrint.Rows.Count > 0)
             {
@@ -792,7 +794,7 @@ namespace TyBus_Intranet_Test_V3
                 rvPrint.LocalReport.DataSources.Clear();
                 rvPrint.LocalReport.ReportPath = @"Report\DriverWorkHourAnalysisMainP.rdlc";
                 rvPrint.LocalReport.DataSources.Add(rdsPrint);
-                rvPrint.LocalReport.SetParameters(new ReportParameter("CompanyName", "桃園汽車客運股份有限公司"));
+                rvPrint.LocalReport.SetParameters(new ReportParameter("CompanyName", vCompanyName));
                 rvPrint.LocalReport.SetParameters(new ReportParameter("ReportName", vFileName));
                 rvPrint.LocalReport.SetParameters(new ReportParameter("CalDate", "行車日期：" + eDriveYear_Search.Text.Trim() + "/" + eDriveMonth_Search.SelectedValue));
                 rvPrint.LocalReport.Refresh();
@@ -824,6 +826,8 @@ namespace TyBus_Intranet_Test_V3
         private void PrintReport_Detail()
         {
             string vFileName = eDriveYear_Search.Text.Trim() + "年" + Int32.Parse(eDriveMonth_Search.SelectedValue).ToString("D2") + "月職醫評估駕駛員風險等級追蹤統計明細表";
+            string vTempStr = "select [Name] from Custom where Types = 'O' and Code = 'A000' ";
+            string vCompanyName = PF.GetValue(vConnStr, vTempStr, "Name");
             DataTable tbPrint = CalWorkHourData_Detail();
             if (tbPrint.Rows.Count > 0)
             {
@@ -832,7 +836,7 @@ namespace TyBus_Intranet_Test_V3
                 rvPrint.LocalReport.DataSources.Clear();
                 rvPrint.LocalReport.ReportPath = @"Report\DriverWorkHourAnalysisDetailP.rdlc";
                 rvPrint.LocalReport.DataSources.Add(rdsPrint);
-                rvPrint.LocalReport.SetParameters(new ReportParameter("CompanyName", "桃園汽車客運股份有限公司"));
+                rvPrint.LocalReport.SetParameters(new ReportParameter("CompanyName", vCompanyName));
                 rvPrint.LocalReport.SetParameters(new ReportParameter("ReportName", vFileName));
                 rvPrint.LocalReport.Refresh();
                 plPrint.Visible = true;
@@ -860,6 +864,8 @@ namespace TyBus_Intranet_Test_V3
         private void PrintReport_Detail2()
         {
             string vFileName = eDriveYear_Search.Text.Trim() + "年" + Int32.Parse(eDriveMonth_Search.SelectedValue).ToString("D2") + "月職醫評估駕駛員風險等級追蹤統計明細表(依單位)";
+            string vTempStr = "select [Name] from Custom where Types = 'O' and Code = 'A000' ";
+            string vCompanyName = PF.GetValue(vConnStr, vTempStr, "Name");
             DataTable tbPrint = CalWorkHourData_Detail();
             if (tbPrint.Rows.Count > 0)
             {
@@ -868,7 +874,7 @@ namespace TyBus_Intranet_Test_V3
                 rvPrint.LocalReport.DataSources.Clear();
                 rvPrint.LocalReport.ReportPath = @"Report\DriverWorkHourAnalysisDetailP2.rdlc";
                 rvPrint.LocalReport.DataSources.Add(rdsPrint);
-                rvPrint.LocalReport.SetParameters(new ReportParameter("CompanyName", "桃園汽車客運股份有限公司"));
+                rvPrint.LocalReport.SetParameters(new ReportParameter("CompanyName", vCompanyName));
                 rvPrint.LocalReport.SetParameters(new ReportParameter("ReportName", vFileName));
                 rvPrint.LocalReport.Refresh();
                 plPrint.Visible = true;
@@ -899,6 +905,8 @@ namespace TyBus_Intranet_Test_V3
         private void PrintReport_Month()
         {
             string vFileName = eDriveYear_Search.Text.Trim() + "年" + Int32.Parse(eDriveMonth_Search.SelectedValue).ToString("D2") + "月職醫評估駕駛員風險等級追蹤統計總表";
+            string vTempStr = "select [Name] from Custom where Types = 'O' and Code = 'A000' ";
+            string vCompanyName = PF.GetValue(vConnStr, vTempStr, "Name");
             DataTable tbPrint = CalWorkHourData_Month();
             if (tbPrint.Rows.Count > 0)
             {
@@ -907,7 +915,7 @@ namespace TyBus_Intranet_Test_V3
                 rvPrint.LocalReport.DataSources.Clear();
                 rvPrint.LocalReport.ReportPath = @"Report\DriverWorkHourAnalysisMonthP.rdlc";
                 rvPrint.LocalReport.DataSources.Add(rdsPrint);
-                rvPrint.LocalReport.SetParameters(new ReportParameter("CompanyName", "桃園汽車客運股份有限公司"));
+                rvPrint.LocalReport.SetParameters(new ReportParameter("CompanyName", vCompanyName));
                 rvPrint.LocalReport.SetParameters(new ReportParameter("ReportName", vFileName));
                 rvPrint.LocalReport.Refresh();
                 plPrint.Visible = true;
@@ -936,6 +944,8 @@ namespace TyBus_Intranet_Test_V3
         {
             /* 2021.03.24 先卡位，程式碼等真的要出報表再重寫
             string vFileName = eDriveYear_Search.Text.Trim() + "年" + Int32.Parse(eDriveMonth_Search.SelectedValue).ToString("D2") + "月各單位駕駛員工時情況";
+            string vTempStr = "select [Name] from Custom where Types = 'O' and Code = 'A000' ";
+            string vCompanyName = PF.GetValue(vConnStr, vTempStr, "Name");
             DataTable tbPrint = CalWorkHourData_Month();
             if (tbPrint.Rows.Count > 0)
             {
@@ -944,7 +954,7 @@ namespace TyBus_Intranet_Test_V3
                 rvPrint.LocalReport.DataSources.Clear();
                 rvPrint.LocalReport.ReportPath = @"Report\DriverWorkHourAnalysisStatusP.rdlc";
                 rvPrint.LocalReport.DataSources.Add(rdsPrint);
-                rvPrint.LocalReport.SetParameters(new ReportParameter("CompanyName", "桃園汽車客運股份有限公司"));
+                rvPrint.LocalReport.SetParameters(new ReportParameter("CompanyName", vCompanyName));
                 rvPrint.LocalReport.SetParameters(new ReportParameter("ReportName", vFileName));
                 rvPrint.LocalReport.Refresh();
                 plPrint.Visible = true;
@@ -973,6 +983,8 @@ namespace TyBus_Intranet_Test_V3
         {
             /* 2021.03.24 先卡位，程式碼等真的要出報表再重寫
             string vFileName = eDriveYear_Search.Text.Trim() + "年" + Int32.Parse(eDriveMonth_Search.SelectedValue).ToString("D2") + "月各單位駕駛員工時情況";
+            string vTempStr = "select [Name] from Custom where Types = 'O' and Code = 'A000' ";
+            string vCompanyName = PF.GetValue(vConnStr, vTempStr, "Name");
             DataTable tbPrint = CalWorkHourData_Month();
             if (tbPrint.Rows.Count > 0)
             {
@@ -981,7 +993,7 @@ namespace TyBus_Intranet_Test_V3
                 rvPrint.LocalReport.DataSources.Clear();
                 rvPrint.LocalReport.ReportPath = @"Report\DriverWorkHourAnalysisStatusP.rdlc";
                 rvPrint.LocalReport.DataSources.Add(rdsPrint);
-                rvPrint.LocalReport.SetParameters(new ReportParameter("CompanyName", "桃園汽車客運股份有限公司"));
+                rvPrint.LocalReport.SetParameters(new ReportParameter("CompanyName", vCompanyName));
                 rvPrint.LocalReport.SetParameters(new ReportParameter("ReportName", vFileName));
                 rvPrint.LocalReport.Refresh();
                 plPrint.Visible = true;

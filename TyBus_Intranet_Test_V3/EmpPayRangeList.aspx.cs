@@ -282,6 +282,8 @@ namespace TyBus_Intranet_Test_V3
         {
             string vReportName = "員工薪資發放級距統計表";
             string vCalYM = "—" + ePayYear_Search.Text.Trim() + " 年 " + ePayMonth_Search.Text.Trim() + " 月第 " + ePayDur_Search.Text.Trim() + " 期";
+            string vTempStr = "select [Name] from Custom where Types = 'O' and Code = 'A000' ";
+            string vCompanyName = PF.GetValue(vConnStr, vTempStr, "Name");
             //統計報表
             string vSelectStr = GetSelStr_List();
             if (vConnStr == "")
@@ -300,7 +302,7 @@ namespace TyBus_Intranet_Test_V3
                 rvPrint.LocalReport.DataSources.Clear();
                 rvPrint.LocalReport.ReportPath = @"Report\EmpPayRangeListP.rdlc";
                 rvPrint.LocalReport.DataSources.Add(rdsPrint);
-                rvPrint.LocalReport.SetParameters(new ReportParameter("CompanyName", "桃園汽車客運股份有限公司"));
+                rvPrint.LocalReport.SetParameters(new ReportParameter("CompanyName", vCompanyName));
                 rvPrint.LocalReport.SetParameters(new ReportParameter("ReportName", vReportName));
                 rvPrint.LocalReport.SetParameters(new ReportParameter("CalYM", vCalYM));
                 rvPrint.LocalReport.Refresh();

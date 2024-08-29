@@ -1,4 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MainPage.Master" AutoEventWireup="true" CodeBehind="DriverWorkStateList.aspx.cs" Inherits="TyBus_Intranet_Test_V3.DriverWorkStateList" %>
+
+<%@ Register Assembly="Microsoft.ReportViewer.WebForms" Namespace="Microsoft.Reporting.WebForms" TagPrefix="rsweb" %>
+
 <asp:Content ID="DriverWorkStateListForm" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div>
         <a class="titleText-Red">駕駛員排班狀況表</a>
@@ -28,6 +31,9 @@
             <tr>
                 <td class="ColHeight ColWidth-8Col">
                     <asp:Button ID="bbSearch" runat="server" CssClass="button-Black" Text="查詢" OnClick="bbSearch_Click" Width="90%" />
+                </td>
+                <td class="ColHeight ColWidth-8Col">
+                    <asp:Button ID="bbPrint" runat="server" CssClass="button-Blue" Text="預覽報表" OnClick="bbPrint_Click" Width="90%" />
                 </td>
                 <td class="ColHeight ColWidth-8Col">
                     <asp:Button ID="bbExcel" runat="server" CssClass="button-Black" Text="匯出 EXCEL" OnClick="bbExcel_Click" Width="90%" />
@@ -98,6 +104,23 @@
             <SortedDescendingCellStyle BackColor="#CAC9C9" />
             <SortedDescendingHeaderStyle BackColor="#33276A" />
         </asp:GridView>
+    </asp:Panel>
+    <asp:Panel ID="plReport" runat="server" CssClass="PrintPanel">
+        <asp:Button ID="bbCloseReport" runat="server" CssClass="button-Red" OnClick="bbCloseReport_Click" Text="結束預覽" Width="120px" />
+        <rsweb:ReportViewer ID="rvPrint" runat="server" BackColor="" ClientIDMode="AutoID" HighlightBackgroundColor=""
+            InternalBorderColor="204, 204, 204" InternalBorderStyle="Solid" InternalBorderWidth="1px"
+            LinkActiveColor="" LinkActiveHoverColor="" LinkDisabledColor=""
+            PrimaryButtonBackgroundColor="" PrimaryButtonForegroundColor="" PrimaryButtonHoverBackgroundColor="" PrimaryButtonHoverForegroundColor=""
+            SecondaryButtonBackgroundColor="" SecondaryButtonForegroundColor="" SecondaryButtonHoverBackgroundColor="" SecondaryButtonHoverForegroundColor=""
+            SplitterBackColor=""
+            ToolbarDividerColor="" ToolbarForegroundColor="" ToolbarForegroundDisabledColor=""
+            ToolbarHoverBackgroundColor="" ToolbarHoverForegroundColor=""
+            ToolBarItemBorderColor="" ToolBarItemBorderStyle="Solid" ToolBarItemBorderWidth="1px" ToolBarItemHoverBackColor=""
+            ToolBarItemPressedBorderColor="51, 102, 153" ToolBarItemPressedBorderStyle="Solid" ToolBarItemPressedBorderWidth="1px"
+            ToolBarItemPressedHoverBackColor="153, 187, 226" Height="600px" Width="100%" PageCountMode="Actual">
+            <LocalReport ReportPath="Report\DriverWorkStateListP.rdlc">
+            </LocalReport>
+        </rsweb:ReportViewer>
     </asp:Panel>
     <asp:SqlDataSource ID="sdsDriverWorkStateList" runat="server" ConnectionString="<%$ ConnectionStrings:connERPSQL %>" ProviderName="<%$ ConnectionStrings:connERPSQL.ProviderName %>" SelectCommand="SELECT DEPNO, CAST('' AS varchar) AS DepName, DRIVER, CAST('' AS varchar) AS DriverName, CAST('' AS varchar) AS WS01, CAST('' AS varchar) AS WS02, CAST('' AS varchar) AS WS03, CAST('' AS varchar) AS WS04, CAST('' AS varchar) AS WS05, CAST('' AS varchar) AS WS06, CAST('' AS varchar) AS WS07, CAST('' AS varchar) AS WS08, CAST('' AS varchar) AS WS09, CAST('' AS varchar) AS WS10, CAST('' AS varchar) AS WS11, CAST('' AS varchar) AS WS12, CAST('' AS varchar) AS WS13, CAST('' AS varchar) AS WS14, CAST('' AS varchar) AS WS15, CAST('' AS varchar) AS WS16, CAST('' AS varchar) AS WS17, CAST('' AS varchar) AS WS18, CAST('' AS varchar) AS WS19, CAST('' AS varchar) AS WS20, CAST('' AS varchar) AS WS21, CAST('' AS varchar) AS WS22, CAST('' AS varchar) AS WS23, CAST('' AS varchar) AS WS24, CAST('' AS varchar) AS WS25, CAST('' AS varchar) AS WS26, CAST('' AS varchar) AS WS27, CAST('' AS varchar) AS WS28, CAST('' AS varchar) AS WS29, CAST('' AS varchar) AS WS30, CAST('' AS varchar) AS WS31 FROM RUNSHEETA WHERE (1 &lt;&gt; 1)"></asp:SqlDataSource>
 </asp:Content>

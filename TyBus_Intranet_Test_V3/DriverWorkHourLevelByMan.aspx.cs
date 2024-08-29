@@ -145,6 +145,8 @@ namespace TyBus_Intranet_Test_V3
             if ((eDriveYear_Search.Text.Trim() != "") && (eDriveMonth_Search.Text.Trim() != ""))
             {
                 string vReportName = eDriveYear_Search.Text.Trim() + " 年 " + eDriveMonth_Search.Text.Trim() + " 月 駕駛員工時級數分析表(人)";
+                string vTempStr = "select [Name] from Custom where Types = 'O' and Code = 'A000' ";
+                string vCompanyName = PF.GetValue(vConnStr, vTempStr, "Name");
                 string vSelectStr = GetSelectStr_Print();
                 DataTable dtPrint = new DataTable();
                 using (SqlConnection connPrint = new SqlConnection(vConnStr))
@@ -159,7 +161,7 @@ namespace TyBus_Intranet_Test_V3
                         rvPrint.LocalReport.DataSources.Clear();
                         rvPrint.LocalReport.ReportPath = @"Report\DriverWorkHourLevelByManP.rdlc";
                         rvPrint.LocalReport.DataSources.Add(rdsPrint);
-                        rvPrint.LocalReport.SetParameters(new ReportParameter("CompanyName", "桃園汽車客運股份有限公司"));
+                        rvPrint.LocalReport.SetParameters(new ReportParameter("CompanyName", vCompanyName));
                         rvPrint.LocalReport.SetParameters(new ReportParameter("ReportName", vReportName));
                         rvPrint.LocalReport.Refresh();
                         plPrint.Visible = true;

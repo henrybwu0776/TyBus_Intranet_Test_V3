@@ -187,6 +187,8 @@ namespace TyBus_Intranet_Test_V3
         protected void bbPrint_Click(object sender, EventArgs e)
         {
             string vListYM = eListYear_Search.Text.Trim() + " 年 " + ddlListMonth_Search.SelectedValue.Trim() + " 月 ";
+            string vTempStr = "select [Name] from Custom where Types = 'O' and Code = 'A000' ";
+            string vCompanyName = PF.GetValue(vConnStr, vTempStr, "Name");
             OpenData();
             if (dtMerits_Detail.Rows.Count > 0)
             {
@@ -214,7 +216,7 @@ namespace TyBus_Intranet_Test_V3
                 //rvPrint.LocalReport.DataSources.Add(rdsPrint_Main);
                 //rvPrint.LocalReport.DataSources.Add(rdsPrint);
                 rvPrint.LocalReport.DataSources.Add(rdsPrint);
-                rvPrint.LocalReport.SetParameters(new ReportParameter("CompanyName", "桃園汽車客運股份有限公司  "));
+                rvPrint.LocalReport.SetParameters(new ReportParameter("CompanyName", vCompanyName + "  "));
                 rvPrint.LocalReport.SetParameters(new ReportParameter("ListYM", vListYM));
                 rvPrint.LocalReport.SetParameters(new ReportParameter("ReportName", " 員工獎懲會名單"));
                 rvPrint.LocalReport.Refresh();

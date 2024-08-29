@@ -1,4 +1,5 @@
 ﻿using Amaterasu_Function;
+using Microsoft.Reporting.WebForms;
 using NPOI.HSSF.UserModel;
 using NPOI.HSSF.Util;
 using NPOI.SS.UserModel;
@@ -53,6 +54,7 @@ namespace TyBus_Intranet_Test_V3
                         eDepNo_S.Enabled = ((vLoginDepNo == "09") || (vLoginDepNo == "03") || (vLoginDepNo == "05") || (vLoginDepNo == "06"));
                         eDepNo_E.Enabled = ((vLoginDepNo == "09") || (vLoginDepNo == "03") || (vLoginDepNo == "05") || (vLoginDepNo == "06"));
                         eDepNo_S.Text = ((Int32.Parse(vLoginDepNo) >= 11) && (Int32.Parse(vLoginDepNo) < 30)) ? vLoginDepNo : "";
+                        plReport.Visible = false;
                     }
                     else
                     {
@@ -110,6 +112,10 @@ namespace TyBus_Intranet_Test_V3
             string vColName = "";
             string vHeaderText = "";
             int vHeaderDays = 0;
+            string vWS_Str = "";
+            int vESCType1 = 0;
+            int vESCType2 = 0;
+            int vESCType3 = 0;
 
             using (SqlConnection connEmpList = new SqlConnection(vConnStr))
             {
@@ -155,9 +161,15 @@ namespace TyBus_Intranet_Test_V3
                     dtWSList.Columns.Add("WS29", typeof(String));
                     dtWSList.Columns.Add("WS30", typeof(String));
                     dtWSList.Columns.Add("WS31", typeof(String));
+                    dtWSList.Columns.Add("ESCType1", typeof(Int32));
+                    dtWSList.Columns.Add("ESCType2", typeof(Int32));
+                    dtWSList.Columns.Add("ESCType3", typeof(Int32));
 
                     while (drEmpList.Read())
                     {
+                        vESCType1 = 0;
+                        vESCType2 = 0;
+                        vESCType3 = 0;
                         DataRow rowsTemp = dtWSList.NewRow();
                         rowsTemp["DepNo"] = drEmpList["DepNo"].ToString().Trim();
                         rowsTemp["DepName"] = drEmpList["DepName"].ToString().Trim();
@@ -185,9 +197,25 @@ namespace TyBus_Intranet_Test_V3
                             while (drWorkState.Read())
                             {
                                 vColName = "WS" + DateTime.Parse(drWorkState["BuDate"].ToString().Trim()).Day.ToString("D2");
-                                rowsTemp[vColName] = drWorkState["WS"].ToString().Trim();
+                                vWS_Str = drWorkState["WS"].ToString().Trim();
+                                rowsTemp[vColName] = vWS_Str;
+                                switch (vWS_Str)
+                                {
+                                    case "休":
+                                        vESCType1++;
+                                        break;
+                                    case "例":
+                                        vESCType2++;
+                                        break;
+                                    case "國":
+                                        vESCType3++;
+                                        break;
+                                }
                             }
                         }
+                        rowsTemp["ESCType1"] = vESCType1;
+                        rowsTemp["ESCType2"] = vESCType2;
+                        rowsTemp["ESCType3"] = vESCType3;
                         dtWSList.Rows.Add(rowsTemp);
                     }
 
@@ -289,6 +317,22 @@ namespace TyBus_Intranet_Test_V3
                                 wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellValue(vHeaderText);
                                 wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csTitle;
                             }
+                            else if ((vHeaderText.Length > 7) && (vHeaderText.Substring(0, 7) == "ESCType"))
+                            {
+                                switch (vHeaderText)
+                                {
+                                    case "ESCType1":
+                                        wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellValue("休加");
+                                        break;
+                                    case "ESCType2":
+                                        wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellValue("例加");
+                                        break;
+                                    case "ESCType3":
+                                        wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellValue("國加");
+                                        break;
+                                }
+                                wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csTitle;
+                            }
                             else if (Int32.Parse(vHeaderText) <= vWorkMonthDays)
                             {
                                 wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellValue(vHeaderText);
@@ -308,6 +352,13 @@ namespace TyBus_Intranet_Test_V3
                                     wsExcel.GetRow(vLinesNo).GetCell(j).SetCellType(CellType.String);
                                     wsExcel.GetRow(vLinesNo).GetCell(j).SetCellValue(dtWSList.Rows[i][j].ToString().Trim());
                                     wsExcel.GetRow(vLinesNo).GetCell(j).CellStyle = csData;
+                                }
+                                else if ((vHeaderText.Length > 7) && (vHeaderText.Substring(0, 7) == "ESCType"))
+                                {
+                                    wsExcel.GetRow(vLinesNo).CreateCell(j);
+                                    wsExcel.GetRow(vLinesNo).GetCell(j).SetCellType(CellType.Numeric);
+                                    wsExcel.GetRow(vLinesNo).GetCell(j).SetCellValue(dtWSList.Rows[i][j].ToString().Trim());
+                                    wsExcel.GetRow(vLinesNo).GetCell(j).CellStyle = csData_Int;
                                 }
                                 else if (Int32.Parse(vHeaderText.Replace("WS", "")) <= vWorkMonthDays)
                                 {
@@ -368,6 +419,112 @@ namespace TyBus_Intranet_Test_V3
                             //throw;
                         }
                     }
+                    else if (fShowType == "3") //預覽列印
+                    {
+                        string vESCDutyMember_11 = "";
+                        string vESCDutyMember_13 = "";
+                        string vESCDutyMember_15 = "";
+                        string vESCDutyMember_16 = "";
+                        string vESCDutyMember_17 = "";
+                        string vESCDutyMember_18 = "";
+                        string vESCDutyMember_19 = "";
+                        string vESCDutyMember_20 = "";
+                        string vESCDutyMember_22 = "";
+                        string vESCDutyMember_23 = "";
+                        string vESCDutyMember_25 = "";
+                        string vTempDepNo = "";
+                        string vTempEmpName = "";
+                        if (dtWSList.Rows.Count > 0)
+                        {
+                            for (int i = 0; i < dtWSList.Rows.Count; i++)
+                            {
+                                vTempDepNo = dtWSList.Rows[i]["DepNo"].ToString().Trim();
+                                vTempEmpName = dtWSList.Rows[i]["DriverName"].ToString().Trim();
+                                if (Int32.Parse(dtWSList.Rows[i]["ESCType2"].ToString().Trim()) > 0)
+                                {
+                                    switch (vTempDepNo)
+                                    {
+                                        case "11":
+                                            vESCDutyMember_11 = (vESCDutyMember_11.Trim() == "") ? "有出現例加人員：" + vTempEmpName : vESCDutyMember_11 + ", " + vTempEmpName;
+                                            break;
+                                        case "13":
+                                            vESCDutyMember_13 = (vESCDutyMember_13.Trim() == "") ? "有出現例加人員：" + vTempEmpName : vESCDutyMember_13 + ", " + vTempEmpName;
+                                            break;
+                                        case "15":
+                                            vESCDutyMember_15 = (vESCDutyMember_15.Trim() == "") ? "有出現例加人員：" + vTempEmpName : vESCDutyMember_15 + ", " + vTempEmpName;
+                                            break;
+                                        case "16":
+                                            vESCDutyMember_16 = (vESCDutyMember_16.Trim() == "") ? "有出現例加人員：" + vTempEmpName : vESCDutyMember_16 + ", " + vTempEmpName;
+                                            break;
+                                        case "17":
+                                            vESCDutyMember_17 = (vESCDutyMember_17.Trim() == "") ? "有出現例加人員：" + vTempEmpName : vESCDutyMember_17 + ", " + vTempEmpName;
+                                            break;
+                                        case "18":
+                                            vESCDutyMember_18 = (vESCDutyMember_18.Trim() == "") ? "有出現例加人員：" + vTempEmpName : vESCDutyMember_18 + ", " + vTempEmpName;
+                                            break;
+                                        case "19":
+                                            vESCDutyMember_19 = (vESCDutyMember_19.Trim() == "") ? "有出現例加人員：" + vTempEmpName : vESCDutyMember_19 + ", " + vTempEmpName;
+                                            break;
+                                        case "20":
+                                            vESCDutyMember_20 = (vESCDutyMember_20.Trim() == "") ? "有出現例加人員：" + vTempEmpName : vESCDutyMember_20 + ", " + vTempEmpName;
+                                            break;
+                                        case "22":
+                                            vESCDutyMember_22 = (vESCDutyMember_22.Trim() == "") ? "有出現例加人員：" + vTempEmpName : vESCDutyMember_22 + ", " + vTempEmpName;
+                                            break;
+                                        case "23":
+                                            vESCDutyMember_23 = (vESCDutyMember_23.Trim() == "") ? "有出現例加人員：" + vTempEmpName : vESCDutyMember_23 + ", " + vTempEmpName;
+                                            break;
+                                        case "25":
+                                            vESCDutyMember_25 = (vESCDutyMember_25.Trim() == "") ? "有出現例加人員：" + vTempEmpName : vESCDutyMember_25 + ", " + vTempEmpName;
+                                            break;
+                                    }
+                                }
+                            }
+                            string vYM = (Int32.Parse(eSheetYear.Text.Trim()) + 1911).ToString("D4") + eSheetMonth.Text.Trim();
+                            string vTempStr = "select cast(cast(left(YYYYMM, 4) as int) - 1911 as varchar) + ' 年 ' + " + Environment.NewLine +
+                                              "       cast(cast(right(YYYYMM, 2) as int) as varchar) + ' 月份共計 ' + " + Environment.NewLine +
+                                              "       cast(WorkStateDays1 as varchar) + ' 休 ' + " + Environment.NewLine +
+                                              "       cast(WorkStateDays2 as varchar) + ' 例 ' + " + Environment.NewLine +
+                                              "       cast(WorkStateDays3 as varchar) + ' 國' as DayTypeList " + Environment.NewLine +
+                                              "  from DriverMonthDays " + Environment.NewLine +
+                                              " where YYYYMM = '" + vYM + "' ";
+                            string vDayTypeList = PF.GetValue(vConnStr, vTempStr, "DayTypeList");
+                            vTempStr = "select [Name] from Custom where Types = 'O' and Code = 'A000' ";
+                            string vCompanyName = PF.GetValue(vConnStr, vTempStr, "Name");
+                            ReportDataSource rdsPrint = new ReportDataSource("DriverWorkStateListP", dtWSList);
+
+                            rvPrint.LocalReport.DataSources.Clear();
+                            rvPrint.LocalReport.ReportPath = @"Report\DriverWorkStateListP.rdlc";
+                            rvPrint.LocalReport.DataSources.Add(rdsPrint);
+                            rvPrint.LocalReport.SetParameters(new ReportParameter("CompanyName", vCompanyName));
+                            rvPrint.LocalReport.SetParameters(new ReportParameter("ReportName", "駕駛員排班狀況表"));
+                            rvPrint.LocalReport.SetParameters(new ReportParameter("DayTypeList", vDayTypeList));
+                            rvPrint.LocalReport.SetParameters(new ReportParameter("ESCDutyMember_11", vESCDutyMember_11));
+                            rvPrint.LocalReport.SetParameters(new ReportParameter("ESCDutyMember_13", vESCDutyMember_13));
+                            rvPrint.LocalReport.SetParameters(new ReportParameter("ESCDutyMember_15", vESCDutyMember_15));
+                            rvPrint.LocalReport.SetParameters(new ReportParameter("ESCDutyMember_16", vESCDutyMember_16));
+                            rvPrint.LocalReport.SetParameters(new ReportParameter("ESCDutyMember_17", vESCDutyMember_17));
+                            rvPrint.LocalReport.SetParameters(new ReportParameter("ESCDutyMember_18", vESCDutyMember_18));
+                            rvPrint.LocalReport.SetParameters(new ReportParameter("ESCDutyMember_19", vESCDutyMember_19));
+                            rvPrint.LocalReport.SetParameters(new ReportParameter("ESCDutyMember_20", vESCDutyMember_20));
+                            rvPrint.LocalReport.SetParameters(new ReportParameter("ESCDutyMember_22", vESCDutyMember_22));
+                            rvPrint.LocalReport.SetParameters(new ReportParameter("ESCDutyMember_23", vESCDutyMember_23));
+                            rvPrint.LocalReport.SetParameters(new ReportParameter("ESCDutyMember_25", vESCDutyMember_25));
+                            rvPrint.LocalReport.Refresh();
+                            plReport.Visible = true;
+                            plShowData.Visible = false;
+
+                            string vSheetYMStr = eSheetYear.Text.Trim() + " 年 " + eSheetMonth.Text.Trim() + " 月";
+                            string vDepNoStr = ((eDepNo_S.Text.Trim() != "") && (eDepNo_E.Text.Trim() != "")) ? "自 " + eDepNo_S.Text.Trim() + " 站至 " + eDepNo_E.Text.Trim() + " 站 " :
+                                               ((eDepNo_S.Text.Trim() != "") && (eDepNo_E.Text.Trim() == "")) ? eDepNo_S.Text.Trim() + " 站" :
+                                               ((eDepNo_S.Text.Trim() == "") && (eDepNo_E.Text.Trim() != "")) ? eDepNo_E.Text.Trim() + " 站" : "全部";
+                            string vRecordNote = "預覽報表_駕駛員排班狀況表" + Environment.NewLine +
+                                                 "DriverWorkStateList.aspx" + Environment.NewLine +
+                                                 "查詢年月：" + vSheetYMStr + Environment.NewLine +
+                                                 "站別：" + vDepNoStr;
+                            PF.InsertOperateRecord(vConnStr, vLoginID, vComputerName, vRecordNote);
+                        }
+                    }
                 }
             }
         }
@@ -398,6 +555,18 @@ namespace TyBus_Intranet_Test_V3
                     e.Row.Cells[i].ForeColor = Color.Red;
                 }
             }
+        }
+
+        protected void bbCloseReport_Click(object sender, EventArgs e)
+        {
+            plReport.Visible = false;
+            plSearch.Visible = true;
+            plShowData.Visible = true;
+        }
+
+        protected void bbPrint_Click(object sender, EventArgs e)
+        {
+            WorkStateListDataBind(GetSelStr(), "3");
         }
     }
 }

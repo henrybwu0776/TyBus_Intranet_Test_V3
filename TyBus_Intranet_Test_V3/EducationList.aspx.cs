@@ -13,7 +13,7 @@ using System.Web.UI.WebControls;
 
 namespace TyBus_Intranet_Test_V3
 {
-    public partial class EducationList : System.Web.UI.Page
+    public partial class EducationList : Page
     {
         PublicFunction PF = new PublicFunction(); //加入公用程式碼參考
         private string vLoginID = "";
@@ -135,6 +135,8 @@ namespace TyBus_Intranet_Test_V3
             string vSelectStr = GetSelectStr();
             string vReportName = "職業安全衛生教育訓練宣導";
             DateTime vTempDate;
+            string vTempStr = "select [Name] from Custom where Types = 'O' and Code = 'A000' ";
+            string vCompanyName = PF.GetValue(vConnStr, vTempStr, "Name");
             string vClassDateStr = (DateTime.TryParse(eClassDate_Search.Text.Trim(), out vTempDate)) ? (vTempDate.Year - 1911).ToString() + " 年 " + vTempDate.Month.ToString("D2") + " 月 " + vTempDate.Date.ToString("dd") + " 日" : "";
             try
             {
@@ -148,7 +150,7 @@ namespace TyBus_Intranet_Test_V3
                     rvPrint.LocalReport.DataSources.Clear();
                     rvPrint.LocalReport.ReportPath = @"Report\EducationListP.rdlc";
                     rvPrint.LocalReport.DataSources.Add(rdsPrint);
-                    rvPrint.LocalReport.SetParameters(new ReportParameter("CompanyName", "桃園汽車客運股份有限公司"));
+                    rvPrint.LocalReport.SetParameters(new ReportParameter("CompanyName", vCompanyName));
                     rvPrint.LocalReport.SetParameters(new ReportParameter("ReportName", vReportName));
                     rvPrint.LocalReport.SetParameters(new ReportParameter("ClassTitle", eClassTitle_Search.Text.Trim()));
                     rvPrint.LocalReport.SetParameters(new ReportParameter("TeacherName", eTeacherName_Search.Text.Trim()));
@@ -166,7 +168,7 @@ namespace TyBus_Intranet_Test_V3
                 Response.Write("alert('" + eMessage.Message + "')");
                 Response.Write("</" + "Script>");
             }
-            
+
         }
 
         protected void bbExcel_Click(object sender, EventArgs e)

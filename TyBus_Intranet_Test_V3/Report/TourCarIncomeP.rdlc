@@ -2442,24 +2442,6 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>副</Value>
-                  <Style />
-                </TextRun>
-              </TextRuns>
-              <Style />
-            </Paragraph>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value />
-                  <Style />
-                </TextRun>
-              </TextRuns>
-              <Style />
-            </Paragraph>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
                   <Value>總</Value>
                   <Style />
                 </TextRun>

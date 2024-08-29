@@ -11,7 +11,7 @@ namespace TyBus_Intranet_Test_V3
 {
 
 
-    public partial class DriverWorkStateList
+    public partial class RentCountsKMS
     {
 
         /// <summary>
@@ -24,22 +24,22 @@ namespace TyBus_Intranet_Test_V3
         protected global::System.Web.UI.WebControls.Panel plSearch;
 
         /// <summary>
-        /// lbSheetYM 控制項。
+        /// lbSearchDate 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbSheetYM;
+        protected global::System.Web.UI.WebControls.Label lbSearchDate;
 
         /// <summary>
-        /// eSheetYear 控制項。
+        /// eSearchDate_S 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox eSheetYear;
+        protected global::System.Web.UI.WebControls.TextBox eSearchDate_S;
 
         /// <summary>
         /// lbSplit_1 控制項。
@@ -51,76 +51,112 @@ namespace TyBus_Intranet_Test_V3
         protected global::System.Web.UI.WebControls.Label lbSplit_1;
 
         /// <summary>
-        /// eSheetMonth 控制項。
+        /// eSearchDate_E 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox eSheetMonth;
+        protected global::System.Web.UI.WebControls.TextBox eSearchDate_E;
 
         /// <summary>
-        /// lbSplit_2 控制項。
+        /// lbDepartment 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbSplit_2;
+        protected global::System.Web.UI.WebControls.Label lbDepartment;
 
         /// <summary>
-        /// lbDepNo 控制項。
+        /// eDepNo 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbDepNo;
+        protected global::System.Web.UI.WebControls.TextBox eDepNo;
 
         /// <summary>
-        /// eDepNo_S 控制項。
+        /// eDepName 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox eDepNo_S;
+        protected global::System.Web.UI.WebControls.Label eDepName;
 
         /// <summary>
-        /// lbSplit_3 控制項。
+        /// lbLinesNo 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbSplit_3;
+        protected global::System.Web.UI.WebControls.Label lbLinesNo;
 
         /// <summary>
-        /// eDepNo_E 控制項。
+        /// eLinesNo 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox eDepNo_E;
+        protected global::System.Web.UI.WebControls.TextBox eLinesNo;
 
         /// <summary>
-        /// bbSearch 控制項。
+        /// lbCarType 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button bbSearch;
+        protected global::System.Web.UI.WebControls.Label lbCarType;
 
         /// <summary>
-        /// bbPrint 控制項。
+        /// ddlCarType 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button bbPrint;
+        protected global::System.Web.UI.WebControls.DropDownList ddlCarType;
+
+        /// <summary>
+        /// eCarType 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label eCarType;
+
+        /// <summary>
+        /// rbDataShowType 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButtonList rbDataShowType;
+
+        /// <summary>
+        /// eDataShowType 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label eDataShowType;
+
+        /// <summary>
+        /// bbShowData 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button bbShowData;
 
         /// <summary>
         /// bbExcel 控制項。
@@ -132,22 +168,13 @@ namespace TyBus_Intranet_Test_V3
         protected global::System.Web.UI.WebControls.Button bbExcel;
 
         /// <summary>
-        /// bbClose 控制項。
+        /// bbExit 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button bbClose;
-
-        /// <summary>
-        /// smMain 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.ScriptManager smMain;
+        protected global::System.Web.UI.WebControls.Button bbExit;
 
         /// <summary>
         /// plShowData 控制項。
@@ -159,48 +186,12 @@ namespace TyBus_Intranet_Test_V3
         protected global::System.Web.UI.WebControls.Panel plShowData;
 
         /// <summary>
-        /// gridDriverWorkStateList 控制項。
+        /// gvShowData 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gridDriverWorkStateList;
-
-        /// <summary>
-        /// plReport 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel plReport;
-
-        /// <summary>
-        /// bbCloseReport 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button bbCloseReport;
-
-        /// <summary>
-        /// rvPrint 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::Microsoft.Reporting.WebForms.ReportViewer rvPrint;
-
-        /// <summary>
-        /// sdsDriverWorkStateList 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource sdsDriverWorkStateList;
+        protected global::System.Web.UI.WebControls.GridView gvShowData;
     }
 }

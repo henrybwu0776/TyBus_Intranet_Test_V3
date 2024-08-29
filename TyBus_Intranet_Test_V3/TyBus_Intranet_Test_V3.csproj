@@ -468,6 +468,7 @@
     <Content Include="CarServiceList.aspx" />
     <Content Include="CashBillListP.aspx" />
     <Content Include="ChangePWD.aspx" />
+    <Content Include="Consumables.aspx" />
     <Content Include="ContractManager.aspx" />
     <Content Include="CreateNameList.aspx" />
     <Content Include="CustomServiceDetail.aspx" />
@@ -546,9 +547,11 @@
     <Content Include="LinesNoChart.aspx" />
     <Content Include="LinesStatistics.aspx" />
     <Content Include="MainPage.Master" />
+    <Content Include="MOUPayCal.aspx" />
     <Content Include="OperateRecord.aspx" />
     <Content Include="Over65DriverList.aspx" />
     <Content Include="PurchaseToExcel.aspx" />
+    <Content Include="RentCountsKMS.aspx" />
     <Content Include="RetireFreeTicketList.aspx" />
     <Content Include="App_Code\DriverWorkHourAnalysisP.xsc">
       <DependentUpon>DriverWorkHourAnalysisP.xsd</DependentUpon>
@@ -584,6 +587,17 @@
     </Content>
     <Content Include="App_Code\EducationListP.xsc">
       <DependentUpon>EducationListP.xsd</DependentUpon>
+    </Content>
+    <Content Include="App_Code\DriverWorkStateListP.xsc">
+      <DependentUpon>DriverWorkStateListP.xsd</DependentUpon>
+    </Content>
+    <None Include="App_Code\DriverWorkStateListP.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DriverWorkStateListP.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="App_Code\DriverWorkStateListP.xss">
+      <DependentUpon>DriverWorkStateListP.xsd</DependentUpon>
     </Content>
     <None Include="App_Code\EducationListP.xsd">
       <SubType>Designer</SubType>
@@ -915,6 +929,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AnecdoteCaseP.xsd</DependentUpon>
     </Content>
+    <Content Include="App_Code\DriverWorkStateListP.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DriverWorkStateListP.xsd</DependentUpon>
+    </Content>
     <Compile Include="AssetReportList.aspx.cs">
       <DependentUpon>AssetReportList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1033,6 +1052,13 @@
     </Compile>
     <Compile Include="ChangePWD.aspx.designer.cs">
       <DependentUpon>ChangePWD.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Consumables.aspx.cs">
+      <DependentUpon>Consumables.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Consumables.aspx.designer.cs">
+      <DependentUpon>Consumables.aspx</DependentUpon>
     </Compile>
     <Compile Include="ContractManager.aspx.cs">
       <DependentUpon>ContractManager.aspx</DependentUpon>
@@ -1556,6 +1582,13 @@
       <DependentUpon>MainPage.Master</DependentUpon>
     </Compile>
     <Compile Include="Models\PublicFunction.cs" />
+    <Compile Include="MOUPayCal.aspx.cs">
+      <DependentUpon>MOUPayCal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MOUPayCal.aspx.designer.cs">
+      <DependentUpon>MOUPayCal.aspx</DependentUpon>
+    </Compile>
     <Compile Include="NPOIMemoryStream.cs" />
     <Compile Include="OfficialDocument.aspx.cs">
       <DependentUpon>OfficialDocument.aspx</DependentUpon>
@@ -1634,6 +1667,13 @@
     </Compile>
     <Compile Include="PurchaseToExcel.aspx.designer.cs">
       <DependentUpon>PurchaseToExcel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RentCountsKMS.aspx.cs">
+      <DependentUpon>RentCountsKMS.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RentCountsKMS.aspx.designer.cs">
+      <DependentUpon>RentCountsKMS.aspx</DependentUpon>
     </Compile>
     <Compile Include="RentDailyCarCount.aspx.cs">
       <DependentUpon>RentDailyCarCount.aspx</DependentUpon>
@@ -2008,6 +2048,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Report\AnecdoteCaseP2.rdlc" />
+    <EmbeddedResource Include="Report\DriverWorkStateListP.rdlc" />
     <EmbeddedResource Include="Report\EmpMeritsP_Detail.rdlc" />
     <EmbeddedResource Include="Report\AdviceReportP.rdlc" />
     <EmbeddedResource Include="Report\AnecdoteCaseP.rdlc" />

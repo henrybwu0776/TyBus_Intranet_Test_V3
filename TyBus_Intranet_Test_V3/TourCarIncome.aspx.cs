@@ -416,7 +416,7 @@ namespace TyBus_Intranet_Test_V3
                           //2023.12.27 增加從憑單判斷車號有沒有跑遊覽車趟次
                           //"                   and a.Car_ID in (select Car_ID from Car_InfoA where Point = 'C1' and Tran_Type = '1') " + Environment.NewLine +
                           "                   and (a.Car_ID in (select Car_ID from Car_InfoA where Point = 'C1' and Tran_Type = '1') " + Environment.NewLine +
-                          "                    or a.Car_ID in (select distinct Car_ID from RunSheetB where CarType = '8' and AssignNo in (select AssignNo from RunSheetA where BuDate between '" + vBuDate_S + "' and '" + vBuDate_E + "') and isnull(ReduceReason, '') = '')) " + Environment.NewLine +
+                          "                    or a.Car_ID in (select distinct Car_ID from RunSheetB where CarType = '8' and AssignNo like '" + vYM_C + "%' and isnull(ReduceReason, '') = '')) " + Environment.NewLine +
                           "                 group by a.DepNo, a.Car_ID, a.Car_No " + Environment.NewLine +
                           "               ) z " + Environment.NewLine +
                           "         group by z.DepNo, z.CarCOunt, z.TourCount " + Environment.NewLine +

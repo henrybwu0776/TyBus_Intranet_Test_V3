@@ -129,6 +129,7 @@
                             <li id="DriverNoneSafeP" runat="server"><a href="DriverNoneSafeP.aspx">駕駛員未領精勤獎金一覽表</a></li>
                             <li id="Over65DriverList" runat="server"><a href="Over65DriverList.aspx">年滿65歲駕駛員名冊</a></li>
                             <li id="DriverWorkStateBatch" runat="server"><a href="DriverWorkStateBatch.aspx">駕駛員例休批次修改</a></li>
+                            <li id="MOUPayCal" runat="server"><a href="MOUPayCal.aspx">MOD專案駕駛薪資計算</a></li>
                         </ul>
                     </li>
                     <li id="G007" runat="server"><a href="#">員工相關作業</a>
@@ -201,6 +202,7 @@
                         <ul>
                             <li id="RentDailyCarCount" runat="server"><a href="RentDailyCarCount.aspx">每日車輛可用數</a></li>
                             <li id="ExportRentCarData" runat="server"><a href="ExportRentCarData.aspx">租車資料匯出</a></li>
+                            <li id="RentCountsKMS" runat="server"><a href="RentCountsKMS.aspx">各站租車趟次統計</a></li>
                         </ul>
                     </li>
                     <li id="G012" runat="server"><a href="#">職安相關作業</a>
@@ -212,12 +214,13 @@
                             <li id="EmpHealthCheckList" runat="server"><a href="EmpHealthCheckList.aspx">年度健康檢查名冊</a></li>
                         </ul>
                     </li>
-                    <li id="G013" runat="server"><a href="#">電腦耗材庫存量管理</a>
+                    <li id="G013" runat="server"><a href="#">耗材庫存量管理</a>
                         <ul>
                             <li id="IAConsumables" runat="server"><a href="IAConsumables.aspx">電腦課耗材管理</a></li>
                             <li id="IAConsumablesInstore" runat="server"><a href="IAConsumablesInstore.aspx">電腦課耗材進貨</a></li>
                             <li id="IAConsumablesOutStore" runat="server"><a href="IAConsumablesOutStore.aspx">電腦課耗材領用</a></li>
                             <li id="IAConsumablesReport" runat="server"><a href="IAConsumablesReport.aspx">電腦課耗材報表</a></li>
+                            <li id="Consumables" runat="server"><a href="IAConsumables.aspx">總務耗材管理</a></li>
                         </ul>
                     </li>
                     <li id="G014" runat="server"><a href="#">公文管理</a>

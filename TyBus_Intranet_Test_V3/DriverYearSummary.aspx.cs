@@ -196,7 +196,9 @@ namespace TyBus_Intranet_Test_V3
                 if (dtPrint.Rows.Count > 0)
                 {
                     //有取得資料才開始預覽
-                    string vCompanyName = "桃園汽車客運股份有限公司";
+                    //string vCompanyName = "桃園汽車客運股份有限公司";
+                    string vTempStr = "select [Name] from Custom where Types = 'O' and Code = 'A000' ";
+                    string vCompanyName = PF.GetValue(vConnStr, vTempStr, "Name");
                     string vReportName = "遊覽車評選收入、公里、總時數";
                     string vCalYM = "日期：" + vCalYMStr_S + "～" + vCalYMStr_E;
                     ReportDataSource rdsPrint = new ReportDataSource("DriverYearSummaryP", dtPrint);
@@ -277,7 +279,9 @@ namespace TyBus_Intranet_Test_V3
                     csData_Int.DataFormat = format.GetFormat("###,##0");
 
                     string vHeaderText = "";
-                    string vCompanyName = "桃園汽車客運股份有限公司";
+                    //string vCompanyName = "桃園汽車客運股份有限公司";
+                    string vTempStr = "select [Name] from Custom where Types = 'O' and Code = 'A000' ";
+                    string vCompanyName = PF.GetValue(vConnStr, vTempStr, "Name");
                     string vFileName = "遊覽車評選收入、公里、總時數";
                     int vLinesNo = 0;
                     int vColumnCount = drExcel.FieldCount;
