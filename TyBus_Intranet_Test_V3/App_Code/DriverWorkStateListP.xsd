@@ -1,0 +1,335 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DriverWorkStateListP" targetNamespace="http://tempuri.org/DriverWorkStateListP.xsd" xmlns:mstns="http://tempuri.org/DriverWorkStateListP.xsd" xmlns="http://tempuri.org/DriverWorkStateListP.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="DriverWorkStateListPTableAdapter" GeneratorDataComponentClassName="DriverWorkStateListPTableAdapter" Name="DriverWorkStateListP" UserDataComponentName="DriverWorkStateListPTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>select cast(null as varchar) DepNo, cast(null as varchar) DepName, cast(null as varchar) Driver, cast(null as varchar) DriverName,
+       cast(null as varchar) WS01, cast(null as varchar) WS02, cast(null as varchar) WS03, cast(null as varchar) WS04, cast(null as varchar) WS05,
+	   cast(null as varchar) WS06, cast(null as varchar) WS07, cast(null as varchar) WS08, cast(null as varchar) WS09, cast(null as varchar) WS10,
+	   cast(null as varchar) WS11, cast(null as varchar) WS12, cast(null as varchar) WS13, cast(null as varchar) WS14, cast(null as varchar) WS15,
+	   cast(null as varchar) WS16, cast(null as varchar) WS17, cast(null as varchar) WS18, cast(null as varchar) WS19, cast(null as varchar) WS20,
+	   cast(null as varchar) WS21, cast(null as varchar) WS22, cast(null as varchar) WS23, cast(null as varchar) WS24, cast(null as varchar) WS25,
+	   cast(null as varchar) WS26, cast(null as varchar) WS27, cast(null as varchar) WS28, cast(null as varchar) WS29, cast(null as varchar) WS30,
+	   cast(null as varchar) WS31, cast(0 as int) ESCType1, cast(0 as int) ESCType2, cast(0 as int) ESCType3</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="DepNo" DataSetColumn="DepNo" />
+              <Mapping SourceColumn="DepName" DataSetColumn="DepName" />
+              <Mapping SourceColumn="Driver" DataSetColumn="Driver" />
+              <Mapping SourceColumn="DriverName" DataSetColumn="DriverName" />
+              <Mapping SourceColumn="WS01" DataSetColumn="WS01" />
+              <Mapping SourceColumn="WS02" DataSetColumn="WS02" />
+              <Mapping SourceColumn="WS03" DataSetColumn="WS03" />
+              <Mapping SourceColumn="WS04" DataSetColumn="WS04" />
+              <Mapping SourceColumn="WS05" DataSetColumn="WS05" />
+              <Mapping SourceColumn="WS06" DataSetColumn="WS06" />
+              <Mapping SourceColumn="WS07" DataSetColumn="WS07" />
+              <Mapping SourceColumn="WS08" DataSetColumn="WS08" />
+              <Mapping SourceColumn="WS09" DataSetColumn="WS09" />
+              <Mapping SourceColumn="WS10" DataSetColumn="WS10" />
+              <Mapping SourceColumn="WS11" DataSetColumn="WS11" />
+              <Mapping SourceColumn="WS12" DataSetColumn="WS12" />
+              <Mapping SourceColumn="WS13" DataSetColumn="WS13" />
+              <Mapping SourceColumn="WS14" DataSetColumn="WS14" />
+              <Mapping SourceColumn="WS15" DataSetColumn="WS15" />
+              <Mapping SourceColumn="WS16" DataSetColumn="WS16" />
+              <Mapping SourceColumn="WS17" DataSetColumn="WS17" />
+              <Mapping SourceColumn="WS18" DataSetColumn="WS18" />
+              <Mapping SourceColumn="WS19" DataSetColumn="WS19" />
+              <Mapping SourceColumn="WS20" DataSetColumn="WS20" />
+              <Mapping SourceColumn="WS21" DataSetColumn="WS21" />
+              <Mapping SourceColumn="WS22" DataSetColumn="WS22" />
+              <Mapping SourceColumn="WS23" DataSetColumn="WS23" />
+              <Mapping SourceColumn="WS24" DataSetColumn="WS24" />
+              <Mapping SourceColumn="WS25" DataSetColumn="WS25" />
+              <Mapping SourceColumn="WS26" DataSetColumn="WS26" />
+              <Mapping SourceColumn="WS27" DataSetColumn="WS27" />
+              <Mapping SourceColumn="WS28" DataSetColumn="WS28" />
+              <Mapping SourceColumn="WS29" DataSetColumn="WS29" />
+              <Mapping SourceColumn="WS30" DataSetColumn="WS30" />
+              <Mapping SourceColumn="WS31" DataSetColumn="WS31" />
+              <Mapping SourceColumn="ESCType1" DataSetColumn="ESCType1" />
+              <Mapping SourceColumn="ESCType2" DataSetColumn="ESCType2" />
+              <Mapping SourceColumn="ESCType3" DataSetColumn="ESCType3" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DriverWorkStateListP" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DriverWorkStateListP" msprop:Generator_UserDSName="DriverWorkStateListP">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="DriverWorkStateListP" msprop:Generator_TableClassName="DriverWorkStateListPDataTable" msprop:Generator_TableVarName="tableDriverWorkStateListP" msprop:Generator_TablePropName="_DriverWorkStateListP" msprop:Generator_RowDeletingName="DriverWorkStateListPRowDeleting" msprop:Generator_RowChangingName="DriverWorkStateListPRowChanging" msprop:Generator_RowEvHandlerName="DriverWorkStateListPRowChangeEventHandler" msprop:Generator_RowDeletedName="DriverWorkStateListPRowDeleted" msprop:Generator_UserTableName="DriverWorkStateListP" msprop:Generator_RowChangedName="DriverWorkStateListPRowChanged" msprop:Generator_RowEvArgName="DriverWorkStateListPRowChangeEvent" msprop:Generator_RowClassName="DriverWorkStateListPRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DepNo" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepNo" msprop:Generator_ColumnPropNameInRow="DepNo" msprop:Generator_ColumnPropNameInTable="DepNoColumn" msprop:Generator_UserColumnName="DepNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDepName" msprop:Generator_ColumnPropNameInRow="DepName" msprop:Generator_ColumnPropNameInTable="DepNameColumn" msprop:Generator_UserColumnName="DepName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Driver" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDriver" msprop:Generator_ColumnPropNameInRow="Driver" msprop:Generator_ColumnPropNameInTable="DriverColumn" msprop:Generator_UserColumnName="Driver" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DriverName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDriverName" msprop:Generator_ColumnPropNameInRow="DriverName" msprop:Generator_ColumnPropNameInTable="DriverNameColumn" msprop:Generator_UserColumnName="DriverName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WS01" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWS01" msprop:Generator_ColumnPropNameInRow="WS01" msprop:Generator_ColumnPropNameInTable="WS01Column" msprop:Generator_UserColumnName="WS01" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WS02" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWS02" msprop:Generator_ColumnPropNameInRow="WS02" msprop:Generator_ColumnPropNameInTable="WS02Column" msprop:Generator_UserColumnName="WS02" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WS03" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWS03" msprop:Generator_ColumnPropNameInRow="WS03" msprop:Generator_ColumnPropNameInTable="WS03Column" msprop:Generator_UserColumnName="WS03" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WS04" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWS04" msprop:Generator_ColumnPropNameInRow="WS04" msprop:Generator_ColumnPropNameInTable="WS04Column" msprop:Generator_UserColumnName="WS04" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WS05" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWS05" msprop:Generator_ColumnPropNameInRow="WS05" msprop:Generator_ColumnPropNameInTable="WS05Column" msprop:Generator_UserColumnName="WS05" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WS06" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWS06" msprop:Generator_ColumnPropNameInRow="WS06" msprop:Generator_ColumnPropNameInTable="WS06Column" msprop:Generator_UserColumnName="WS06" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WS07" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWS07" msprop:Generator_ColumnPropNameInRow="WS07" msprop:Generator_ColumnPropNameInTable="WS07Column" msprop:Generator_UserColumnName="WS07" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WS08" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWS08" msprop:Generator_ColumnPropNameInRow="WS08" msprop:Generator_ColumnPropNameInTable="WS08Column" msprop:Generator_UserColumnName="WS08" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WS09" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWS09" msprop:Generator_ColumnPropNameInRow="WS09" msprop:Generator_ColumnPropNameInTable="WS09Column" msprop:Generator_UserColumnName="WS09" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WS10" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWS10" msprop:Generator_ColumnPropNameInRow="WS10" msprop:Generator_ColumnPropNameInTable="WS10Column" msprop:Generator_UserColumnName="WS10" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WS11" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWS11" msprop:Generator_ColumnPropNameInRow="WS11" msprop:Generator_ColumnPropNameInTable="WS11Column" msprop:Generator_UserColumnName="WS11" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WS12" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWS12" msprop:Generator_ColumnPropNameInRow="WS12" msprop:Generator_ColumnPropNameInTable="WS12Column" msprop:Generator_UserColumnName="WS12" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WS13" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWS13" msprop:Generator_ColumnPropNameInRow="WS13" msprop:Generator_ColumnPropNameInTable="WS13Column" msprop:Generator_UserColumnName="WS13" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WS14" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWS14" msprop:Generator_ColumnPropNameInRow="WS14" msprop:Generator_ColumnPropNameInTable="WS14Column" msprop:Generator_UserColumnName="WS14" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WS15" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWS15" msprop:Generator_ColumnPropNameInRow="WS15" msprop:Generator_ColumnPropNameInTable="WS15Column" msprop:Generator_UserColumnName="WS15" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WS16" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWS16" msprop:Generator_ColumnPropNameInRow="WS16" msprop:Generator_ColumnPropNameInTable="WS16Column" msprop:Generator_UserColumnName="WS16" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WS17" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWS17" msprop:Generator_ColumnPropNameInRow="WS17" msprop:Generator_ColumnPropNameInTable="WS17Column" msprop:Generator_UserColumnName="WS17" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WS18" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWS18" msprop:Generator_ColumnPropNameInRow="WS18" msprop:Generator_ColumnPropNameInTable="WS18Column" msprop:Generator_UserColumnName="WS18" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WS19" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWS19" msprop:Generator_ColumnPropNameInRow="WS19" msprop:Generator_ColumnPropNameInTable="WS19Column" msprop:Generator_UserColumnName="WS19" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WS20" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWS20" msprop:Generator_ColumnPropNameInRow="WS20" msprop:Generator_ColumnPropNameInTable="WS20Column" msprop:Generator_UserColumnName="WS20" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WS21" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWS21" msprop:Generator_ColumnPropNameInRow="WS21" msprop:Generator_ColumnPropNameInTable="WS21Column" msprop:Generator_UserColumnName="WS21" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WS22" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWS22" msprop:Generator_ColumnPropNameInRow="WS22" msprop:Generator_ColumnPropNameInTable="WS22Column" msprop:Generator_UserColumnName="WS22" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WS23" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWS23" msprop:Generator_ColumnPropNameInRow="WS23" msprop:Generator_ColumnPropNameInTable="WS23Column" msprop:Generator_UserColumnName="WS23" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WS24" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWS24" msprop:Generator_ColumnPropNameInRow="WS24" msprop:Generator_ColumnPropNameInTable="WS24Column" msprop:Generator_UserColumnName="WS24" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WS25" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWS25" msprop:Generator_ColumnPropNameInRow="WS25" msprop:Generator_ColumnPropNameInTable="WS25Column" msprop:Generator_UserColumnName="WS25" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WS26" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWS26" msprop:Generator_ColumnPropNameInRow="WS26" msprop:Generator_ColumnPropNameInTable="WS26Column" msprop:Generator_UserColumnName="WS26" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WS27" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWS27" msprop:Generator_ColumnPropNameInRow="WS27" msprop:Generator_ColumnPropNameInTable="WS27Column" msprop:Generator_UserColumnName="WS27" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WS28" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWS28" msprop:Generator_ColumnPropNameInRow="WS28" msprop:Generator_ColumnPropNameInTable="WS28Column" msprop:Generator_UserColumnName="WS28" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WS29" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWS29" msprop:Generator_ColumnPropNameInRow="WS29" msprop:Generator_ColumnPropNameInTable="WS29Column" msprop:Generator_UserColumnName="WS29" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WS30" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWS30" msprop:Generator_ColumnPropNameInRow="WS30" msprop:Generator_ColumnPropNameInTable="WS30Column" msprop:Generator_UserColumnName="WS30" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WS31" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWS31" msprop:Generator_ColumnPropNameInRow="WS31" msprop:Generator_ColumnPropNameInTable="WS31Column" msprop:Generator_UserColumnName="WS31" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ESCType1" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnESCType1" msprop:Generator_ColumnPropNameInRow="ESCType1" msprop:Generator_ColumnPropNameInTable="ESCType1Column" msprop:Generator_UserColumnName="ESCType1" type="xs:int" minOccurs="0" />
+              <xs:element name="ESCType2" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnESCType2" msprop:Generator_ColumnPropNameInRow="ESCType2" msprop:Generator_ColumnPropNameInTable="ESCType2Column" msprop:Generator_UserColumnName="ESCType2" type="xs:int" minOccurs="0" />
+              <xs:element name="ESCType3" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnESCType3" msprop:Generator_ColumnPropNameInRow="ESCType3" msprop:Generator_ColumnPropNameInTable="ESCType3Column" msprop:Generator_UserColumnName="ESCType3" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
