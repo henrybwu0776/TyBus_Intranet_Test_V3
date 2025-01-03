@@ -229,7 +229,7 @@ namespace TyBus_Intranet_Test_V3
 
             vSelectSQLStr = "select e.DepNo, e.Title, " + Environment.NewLine +
                             "       (select CLassTxt from DBDICB where FKey = '人事資料檔      EMPLOYEE        TITLE' and ClassNo = e.Title) Title_C, " + Environment.NewLine +
-                            "       t.EmpNo, e.[Name],  " + Environment.NewLine +
+                            "       t.EmpNo, e.[Name], e.Assumeday, " + Environment.NewLine +
                             "       t.YM_01_T as [" + vStartDate_C + "], t.ClassBounds_01_T as [" + vStartDate_C + "授課], " + Environment.NewLine +
                             "       t.YM_02_T as [" + vMidDate_C + "], t.ClassBounds_02_T as [" + vMidDate_C + "授課], " + Environment.NewLine +
                             "       t.YM_03_T as [" + vEndDate_C + "], t.ClassBounds_03_T as [" + vEndDate_C + "授課], " + Environment.NewLine +
@@ -290,18 +290,19 @@ namespace TyBus_Intranet_Test_V3
                                   (drAvgPayment.GetName(i) == "Title_C") ? "職稱" :
                                   (drAvgPayment.GetName(i) == "EmpNo") ? "員工工號" :
                                   (drAvgPayment.GetName(i) == "Name") ? "姓名" :
+                                  (drAvgPayment.GetName(i) == "Assumeday") ? "到職日" :
                                   (drAvgPayment.GetName(i) == "ClassBounds") ? "授課津貼" :
                                   (drAvgPayment.GetName(i) == "ClassBounds_AVG") ? "平均授課津貼" :
-                                  (drAvgPayment.GetName(i) == "PaymentAVG") ? "平均工資" :
+                                  (drAvgPayment.GetName(i) == "PaymentAVG") ? "平均工資" : //7
                                   (drAvgPayment.GetName(i) == "PaymentAVG_New") ? "平均工資(新)" :
                                   (drAvgPayment.GetName(i) == "IDCardNo") ? "身分證字號" :
                                   (drAvgPayment.GetName(i) == "Birthday") ? "出生日期" :
                                   (drAvgPayment.GetName(i) == "LiAMT_New") ? "新勞保對應費用" :
-                                  (drAvgPayment.GetName(i) == "HiAMT_New") ? "新健保對應費用" :
+                                  (drAvgPayment.GetName(i) == "HiAMT_New") ? "新健保對應費用" : //7
                                   (drAvgPayment.GetName(i) == "LaiAMT") ? "勞保級距" :
                                   (drAvgPayment.GetName(i) == "LiFee") ? "勞保費" :
-                                  (drAvgPayment.GetName(i) == "HiAMT") ? "健保級距" :
-                                  (drAvgPayment.GetName(i) == "HiFee") ? "健保費" :
+                                  (drAvgPayment.GetName(i) == "HiAMT") ? "健保級距" : //7
+                                  (drAvgPayment.GetName(i) == "HiFee") ? "健保費" : 
                                   (drAvgPayment.GetName(i) == "LiAMT_Diff") ? "勞保級距差" :
                                   (drAvgPayment.GetName(i) == "HiAMT_Diff") ? "健保級距差" :
                                   (drAvgPayment.GetName(i) == "RetireType") ? "新舊制" : drAvgPayment.GetName(i);
@@ -318,13 +319,13 @@ namespace TyBus_Intranet_Test_V3
                         vCellName = drAvgPayment.GetName(i);
                         if ((vCellName == "ClassBounds") ||
                             (vCellName == "ClassBounds_AVG") ||
-                            (vCellName == "PaymentAVG") ||
+                            //(vCellName == "PaymentAVG") ||
                             (vCellName == "PaymentAVG_New") ||
                             (vCellName == "LiAMT_New") ||
-                            (vCellName == "HiAMT_New") ||
+                            //(vCellName == "HiAMT_New") ||
                             (vCellName == "LaiAMT") ||
                             (vCellName == "LiFee") ||
-                            (vCellName == "HiAMT") ||
+                            //(vCellName == "HiAMT") ||
                             (vCellName == "HiFee") ||
                             (vCellName == "LiAMT_Diff") ||
                             (vCellName == "HiAMT_Diff") ||
@@ -338,10 +339,24 @@ namespace TyBus_Intranet_Test_V3
                             wsExcel.GetRow(vLinesNo).GetCell(i).SetCellType(CellType.Numeric);
                             wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(double.Parse(drAvgPayment[i].ToString()));
                         }
+                        else if ((vCellName == "PaymentAVG") ||
+                                 (vCellName == "HiAMT_New")||
+                                 (vCellName == "HiAMT"))
+                        {
+                            wsExcel.GetRow(vLinesNo).GetCell(i).SetCellType(CellType.String);
+                            wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(Int32.Parse(drAvgPayment[i].ToString()).ToString("D6"));
+                        }
                         else if (vCellName == "Birthday")
                         {
                             wsExcel.GetRow(vLinesNo).GetCell(i).SetCellType(CellType.String);
-                            wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue((DateTime.Parse(drAvgPayment[i].ToString()).Year - 1911).ToString() + "/" +
+                            wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue((DateTime.Parse(drAvgPayment[i].ToString()).Year - 1911).ToString("D3") +
+                                                                             DateTime.Parse(drAvgPayment[i].ToString()).Month.ToString("D2") +
+                                                                             DateTime.Parse(drAvgPayment[i].ToString()).Day.ToString("D2"));
+                        }
+                        else if (vCellName == "Assumeday")
+                        {
+                            wsExcel.GetRow(vLinesNo).GetCell(i).SetCellType(CellType.String);
+                            wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue((DateTime.Parse(drAvgPayment[i].ToString()).Year - 1911).ToString("D3") + "/" +
                                                                              DateTime.Parse(drAvgPayment[i].ToString()).Month.ToString("D2") + "/" +
                                                                              DateTime.Parse(drAvgPayment[i].ToString()).Day.ToString("D2"));
                         }

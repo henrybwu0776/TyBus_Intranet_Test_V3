@@ -220,7 +220,9 @@
                             <li id="IAConsumablesInstore" runat="server"><a href="IAConsumablesInstore.aspx">電腦課耗材進貨</a></li>
                             <li id="IAConsumablesOutStore" runat="server"><a href="IAConsumablesOutStore.aspx">電腦課耗材領用</a></li>
                             <li id="IAConsumablesReport" runat="server"><a href="IAConsumablesReport.aspx">電腦課耗材報表</a></li>
-                            <li id="Consumables" runat="server"><a href="IAConsumables.aspx">總務耗材管理</a></li>
+                            <li id="Consumables" runat="server"><a href="Consumables.aspx">總務耗材管理</a></li>
+                            <li id="ConsumablesInstore" runat="server"><a href="ConsumablesInstore.aspx">總務耗材進貨</a></li>
+                            <li id="ConsumablesOutStore" runat="server"><a href="ConsumablesOutStore.aspx">總務耗材領用</a></li>
                         </ul>
                     </li>
                     <li id="G014" runat="server"><a href="#">公文管理</a>

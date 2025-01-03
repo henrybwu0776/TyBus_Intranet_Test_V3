@@ -23,6 +23,7 @@
                         <asp:ListItem Text="轉入合約資料" Value="T006" />
                         <asp:ListItem Text="轉入路線對照" Value="T007" />
                         <asp:ListItem Text="更新不休假獎金資料" Value="T008" />
+                        <asp:ListItem Text="匯入MOU津貼資料" Value="T009" />
                     </asp:DropDownList>
                 </td>
                 <td class="ColHeight ColBorder ColWidth-9Col">
@@ -45,6 +46,9 @@
                 </td>
                 <td class="ColHeight ColWidth-9Col">
                     <asp:Button ID="bbClose" runat="server" CssClass="button-Red" Text="結束" OnClick="bbClose_Click" Width="90%" />
+                </td>
+                <td class="ColHeight ColWidth-9Col" colspan="7">
+                    <asp:Label ID="lbError" runat="server" CssClass="errorMessageText" />
                 </td>
             </tr>
             <tr>

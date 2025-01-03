@@ -528,7 +528,7 @@ namespace TyBus_Intranet_Test_V3
                         ddlTaxType_Edit.SelectedIndex = vRCount_Edit;
                     }
                     TextBox eSupNo_Edit = (TextBox)fvIASheetA_Detail.FindControl("eSupNo_Edit");
-                    vSupDataURL = "SearchSup.aspx?TextBoxID=" + eSupNo_Edit.ClientID;
+                    vSupDataURL = "SearchSup.aspx?TextBoxID=" + eSupNo_Edit.ClientID + "&SupKind=C";
                     vSupDataScript = "window.open('" + vSupDataURL + "','','height=600, width=650,status=no,toolbar=no,menubar=no,location=no','')";
                     eSupNo_Edit.Attributes["onClick"] = vSupDataScript;
                     break;

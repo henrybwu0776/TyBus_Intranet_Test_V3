@@ -339,8 +339,8 @@ namespace Amaterasu_Function
         /// <param name="fYMStrHasDays">日期格式是否包括日</param>
         /// <param name="fCodeDate">用來取號的日期</param>
         /// <param name="fYMLength">日期部份長度</param>
-        /// <param name="fIndexCode">序號中置碼</param>
-        /// <param name="fIndexLength">序號總長度</param>
+        /// <param name="fIndexCode">流水號中置碼</param>
+        /// <param name="fIndexLength">流水號總長度</param>
         /// <returns></returns>
         public string GetDataIndex(string fConnStr, string fTableName, string fFieldName, string fYearType, Boolean fYMStrHasDays, DateTime fCodeDate, int fYMLength, string fIndexCode, int fIndexLength)
         {
@@ -613,7 +613,7 @@ namespace Amaterasu_Function
         }
 
         /// <summary>
-        /// 取回耗材進出貨單號
+        /// 取回電腦耗材進出貨單號
         /// </summary>
         /// <param name="fConnStr"></param>
         /// <param name="fSheetMode"></param>
@@ -622,6 +622,31 @@ namespace Amaterasu_Function
         {
             string vResultStr = "";
             string vSQLStr_Temp = "select max(SheetNo) MaxIndex from IASheetA where SheetMode = '" + fSheetMode + "' ";
+            string vOldSheetNo = GetValue(fConnStr, vSQLStr_Temp, "MaxIndex");
+            string vOldIndex = (vOldSheetNo != "") ? vOldSheetNo.Substring(8) : "0";
+            int vNewIndex = 0;
+            if (int.TryParse(vOldIndex, out vNewIndex))
+            {
+                vNewIndex++;
+            }
+            else
+            {
+                vNewIndex = 1;
+            }
+            vResultStr = DateTime.Now.Year.ToString("D4") + DateTime.Now.Month.ToString("D2") + fSheetMode + vNewIndex.ToString("D4");
+            return vResultStr.Trim();
+        }
+
+        /// <summary>
+        /// 取回耗材進出貨單號
+        /// </summary>
+        /// <param name="fConnStr"></param>
+        /// <param name="fSheetMode"></param>
+        /// <returns></returns>
+        public string GetConsSheetNo(string fConnStr, string fSheetMode)
+        {
+            string vResultStr = "";
+            string vSQLStr_Temp = "select max(SheetNo) MaxIndex from ConsSheetA where SheetMode = '" + fSheetMode + "' ";
             string vOldSheetNo = GetValue(fConnStr, vSQLStr_Temp, "MaxIndex");
             string vOldIndex = (vOldSheetNo != "") ? vOldSheetNo.Substring(8) : "0";
             int vNewIndex = 0;

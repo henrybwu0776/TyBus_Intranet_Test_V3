@@ -198,6 +198,26 @@ namespace TyBus_Intranet_Test_V3
                          "                            left join DBDICB as a on a.ClassNo = e.Title and a.FKey = '人事資料檔      EMPLOYEE        TITLE' " + Environment.NewLine +
                          "        where e.Title = '271' " + Environment.NewLine +
                          "          and e.DepNo > '00' " + Environment.NewLine +
+                         //2024.09.12 MOU 人員區分 "正常在職、本月到職、本月離職
+                         "          and e.Assumeday < '"+vCalDate+" 00:00:00' "+Environment.NewLine+
+                         "          and isnull(e.Leaveday, '') = '' "+Environment.NewLine +
+                         "        union all " + Environment.NewLine +
+                         "       select '0' as GetPayMode, e.IDCardNo, e.WorkType, e.DepNo, d.[Name] DepName, e.EmpNo, e.[Name] EmpName, e.Title, " + Environment.NewLine +
+                         "              a.ClassTxt, isnull(e.Leaveday, '') Leaveday, NULL as WorkDays, 'MOU員工_本月到職' as Remark " + Environment.NewLine +
+                         "         from Employee as e left join Department as d on d.DepNo = e.DepNo " + Environment.NewLine +
+                         "                            left join DBDICB as a on a.ClassNo = e.Title and a.FKey = '人事資料檔      EMPLOYEE        TITLE' " + Environment.NewLine +
+                         "        where e.Title = '271' " + Environment.NewLine +
+                         "          and e.DepNo > '00' " + Environment.NewLine +
+                         "          and e.Assumeday > '" + vCalDate + " 23:59:59' " + Environment.NewLine +
+                         "        union all " + Environment.NewLine +
+                         "       select '0' as GetPayMode, e.IDCardNo, e.WorkType, e.DepNo, d.[Name] DepName, e.EmpNo, e.[Name] EmpName, e.Title, " + Environment.NewLine +
+                         "              a.ClassTxt, isnull(e.Leaveday, '') Leaveday, NULL as WorkDays, 'MOU員工_本月離職' as Remark " + Environment.NewLine +
+                         "         from Employee as e left join Department as d on d.DepNo = e.DepNo " + Environment.NewLine +
+                         "                            left join DBDICB as a on a.ClassNo = e.Title and a.FKey = '人事資料檔      EMPLOYEE        TITLE' " + Environment.NewLine +
+                         "        where e.Title = '271' " + Environment.NewLine +
+                         "          and e.DepNo > '00' " + Environment.NewLine +
+                         "          and isnull(e.LeaveDay, '') > '" + vCalDate + " 00:00:00' " + Environment.NewLine +
+                         //===============================================================================================================
                          "        union all " + Environment.NewLine +
                          "       select '0' as GetPayMode, e.IDCardNo, e.WorkType, e.DepNo, d.[Name] DepName, e.EmpNo, e.[Name] EmpName, e.Title, " + Environment.NewLine +
                          "              a.ClassTxt, isnull(e.Leaveday, '') Leaveday, NULL as WorkDays, '本月到職' as Remark " + Environment.NewLine +

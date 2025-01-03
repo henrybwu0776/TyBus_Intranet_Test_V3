@@ -65,8 +65,8 @@
     </asp:Panel>
     <asp:ScriptManager ID="smMain" runat="server"></asp:ScriptManager>
     <asp:Panel ID="plShowData" runat="server" CssClass="ShowPanel">
-        <asp:GridView ID="gvShowList" runat="server" BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px" CellPadding="4" Width="100%" 
-            AutoGenerateColumns="False" DataKeyNames="ConsNo" DataSourceID="dsShowList" AllowPaging="True" OnPageIndexChanging="gvShowList_PageIndexChanging" 
+        <asp:GridView ID="gvShowList" runat="server" BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px" CellPadding="4" Width="100%"
+            AutoGenerateColumns="False" DataKeyNames="ConsNo" DataSourceID="dsShowList" AllowPaging="True" OnPageIndexChanging="gvShowList_PageIndexChanging"
             PageSize="5" OnSelectedIndexChanged="gvShowList_SelectedIndexChanged">
             <Columns>
                 <asp:ButtonField ButtonType="Button" Text="選" />
@@ -91,17 +91,13 @@
         </asp:GridView>
         <table class="TableSetting">
             <tr>
-                <td class="ColHeight ColWidth-8Col">
-                    <asp:Button ID="bbInsert" runat="server" CssClass="button-Black" Text="新增" OnClick="bbInsert_Click" Width="95%" />
-                </td>
-                <td class="ColHeight ColWidth-8Col">
-                    <asp:Button ID="bbEdit" runat="server" CssClass="button-Blue" Text="修改" OnClick="bbEdit_Click" Width="95%" />
-                </td>
-                <td class="ColHeight ColWidth-8Col">
-                    <asp:Button ID="bbStopUse" runat="server" CssClass="button-Black" Text="停用" OnClick="bbStopUse_Click" Width="95%" />
-                </td>
-                <td class="ColHeight ColWidth-8Col">
-                    <asp:Button ID="bbDelete" runat="server" CssClass="button-Red" Text="刪除" OnClick="bbDelete_Click" Width="95%" />
+                <td class="ColHeight ColWidth-8Col" colspan="8">
+                    <asp:Button ID="bbInsert" runat="server" CssClass="button-Black" Text="新增" OnClick="bbInsert_Click" Width="120px" />
+                    <asp:Button ID="bbEdit" runat="server" CssClass="button-Blue" Text="修改" OnClick="bbEdit_Click" Width="120px" />
+                    <asp:Button ID="bbStopUse" runat="server" CssClass="button-Black" Text="停用" OnClick="bbStopUse_Click" Width="120px" />
+                    <asp:Button ID="bbDelete" runat="server" CssClass="button-Red" Text="刪除" OnClick="bbDelete_Click" Width="120px" />
+                    <asp:Button ID="bbOK" runat="server" CssClass="button-Blue" Text="確定" OnClick="bbOK_Click" Width="120px" />
+                    <asp:Button ID="bbCancel" runat="server" CssClass="button-Red" Text="取消" OnClick="bbCancel_Click" Width="120px" />
                 </td>
             </tr>
             <tr>
@@ -109,19 +105,41 @@
                     <asp:Label ID="lbConsNo" runat="server" CssClass="text-Right-Blue" Text="料號" Width="95%" />
                 </td>
                 <td class="ColHeight ColBorder ColWidth-8Col">
-                    <asp:Label ID="eConsNo" runat="server" CssClass="text-Left-Black" Width="95%" />
+                    <asp:Label ID="eConsNo" runat="server" CssClass="text-Left-Black" Text='<%# vdConsNo %>' Width="95%" />
                 </td>
                 <td class="ColHeight ColBorder ColWidth-8Col">
                     <asp:Label ID="lbConsName" runat="server" CssClass="text-Right-Blue" Text="品名" Width="95%" />
                 </td>
                 <td class="ColHeight ColBorder ColWidth-8Col" colspan="3">
-                    <asp:TextBox ID="eConsName" runat="server" CssClass="text-Left-Black" Width="95%" />
+                    <asp:TextBox ID="eConsName" runat="server" CssClass="text-Left-Black" Text='<%# vdConsName %>' Width="95%" />
                 </td>
                 <td class="ColHeight ColBorder ColWidth-8Col">
                     <asp:Label ID="lbConsType" runat="server" CssClass="text-Right-Blue" Text="類別" Width="95%" />
                 </td>
                 <td class="ColHeight ColBorder ColWidth-8Col">
                     <asp:DropDownList ID="ddlConsType" runat="server" CssClass="text-Left-Black" Width="95%" />
+                    <asp:Label ID="eConsType" runat="server" Text='<%# vdConsType %>' Visible="false" />
+                </td>
+            </tr>
+            <tr>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:Label ID="lbBrand" runat="server" CssClass="text-Right-Blue" Text="廠牌" Width="95%" />
+                </td>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:DropDownList ID="ddlBrand" runat="server" CssClass="text-Left-Black" AutoPostBack="true" OnSelectedIndexChanged="ddlBrand_SelectedIndexChanged" Width="95%" />
+                    <asp:Label ID="eBrand" runat="server" Visible="false" Text='<%# vdBrand %>' />
+                </td>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:Label ID="lbConsSpec" runat="server" CssClass="text-Right-Blue" Text="規格" Width="95%" />
+                </td>
+                <td class="ColHeight ColBorder ColWidth-8Col" colspan="3">
+                    <asp:TextBox ID="eConsSpec" runat="server" CssClass="text-Left-Black" Text='<%# vdConsSpec %>' Width="95%" />
+                </td>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:Label ID="lbConsSpec2" runat="server" CssClass="text-Right-Blue" Text="尺寸" Width="95%" />
+                </td>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:TextBox ID="eConsSpec2" runat="server" CssClass="text-Left-Black" Text='<%# vdConsSpec2 %>' Width="95%" />
                 </td>
             </tr>
             <tr>
@@ -129,14 +147,93 @@
                     <asp:Label ID="lbStockQty" runat="server" CssClass="text-Right-Blue" Text="在庫數" Width="95%" />
                 </td>
                 <td class="ColHeight ColBorder ColWidth-8Col">
-                    <asp:TextBox ID="eStockQty" runat="server" CssClass="text-Left-Black" Width="55%" />
+                    <asp:Label ID="eStockQty" runat="server" CssClass="text-Left-Black" Text='<%# vdStockQty %>' Width="55%" />
                     <asp:DropDownList ID="ddlConsUnit" runat="server" CssClass="text-Left-Black" Width="35%" />
+                    <asp:Label ID="eConsUnit" runat="server" Text='<%# vdConsUnit %>' Visible="false" />
                 </td>
                 <td class="ColHeight ColBorder ColWidth-8Col">
                     <asp:Label ID="lbConsColor" runat="server" CssClass="text-Right-Blue" Text="顏色" Width="95%" />
                 </td>
                 <td class="ColHeight ColBorder ColWidth-8Col">
-                    <asp:TextBox ID="eConsColor" runat="server" CssClass="text-Left-Black" Width="95%" />
+                    <asp:TextBox ID="eConsColor" runat="server" CssClass="text-Left-Black" Text='<%# vdConsColor %>' Width="95%" />
+                </td>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:Label ID="lbAvgPrice" runat="server" CssClass="text-Right-Blue" Text="平均單價" Width="95%" />
+                </td>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:Label ID="eAvgPrice" runat="server" CssClass="text-Left-Black" Text='<%# vdAvgPrice %>' Width="95%" />
+                </td>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:CheckBox ID="cbIsStopuse" runat="server" CssClass="text-Left-Black" Text="停用" />
+                    <asp:Label ID="eIsStopuse" runat="server" Visible="false" Text='<%# vdIsStopUse %>' />
+                </td>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:CheckBox ID="cbInOrder" runat="server" CssClass="text-Left-Black" Text="採購中" />
+                    <asp:Label ID="eInOrder" runat="server" Visible="false" Text='<%# vdInOrder %>' />
+                </td>
+            </tr>
+            <tr>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:Label ID="lbStoreLocation" runat="server" CssClass="text-Right-Blue" Text="存放庫位" Width="95%" />
+                </td>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:TextBox ID="eStoreLocation" runat="server" CssClass="text-Left-Black" Text='<%# vdStoreLocation %>' Width="95%" />
+                </td>
+                <td class="ColHeight ColBorder ColWidth-8Col" rowspan="4">
+                    <asp:Label ID="lbRemark" runat="server" CssClass="text-Right-Blue" Text="備註" Width="95%" />
+                </td>
+                <td class="ColHeight ColBorder ColWidth-8Col" colspan="5" rowspan="4">
+                    <asp:TextBox ID="eRemark" runat="server" TextMode="MultiLine" Text='<%# vdRemark %>' Width="95%" Height="97%" />
+                </td>
+            </tr>
+            <tr>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:Label ID="lbLastInDate" runat="server" CssClass="text-Right-Blue" Text="最後進貨日" Width="95%" />
+                </td>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:Label ID="eLastInDate" runat="server" CssClass="text-Left-Black" Text='<%# vdLastInDate %>' Width="95%" />
+                </td>
+            </tr>
+            <tr>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:Label ID="lbLastInPrice" runat="server" CssClass="text-Right-Blue" Text="最後進價" Width="95%" />
+                </td>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:Label ID="eLastInPrice" runat="server" CssClass="text-Left-Black" Text='<%# vdLastInPrice %>' Width="95%" />
+                </td>
+            </tr>
+            <tr>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:Label ID="lbLastOutDate" runat="server" CssClass="text-Right-Blue" Text="最後出貨日" Width="95%" />
+                </td>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:Label ID="eLastOutDate" runat="server" CssClass="text-Left-Black" Text='<%# vdLastOutDate %>' Width="95%" />
+                </td>
+            </tr>
+            <tr>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:Label ID="lbBuDate" runat="server" CssClass="text-Right-Blue" Text="建檔日期" Width="95%" />
+                </td>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:Label ID="eBuDate" runat="server" CssClass="text-Left-Black" Text='<%# vdBuDate %>' Width="95%" />
+                </td>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:Label ID="lbBuMan" runat="server" CssClass="text-Right-Blue" Text=" 建檔人" Width="95%" />
+                </td>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:Label ID="eBuMan" runat="server" CssClass="text-Left-Black" Text='<%# vdBuMan %>' Width="95%" />
+                </td>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:Label ID="lbModifyDate" runat="server" CssClass="text-Right-Blue" Text="異動日" Width="95%" />
+                </td>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:Label ID="eModifyDate" runat="server" CssClass="text-Left-Black" Text='<%# vdModifyDate %>' Width="95%" />
+                </td>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:Label ID="lbModifyMan" runat="server" CssClass="text-Right-Blue" Text="異動人" Width="95%" />
+                </td>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:Label ID="eModifyMan" runat="server" CssClass="text-Left-Black" Text='<%# vdModifyMan %>' Width="95%" />
                 </td>
             </tr>
             <tr>

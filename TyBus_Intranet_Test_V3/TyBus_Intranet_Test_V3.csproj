@@ -13,7 +13,7 @@
     <RootNamespace>TyBus_Intranet_Test_V3</RootNamespace>
     <AssemblyName>TyBus_Intranet_Test_V3</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -103,6 +103,7 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
+    <Reference Include="System.Security" />
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
@@ -469,6 +470,8 @@
     <Content Include="CashBillListP.aspx" />
     <Content Include="ChangePWD.aspx" />
     <Content Include="Consumables.aspx" />
+    <Content Include="ConsumablesInstore.aspx" />
+    <Content Include="ConsumablesOutStore.aspx" />
     <Content Include="ContractManager.aspx" />
     <Content Include="CreateNameList.aspx" />
     <Content Include="CustomServiceDetail.aspx" />
@@ -1059,6 +1062,20 @@
     </Compile>
     <Compile Include="Consumables.aspx.designer.cs">
       <DependentUpon>Consumables.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ConsumablesInstore.aspx.cs">
+      <DependentUpon>ConsumablesInstore.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ConsumablesInstore.aspx.designer.cs">
+      <DependentUpon>ConsumablesInstore.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ConsumablesOutStore.aspx.cs">
+      <DependentUpon>ConsumablesOutStore.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ConsumablesOutStore.aspx.designer.cs">
+      <DependentUpon>ConsumablesOutStore.aspx</DependentUpon>
     </Compile>
     <Compile Include="ContractManager.aspx.cs">
       <DependentUpon>ContractManager.aspx</DependentUpon>
@@ -2139,7 +2156,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50245</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:50245/</IISUrl>
+          <IISUrl>http://localhost/TyBus_Intranet_Test_V3</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:50245/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
@@ -2149,13 +2168,13 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>此專案參考這部電腦上所缺少的 NuGet 套件。請啟用 NuGet 套件還原，以下載該套件。如需詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的檔案是 {0}。</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets'))" />
   </Target>
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

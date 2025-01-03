@@ -723,10 +723,5 @@ namespace TyBus_Intranet_Test_V3
             gridAnnList.PageIndex = e.NewPageIndex;
             gridAnnList.DataBind();
         }
-
-        protected void fvAnnList_Detail_PageIndexChanging(object sender, FormViewPageEventArgs e)
-        {
-
-        }
     }
 }

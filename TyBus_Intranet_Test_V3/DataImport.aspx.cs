@@ -103,6 +103,9 @@ namespace TyBus_Intranet_Test_V3
                     case "T008":
                         Import_UnusedBounds(); //更新不休假獎金資料
                         break;
+                    case "T009":
+                        Import_MOUPayData(); //匯入MOU津貼資料
+                        break;
                 }
             }
         }
@@ -1263,10 +1266,10 @@ namespace TyBus_Intranet_Test_V3
                                         }
                                         catch (Exception eMessage)
                                         {
-                                            Response.Write("<Script language='Javascript'>");
-                                            Response.Write("alert('" + eMessage.Message.Trim() + eMessage.ToString() + "')");
-                                            Response.Write("</" + "Script>");
-                                            //throw;
+                                            //Response.Write("<Script language='Javascript'>");
+                                            //Response.Write("alert('" + eMessage.Message + Environment.NewLine + vTempStr + "')");
+                                            //Response.Write("</" + "Script>");
+                                            lbError.Text = eMessage.Message + Environment.NewLine + vTempStr;
                                         }
                                     }
                                 }
@@ -1337,10 +1340,10 @@ namespace TyBus_Intranet_Test_V3
                                         }
                                         catch (Exception eMessage)
                                         {
-                                            Response.Write("<Script language='Javascript'>");
-                                            Response.Write("alert('" + eMessage.Message.Trim() + eMessage.ToString() + "')");
-                                            Response.Write("</" + "Script>");
-                                            //throw;
+                                            //Response.Write("<Script language='Javascript'>");
+                                            //Response.Write("alert('" + eMessage.Message + Environment.NewLine + vTempStr + "')");
+                                            //Response.Write("</" + "Script>");
+                                            lbError.Text = eMessage.Message + Environment.NewLine + vTempStr;
                                         }
                                     }
                                 }
@@ -2030,9 +2033,10 @@ namespace TyBus_Intranet_Test_V3
                                 }
                                 catch (Exception eMessage)
                                 {
-                                    Response.Write("<Script language='Javascript'>");
-                                    Response.Write("alert('" + eMessage.Message + "')");
-                                    Response.Write("</" + "Script>");
+                                    //Response.Write("<Script language='Javascript'>");
+                                    //Response.Write("alert('" + eMessage.Message + Environment.NewLine + vTempStr + "')");
+                                    //Response.Write("</" + "Script>");
+                                    lbError.Text = eMessage.Message + Environment.NewLine + vTempStr;
                                 }
                             }
                         }
@@ -2102,9 +2106,10 @@ namespace TyBus_Intranet_Test_V3
                                 }
                                 catch (Exception eMessage)
                                 {
-                                    Response.Write("<Script language='Javascript'>");
-                                    Response.Write("alert('" + eMessage.Message + Environment.NewLine + vTempStr + "')");
-                                    Response.Write("</" + "Script>");
+                                    //Response.Write("<Script language='Javascript'>");
+                                    //Response.Write("alert('" + eMessage.Message + Environment.NewLine + vTempStr + "')");
+                                    //Response.Write("</" + "Script>");
+                                    lbError.Text = eMessage.Message + Environment.NewLine + vTempStr;
                                 }
                             }
                         }
@@ -2188,9 +2193,10 @@ namespace TyBus_Intranet_Test_V3
                                 }
                                 catch (Exception eMessage)
                                 {
-                                    Response.Write("<Script language='Javascript'>");
-                                    Response.Write("alert('" + eMessage.Message + Environment.NewLine + vTempStr + "')");
-                                    Response.Write("</" + "Script>");
+                                    //Response.Write("<Script language='Javascript'>");
+                                    //Response.Write("alert('" + eMessage.Message + Environment.NewLine + vTempStr + "')");
+                                    //Response.Write("</" + "Script>");
+                                    lbError.Text = eMessage.Message + Environment.NewLine + vTempStr;
                                 }
                             }
                         }
@@ -2226,9 +2232,231 @@ namespace TyBus_Intranet_Test_V3
                                 }
                                 catch (Exception eMessage)
                                 {
-                                    Response.Write("<Script language='Javascript'>");
-                                    Response.Write("alert('" + eMessage.Message + Environment.NewLine + vTempStr + "')");
-                                    Response.Write("</" + "Script>");
+                                    //Response.Write("<Script language='Javascript'>");
+                                    //Response.Write("alert('" + eMessage.Message + Environment.NewLine + vTempStr + "')");
+                                    //Response.Write("</" + "Script>");
+                                    lbError.Text = eMessage.Message + Environment.NewLine + vTempStr;
+                                }
+                            }
+                        }
+                        break;
+                }
+            }
+            else
+            {
+                Response.Write("<Script language='Javascript'>");
+                Response.Write("alert('請先指定要匯入的檔案。')");
+                Response.Write("</" + "Script>");
+            }
+        }
+
+        /// <summary>
+        /// 匯入MOU津貼資料
+        /// </summary>
+        private void Import_MOUPayData()
+        {
+            string vUploadPath = Request.PhysicalApplicationPath + @"App_Data\";
+            int vTempINT = 0;
+            string vTempStr = "";
+            string vTempNo = "";
+            string vRCountStr = "";
+
+            string vCalYM = "";
+            string vEmpNo = "";
+            string vPayNo = "";
+            string vPayBNo = "";
+            double vExpense = 0.0;
+            string vPriNo = "";
+            string vPayDate = "";
+            string vRealPayDate = "";
+            string vPayDur = "2";
+            DateTime vAssumeday;
+            double vDurNum = 0;
+            int vTempINT_1 = 0;
+            int vTempINT_2 = 0;
+
+            if (vConnStr == "")
+            {
+                vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
+            }
+
+            if (fuExcel.FileName != "")
+            {
+                vExtName = Path.GetExtension(fuExcel.FileName);
+                switch (vExtName)
+                {
+
+                    default:
+                        Response.Write("<Script language='Javascript'>");
+                        Response.Write("alert('您指定的檔案不是 EXCEL 檔，請重新確認檔案格式。')");
+                        Response.Write("</" + "Script>");
+                        break;
+
+                    case ".xls"://EXCEL 2003 之前版本
+                        HSSFWorkbook wbExcel_H = new HSSFWorkbook(fuExcel.FileContent);
+                        HSSFSheet vSheet_H = (HSSFSheet)wbExcel_H.GetSheetAt(0);
+                        if (vSheet_H.LastRowNum > 0)
+                        {
+                            for (int vRCount = vSheet_H.FirstRowNum + 1; vRCount <= vSheet_H.LastRowNum; vRCount++)
+                            {
+                                try
+                                {
+                                    HSSFRow vRowTemp_H = (HSSFRow)vSheet_H.GetRow(vRCount);
+                                    vEmpNo = vRowTemp_H.GetCell(0).StringCellValue.Trim();
+                                    vPayNo = vRowTemp_H.GetCell(2).StringCellValue.Trim();
+                                    vPayBNo = vRowTemp_H.GetCell(3).StringCellValue.Trim();
+                                    vExpense = vRowTemp_H.GetCell(4).NumericCellValue;
+                                    vTempStr = "select Assumeday from Employee where EmpNo = '" + vEmpNo + "' ";
+                                    vAssumeday = DateTime.Parse(PF.GetValue(vConnStr, vTempStr, "Assumeday"));
+                                    vTempINT_1 = PF.GetMonthDays(vAssumeday);
+                                    vTempINT_2 = vAssumeday.Day;
+                                    vDurNum = vTempINT_1 - vTempINT_2 + 1;
+                                    vPayDate = PF.GetMonthFirstDay(vAssumeday, "B");
+                                    vRealPayDate = PF.GetMonthFirstDay(vAssumeday.AddMonths(1), "B");
+                                    vTempStr = "select PriNo from MSHZ where PayDate = '" + vPayDate + "' and EmpNo = '" + vEmpNo + "' and PayDur = '2' and PayBNo = '" + vPayBNo + "' ";
+                                    vTempNo = PF.GetValue(vConnStr, vTempStr, "PriNo");
+                                    if (vTempNo != "")
+                                    {
+                                        vPriNo = vTempNo.Trim();
+                                        vTempStr = "update MSHZ set Expense = Expense + " + vExpense + " where PriNo = '" + vPriNo + "' ";
+                                    }
+                                    else
+                                    {
+                                        vCalYM = vAssumeday.ToString("yyyyMM");
+                                        vPriNo = PF.GetDataIndex(vConnStr, "MSHZ", "PriNo", "B", false, vAssumeday, 6, "", 4);
+                                        vTempStr = "insert into MSHZ(PriNo,PayDate,PinDate,PayNo,PayDur,EmpNo,Company,DepNo,Title,Type,Expense,PayBNo)" + Environment.NewLine +
+                                                   "          values('" + vPriNo + "', '" + vPayDate + "', '" + vPayDate + "', '" + vPayNo + "', '" + vPayDur + "', '" + vEmpNo + "', 'A000', '06', '271', '00', " + vExpense.ToString() + ", '" + vPayBNo + "')";
+                                    }
+                                    PF.ExecSQL(vConnStr, vTempStr);
+                                    vTempStr = "select count(EmpNo) RCount from PayRec where PayDate = '" + vPayDate + "' and PayDur = '2' and EmpNo = '" + vEmpNo + "' ";
+                                    vRCountStr = PF.GetValue(vConnStr, vTempStr, "RCount");
+                                    if ((Int32.TryParse(vRCountStr, out vTempINT)) && (vTempINT != 0))
+                                    {
+                                        vTempStr = "update PayRec set CashNum14 = CashNum14 + " + vExpense + ", Tracash1 = Tracash1 + " + vExpense + ", RealCash = RealCash + " + vExpense + ", GIVCash = GIVCash + " + vExpense + Environment.NewLine +
+                                                   " where PayDate = '" + vPayDate + "' and PayDur = '2' and EmpNo = '" + vEmpNo + "' ";
+                                    }
+                                    else
+                                    {
+                                        vTempStr = "INSERT INTO PAYREC ( " + Environment.NewLine +
+                                                   "       paydate, paydur, empno, name, company, depno, servno, groupno1, title, type, unit, paytype, bankno1, bankno2, account1, account2, supplynum, " + Environment.NewLine +
+                                                   "       hikind, hiamt, laiamt, hinum, gikind, patnum, durnum, attnum, holnum, trunum, esctype1, esctype2, esctype3, esctype4, esctype5, esctype6, esctype7, " + Environment.NewLine +
+                                                   "       esctype8, esctype9, esctype10, esctype11, esctype12, frontover, postover, superover, holover, dechour, exthour, patchour, latetime, latemin, forgetime, " + Environment.NewLine +
+                                                   "       chorenum, remark, nowpay1, nowpay2, nowpay3, nowpay4, nowpay5, nowpay6, nowpay7, nowpay8, cashno01, cashno02, cashno03, cashno04, cashno05, cashno06, " + Environment.NewLine +
+                                                   "       cashno07, cashno08, cashno09, cashno10, cashno11, cashno12, cashno13, cashno14, cashno15, cashno16, cashno17, cashno18, cashno19, cashno20, cashno21, " + Environment.NewLine +
+                                                   "       cashno22, cashno23, cashno24, cashno25, cashno26, cashno27, cashno28, cashno29, cashno30, cashnum01, cashnum02, cashnum03, cashnum04, cashnum05, cashnum06, " + Environment.NewLine +
+                                                   "       cashnum07, cashnum08, cashnum09, cashnum10, cashnum11, cashnum12, cashnum13, cashnum14, cashnum15, cashnum16, cashnum17, cashnum18, cashnum19, cashnum20, " + Environment.NewLine +
+                                                   "       cashnum21, cashnum22, cashnum23, cashnum24, cashnum25, cashnum26, cashnum27, cashnum28, cashnum29, cashnum30, cashno41, cashno42, cashno43, cashno44, cashno45, " + Environment.NewLine +
+                                                   "       cashno46, cashno47, cashno48, cashno49, cashno50, cashno51, cashno52, cashno53, cashno54, cashno55, cashno56, cashno57, cashno58, cashno59, cashno60, cashno61, " + Environment.NewLine +
+                                                   "       cashno62, cashno63, cashno64, cashno65, cashno66, cashno67, cashno68, cashno69, cashno70, cashnum41, cashnum42, cashnum43, cashnum44, cashnum45, cashnum46, cashnum47, " + Environment.NewLine +
+                                                   "       cashnum48, cashnum49, cashnum50, cashnum51, cashnum52, cashnum53, cashnum54, cashnum55, cashnum56, cashnum57, cashnum58, cashnum59, cashnum60, cashnum61, cashnum62, " + Environment.NewLine +
+                                                   "       cashnum63, cashnum64, cashnum65, cashnum66, cashnum67, cashnum68, cashnum69, cashnum70, cashno71, cashno72, cashno73, cashno74, cashno75, cashno76, cashno77, cashno78, " + Environment.NewLine +
+                                                   "       cashno79, cashnum71, cashnum72, cashnum73, cashnum74, cashnum75, cashnum76, cashnum77, cashnum78, cashnum79, fixtax, vartax, incotax, lifee, hifee, taxpay, notaxpay, " + Environment.NewLine +
+                                                   "       bonuspay, givcash, nogivcash, realcash, cashpay, tracash1, tracash2, nholnum, repast, overfit, detain, gifee, Payrolldate, ACKIND, REALPAYDATE, FRONTOVER2, POSTOVER2, POSTOVER22)" + Environment.NewLine +
+                                                   "select '" + vPayDate + "', '2', EmpNo, [Name], Company, '06', isnull(ServNo, ''), isnull(GroupNo1, ''), Title, Type, Unit, PayType, " + Environment.NewLine +
+                                                   "       isnull(BankNo1, ''), isnull(BankNo2, ''), isnull(Account1, ''), isnull(Account2, ''), SupplyNum, HiKind, HiAmt, LaiAmt, HiNum, GiKind, 0, " + Environment.NewLine +
+                                                   "       " + vDurNum.ToString().Trim() + ", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, " + Environment.NewLine +
+                                                   "       '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', " + Environment.NewLine +
+                                                   "       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, " + vExpense + ", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, " + Environment.NewLine +
+                                                   "       '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', " + Environment.NewLine +
+                                                   "       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, " + Environment.NewLine +
+                                                   "       '71', '72', '73', '74', '75', '76', '77', '78', '79', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, " + vExpense + ", " + Environment.NewLine +
+                                                   "       0, " + vExpense + ", 0, " + vExpense + ", 0, " + vExpense + ", 0, 0, NULL, NULL, NULL, NULL, " + vPayDate + ", '1', " + vRealPayDate + ", 0, 0, 0 " + Environment.NewLine +
+                                                   "  from Employee " + Environment.NewLine +
+                                                   " where EmpNo = '" + vEmpNo + "' ";
+                                    }
+                                    PF.ExecSQL(vConnStr, vTempStr);
+                                }
+                                catch (Exception eMessage)
+                                {
+                                    //Response.Write("<Script language='Javascript'>");
+                                    //Response.Write("alert('" + eMessage.Message + Environment.NewLine + vTempStr + "')");
+                                    //Response.Write("</" + "Script>");
+                                    lbError.Text = eMessage.Message + Environment.NewLine + vTempStr;
+                                }
+                            }
+                        }
+                        break;
+
+                    case ".xlsx"://EXCEL 2010 之後版本
+                        XSSFWorkbook wbExcel_X = new XSSFWorkbook(fuExcel.FileContent);
+                        XSSFSheet vSheet_X = (XSSFSheet)wbExcel_X.GetSheetAt(0);
+                        if (vSheet_X.LastRowNum > 0)
+                        {
+                            for (int vRCount = vSheet_X.FirstRowNum + 1; vRCount <= vSheet_X.LastRowNum; vRCount++)
+                            {
+                                try
+                                {
+                                    XSSFRow vRowTemp_X = (XSSFRow)vSheet_X.GetRow(vRCount);
+                                    vEmpNo = vRowTemp_X.GetCell(0).StringCellValue.Trim();
+                                    vPayNo = vRowTemp_X.GetCell(2).StringCellValue.Trim();
+                                    vPayBNo = vRowTemp_X.GetCell(3).StringCellValue.Trim();
+                                    vExpense = vRowTemp_X.GetCell(4).NumericCellValue;
+                                    vTempStr = "select Assumeday from Employee where EmpNo = '" + vEmpNo + "' ";
+                                    vAssumeday = DateTime.Parse(PF.GetValue(vConnStr, vTempStr, "Assumeday"));
+                                    vTempINT_1 = PF.GetMonthDays(vAssumeday);
+                                    vTempINT_2 = vAssumeday.Day;
+                                    vDurNum = vTempINT_1 - vTempINT_2 + 1;
+                                    vPayDate = PF.GetMonthFirstDay(vAssumeday, "B");
+                                    vRealPayDate = PF.GetMonthFirstDay(vAssumeday.AddMonths(1), "B");
+                                    vTempStr = "select PriNo from MSHZ where PayDate = '" + vPayDate + "' and EmpNo = '" + vEmpNo + "' and PayDur = '2' and PayBNo = '" + vPayBNo + "' ";
+                                    vTempNo = PF.GetValue(vConnStr, vTempStr, "PriNo");
+                                    if (vTempNo != "")
+                                    {
+                                        vPriNo = vTempNo.Trim();
+                                        vTempStr = "update MSHZ set Expense = Expense + " + vExpense + " where PriNo = '" + vPriNo + "' ";
+                                    }
+                                    else
+                                    {
+                                        vCalYM = vAssumeday.ToString("yyyyMM");
+                                        vPriNo = PF.GetDataIndex(vConnStr, "MSHZ", "PriNo", "B", false, vAssumeday, 6, "", 4);
+                                        vTempStr = "insert into MSHZ(PriNo,PayDate,PinDate,PayNo,PayDur,EmpNo,Company,DepNo,Title,Type,Expense,PayBNo)" + Environment.NewLine +
+                                                   "          values('" + vPriNo + "', '" + vPayDate + "', '" + vPayDate + "', '" + vPayNo + "', '" + vPayDur + "', '" + vEmpNo + "', 'A000', '06', '271', '00', " + vExpense.ToString() + ", '" + vPayBNo + "')";
+                                    }
+                                    PF.ExecSQL(vConnStr, vTempStr);
+                                    vTempStr = "select count(EmpNo) RCount from PayRec where PayDate = '" + vPayDate + "' and PayDur = '2' and EmpNo = '" + vEmpNo + "' ";
+                                    vRCountStr = PF.GetValue(vConnStr, vTempStr, "RCount");
+                                    if ((Int32.TryParse(vRCountStr, out vTempINT)) && (vTempINT != 0))
+                                    {
+                                        vTempStr = "update PayRec set CashNum14 = CashNum14 + " + vExpense + ", Tracash1 = Tracash1 + " + vExpense + ", RealCash = RealCash + " + vExpense + ", GIVCash = GIVCash + " + vExpense + Environment.NewLine +
+                                                   " where PayDate = '" + vPayDate + "' and PayDur = '2' and EmpNo = '" + vEmpNo + "' ";
+                                    }
+                                    else
+                                    {
+                                        vTempStr = "INSERT INTO PAYREC ( " + Environment.NewLine +
+                                                   "       paydate, paydur, empno, name, company, depno, servno, groupno1, title, type, unit, paytype, bankno1, bankno2, account1, account2, supplynum, " + Environment.NewLine +
+                                                   "       hikind, hiamt, laiamt, hinum, gikind, patnum, durnum, attnum, holnum, trunum, esctype1, esctype2, esctype3, esctype4, esctype5, esctype6, esctype7, " + Environment.NewLine +
+                                                   "       esctype8, esctype9, esctype10, esctype11, esctype12, frontover, postover, superover, holover, dechour, exthour, patchour, latetime, latemin, forgetime, " + Environment.NewLine +
+                                                   "       chorenum, remark, nowpay1, nowpay2, nowpay3, nowpay4, nowpay5, nowpay6, nowpay7, nowpay8, cashno01, cashno02, cashno03, cashno04, cashno05, cashno06, " + Environment.NewLine +
+                                                   "       cashno07, cashno08, cashno09, cashno10, cashno11, cashno12, cashno13, cashno14, cashno15, cashno16, cashno17, cashno18, cashno19, cashno20, cashno21, " + Environment.NewLine +
+                                                   "       cashno22, cashno23, cashno24, cashno25, cashno26, cashno27, cashno28, cashno29, cashno30, cashnum01, cashnum02, cashnum03, cashnum04, cashnum05, cashnum06, " + Environment.NewLine +
+                                                   "       cashnum07, cashnum08, cashnum09, cashnum10, cashnum11, cashnum12, cashnum13, cashnum14, cashnum15, cashnum16, cashnum17, cashnum18, cashnum19, cashnum20, " + Environment.NewLine +
+                                                   "       cashnum21, cashnum22, cashnum23, cashnum24, cashnum25, cashnum26, cashnum27, cashnum28, cashnum29, cashnum30, cashno41, cashno42, cashno43, cashno44, cashno45, " + Environment.NewLine +
+                                                   "       cashno46, cashno47, cashno48, cashno49, cashno50, cashno51, cashno52, cashno53, cashno54, cashno55, cashno56, cashno57, cashno58, cashno59, cashno60, cashno61, " + Environment.NewLine +
+                                                   "       cashno62, cashno63, cashno64, cashno65, cashno66, cashno67, cashno68, cashno69, cashno70, cashnum41, cashnum42, cashnum43, cashnum44, cashnum45, cashnum46, cashnum47, " + Environment.NewLine +
+                                                   "       cashnum48, cashnum49, cashnum50, cashnum51, cashnum52, cashnum53, cashnum54, cashnum55, cashnum56, cashnum57, cashnum58, cashnum59, cashnum60, cashnum61, cashnum62, " + Environment.NewLine +
+                                                   "       cashnum63, cashnum64, cashnum65, cashnum66, cashnum67, cashnum68, cashnum69, cashnum70, cashno71, cashno72, cashno73, cashno74, cashno75, cashno76, cashno77, cashno78, " + Environment.NewLine +
+                                                   "       cashno79, cashnum71, cashnum72, cashnum73, cashnum74, cashnum75, cashnum76, cashnum77, cashnum78, cashnum79, fixtax, vartax, incotax, lifee, hifee, taxpay, notaxpay, " + Environment.NewLine +
+                                                   "       bonuspay, givcash, nogivcash, realcash, cashpay, tracash1, tracash2, nholnum, repast, overfit, detain, gifee, Payrolldate, ACKIND, REALPAYDATE, FRONTOVER2, POSTOVER2, POSTOVER22)" + Environment.NewLine +
+                                                   "select '" + vPayDate + "', '2', EmpNo, [Name], Company, '06', isnull(ServNo, ''), isnull(GroupNo1, ''), Title, Type, Unit, PayType, " + Environment.NewLine +
+                                                   "       isnull(BankNo1, ''), isnull(BankNo2, ''), isnull(Account1, ''), isnull(Account2, ''), SupplyNum, HiKind, HiAmt, LaiAmt, HiNum, GiKind, 0, " + Environment.NewLine +
+                                                   "       " + vDurNum.ToString().Trim() + ", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, " + Environment.NewLine +
+                                                   "       '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', " + Environment.NewLine +
+                                                   "       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, " + vExpense + ", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, " + Environment.NewLine +
+                                                   "       '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', " + Environment.NewLine +
+                                                   "       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, " + Environment.NewLine +
+                                                   "       '71', '72', '73', '74', '75', '76', '77', '78', '79', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, " + vExpense + ", " + Environment.NewLine +
+                                                   "       0, " + vExpense + ", 0, " + vExpense + ", 0, " + vExpense + ", 0, 0, NULL, NULL, NULL, NULL, " + vPayDate + ", '1', " + vRealPayDate + ", 0, 0, 0 " + Environment.NewLine +
+                                                   "  from Employee " + Environment.NewLine +
+                                                   " where EmpNo = '" + vEmpNo + "' ";
+                                    }
+                                    PF.ExecSQL(vConnStr, vTempStr);
+                                }
+                                catch (Exception eMessage)
+                                {
+                                    //Response.Write("<Script language='Javascript'>");
+                                    //Response.Write("alert('" + eMessage.Message + Environment.NewLine + vTempStr + "')");
+                                    //Response.Write("</" + "Script>");
+                                    lbError.Text = eMessage.Message + Environment.NewLine + vTempStr;
                                 }
                             }
                         }

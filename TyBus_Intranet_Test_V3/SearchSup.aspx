@@ -12,7 +12,8 @@
     <form id="SearchSupForm" runat="server">
         <div>
             <asp:Label ID="lbSupName_Search" runat="server" CssClass="text-Right-Blue" Text="廠商名稱" Width="120px" />
-            <asp:TextBox ID="eSupName_Search" runat="server" CssClass="text-Left-Black" AutoPostBack="true" OnTextChanged="eSupName_Search_TextChanged" Width="400px" />
+            <asp:TextBox ID="eSupName_Search" runat="server" CssClass="text-Left-Black" Width="400px" />
+            <asp:Button ID="bbShow_Search" runat="server" CssClass="button-Blue" Text="查詢" OnClick="bbShow_Search_Click" Width="120px" />
             <asp:GridView ID="gridSupData_Search" runat="server" CssClass="text-Left-Black" Width="600px" AllowPaging="True" AutoGenerateColumns="False" CellPadding="4" DataKeyNames="code" ForeColor="#333333" GridLines="None">
                 <AlternatingRowStyle BackColor="White" />
                 <Columns>
