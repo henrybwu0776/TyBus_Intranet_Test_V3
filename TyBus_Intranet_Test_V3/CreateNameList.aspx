@@ -28,12 +28,16 @@
             </tr>
             <tr>
                 <td class="ColHeight ColBorder ColWidth-8Col">
-                    <asp:Label ID="lbDateRange" runat="server" CssClass="text-Right-Blue" Text="半份起迄日期：" Width="90%" />
+                    <asp:Label ID="lbDateRange" runat="server" CssClass="text-Right-Blue" Text="計算基準日：" Width="95%" />
                 </td>
-                <td class="ColHeight ColBorder ColWidth-8Col" colspan="3">
-                    <asp:TextBox ID="eStartDate_Search" runat="server" CssClass="text-Left-Black" Width="40%" />
-                    <asp:Label ID="lbSplit1" runat="server" CssClass="text-Left-Black" Text="～" Width="5%" />
-                    <asp:TextBox ID="eEndDate_Search" runat="server" CssClass="text-Left-Black" Width="40%" />
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:TextBox ID="eCalBaseDate_Search" runat="server" CssClass="text-Left-Black" Width="95%" />
+                </td>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:Label ID="lbRetireHideDate_Search" runat="server" CssClass="text-Right-Blue" Text="退休人員起算日：" Width="95%" />
+                </td>
+                <td class="ColHeight ColBorder ColWidth-8Col">
+                    <asp:TextBox ID="eRetireHideDate_Search" runat="server" CssClass="text-Left-Black" Width="95%" />
                 </td>
                 <td class="ColHeight ColBorder ColWidth-8Col">
                     <asp:Label ID="lbGiftYear" runat="server" CssClass="text-Right-Blue" Text="年度：" Width="90%" />

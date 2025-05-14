@@ -51,31 +51,31 @@ namespace TyBus_Intranet_Test_V3
         protected global::System.Web.UI.WebControls.Label lbDateRange;
 
         /// <summary>
-        /// eStartDate_Search 控制項。
+        /// eCalBaseDate_Search 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox eStartDate_Search;
+        protected global::System.Web.UI.WebControls.TextBox eCalBaseDate_Search;
 
         /// <summary>
-        /// lbSplit1 控制項。
+        /// lbRetireHideDate_Search 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbSplit1;
+        protected global::System.Web.UI.WebControls.Label lbRetireHideDate_Search;
 
         /// <summary>
-        /// eEndDate_Search 控制項。
+        /// eRetireHideDate_Search 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox eEndDate_Search;
+        protected global::System.Web.UI.WebControls.TextBox eRetireHideDate_Search;
 
         /// <summary>
         /// lbGiftYear 控制項。

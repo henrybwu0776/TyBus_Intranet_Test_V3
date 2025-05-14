@@ -51,13 +51,13 @@ namespace TyBus_Intranet_Test_V3
                     {
                         vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
                     }
-                    string vDateURL = "InputDate_ChineseYears.aspx?TextboxID=" + eStartDate_Search.ClientID;
+                    string vDateURL = "InputDate_ChineseYears.aspx?TextboxID=" + eCalBaseDate_Search.ClientID;
                     string vDateScript = "window.open('" + vDateURL + "','','height=315, width=350,status=no,toolbar=no,menubar=no,location=no','')";
-                    eStartDate_Search.Attributes["onClick"] = vDateScript;
+                    eCalBaseDate_Search.Attributes["onClick"] = vDateScript;
 
-                    vDateURL = "InputDate_ChineseYears.aspx?TextboxID=" + eEndDate_Search.ClientID;
+                    vDateURL = "InputDate_ChineseYears.aspx?TextboxID=" + eRetireHideDate_Search.ClientID;
                     vDateScript = "window.open('" + vDateURL + "','','height=315, width=350,status=no,toolbar=no,menubar=no,location=no','')";
-                    eEndDate_Search.Attributes["onClick"] = vDateScript;
+                    eRetireHideDate_Search.Attributes["onClick"] = vDateScript;
 
                     if (!IsPostBack)
                     {
@@ -81,20 +81,65 @@ namespace TyBus_Intranet_Test_V3
             string vResultStr = "";
             string vGiftTitle = eGiftYear.Text.Trim() + " 年 " + rbListType.SelectedItem.Text + "發放名冊";
             DateTime vDate_S;
+            string vDateStr_S;
             DateTime vDate_E;
+            string vDateStr_E;
+            DateTime vDate_Retire;
+            string vDateStr_Retire;
 
             switch (fSelectListType)
             {
                 case "0":
                 case "1":
                 case "2"://春節，端午，中秋
-                    if ((eStartDate_Search.Text.Trim() == "") || (eEndDate_Search.Text.Trim() == ""))
+                    //先根據計算基準日算出起迄日期
+                    vDateStr_E = (DateTime.TryParse(eCalBaseDate_Search.Text.Trim(), out vDate_E)) ? PF.GetMonthFirstDay(vDate_E, "B") : "";
+                    vDateStr_S = (DateTime.TryParse(eCalBaseDate_Search.Text.Trim(), out vDate_S)) ? PF.GetMonthFirstDay(vDate_S.AddMonths(-13), "B") : "";
+                    vDateStr_Retire = (DateTime.TryParse(eRetireHideDate_Search.Text.Trim(), out vDate_Retire)) ? PF.TransDateString(vDate_Retire, "B") : "";
+
+                    if ((vDateStr_E.Trim() == "") || (vDateStr_S.Trim() == "") || (vDateStr_Retire.Trim() == ""))
                     {
                         //起迄日期其中之一沒有輸入
                         vResultStr = "";
                     }
                     else
                     {
+                        vResultStr = "select * from (" + Environment.NewLine +
+                                    "        select e.DepNo, d.[Name] as DepName, e.EmpNo, e.[Name], e.Title, db.ClassTxt as Title_C, e.Assumeday, e.WorkType, " + Environment.NewLine +
+                                    "               case when isnull(pr.PayTime, 0) >= 6 then '全份' else '半份' end GiftType, " + Environment.NewLine +
+                                    "               cast('' as nvarchar) GiftNote, cast('" + vGiftTitle.Trim() + "' as nvarchar) GiftTitle, " + Environment.NewLine +
+                                    "               case when isnull(pr.PayTime, 0) >= 6 then 1 else 0 end FullGift, " + Environment.NewLine +
+                                    "               case when isnull(pr.PayTime, 0) >= 6 then 0 else 1 end HalfGift, "+Environment.NewLine+
+                                    "               cast('' as nvarchar) as StampPlace " +Environment.NewLine+
+                                    "          from Employee as e left join Department as d on d.DepNo = e.DepNo " + Environment.NewLine +
+                                    "                             left join DBDICB as db on db.ClassNo = e.Title and db.FKey = '員工資料        EMPLOYEE        TITLE' " + Environment.NewLine +
+                                    "                             left join ( " + Environment.NewLine +
+                                    "                                        select EmpNo, count(isnull(CashNum51, 0)) as PayTime " + Environment.NewLine +
+                                    "                                          from PayRec " + Environment.NewLine +
+                                    "                                         where PayDate between '" + vDateStr_S + "' and '" + vDateStr_E + "' " + Environment.NewLine +
+                                    "                                           and PayDur = '1' " + Environment.NewLine +
+                                    "                                         group by EmpNo " + Environment.NewLine +
+                                    "                                       ) as pr on pr.EmpNo = e.EmpNo " + Environment.NewLine +
+                                    "         where e.WorkType = '在職' " + Environment.NewLine +
+                                    "           and ((isnull(e.DepNo, '00') <> '00') or ((isnull(e.DepNo, '00') = '00') and (e.Title  in ('010', '020', '030', '070')))) " + Environment.NewLine +
+                                    "           and isnull(pr.PayTime, 0) > 0 " + Environment.NewLine +
+                                    "         union all " + Environment.NewLine +
+                                    "        select e2.DepNo, d2.[Name] as DepName, e2.EmpNo, e2.[Name], e2.Title, db2.ClassTxt as Title_C, e2.Assumeday, e2.WorkType, " + Environment.NewLine +
+                                    "               cast('全份' as nvarchar) GiftType, cast('' as nvarchar) GiftNote, " + Environment.NewLine +
+                                    "               cast('" + vGiftTitle.Trim() + "' as nvarchar) GiftTitle, 1 as FullGift, 0 as HalfGift, cast('' as nvarchar) as StampPlace " + Environment.NewLine +
+                                    "          from Employee as e2 left join Department as d2 on d2.DepNo = e2.DepNo " + Environment.NewLine +
+                                    "                              left join DBDICB as db2 on db2.ClassNo = e2.Title and db2.FKey = '員工資料        EMPLOYEE        TITLE' " + Environment.NewLine +
+                                    "                              left join ( " + Environment.NewLine +
+                                    "                                         select EmpNo, count(isnull(CashNum51, 0)) as PayTime " + Environment.NewLine +
+                                    "                                           from PayRec " + Environment.NewLine +
+                                    "                                          where PayDate between '" + vDateStr_S + "' and '" + vDateStr_E + "' " + Environment.NewLine +
+                                    "                                            and PayDur = '1' " + Environment.NewLine +
+                                    "                                          group by EmpNo " + Environment.NewLine +
+                                    "                                        ) as pr2 on pr2.EmpNo = e2.EmpNo " + Environment.NewLine +
+                                    "         where e2.WorkType = '退休' and e2.Leaveday >= '" + vDateStr_Retire + "' " + Environment.NewLine +
+                                    "           and ((isnull(e2.DepNo, '00') <> '00') or ((isnull(e2.DepNo, '00') = '00') and (e2.Title  in ('010', '020', '030', '070')))) " + Environment.NewLine +
+                                    ") z order by z.DepNo, z.Title, z.EmpNo";
+                        /* 2025.04.30 規則全部重來
                         vDate_S = DateTime.Parse(eStartDate_Search.Text.Trim());
                         vDate_E = DateTime.Parse(eEndDate_Search.Text.Trim());
                         vResultStr = "select e.DepNo, d.[Name] as DepName, e.EmpNo, e.[Name], e.Title, db.ClassTxt as Title_C, e.Assumeday, e.WorkType, " + Environment.NewLine +
@@ -119,7 +164,7 @@ namespace TyBus_Intranet_Test_V3
                                      " where (e.WorkType = '在職' or e.WorkType = '退休') " + Environment.NewLine +
                                      "   and ((isnull(e.DepNo, '00') <> '00') or((isnull(e.DepNo, '00') = '00') and(e.Title  in ('010', '020', '030', '070')))) " + Environment.NewLine +
                                      "   and isnull(pr.PayTime, 0) > 0 " + Environment.NewLine +
-                                     " order by e.DepNo, e.Title, e.EmpNo ";
+                                     " order by e.DepNo, e.Title, e.EmpNo "; //*/
                         /* 2023.09.22 修改過濾標準
                         vResultStr = "select DepNo, (select [Name] from Department where DepNo = e.DepNo) DepName, " + Environment.NewLine +
                                      "       EmpNo, [Name], " + Environment.NewLine +
@@ -343,30 +388,30 @@ namespace TyBus_Intranet_Test_V3
 
         protected void rbListType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            eStartDate_Search.Text = "";
-            eEndDate_Search.Text = "";
+            eCalBaseDate_Search.Text = "";
+            eRetireHideDate_Search.Text = "";
             switch (rbListType.SelectedValue)
             {
                 case "0":
                 case "1":
                 case "2":
                     //春節，端午，中秋
-                    eStartDate_Search.Enabled = true;
-                    eEndDate_Search.Enabled = true;
+                    eCalBaseDate_Search.Enabled = true;
+                    eRetireHideDate_Search.Enabled = true;
                     eMoneyPay.Enabled = false;
                     break;
                 case "3":
                 case "4":
                     //紅包，尾牙
-                    eStartDate_Search.Enabled = false;
-                    eEndDate_Search.Enabled = false;
+                    eCalBaseDate_Search.Enabled = false;
+                    eRetireHideDate_Search.Enabled = false;
                     eMoneyPay.Enabled = true;
                     break;
                 case "5":
                 case "6":
                     //制服發放，月餅發放
-                    eStartDate_Search.Enabled = false;
-                    eEndDate_Search.Enabled = false;
+                    eCalBaseDate_Search.Enabled = false;
+                    eRetireHideDate_Search.Enabled = false;
                     eMoneyPay.Enabled = false;
                     break;
             }
@@ -386,12 +431,19 @@ namespace TyBus_Intranet_Test_V3
                 case "0":
                 case "1":
                 case "2":
-                    if ((eStartDate_Search.Text.Trim() == "") || (eEndDate_Search.Text.Trim() == ""))
+                    if (eCalBaseDate_Search.Text.Trim() == "")
                     {
                         Response.Write("<Script language='Javascript'>");
-                        Response.Write("alert('起迄日期不可空白！')");
+                        Response.Write("alert('基準日期不可空白！')");
                         Response.Write("</" + "Script>");
-                        eStartDate_Search.Focus();
+                        eCalBaseDate_Search.Focus();
+                    }
+                    else if (eRetireHideDate_Search.Text.Trim() == "")
+                    {
+                        Response.Write("<Script language='Javascript'>");
+                        Response.Write("alert('退休起算日期不可空白！')");
+                        Response.Write("</" + "Script>");
+                        eRetireHideDate_Search.Focus();
                     }
                     else
                     {
@@ -462,12 +514,19 @@ namespace TyBus_Intranet_Test_V3
                 case "0":
                 case "1":
                 case "2":
-                    if ((eStartDate_Search.Text.Trim() == "") || (eEndDate_Search.Text.Trim() == ""))
+                    if (eCalBaseDate_Search.Text.Trim() == "")
                     {
                         Response.Write("<Script language='Javascript'>");
-                        Response.Write("alert('起迄日期不可空白！')");
+                        Response.Write("alert('基準日期不可空白！')");
                         Response.Write("</" + "Script>");
-                        eStartDate_Search.Focus();
+                        eCalBaseDate_Search.Focus();
+                    }
+                    else if (eRetireHideDate_Search.Text.Trim() == "")
+                    {
+                        Response.Write("<Script language='Javascript'>");
+                        Response.Write("alert('退休起算日期不可空白！')");
+                        Response.Write("</" + "Script>");
+                        eRetireHideDate_Search.Focus();
                     }
                     else
                     {
