@@ -264,7 +264,7 @@ namespace TyBus_Intranet_Test_V3
         /// <param name="e"></param>
         protected void bbPrintCheckList_Click(object sender, EventArgs e)
         {
-            Int32 vTempINT = 0;
+            //Int32 vTempINT = 0;
             double vTempFloat = 0.0;
             string vSQLStrTemp = "select ConsNo, Brand, ConsName, isnull(ConsType, '') ConsType, isnull(ConsColor, '') ConsColor, " + Environment.NewLine +
                                  "       isnull(StockQty, '') StockQty, cast('' as varchar) as InventoryQty, StoreLocation " + Environment.NewLine +

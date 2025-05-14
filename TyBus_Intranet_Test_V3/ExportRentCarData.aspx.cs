@@ -330,7 +330,7 @@ namespace TyBus_Intranet_Test_V3
 
             string vHeaderText = "";
             int vLinesNo = 0;
-            DateTime vBuDate;
+            //DateTime vBuDate;
 
             int vYear = 0;
             int vMonth = 0;

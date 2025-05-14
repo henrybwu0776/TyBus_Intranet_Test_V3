@@ -415,6 +415,7 @@ namespace TyBus_Intranet_Test_V3
         /// </summary>
         private void ImportFromExcel_CardIn()
         {
+            /*
             if (fuExcel.FileName=="")
             {
                 Response.Write("<Script language='Javascript'>");
@@ -455,7 +456,7 @@ namespace TyBus_Intranet_Test_V3
 
                         break;
                 }
-            }
+            } //*/
         }
 
         /// <summary>
@@ -3559,6 +3560,7 @@ namespace TyBus_Intranet_Test_V3
         /// </summary>
         private void ImportFromExcel_TPMPass2()
         {
+            /*
             if (fuExcel.FileName == "")
             {
                 Response.Write("<Script language='Javascript'>");
@@ -3598,7 +3600,7 @@ namespace TyBus_Intranet_Test_V3
                         Response.Write("</" + "Script>");
                         break;
                 }
-            }
+            } //*/
         }
 
         /// <summary>
@@ -3808,6 +3810,7 @@ namespace TyBus_Intranet_Test_V3
         /// </summary>
         private void ImportFromExcel_TWTraip()
         {
+            /*
             if (fuExcel.FileName == "")
             {
                 Response.Write("<Script language='Javascript'>");
@@ -3847,7 +3850,7 @@ namespace TyBus_Intranet_Test_V3
 
                         break;
                 }
-            }
+            } //*/
         }
 
         protected void bbImportData_Click(object sender, EventArgs e)

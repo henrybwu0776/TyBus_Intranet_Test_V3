@@ -6,34 +6,37 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>2.07667cm</Width>
+              <Width>2.16779cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.91792cm</Width>
+              <Width>1.25646cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.39417cm</Width>
+              <Width>2.00904cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.05563cm</Width>
+              <Width>2.48529cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.84396cm</Width>
+              <Width>3.14675cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.33583cm</Width>
+              <Width>2.93508cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>7.67542cm</Width>
+              <Width>1.42695cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.73271cm</Width>
+              <Width>6.523cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.02375cm</Width>
+              <Width>1.79737cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.73271cm</Width>
+              <Width>1.94321cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>2.00904cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -73,7 +76,41 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox8">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>字號</Value>
+                              <Style>
+                                <FontFamily>新細明體</FontFamily>
+                                <FontSize>11pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox8</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -155,7 +192,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>收發文字號</Value>
+                              <Value>收發文號</Value>
                               <Style>
                                 <FontFamily>新細明體</FontFamily>
                                 <FontSize>11pt</FontSize>
@@ -416,6 +453,39 @@
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>DocDep_C</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="DocFirstWord_C">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!DocFirstWord_C.Value</Value>
+                              <Style>
+                                <FontFamily>新細明體</FontFamily>
+                                <FontSize>11pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>DocFirstWord_C</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -744,6 +814,7 @@
             <TablixMember />
             <TablixMember />
             <TablixMember />
+            <TablixMember />
           </TablixMembers>
         </TablixColumnHierarchy>
         <TablixRowHierarchy>
@@ -759,9 +830,8 @@
         </TablixRowHierarchy>
         <DataSetName>dsOfficialDocumentP</DataSetName>
         <Top>0.17639cm</Top>
-        <Left>0.42333cm</Left>
         <Height>1.2cm</Height>
-        <Width>26.78877cm</Width>
+        <Width>27.7cm</Width>
         <Style>
           <Border>
             <Style>None</Style>

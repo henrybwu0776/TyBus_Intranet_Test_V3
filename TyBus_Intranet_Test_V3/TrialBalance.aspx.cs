@@ -672,7 +672,7 @@ namespace TyBus_Intranet_Test_V3
             {
                 vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
             }
-            string vSQLStr = "";
+            //string vSQLStr = "";
             string vSQLStr2 = "";
             //起始日期
             DateTime vDate_Start_D = (eCalDate_Start_Search.Text.Trim() != "") ? DateTime.Parse(eCalDate_Start_Search.Text.Trim()) : DateTime.Parse(PF.GetMonthFirstDay(DateTime.Today, "C"));

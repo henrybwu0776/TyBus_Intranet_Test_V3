@@ -209,7 +209,7 @@ namespace TyBus_Intranet_Test_V3
                                 for (int i = sheetExcel_H.FirstRowNum + 1; i <= sheetExcel_H.LastRowNum; i++)
                                 {
                                     HSSFRow vRowTemp_H = (HSSFRow)sheetExcel_H.GetRow(i);
-                                    vBuildDate = (vRowTemp_H.GetCell(1).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(1).DateCellValue.ToString("yyyy/MM/dd") : DateTime.Today.ToString("yyyy/MM/dd");
+                                    vBuildDate = (vRowTemp_H.GetCell(1).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(1).DateCellValue.ToString() : DateTime.Today.ToString("yyyy/MM/dd");
                                     vCaseNo_TypeA = DateTime.Parse(vBuildDate).ToString("yyyyMMdd") + vCaseType;
                                     vCaseNo = GetCaseNo(vCaseNo_TypeA.Trim());
                                     vBuildManName = (vRowTemp_H.GetCell(2).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(2).StringCellValue.Trim() : Session["LoginName"].ToString().Trim();
@@ -224,7 +224,7 @@ namespace TyBus_Intranet_Test_V3
                                     vDriverName = (vRowTemp_H.GetCell(6).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(6).StringCellValue.Trim() : "";
                                     vSQLStr = "select EmpNo from Employee where [Name] = '" + vDriverName + "' and LeaveDay is null and Type = '20'";
                                     vDriver = PF.GetValue(vConnStr, vSQLStr, "EmpNo");
-                                    vViolationDate = (vRowTemp_H.GetCell(7).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(7).DateCellValue.ToString("yyyy/MM/dd") : "";
+                                    vViolationDate = (vRowTemp_H.GetCell(7).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(7).DateCellValue.ToString() : "";
                                     vTicketNo = (vRowTemp_H.GetCell(8).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(8).StringCellValue.Trim() : "";
                                     vPenaltyDep = (vRowTemp_H.GetCell(9).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(9).StringCellValue.Trim() : "";
                                     vUndertaker = (vRowTemp_H.GetCell(10).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(10).StringCellValue.Trim() : "";
@@ -235,8 +235,8 @@ namespace TyBus_Intranet_Test_V3
                                     vViolationLocation = (vRowTemp_H.GetCell(15).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(15).StringCellValue.Trim() : "";
                                     vViolationNote = (vRowTemp_H.GetCell(16).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(16).StringCellValue.Trim() : "";
                                     vViolationPoint = (vRowTemp_H.GetCell(17).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(17).NumericCellValue.ToString().Trim() : "0";
-                                    vPaymentDeadline = (vRowTemp_H.GetCell(18).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(18).DateCellValue.ToString("yyyy/MM/dd") : "";
-                                    vPaidDate = (vRowTemp_H.GetCell(19).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(19).DateCellValue.ToString("yyyy/MM/dd") : "";
+                                    vPaymentDeadline = (vRowTemp_H.GetCell(18).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(18).DateCellValue.ToString() : "";
+                                    vPaidDate = (vRowTemp_H.GetCell(19).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(19).DateCellValue.ToString() : "";
                                     vRemark = (vRowTemp_H.GetCell(20).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(20).ToString().Trim() : "";
 
                                     sdsImportDataFromExcel.InsertParameters.Clear();
@@ -286,7 +286,7 @@ namespace TyBus_Intranet_Test_V3
                                 for (int i = sheetExcel_X.FirstRowNum + 1; i <= sheetExcel_X.LastRowNum; i++)
                                 {
                                     XSSFRow vRowTemp_H = (XSSFRow)sheetExcel_X.GetRow(i);
-                                    vBuildDate = (vRowTemp_H.GetCell(1).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(1).DateCellValue.ToString("yyyy/MM/dd") : DateTime.Today.ToString("yyyy/MM/dd");
+                                    vBuildDate = (vRowTemp_H.GetCell(1).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(1).DateCellValue.ToString() : DateTime.Today.ToString("yyyy/MM/dd");
                                     vCaseNo_TypeA = DateTime.Parse(vBuildDate).ToString("yyyyMMdd") + vCaseType;
                                     vCaseNo = GetCaseNo(vCaseNo_TypeA.Trim());
                                     vBuildManName = (vRowTemp_H.GetCell(2).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(2).StringCellValue.Trim() : Session["LoginName"].ToString().Trim();
@@ -301,7 +301,7 @@ namespace TyBus_Intranet_Test_V3
                                     vDriverName = (vRowTemp_H.GetCell(6).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(6).StringCellValue.Trim() : "";
                                     vSQLStr = "select EmpNo from Employee where [Name] = '" + vDriverName + "' and LeaveDay is null and Type = '20'";
                                     vDriver = PF.GetValue(vConnStr, vSQLStr, "EmpNo");
-                                    vViolationDate = (vRowTemp_H.GetCell(7).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(7).DateCellValue.ToString("yyyy/MM/dd") : "";
+                                    vViolationDate = (vRowTemp_H.GetCell(7).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(7).DateCellValue.ToString() : "";
                                     vTicketNo = (vRowTemp_H.GetCell(8).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(8).StringCellValue.Trim() : "";
                                     vPenaltyDep = (vRowTemp_H.GetCell(9).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(9).StringCellValue.Trim() : "";
                                     vUndertaker = (vRowTemp_H.GetCell(10).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(10).StringCellValue.Trim() : "";
@@ -312,8 +312,8 @@ namespace TyBus_Intranet_Test_V3
                                     vViolationLocation = (vRowTemp_H.GetCell(15).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(15).StringCellValue.Trim() : "";
                                     vViolationNote = (vRowTemp_H.GetCell(16).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(16).StringCellValue.Trim() : "";
                                     vViolationPoint = (vRowTemp_H.GetCell(17).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(17).NumericCellValue.ToString().Trim() : "0";
-                                    vPaymentDeadline = (vRowTemp_H.GetCell(18).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(18).DateCellValue.ToString("yyyy/MM/dd") : "";
-                                    vPaidDate = (vRowTemp_H.GetCell(19).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(19).DateCellValue.ToString("yyyy/MM/dd") : "";
+                                    vPaymentDeadline = (vRowTemp_H.GetCell(18).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(18).DateCellValue.ToString() : "";
+                                    vPaidDate = (vRowTemp_H.GetCell(19).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(19).DateCellValue.ToString() : "";
                                     vRemark = (vRowTemp_H.GetCell(20).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(20).ToString().Trim() : "";
 
                                     sdsImportDataFromExcel.InsertParameters.Clear();

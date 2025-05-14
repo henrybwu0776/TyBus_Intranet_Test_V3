@@ -158,7 +158,7 @@ namespace TyBus_Intranet_Test_V3
                     plPrint.Visible = true;
                     plSearch.Visible = false;
 
-                    string vSelectedEmpNo = "";
+                    //string vSelectedEmpNo = "";
                     string vRecordNote = "預覽報表_修車廠修車日報表" + Environment.NewLine +
                                          "FixWorkDailyReport.aspx";
                     PF.InsertOperateRecord(vConnStr, vLoginID, vComputerName, vRecordNote);

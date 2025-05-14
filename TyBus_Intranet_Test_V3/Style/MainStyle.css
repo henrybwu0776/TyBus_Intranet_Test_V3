@@ -112,6 +112,11 @@
     background-color: #E6E6FA;
 }
 
+.ShowPanel-Detail_Float {
+    float: left;
+    background-color: darkkhaki;
+}
+
 .ShowPanel-Detail-TwoColumns {
     float: left;
     width: 49%;

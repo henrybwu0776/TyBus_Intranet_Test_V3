@@ -537,7 +537,7 @@ namespace TyBus_Intranet_Test_V3
         {
             string vSQLStrTemp = "";
             string vSheetNo = "";
-            string vConsNo = "";
+            //string vConsNo = "";
             Label eSheetNo_List = (Label)fvIASheetA_Detail.FindControl("eSheetNo_List");
             if (eSheetNo_List != null)
             {
@@ -632,7 +632,7 @@ namespace TyBus_Intranet_Test_V3
         {
             string vSQLStrTemp = "";
             string vSheetNo = "";
-            string vConsNo = "";
+            //string vConsNo = "";
             Label eSheetNo_List = (Label)fvIASheetA_Detail.FindControl("eSheetNo_List");
             if (eSheetNo_List != null)
             {

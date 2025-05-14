@@ -394,7 +394,7 @@ namespace TyBus_Intranet_Test_V3
             string vFileName = "票價補助發放名冊";
             string vGetPayMode = "";
             string vModeStr = "";
-            string vHeaderStr = "";
+            //string vHeaderStr = "";
 
             CalData();
             if (dtTarget.Rows.Count > 0)

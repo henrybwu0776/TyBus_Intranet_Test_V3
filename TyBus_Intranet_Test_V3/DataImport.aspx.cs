@@ -106,6 +106,9 @@ namespace TyBus_Intranet_Test_V3
                     case "T009":
                         Import_MOUPayData(); //匯入MOU津貼資料
                         break;
+                    case "T010":
+                        Modify_MOUPayData(); //修改MOU津貼資料
+                        break;
                 }
             }
         }
@@ -177,7 +180,7 @@ namespace TyBus_Intranet_Test_V3
                                 for (int i = sheetExcel_H.FirstRowNum + 1; i <= sheetExcel_H.LastRowNum; i++)
                                 {
                                     HSSFRow vRowTemp_H = (HSSFRow)sheetExcel_H.GetRow(i);
-                                    vBuildDate = (vRowTemp_H.GetCell(1).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(1).DateCellValue.ToString("yyyy/MM/dd") : DateTime.Today.ToString("yyyy/MM/dd");
+                                    vBuildDate = (vRowTemp_H.GetCell(1).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(1).DateCellValue.ToString() : DateTime.Today.ToString("yyyy/MM/dd");
                                     vCaseNo_TypeA = DateTime.Parse(vBuildDate).ToString("yyyyMMdd") + vCaseType;
                                     vCaseNo = PF.GetDataIndex(vConnStr, "ViolationCase", "CaseNo", "B", false, DateTime.Parse(vBuildDate), 8, vCaseType, 4);
                                     vBuildManName = (vRowTemp_H.GetCell(2).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(2).StringCellValue.Trim() : Session["LoginName"].ToString().Trim();
@@ -192,7 +195,7 @@ namespace TyBus_Intranet_Test_V3
                                     vDriverName = (vRowTemp_H.GetCell(6).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(6).StringCellValue.Trim() : "";
                                     vSQLStr = "select EmpNo from Employee where [Name] = '" + vDriverName + "' and LeaveDay is null and Type = '20'";
                                     vDriver = PF.GetValue(vConnStr, vSQLStr, "EmpNo");
-                                    vViolationDate = (vRowTemp_H.GetCell(7).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(7).DateCellValue.ToString("yyyy/MM/dd") : "";
+                                    vViolationDate = (vRowTemp_H.GetCell(7).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(7).DateCellValue.ToString() : "";
                                     vTicketNo = (vRowTemp_H.GetCell(8).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(8).StringCellValue.Trim() : "";
                                     vPenaltyDep = (vRowTemp_H.GetCell(9).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(9).StringCellValue.Trim() : "";
                                     vUndertaker = (vRowTemp_H.GetCell(10).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(10).StringCellValue.Trim() : "";
@@ -203,8 +206,8 @@ namespace TyBus_Intranet_Test_V3
                                     vViolationLocation = (vRowTemp_H.GetCell(15).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(15).StringCellValue.Trim() : "";
                                     vViolationNote = (vRowTemp_H.GetCell(16).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(16).StringCellValue.Trim() : "";
                                     vViolationPoint = (vRowTemp_H.GetCell(17).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(17).NumericCellValue.ToString().Trim() : "0";
-                                    vPaymentDeadline = (vRowTemp_H.GetCell(18).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(18).DateCellValue.ToString("yyyy/MM/dd") : "";
-                                    vPaidDate = (vRowTemp_H.GetCell(19).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(19).DateCellValue.ToString("yyyy/MM/dd") : "";
+                                    vPaymentDeadline = (vRowTemp_H.GetCell(18).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(18).DateCellValue.ToString() : "";
+                                    vPaidDate = (vRowTemp_H.GetCell(19).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(19).DateCellValue.ToString() : "";
                                     vRemark = (vRowTemp_H.GetCell(20).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(20).ToString().Trim() : "";
 
                                     using (SqlDataSource sdsTemp = new SqlDataSource())
@@ -267,7 +270,7 @@ namespace TyBus_Intranet_Test_V3
                                 for (int i = sheetExcel_X.FirstRowNum + 1; i <= sheetExcel_X.LastRowNum; i++)
                                 {
                                     XSSFRow vRowTemp_H = (XSSFRow)sheetExcel_X.GetRow(i);
-                                    vBuildDate = (vRowTemp_H.GetCell(1).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(1).DateCellValue.ToString("yyyy/MM/dd") : DateTime.Today.ToString("yyyy/MM/dd");
+                                    vBuildDate = (vRowTemp_H.GetCell(1).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(1).DateCellValue.ToString() : DateTime.Today.ToString("yyyy/MM/dd");
                                     vCaseNo_TypeA = DateTime.Parse(vBuildDate).ToString("yyyyMMdd") + vCaseType;
                                     vCaseNo = PF.GetDataIndex(vConnStr, "ViolationCase", "CaseNo", "B", false, DateTime.Parse(vBuildDate), 8, vCaseType, 4);
                                     vBuildManName = (vRowTemp_H.GetCell(2).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(2).StringCellValue.Trim() : Session["LoginName"].ToString().Trim();
@@ -282,7 +285,7 @@ namespace TyBus_Intranet_Test_V3
                                     vDriverName = (vRowTemp_H.GetCell(6).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(6).StringCellValue.Trim() : "";
                                     vSQLStr = "select EmpNo from Employee where [Name] = '" + vDriverName + "' and LeaveDay is null and Type = '20'";
                                     vDriver = PF.GetValue(vConnStr, vSQLStr, "EmpNo");
-                                    vViolationDate = (vRowTemp_H.GetCell(7).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(7).DateCellValue.ToString("yyyy/MM/dd") : "";
+                                    vViolationDate = (vRowTemp_H.GetCell(7).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(7).DateCellValue.ToString() : "";
                                     vTicketNo = (vRowTemp_H.GetCell(8).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(8).StringCellValue.Trim() : "";
                                     vPenaltyDep = (vRowTemp_H.GetCell(9).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(9).StringCellValue.Trim() : "";
                                     vUndertaker = (vRowTemp_H.GetCell(10).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(10).StringCellValue.Trim() : "";
@@ -293,8 +296,8 @@ namespace TyBus_Intranet_Test_V3
                                     vViolationLocation = (vRowTemp_H.GetCell(15).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(15).StringCellValue.Trim() : "";
                                     vViolationNote = (vRowTemp_H.GetCell(16).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(16).StringCellValue.Trim() : "";
                                     vViolationPoint = (vRowTemp_H.GetCell(17).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(17).NumericCellValue.ToString().Trim() : "0";
-                                    vPaymentDeadline = (vRowTemp_H.GetCell(18).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(18).DateCellValue.ToString("yyyy/MM/dd") : "";
-                                    vPaidDate = (vRowTemp_H.GetCell(19).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(19).DateCellValue.ToString("yyyy/MM/dd") : "";
+                                    vPaymentDeadline = (vRowTemp_H.GetCell(18).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(18).DateCellValue.ToString() : "";
+                                    vPaidDate = (vRowTemp_H.GetCell(19).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(19).DateCellValue.ToString() : "";
                                     vRemark = (vRowTemp_H.GetCell(20).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(20).ToString().Trim() : "";
 
                                     using (SqlDataSource sdsTemp = new SqlDataSource())
@@ -888,6 +891,7 @@ namespace TyBus_Intranet_Test_V3
             string vAssignDate = "";
             string vAssignMan = "";
             int SheetCount = 0;
+            DateTime dtTemp;
 
             if (vConnStr == "")
             {
@@ -912,8 +916,9 @@ namespace TyBus_Intranet_Test_V3
                                 if ((vRowTemp_H.GetCell(0).CellType != CellType.Blank) && (vRowTemp_H.GetCell(2).CellType != CellType.Blank))
                                 {
                                     //開單日期時間
-                                    vBuildDate = (vRowTemp_H.GetCell(0).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(0).DateCellValue.ToString("yyyy/MM/dd") : "";
-                                    vBuildTime = (vRowTemp_H.GetCell(1).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(1).DateCellValue.ToString("hh:mm") : "";
+                                    vBuildDate = (vRowTemp_H.GetCell(0).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(0).DateCellValue.ToString() : "";
+                                    //vBuildTime = (vRowTemp_H.GetCell(1).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(1).DateCellValue.ToString("hh:mm") : "";
+                                    vBuildTime = DateTime.TryParse(vRowTemp_H.GetCell(1).ToString().Trim(), out dtTemp) ? dtTemp.ToString("hh:mm") : "";
                                     //開單人
                                     vTempStr = (vRowTemp_H.GetCell(2).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(2).ToString().Trim() : "";
                                     vSQLStr = "select EmpNo from Employee where [Name] = '" + vTempStr + "' and LeaveDay is null ";
@@ -981,7 +986,7 @@ namespace TyBus_Intranet_Test_V3
                                     vRemark = (vRowTemp_H.GetCell(21).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(21).ToString().Trim() : "";
                                     //是否分發待查
                                     vIsPending = (vRowTemp_H.GetCell(22).ToString().Trim() != "XXXXXXXX") ? (vRowTemp_H.GetCell(22).ToString().Trim() == "是") ? "true" : "false" : "false";
-                                    vAssignDate = (vRowTemp_H.GetCell(23).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(23).DateCellValue.ToString("yyyy/MM/dd") : "";
+                                    vAssignDate = (vRowTemp_H.GetCell(23).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(23).DateCellValue.ToString() : "";
                                     vTempStr = (vRowTemp_H.GetCell(24).ToString().Trim() != "XXXXXXXX") ? vRowTemp_H.GetCell(24).ToString().Trim() : "";
                                     vSQLStr = "select EmpNo from Employee where [Name] = '" + vTempStr + "' and LeaveDay is null ";
                                     vAssignMan = PF.GetValue(vConnStr, vSQLStr, "EmpNo");
@@ -1040,8 +1045,9 @@ namespace TyBus_Intranet_Test_V3
                                 if ((vRowTemp_X.GetCell(0).CellType != CellType.Blank) && (vRowTemp_X.GetCell(2).CellType != CellType.Blank))
                                 {
                                     //開單日期時間
-                                    vBuildDate = (vRowTemp_X.GetCell(0).ToString().Trim() != "XXXXXXXX") ? vRowTemp_X.GetCell(0).DateCellValue.ToString("yyyy/MM/dd") : "";
-                                    vBuildTime = (vRowTemp_X.GetCell(1).ToString().Trim() != "XXXXXXXX") ? vRowTemp_X.GetCell(1).DateCellValue.ToString("hh:mm") : "";
+                                    vBuildDate = (vRowTemp_X.GetCell(0).ToString().Trim() != "XXXXXXXX") ? vRowTemp_X.GetCell(0).DateCellValue.ToString() : "";
+                                    //vBuildTime = (vRowTemp_X.GetCell(1).ToString().Trim() != "XXXXXXXX") ? vRowTemp_X.GetCell(1).DateCellValue.ToString("hh:mm") : "";
+                                    vBuildTime = DateTime.TryParse(vRowTemp_X.GetCell(1).ToString().Trim(), out dtTemp) ? dtTemp.ToString("hh:mm") : "";
                                     //開單人
                                     vTempStr = (vRowTemp_X.GetCell(2).ToString().Trim() != "XXXXXXXX") ? vRowTemp_X.GetCell(2).ToString().Trim() : "";
                                     vSQLStr = "select EmpNo from Employee where [Name] = '" + vTempStr + "' and LeaveDay is null ";
@@ -1109,7 +1115,7 @@ namespace TyBus_Intranet_Test_V3
                                     vRemark = (vRowTemp_X.GetCell(21).ToString().Trim() != "XXXXXXXX") ? vRowTemp_X.GetCell(21).ToString().Trim() : "";
                                     //是否分發待查
                                     vIsPending = (vRowTemp_X.GetCell(22).ToString().Trim() != "XXXXXXXX") ? (vRowTemp_X.GetCell(22).ToString().Trim() == "是") ? "true" : "false" : "false";
-                                    vAssignDate = (vRowTemp_X.GetCell(23).ToString().Trim().Replace("XXXXXXXX", "") != "") ? vRowTemp_X.GetCell(23).DateCellValue.ToString("yyyy/MM/dd") : "";
+                                    vAssignDate = (vRowTemp_X.GetCell(23).ToString().Trim().Replace("XXXXXXXX", "") != "") ? vRowTemp_X.GetCell(23).DateCellValue.ToString() : "";
                                     vTempStr = (vRowTemp_X.GetCell(24).ToString().Trim() != "XXXXXXXX") ? vRowTemp_X.GetCell(24).ToString().Trim() : "";
                                     vSQLStr = "select EmpNo from Employee where [Name] = '" + vTempStr + "' and LeaveDay is null ";
                                     vAssignMan = PF.GetValue(vConnStr, vSQLStr, "EmpNo");
@@ -2285,7 +2291,6 @@ namespace TyBus_Intranet_Test_V3
                 vExtName = Path.GetExtension(fuExcel.FileName);
                 switch (vExtName)
                 {
-
                     default:
                         Response.Write("<Script language='Javascript'>");
                         Response.Write("alert('您指定的檔案不是 EXCEL 檔，請重新確認檔案格式。')");
@@ -2461,6 +2466,156 @@ namespace TyBus_Intranet_Test_V3
                             }
                         }
                         break;
+                }
+            }
+            else
+            {
+                Response.Write("<Script language='Javascript'>");
+                Response.Write("alert('請先指定要匯入的檔案。')");
+                Response.Write("</" + "Script>");
+            }
+        }
+
+        private void Modify_MOUPayData()
+        {
+            string vUploadPath = Request.PhysicalApplicationPath + @"App_Data\";
+            int vTempINT = 0;
+            string vTempStr = "";
+            string vTempNo = "";
+            string vRCountStr = "";
+
+            //string vCalYM = "";
+            string vEmpNo = "";
+            string vPayNo = "";
+            string vPayBNo = "";
+            double vExpense = 0.0;
+            string vExpenseStr = "";
+            string vPriNo = "";
+            string vPayDate = "";
+            string vRealPayDate = "";
+            //string vPayDur = "2";
+            DateTime vAssumeday;
+            double vDurNum = 0;
+            int vTempINT_1 = 0;
+            int vTempINT_2 = 0;
+
+            if (vConnStr == "")
+            {
+                vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
+            }
+
+            if (fuExcel.FileName != "")
+            {
+                vExtName = Path.GetExtension(fuExcel.FileName);
+                switch (vExtName)
+                {
+                    default:
+                        Response.Write("<Script language='Javascript'>");
+                        Response.Write("alert('您指定的檔案不是 EXCEL 檔，請重新確認檔案格式。')");
+                        Response.Write("</" + "Script>");
+                        break;
+
+                    case ".xls"://EXCEL 2003 之前版本
+                        HSSFWorkbook wbExcel_H = new HSSFWorkbook(fuExcel.FileContent);
+                        HSSFSheet vSheet_H = (HSSFSheet)wbExcel_H.GetSheetAt(0);
+                        if (vSheet_H.LastRowNum > 0)
+                        {
+                            for (int vRCount = vSheet_H.FirstRowNum + 1; vRCount <= vSheet_H.LastRowNum; vRCount++)
+                            {
+                                try
+                                {
+                                    HSSFRow vRowTemp_H = (HSSFRow)vSheet_H.GetRow(vRCount);
+                                    vEmpNo = vRowTemp_H.GetCell(0).StringCellValue.Trim();
+                                    vPayNo = vRowTemp_H.GetCell(2).StringCellValue.Trim();
+                                    vPayBNo = vRowTemp_H.GetCell(3).StringCellValue.Trim();
+                                    vExpense = vRowTemp_H.GetCell(4).NumericCellValue;
+                                    vExpenseStr = vExpense.ToString();
+                                    vTempStr = "select Assumeday from Employee where EmpNo = '" + vEmpNo + "' ";
+                                    vAssumeday = DateTime.Parse(PF.GetValue(vConnStr, vTempStr, "Assumeday"));
+                                    vTempINT_1 = PF.GetMonthDays(vAssumeday);
+                                    vTempINT_2 = vAssumeday.Day;
+                                    vDurNum = vTempINT_1 - vTempINT_2 + 1;
+                                    vPayDate = PF.GetMonthFirstDay(vAssumeday, "B");
+                                    vRealPayDate = PF.GetMonthFirstDay(vAssumeday.AddMonths(1), "B");
+                                    vTempStr = "select PriNo from MSHZ where PayDate = '" + vPayDate + "' and EmpNo = '" + vEmpNo + "' and PayDur = '2' and PayBNo = '" + vPayBNo + "' and Expense >= " + vExpenseStr;
+                                    vTempNo = PF.GetValue(vConnStr, vTempStr, "PriNo");
+                                    if (vTempNo != "")
+                                    {
+                                        vPriNo = vTempNo.Trim();
+                                        vTempStr = "update MSHZ set Expense = Expense - " + vExpenseStr + " where PriNo = '" + vPriNo + "' ";
+                                        PF.ExecSQL(vConnStr, vTempStr);
+                                    }
+                                    vTempStr = "select count(EmpNo) RCount from PayRec where PayDate = '" + vPayDate + "' and PayDur = '2' and EmpNo = '" + vEmpNo + "' and CashNum14 >= " + vExpenseStr;
+                                    vRCountStr = PF.GetValue(vConnStr, vTempStr, "RCount");
+                                    if ((Int32.TryParse(vRCountStr, out vTempINT)) && (vTempINT != 0))
+                                    {
+                                        vTempStr = "update PayRec set CashNum14 = CashNum14 - " + vExpenseStr + ", Tracash1 = Tracash1 - " + vExpenseStr + ", RealCash = RealCash - " + vExpenseStr + ", GIVCash = GIVCash - " + vExpense + Environment.NewLine +
+                                                   " where PayDate = '" + vPayDate + "' and PayDur = '2' and EmpNo = '" + vEmpNo + "' ";
+                                        PF.ExecSQL(vConnStr, vTempStr);
+                                    }
+                                }
+                                catch (Exception eMessage)
+                                {
+                                    lbError.Text = eMessage.Message + Environment.NewLine + vTempStr;
+                                }
+                            }
+                            vTempStr = "delete MSHZ where Expense = 0";
+                            PF.ExecSQL(vConnStr, vTempStr);
+                            vTempStr = "delete Payrec where RealCash = 0 and GIVCash = 0 and PayDur = '2'";
+                            PF.ExecSQL(vConnStr, vTempStr);
+                        }
+                        break;
+
+                    case ".xlsx"://EXCEL 2010 之後版本
+                        XSSFWorkbook wbExcel_X = new XSSFWorkbook(fuExcel.FileContent);
+                        XSSFSheet vSheet_X = (XSSFSheet)wbExcel_X.GetSheetAt(0);
+                        if (vSheet_X.LastRowNum > 0)
+                        {
+                            for (int vRCount = vSheet_X.FirstRowNum + 1; vRCount <= vSheet_X.LastRowNum; vRCount++)
+                            {
+                                try
+                                {
+                                    XSSFRow vRowTemp_X = (XSSFRow)vSheet_X.GetRow(vRCount);
+                                    vEmpNo = vRowTemp_X.GetCell(0).StringCellValue.Trim();
+                                    vPayNo = vRowTemp_X.GetCell(2).StringCellValue.Trim();
+                                    vPayBNo = vRowTemp_X.GetCell(3).StringCellValue.Trim();
+                                    vExpense = vRowTemp_X.GetCell(4).NumericCellValue;
+                                    vExpenseStr = vExpense.ToString();
+                                    vTempStr = "select Assumeday from Employee where EmpNo = '" + vEmpNo + "' ";
+                                    vAssumeday = DateTime.Parse(PF.GetValue(vConnStr, vTempStr, "Assumeday"));
+                                    vTempINT_1 = PF.GetMonthDays(vAssumeday);
+                                    vTempINT_2 = vAssumeday.Day;
+                                    vDurNum = vTempINT_1 - vTempINT_2 + 1;
+                                    vPayDate = PF.GetMonthFirstDay(vAssumeday, "B");
+                                    vRealPayDate = PF.GetMonthFirstDay(vAssumeday.AddMonths(1), "B");
+                                    vTempStr = "select PriNo from MSHZ where PayDate = '" + vPayDate + "' and EmpNo = '" + vEmpNo + "' and PayDur = '2' and PayBNo = '" + vPayBNo + "' and Expense >= " + vExpenseStr;
+                                    vTempNo = PF.GetValue(vConnStr, vTempStr, "PriNo");
+                                    if (vTempNo != "")
+                                    {
+                                        vPriNo = vTempNo.Trim();
+                                        vTempStr = "update MSHZ set Expense = Expense - " + vExpenseStr + " where PriNo = '" + vPriNo + "' ";
+                                        PF.ExecSQL(vConnStr, vTempStr);
+                                    }
+                                    vTempStr = "select count(EmpNo) RCount from PayRec where PayDate = '" + vPayDate + "' and PayDur = '2' and EmpNo = '" + vEmpNo + "' and CashNum14 >= " + vExpenseStr;
+                                    vRCountStr = PF.GetValue(vConnStr, vTempStr, "RCount");
+                                    if ((Int32.TryParse(vRCountStr, out vTempINT)) && (vTempINT != 0))
+                                    {
+                                        vTempStr = "update PayRec set CashNum14 = CashNum14 - " + vExpenseStr + ", Tracash1 = Tracash1 - " + vExpenseStr + ", RealCash = RealCash - " + vExpenseStr + ", GIVCash = GIVCash - " + vExpense + Environment.NewLine +
+                                                   " where PayDate = '" + vPayDate + "' and PayDur = '2' and EmpNo = '" + vEmpNo + "' ";
+                                        PF.ExecSQL(vConnStr, vTempStr);
+                                    }
+                                }
+                                catch (Exception eMessage)
+                                {
+                                    lbError.Text = eMessage.Message + Environment.NewLine + vTempStr;
+                                }
+                            }
+                            vTempStr = "delete MSHZ where Expense = 0";
+                            PF.ExecSQL(vConnStr, vTempStr);
+                            vTempStr = "delete Payrec where RealCash = 0 and GIVCash = 0 and PayDur = '2'";
+                            PF.ExecSQL(vConnStr, vTempStr);
+                        }
+                        break;    
                 }
             }
             else

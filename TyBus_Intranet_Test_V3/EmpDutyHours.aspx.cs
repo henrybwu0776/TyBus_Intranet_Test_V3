@@ -81,6 +81,7 @@ namespace TyBus_Intranet_Test_V3
                                 "       a.EmpNo, a.[Name], SUM(ISNULL(b.UsableHours, 0)) AS UseableHours " + Environment.NewLine +
                                 "  FROM Employee AS a LEFT OUTER JOIN EmpDutyHours AS b ON b.EmpNo = a.EmpNo AND (b.IsAllowed = 1) " + Environment.NewLine +
                                 " WHERE (a.LeaveDay IS NULL) AND (ISNULL(a.DepNo, '00') <> '00') and a.EmpNo <> 'supervisor' " + Environment.NewLine +
+                                //" WHERE (ISNULL(a.DepNo, '00') <> '00') and a.EmpNo <> 'supervisor' " + Environment.NewLine +
                                 "   AND b.DutyType = 'T01' AND b.DutyDateStart between '" + vCalBeginDay + "' and '" + vCalEndDay + "' " + Environment.NewLine +
                                 vWStr_DepNo + vWStr_EmpNo +
                                 " GROUP BY a.DepNo, a.Title, a.EmpNo, a.[Name]" + Environment.NewLine +

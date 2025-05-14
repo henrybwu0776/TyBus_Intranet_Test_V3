@@ -24,7 +24,7 @@ namespace TyBus_Intranet_Test_V3
         private string vLoginEmpType = "";
         private string vComputerName = ""; //2021.09.27 新增
         private string vConnStr = "";
-        private string vErrorMessage = "";
+        //private string vErrorMessage = "";
         private DataTable dtTarget = new DataTable();
 
         protected void Page_Load(object sender, EventArgs e)

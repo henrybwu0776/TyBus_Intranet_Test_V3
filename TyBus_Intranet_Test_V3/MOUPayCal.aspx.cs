@@ -204,7 +204,7 @@ namespace TyBus_Intranet_Test_V3
             string vNoWorkFee = "";
             string vTitle = "";
             string vTempStr = "";
-            string vTempDateStr = "";
+            //string vTempDateStr = "";
             string vCash51Str = ""; //福利金
             string vCash52Str = ""; //互助金
             string vCash53Str = ""; //工會費
@@ -218,8 +218,8 @@ namespace TyBus_Intranet_Test_V3
             string vAssumedayStr = "";
             DateTime vLeaveDay;
             string vLeavedayStr = "";
-            DateTime vStudyBoundStartDay;
-            DateTime vStudyBoundEndDay;
+            //DateTime vStudyBoundStartDay;
+            //DateTime vStudyBoundEndDay;
             double vMonthDays = (double)DateTime.DaysInMonth(Int32.Parse(eCalYear.Text.Trim()) + 1911, Int32.Parse(eCalMonth.Text.Trim()));
             double vWorkDays = 0.0;
             double vESCHour_04 = 0.0;

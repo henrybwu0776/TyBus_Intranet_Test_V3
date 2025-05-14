@@ -137,7 +137,7 @@ namespace TyBus_Intranet_Test_V3
             XSSFDataFormat format = (XSSFDataFormat)wbExcel.CreateDataFormat();
             csData_Int.DataFormat = format.GetFormat("###,##0");
 
-            string vHeaderText = "";
+            //string vHeaderText = "";
 
             string vFileName = "年度健康檢查名冊";
             int vLinesNo = 0;

@@ -22,7 +22,7 @@ namespace TyBus_Intranet_Test_V3
         private string vLoginEmpType = "";
         private string vComputerName = ""; //2021.09.27 新增
         private string vConnStr = "";
-        private string vTempStr = "";
+        //private string vTempStr = "";
         private DataTable dtShowData;
 
         protected void Page_Load(object sender, EventArgs e)

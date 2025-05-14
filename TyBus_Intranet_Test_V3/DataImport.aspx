@@ -24,6 +24,7 @@
                         <asp:ListItem Text="轉入路線對照" Value="T007" />
                         <asp:ListItem Text="更新不休假獎金資料" Value="T008" />
                         <asp:ListItem Text="匯入MOU津貼資料" Value="T009" />
+                        <asp:ListItem Text="修正MOU津貼資料" Value="T010" />
                     </asp:DropDownList>
                 </td>
                 <td class="ColHeight ColBorder ColWidth-9Col">

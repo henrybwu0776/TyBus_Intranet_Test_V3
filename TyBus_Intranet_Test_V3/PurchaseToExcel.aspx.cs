@@ -169,7 +169,7 @@ namespace TyBus_Intranet_Test_V3
             string vStoreNo = "";
             string vWorkSheetName = "";
             int vLinesNo = 0;
-            DateTime vTempDate;
+            //DateTime vTempDate;
 
             if (vConnStr == "")
             {
