@@ -1,17 +1,19 @@
-﻿using Amaterasu_Function;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using Amaterasu_Function;
 using NPOI.HSSF.UserModel;
 using NPOI.HSSF.Util;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
-using System;
+using Microsoft.Reporting.WebForms;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.IO;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Microsoft.Reporting.WebForms;
 
 namespace TyBus_Intranet_Test_V3
 {
@@ -28,6 +30,8 @@ namespace TyBus_Intranet_Test_V3
         private string vComputerName = ""; //2021.09.27 新增
         private string vConnStr = "";
         private string vStationNo = "";
+        private string vCaseDateURL;
+        private string vCaseDateScript;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -60,17 +64,18 @@ namespace TyBus_Intranet_Test_V3
                     }
                     //定義畫面上事件日期欄位各自的 onclick 事件
                     //因為畫面日期的定義是民國年，所以對應的日期選擇視窗是 InputDate_ChineseYears.aspx
-                    string vCaseDateURL = "InputDate_ChineseYears.aspx?TextboxID=" + eCaseDate_Start_Search.ClientID;
-                    string vCaseDateScript = "window.open('" + vCaseDateURL + "','','height=315, width=350,status=no,toolbar=no,menubar=no,location=no','')";
+                    //查詢介面出險日期_起
+                    vCaseDateURL = "InputDate_ChineseYears.aspx?TextboxID=" + eCaseDate_Start_Search.ClientID;
+                    vCaseDateScript = "window.open('" + vCaseDateURL + "','','height=315, width=350,status=no,toolbar=no,menubar=no,location=no','')";
                     eCaseDate_Start_Search.Attributes["onClick"] = vCaseDateScript;
+                    //查詢介面出險日期_迄
                     vCaseDateURL = "InputDate_ChineseYears.aspx?TextboxID=" + eCaseDate_End_Search.ClientID;
                     vCaseDateScript = "window.open('" + vCaseDateURL + "','','height=315, width=350,status=no,toolbar=no,menubar=no,location=no','')";
                     eCaseDate_End_Search.Attributes["onClick"] = vCaseDateScript;
 
                     if (!IsPostBack)
                     {
-                        fuExcel.Visible = (vLoginDepNo == "09");
-                        bbImportData.Visible = (vLoginDepNo == "09");
+                        //不是因為觸發 PostBack 導致的畫面刷新，而是第一次打開畫面
                         vStationNo = PF.GetValue(vConnStr, "select DepNo from Department where DepNo = '" + vLoginDepNo + "' and InSHReport = 'V'", "DepNo");
 
                         eDepNo_Start_Search.Text = vStationNo.Trim();
@@ -82,6 +87,12 @@ namespace TyBus_Intranet_Test_V3
                         plSearch.Visible = true;
                         plMainDataShow.Visible = true;
                         plDetailDataShow.Visible = true;
+                        eErrorMSG_Main.Text = "";
+                        eErrorMSG_Main.Visible = false;
+                        eErrorMSG_A.Text = "";
+                        eErrorMSG_A.Visible = false;
+                        eErrorMSG_B.Text = "";
+                        eErrorMSG_B.Visible = false;
                     }
                     else
                     {
@@ -141,13 +152,13 @@ namespace TyBus_Intranet_Test_V3
         }
 
         /// <summary>
-        /// 取回EXCEL用的查詢字串
+        /// 取回匯出 EXCEL 檔用的查詢字串
         /// </summary>
         /// <returns></returns>
-        private string GetSelectStr_Excel()
+        private string GetSelStr_Excel()
         {
-            string vHasInsuStr = (chkHasInsurance.Checked) ? " and HasInsurance = 1" + Environment.NewLine : " and isnull(HasInsurance, 0) = 0" + Environment.NewLine;
-            string vCaseCloseStr = (chkCaseClose.Checked) ? " and CaseClose = 1" + Environment.NewLine : " and isnull(CaseClose, 0) = 0" + Environment.NewLine;
+            string vHasInsuStr = (chkHasInsurance.Checked) ? " and isnull(HasInsurance, 0) = 1" + Environment.NewLine : " and isnull(HasInsurance, 0) = 0" + Environment.NewLine;
+            string vCaseCloseStr = (chkCaseClose.Checked) ? " and isnull(CaseClose, 0) = 1" + Environment.NewLine : " and isnull(CaseClose, 0) = 0" + Environment.NewLine;
             string vDepNoWhereStr = ((eDepNo_Start_Search.Text.Trim() != "") && (eDepNo_End_Search.Text.Trim() != "")) ? " and DepNo between '" + eDepNo_Start_Search.Text.Trim() + "' and '" + eDepNo_End_Search.Text.Trim() + "' " + Environment.NewLine :
                                     ((eDepNo_Start_Search.Text.Trim() != "") && (eDepNo_End_Search.Text.Trim() == "")) ? " and DepNo = '" + eDepNo_Start_Search.Text.Trim() + "' " + Environment.NewLine :
                                     ((eDepNo_Start_Search.Text.Trim() == "") && (eDepNo_End_Search.Text.Trim() != "")) ? " and DepNo = '" + eDepNo_End_Search.Text.Trim() + "' " + Environment.NewLine :
@@ -161,18 +172,21 @@ namespace TyBus_Intranet_Test_V3
                                        "";
             string vCarIDStr = (eCarID_Search.Text.Trim() != "") ? " and Car_ID like '%" + eCarID_Search.Text.Trim() + "%' " + Environment.NewLine : "";
             string vDriverStr = (eDriver_Search.Text.Trim() != "") ? " and Driver = '" + eDriver_Search.Text.Trim() + "' " + Environment.NewLine : "";
-            string vResultStr = "SELECT CaseNo, " + Environment.NewLine +
-                                "       case when HasInsurance = 1 then '是' else '否' end HasInsurance, " + Environment.NewLine +
-                                "       DepNo, DepName, BuildDate, BuildMan, " + Environment.NewLine +
-                                "       (SELECT NAME FROM Employee WHERE (EMPNO = AnecdoteCase.BuildMan)) AS BuildManName, " + Environment.NewLine +
-                                "       Car_ID, Driver, DriverName, InsuMan, AnecdotalResRatio, " + Environment.NewLine +
-                                "       case when IsNoDeduction = 1 then '是' else '否' end IsNoDeduction, " + Environment.NewLine +
-                                //2024.05.08 新增欄位
-                                //"       DeductionDate, Remark, CaseOccurrence, ERPCouseNo, CaseClose " + Environment.NewLine +
-                                "       DeductionDate, Remark, CaseOccurrence, ERPCouseNo, CaseClose, " + Environment.NewLine +
-                                "       IsExemption, PaidAmount, InsuAmount, Penalty, PenaltyRatio " + Environment.NewLine +
-                                "  FROM AnecdoteCase " + Environment.NewLine +
-                                " where isnull(CaseNo, '') <> '' " + Environment.NewLine +
+            string vResultStr = "select a.CaseNo, case when a.HasInsurance = 1 then '是' else '否' end HasInsurance, " + Environment.NewLine +
+                                "       a.DepNo, a.DepName, convert(varchar(10), a.BuildDate, 111) BuildDate, a.BuildMan, " + Environment.NewLine +
+                                "       e.[Name] BuildManName, a.Car_ID, a.Driver, a.DriverName, a.InsuMan, a.AnecdotalResRatio, " + Environment.NewLine +
+                                "       case when a.IsNoDeduction = 1 then '是' else '否' end IsNoDeduction, " + Environment.NewLine +
+                                "       convert(varchar(10), a.DeductionDate, 111) DeductionDate, a.Remark, a.CaseOccurrence, " + Environment.NewLine +
+                                "       a.ERPCouseNo, case when a.CaseClose = 1 then '是' else '否' end CaseClose, " + Environment.NewLine +
+                                "       case when a.IsExemption = 'Y' then '是' else '否' end IsExemption, a.PaisAmount, a.Penalty, a.PenaltyRatio, " + Environment.NewLine +
+                                "       a.InsuAmount, a.IDCardNo, convert(varchar(10), a.Birthday, 111) Birthday, convert(varchar(10), a.Assumeday, 111) Assumeday, " + Environment.NewLine +
+                                "       a.TelephoneNo, a.Address, a.PersonDamage, a.CarDamage, convert(varchar(10), a.ReportDate, 111) ReportDate, " + Environment.NewLine +
+                                "       convert(varchar(10), a.CaseDate, 111) CaseDate, a.CaseTime, a.OutReportNo, a.CasePosition, a.PoliceUnit, a.PoliceName, " + Environment.NewLine +
+                                "       case when a.HasVideo = 'Y' then '有' else '無' end HasVideo, a.NoVideoReason, " + Environment.NewLine +
+                                "       case when a.HasCaseData = 'V' then '有' else '無' end HasCaseData, a.ModifyMan, " + Environment.NewLine +
+                                "       convert(varchar(10), a.ModifyDate, 111) ModifyDate, case when a.HasAccReport = 'Y' then '有' else '無' end HasAccReport " + Environment.NewLine +
+                                "  from AnecdoteCase as a left join Employee as e on e.EmpNo = a.BuildMan " + Environment.NewLine +
+                                " where isnull(a.CaseNo, '') <> '' " + Environment.NewLine +
                                 vHasInsuStr +
                                 vCaseCloseStr +
                                 vDepNoWhereStr +
@@ -184,9 +198,9 @@ namespace TyBus_Intranet_Test_V3
         }
 
         /// <summary>
-        /// 資料繫結
+        /// 繫結主檔資料
         /// </summary>
-        private void CaseDataBind()
+        protected void CaseDataBind()
         {
             if (vLoginID != "")
             {
@@ -195,1598 +209,45 @@ namespace TyBus_Intranet_Test_V3
             }
         }
 
+        /// <summary>
+        /// 查詢畫面帶回駕駛員姓名
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void eDriver_Search_TextChanged(object sender, EventArgs e)
+        {
+            if (vConnStr == "")
+            {
+                vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
+            }
+            //先假設畫面上輸入的是工號，用工號抓姓名
+            string vDriver = eDriver_Search.Text.Trim();
+            string vDriverName = "";
+            string vSQLStr_Temp = "select [Name] from  Employee where EmpNo = '" + vDriver + "' ";
+            vDriverName = PF.GetValue(vConnStr, vSQLStr_Temp, "Name");
+            if (vDriverName == "")
+            {
+                //如果工號抓不到姓名，可能是因為輸入的是姓名，所以改用姓名抓工號
+                vDriverName = vDriver;
+                vSQLStr_Temp = "select EmpNo from Employee where [Name] = '" + vDriverName + "' order by EmpNo DESC";
+                vDriver = PF.GetValue(vConnStr, vSQLStr_Temp, "EmpNo");
+            }
+            eDriver_Search.Text = vDriver.Trim();
+            eDriverName_Search.Text = vDriverName.Trim();
+        }
+
+        /// <summary>
+        /// 取回查詢資料
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void bbSearch_Click(object sender, EventArgs e)
         {
             CaseDataBind();
         }
 
-        protected void bbCancel_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("~/default.aspx");
-        }
-
         /// <summary>
-        /// 從 EXCEL 匯入資料
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void bbImportData_Click(object sender, EventArgs e)
-        {
-            string vUploadPath = Request.PhysicalApplicationPath + @"App_Data\"; //取回主機上的應用程式實體資料夾路徑
-            string vUploadFileName = "";
-            string vExtName = "";
-            string vTempIndex = "";
-            string vTempStr = "";
-            int vTempINT = 0;
-            DateTime vTempDate;
-
-            string vCaseNo = "";
-            string vDepNo_Temp = "";
-            string vDepName_Temp = "";
-            string vBuildDate = "";
-            string vBuildMan = "";
-            string vCar_ID = "";
-            string vDriver = "";
-            string vDriverName = "";
-            string vInsuMan = "";
-            string vAncedotalResRatio = "0";
-            string vIsNoDeduction = "0";
-            string vDeductionDate = "";
-            string vRemark = "";
-            string vItems = "";
-            string vCaseNoItems = "";
-            string vRelationship = "";
-            string vRelCar_ID = "";
-            string vEstimatedAmount = "0";
-            string vThirdInsurance = "0";
-            string vCompInsurance = "0";
-            string vDriverSharing = "0";
-            string vCompanySharing = "0";
-            string vCarDamageAMT = "0";
-            string vPersonDamageAMT = "0";
-            string vRelationComp = "0";
-            string vReconciliationDate = "";
-            string vRemarkB = "";
-            string vPassengerInsu = "0";
-            string vSQLStr = "";
-            int vColIndex = 0;
-
-            if (fuExcel.FileName != "")
-            {
-                if (vConnStr == "")
-                {
-                    vConnStr = PF.GetConnectionStr(Request.ApplicationPath); //取得資料庫連線字串
-                }
-                vExtName = Path.GetExtension(fuExcel.FileName); //取得 EXCEL 檔的副檔名，用來判斷 EXCEL 版本
-                vUploadFileName = vUploadPath + fuExcel.FileName; //取得EXCEL 檔的完整路徑
-                fuExcel.SaveAs(vUploadFileName);
-                if (vExtName == ".xls") //舊版 EXCEL (97~2003)
-                {
-                    HSSFWorkbook wbExcel_H = new HSSFWorkbook(fuExcel.FileContent);
-                    HSSFSheet sheetExcel_H = (HSSFSheet)wbExcel_H.GetSheetAt(0);
-                    for (int i = sheetExcel_H.FirstRowNum + 2; i <= sheetExcel_H.LastRowNum; i++) //標題列有二行，所以起始列加 2
-                    {
-                        HSSFRow vRowTemp_H = (HSSFRow)sheetExcel_H.GetRow(i);
-                        if (vRowTemp_H.GetCell(1).CellType != CellType.Blank)
-                        {
-                            // 2023.10.19 避免發生 EXCEL 欄位空白導致欄位對應錯亂
-                            vDepNo_Temp = "";
-                            vDepName_Temp = "";
-                            vBuildDate = "";
-                            vCaseNo = "";
-                            vBuildMan = vLoginID;
-                            vCar_ID = "";
-                            vDriverName = "";
-                            vDriver = "";
-                            vInsuMan = vLoginID;
-                            vAncedotalResRatio = "";
-                            vRemark = "";
-                            vDeductionDate = "";
-                            vIsNoDeduction = "";
-                            for (int iColumnIndex = 0; iColumnIndex < vRowTemp_H.Cells.Count; iColumnIndex++)
-                            {
-                                vColIndex = vRowTemp_H.Cells[iColumnIndex].ColumnIndex;
-                                switch (vColIndex)
-                                {
-                                    case 1:
-                                        vDepNo_Temp = vRowTemp_H.GetCell(vColIndex).ToString().Trim();
-                                        vSQLStr = "select [Name] from Department where DepNo = '" + vDepNo_Temp + "' ";
-                                        vDepName_Temp = PF.GetValue(vConnStr, vSQLStr, "Name");
-                                        break;
-                                    case 3:
-                                        vBuildDate = (DateTime.ParseExact(vRowTemp_H.GetCell(vColIndex).ToString().Trim(), "yyy.MM.dd", CultureInfo.InvariantCulture).AddYears(1911)).ToString("yyyy/MM/dd");
-                                        vCaseNo = (DateTime.Today.Year - 1911).ToString("D3") + DateTime.Today.Month.ToString("D2") + "A";
-                                        vSQLStr = "select MAX(CaseNo) CaseNo from AnecdoteCase where CaseNo like '" + vCaseNo + "%' ";
-                                        vTempIndex = (PF.GetValue(vConnStr, vSQLStr, "CaseNo")).Replace(vCaseNo, "").Trim();
-                                        vTempIndex = (vTempIndex != "") ? (int.Parse(vTempIndex) + 1).ToString("D4") : "0001";
-                                        vCaseNo = vCaseNo + vTempIndex;
-                                        break;
-                                    case 4:
-                                        vCar_ID = (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_H.GetCell(4).ToString().Trim() : "";
-                                        break;
-                                    case 5:
-                                        vDriverName = vRowTemp_H.GetCell(vColIndex).ToString().Trim();
-                                        vSQLStr = "select EmpNo from Employee where [Name] = '" + vDriverName + "' ";
-                                        vDriver = PF.GetValue(vConnStr, vSQLStr, "EmpNo");
-                                        break;
-                                    case 8:
-                                        vInsuMan = (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_H.GetCell(8).ToString().Trim() : "";
-                                        break;
-                                    case 18:
-                                        vAncedotalResRatio = (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_H.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
-                                        break;
-                                    case 19:
-                                        if (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank)
-                                        {
-                                            vTempStr = vRowTemp_H.GetCell(vColIndex).ToString().Trim();
-                                            vIsNoDeduction = (vTempStr == "免扣") ? "true" : "false";
-                                            vTempStr = vTempStr.Replace("免扣", "");
-                                            if (DateTime.TryParseExact(vTempStr.Replace("扣", ""), "yyy.MM.dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out vTempDate))
-                                            {
-                                                vDeductionDate = vTempDate.AddYears(1911).ToString("yyyy/MM/dd");
-                                                vRemark = "";
-                                            }
-                                            else
-                                            {
-                                                vDeductionDate = "";
-                                                vRemark = vTempStr;
-                                            }
-                                        }
-                                        else
-                                        {
-                                            vIsNoDeduction = "false";
-                                            vDeductionDate = "";
-                                        }
-                                        break;
-                                    case 20:
-                                        if (vRemark != "")
-                                        {
-                                            vRemark = (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank) ? vRemark + Environment.NewLine + vRowTemp_H.GetCell(vColIndex).ToString().Trim() : vRemark;
-                                        }
-                                        else
-                                        {
-                                            vRemark = (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_H.GetCell(20).ToString().Trim() : "";
-                                        }
-                                        break;
-                                }
-                            }
-                            /*
-                            vDepNo_Temp = vRowTemp_H.GetCell(1).ToString().Trim();
-                            vSQLStr = "select [Name] from Department where DepNo = '" + vDepNo_Temp + "' ";
-                            vDepName_Temp = PF.GetValue(vConnStr, vSQLStr, "Name");
-                            vBuildDate = (DateTime.ParseExact(vRowTemp_H.GetCell(3).ToString().Trim(), "yyy.MM.dd", CultureInfo.InvariantCulture).AddYears(1911)).ToString("yyyy/MM/dd");
-                            //2023.08.18 CaseNo 改用建單當下的年月取單號，而不是用發生日期取單號
-                            //vCaseNo = (DateTime.Parse(vBuildDate).Year - 1911).ToString("D3") + DateTime.Parse(vBuildDate).Month.ToString("D2") + "A";
-                            vCaseNo = (DateTime.Today.Year - 1911).ToString("D3") + DateTime.Today.Month.ToString("D2") + "A";
-                            vSQLStr = "select MAX(CaseNo) CaseNo from AnecdoteCase where CaseNo like '" + vCaseNo + "%' ";
-                            vTempIndex = (PF.GetValue(vConnStr, vSQLStr, "CaseNo")).Replace(vCaseNo, "").Trim();
-                            vTempIndex = (vTempIndex != "") ? (int.Parse(vTempIndex) + 1).ToString("D4") : "0001";
-                            vCaseNo = vCaseNo + vTempIndex;
-                            vBuildMan = vLoginID;
-                            vCar_ID = (vRowTemp_H.GetCell(4).CellType != CellType.Blank) ? vRowTemp_H.GetCell(4).ToString().Trim() : "";
-                            vDriverName = vRowTemp_H.GetCell(5).ToString().Trim();
-                            vSQLStr = "select EmpNo from Employee where [Name] = '" + vDriverName + "' ";
-                            vDriver = PF.GetValue(vConnStr, vSQLStr, "EmpNo");
-                            vInsuMan = (vRowTemp_H.GetCell(8).CellType != CellType.Blank) ? vRowTemp_H.GetCell(8).ToString().Trim() : "";
-                            vAncedotalResRatio = (vRowTemp_H.GetCell(18).CellType != CellType.Blank) ? vRowTemp_H.GetCell(18).ToString().Trim().Replace(",", "") : "0";
-                            vRemark = "";
-                            vDeductionDate = "";
-                            if (vRowTemp_H.GetCell(19).CellType != CellType.Blank)
-                            {
-                                vTempStr = vRowTemp_H.GetCell(19).ToString().Trim();
-                                vIsNoDeduction = (vTempStr == "免扣") ? "true" : "false";
-                                vTempStr = vTempStr.Replace("免扣", "");
-                                //vTempStr = vTempStr.Replace("扣", "");
-                                if (DateTime.TryParseExact(vTempStr.Replace("扣", ""), "yyy.MM.dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out vTempDate))
-                                {
-                                    vDeductionDate = vTempDate.AddYears(1911).ToString("yyyy/MM/dd");
-                                    vRemark = "";
-                                }
-                                else
-                                {
-                                    vDeductionDate = "";
-                                    vRemark = vTempStr;
-                                }
-                            }
-                            else
-                            {
-                                vIsNoDeduction = "false";
-                                vDeductionDate = "";
-                            }
-                            if (vRemark != "")
-                            {
-                                vRemark = (vRowTemp_H.GetCell(20).CellType != CellType.Blank) ? vRemark + Environment.NewLine + vRowTemp_H.GetCell(20).ToString().Trim() : vRemark;
-                            }
-                            else
-                            {
-                                vRemark = (vRowTemp_H.GetCell(20).CellType != CellType.Blank) ? vRowTemp_H.GetCell(20).ToString().Trim() : "";
-                            } //*/
-
-                            using (SqlDataSource dsTemp = new SqlDataSource())
-                            {
-                                dsTemp.ConnectionString = (vConnStr != "") ? vConnStr : PF.GetConnectionStr(Request.ApplicationPath);
-                                dsTemp.InsertCommand = "insert into AnecdoteCase " + Environment.NewLine +
-                                                       "       (CaseNo, HasInsurance, DepNo, DepName, BuildDate, BuildMan, Car_ID, Driver, DriverName, " + Environment.NewLine +
-                                                       "        InsuMan, AnecdotalResRatio, IsNoDeduction, DeductionDate, Remark)" + Environment.NewLine +
-                                                       "values (@CaseNo, @HasInsurance, @DepNo, @DepName, @BuildDate, @BuildMan, @Car_ID, @Driver, @DriverName, " + Environment.NewLine +
-                                                       "        @InsuMan, @AnecdotalResRatio, @IsNoDeduction, @DeductionDate, @Remark)";
-                                dsTemp.InsertParameters.Clear(); //先清空參數
-                                dsTemp.InsertParameters.Add(new Parameter("CaseNo", DbType.String, vCaseNo));
-                                dsTemp.InsertParameters.Add(new Parameter("HasInsurance", DbType.Boolean, "false")); //先全部用 "未出險" 轉入
-                                dsTemp.InsertParameters.Add(new Parameter("DepNo", DbType.String, vDepNo_Temp));
-                                dsTemp.InsertParameters.Add(new Parameter("DepName", DbType.String, vDepName_Temp));
-                                dsTemp.InsertParameters.Add(new Parameter("BuildDate", DbType.Date, vBuildDate));
-                                dsTemp.InsertParameters.Add(new Parameter("BuildMan", DbType.String, vBuildMan));
-                                dsTemp.InsertParameters.Add(new Parameter("Car_ID", DbType.String, vCar_ID));
-                                dsTemp.InsertParameters.Add(new Parameter("Driver", DbType.String, vDriver));
-                                dsTemp.InsertParameters.Add(new Parameter("DriverName", DbType.String, vDriverName));
-                                dsTemp.InsertParameters.Add(new Parameter("InsuMan", DbType.String, vInsuMan));
-                                dsTemp.InsertParameters.Add(new Parameter("AnecdotalResRatio", DbType.Double, vAncedotalResRatio));
-                                dsTemp.InsertParameters.Add(new Parameter("IsNoDeduction", DbType.Boolean, vIsNoDeduction));
-                                dsTemp.InsertParameters.Add(new Parameter("DeductionDate", DbType.Date, vDeductionDate));
-                                dsTemp.InsertParameters.Add(new Parameter("Remark", DbType.String, (vRemark != "") ? vRemark : String.Empty));
-                                dsTemp.Insert();
-                            }
-                        }
-
-                        if (vRowTemp_H.GetCell(6).CellType != CellType.Blank)
-                        {
-                            vSQLStr = "select MAX(Items) MaxItem from AnecdoteCaseB where CaseNo = '" + vCaseNo + "' ";
-                            vTempIndex = PF.GetValue(vConnStr, vSQLStr, "MaxItem");
-                            vItems = (vTempIndex != "") ? (int.Parse(vTempIndex) + 1).ToString("D4") : "0001";
-                            vCaseNoItems = vCaseNo + vItems;
-                            // 2023.10.19 避免發生 EXCEL 欄位空白導致欄位對應錯亂
-                            vRelationship = "";
-                            vRelCar_ID = "";
-                            vRemarkB = "";
-                            vEstimatedAmount = "0";
-                            vThirdInsurance = "0";
-                            vCompInsurance = "0";
-                            vDriverSharing = "0";
-                            vCompanySharing = "0";
-                            vCarDamageAMT = "0";
-                            vPersonDamageAMT = "0";
-                            vRelationComp = "0";
-                            vPassengerInsu = "0";
-                            vReconciliationDate = "";
-                            for (int iColumnIndex = 0; iColumnIndex < vRowTemp_H.Cells.Count; iColumnIndex++)
-                            {
-                                vColIndex = vRowTemp_H.Cells[iColumnIndex].ColumnIndex;
-                                switch (vColIndex)
-                                {
-                                    case 6:
-                                        vRelationship = (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_H.GetCell(vColIndex).ToString().Trim() : "";
-                                        break;
-                                    case 7:
-                                        vRelCar_ID = (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_H.GetCell(vColIndex).ToString().Trim() : "";
-                                        break;
-                                    case 9:
-                                        vEstimatedAmount = (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_H.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
-                                        if (Int32.TryParse(vEstimatedAmount, out vTempINT))
-                                        {
-                                            vEstimatedAmount = vTempINT.ToString();
-                                            vRemarkB = "";
-                                        }
-                                        else
-                                        {
-                                            vRemarkB = vEstimatedAmount;
-                                            vEstimatedAmount = "0";
-                                        }
-                                        break;
-                                    case 10:
-                                        vThirdInsurance = (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_H.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
-                                        break;
-                                    case 11:
-                                        vCompInsurance = (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_H.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
-                                        break;
-                                    case 12:
-                                        vDriverSharing = (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_H.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
-                                        break;
-                                    case 13:
-                                        vCompanySharing = (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_H.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
-                                        break;
-                                    case 14:
-                                        vCarDamageAMT = (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_H.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
-                                        break;
-                                    case 15:
-                                        vPersonDamageAMT = (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_H.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
-                                        break;
-                                    case 16:
-                                        vRelationComp = (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_H.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
-                                        break;
-                                    case 17:
-                                        vTempStr = (vRowTemp_H.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_H.GetCell(vColIndex).ToString().Trim() : "";
-                                        vTempStr = vTempStr.Replace("和解", "");
-                                        vTempStr = vTempStr.Replace("自行", "");
-                                        vPassengerInsu = "0"; //乘客險先用 0 轉入
-                                        vReconciliationDate = (vTempStr != "") ? (DateTime.ParseExact(vTempStr, "yyy.MM.dd", CultureInfo.InvariantCulture).AddYears(1911)).ToString("yyyy/MM/dd") : vTempStr;
-                                        break;
-                                }
-                            }
-                            /*
-                            vRelationship = (vRowTemp_H.GetCell(6).CellType != CellType.Blank) ? vRowTemp_H.GetCell(6).ToString().Trim() : "";
-                            vRelCar_ID = (vRowTemp_H.GetCell(7).CellType != CellType.Blank) ? vRowTemp_H.GetCell(7).ToString().Trim() : "";
-                            vEstimatedAmount = (vRowTemp_H.GetCell(9).CellType != CellType.Blank) ? vRowTemp_H.GetCell(9).ToString().Trim().Replace(",", "") : "0";
-                            if (Int32.TryParse(vEstimatedAmount, out vTempINT))
-                            {
-                                vEstimatedAmount = vTempINT.ToString();
-                                vRemarkB = "";
-                            }
-                            else
-                            {
-                                vRemarkB = vEstimatedAmount;
-                                vEstimatedAmount = "0";
-                            }
-                            vThirdInsurance = (vRowTemp_H.GetCell(10).CellType != CellType.Blank) ? vRowTemp_H.GetCell(10).ToString().Trim().Replace(",", "") : "0";
-                            vCompInsurance = (vRowTemp_H.GetCell(11).CellType != CellType.Blank) ? vRowTemp_H.GetCell(11).ToString().Trim().Replace(",", "") : "0";
-                            vDriverSharing = (vRowTemp_H.GetCell(12).CellType != CellType.Blank) ? vRowTemp_H.GetCell(12).ToString().Trim().Replace(",", "") : "0";
-                            vCompanySharing = (vRowTemp_H.GetCell(13).CellType != CellType.Blank) ? vRowTemp_H.GetCell(13).ToString().Trim().Replace(",", "") : "0";
-                            vCarDamageAMT = (vRowTemp_H.GetCell(14).CellType != CellType.Blank) ? vRowTemp_H.GetCell(14).ToString().Trim().Replace(",", "") : "0";
-                            vPersonDamageAMT = (vRowTemp_H.GetCell(15).CellType != CellType.Blank) ? vRowTemp_H.GetCell(15).ToString().Trim().Replace(",", "") : "0";
-                            vRelationComp = (vRowTemp_H.GetCell(16).CellType != CellType.Blank) ? vRowTemp_H.GetCell(16).ToString().Trim().Replace(",", "") : "0";
-                            vTempStr = (vRowTemp_H.GetCell(17).CellType != CellType.Blank) ? vRowTemp_H.GetCell(17).ToString().Trim() : "";
-                            vTempStr = vTempStr.Replace("和解", "");
-                            vTempStr = vTempStr.Replace("自行", "");
-                            vPassengerInsu = "0"; //乘客險先用 0 轉入
-                            vReconciliationDate = (vTempStr != "") ? (DateTime.ParseExact(vTempStr, "yyy.MM.dd", CultureInfo.InvariantCulture).AddYears(1911)).ToString("yyyy/MM/dd") : vTempStr;
-                            //*/
-
-                            using (SqlDataSource dsTempB = new SqlDataSource())
-                            {
-                                dsTempB.ConnectionString = (vConnStr != "") ? vConnStr : PF.GetConnectionStr(Request.ApplicationPath);
-                                dsTempB.InsertCommand = "INSERT INTO AnecdoteCaseB " + Environment.NewLine +
-                                                        "      (CaseNo, Items, CaseNoItems, Relationship, RelCar_ID, EstimatedAmount, ThirdInsurance, CompInsurance, " + Environment.NewLine +
-                                                        "       DriverSharing, CompanySharing, CarDamageAMT, PersonDamageAMT, RelationComp, ReconciliationDate, " + Environment.NewLine +
-                                                        "       PassengerInsu, Remark) " + Environment.NewLine +
-                                                        "values(@CaseNo, @Items, @CaseNoItems, @Relationship, @RelCar_ID, @EstimatedAmount, @ThirdInsurance, @CompInsurance, " + Environment.NewLine +
-                                                        "       @DriverSharing, @CompanySharing, @CarDamageAMT, @PersonDamageAMT, @RelationComp, @ReconciliationDate, " + Environment.NewLine +
-                                                        "       @PassengerInsu, @Remark)";
-                                dsTempB.InsertParameters.Clear(); //先清空參數
-                                dsTempB.InsertParameters.Add(new Parameter("CaseNo", DbType.String, vCaseNo));
-                                dsTempB.InsertParameters.Add(new Parameter("Items", DbType.String, vItems));
-                                dsTempB.InsertParameters.Add(new Parameter("CaseNoItems", DbType.String, vCaseNoItems));
-                                dsTempB.InsertParameters.Add(new Parameter("Relationship", DbType.String, vRelationship));
-                                dsTempB.InsertParameters.Add(new Parameter("RelCar_ID", DbType.String, vRelCar_ID));
-                                dsTempB.InsertParameters.Add(new Parameter("EstimatedAmount", DbType.Int32, vEstimatedAmount));
-                                dsTempB.InsertParameters.Add(new Parameter("ThirdInsurance", DbType.Int32, vThirdInsurance));
-                                dsTempB.InsertParameters.Add(new Parameter("CompInsurance", DbType.Int32, vCompInsurance));
-                                dsTempB.InsertParameters.Add(new Parameter("DriverSharing", DbType.Int32, vDriverSharing));
-                                dsTempB.InsertParameters.Add(new Parameter("CompanySharing", DbType.Int32, vCompanySharing));
-                                dsTempB.InsertParameters.Add(new Parameter("CarDamageAMT", DbType.Int32, vCarDamageAMT));
-                                dsTempB.InsertParameters.Add(new Parameter("PersonDamageAMT", DbType.Int32, vPersonDamageAMT));
-                                dsTempB.InsertParameters.Add(new Parameter("RelationComp", DbType.Int32, vRelationComp));
-                                dsTempB.InsertParameters.Add(new Parameter("ReconciliationDate", DbType.Date, vReconciliationDate));
-                                dsTempB.InsertParameters.Add(new Parameter("Remark", DbType.String, (vRemarkB != "") ? vRemarkB : String.Empty));
-                                dsTempB.InsertParameters.Add(new Parameter("PassengerInsu", DbType.Int32, vPassengerInsu));
-                                dsTempB.Insert();
-                            }
-                        }
-                    }
-                }
-                else if (vExtName == ".xlsx") //2010 之後的 EXCEL
-                {
-                    XSSFWorkbook wbExcel_X = new XSSFWorkbook(fuExcel.FileContent);
-                    XSSFSheet sheetExcel_X = (XSSFSheet)wbExcel_X.GetSheetAt(0);
-                    for (int i = sheetExcel_X.FirstRowNum + 2; i <= sheetExcel_X.LastRowNum; i++) //標題列有二行，所以起始列 +2
-                    {
-                        XSSFRow vRowTemp_X = (XSSFRow)sheetExcel_X.GetRow(i);
-                        if (vRowTemp_X.GetCell(1).CellType != CellType.Blank)
-                        {
-                            // 2023.10.19 避免發生 EXCEL 欄位空白導致欄位對應錯亂
-                            vDepNo_Temp = "";
-                            vDepName_Temp = "";
-                            vBuildDate = "";
-                            vCaseNo = "";
-                            vBuildMan = vLoginID;
-                            vCar_ID = "";
-                            vDriverName = "";
-                            vDriver = "";
-                            vInsuMan = vLoginID;
-                            vAncedotalResRatio = "";
-                            vRemark = "";
-                            vDeductionDate = "";
-                            vIsNoDeduction = "";
-                            for (int iColumnIndex = 0; iColumnIndex < vRowTemp_X.Cells.Count; iColumnIndex++)
-                            {
-                                vColIndex = vRowTemp_X.Cells[iColumnIndex].ColumnIndex;
-                                switch (vColIndex)
-                                {
-                                    case 1:
-                                        vDepNo_Temp = vRowTemp_X.GetCell(vColIndex).ToString().Trim();
-                                        vSQLStr = "select [Name] from Department where DepNo = '" + vDepNo_Temp + "' ";
-                                        vDepName_Temp = PF.GetValue(vConnStr, vSQLStr, "Name");
-                                        break;
-                                    case 3:
-                                        vBuildDate = (DateTime.ParseExact(vRowTemp_X.GetCell(vColIndex).ToString().Trim(), "yyy.MM.dd", CultureInfo.InvariantCulture).AddYears(1911)).ToString("yyyy/MM/dd");
-                                        vCaseNo = (DateTime.Today.Year - 1911).ToString("D3") + DateTime.Today.Month.ToString("D2") + "A";
-                                        vSQLStr = "select MAX(CaseNo) CaseNo from AnecdoteCase where CaseNo like '" + vCaseNo + "%' ";
-                                        vTempIndex = (PF.GetValue(vConnStr, vSQLStr, "CaseNo")).Replace(vCaseNo, "").Trim();
-                                        vTempIndex = (vTempIndex != "") ? (int.Parse(vTempIndex) + 1).ToString("D4") : "0001";
-                                        vCaseNo = vCaseNo + vTempIndex;
-                                        break;
-                                    case 4:
-                                        vCar_ID = (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_X.GetCell(4).ToString().Trim() : "";
-                                        break;
-                                    case 5:
-                                        vDriverName = vRowTemp_X.GetCell(vColIndex).ToString().Trim();
-                                        vSQLStr = "select EmpNo from Employee where [Name] = '" + vDriverName + "' ";
-                                        vDriver = PF.GetValue(vConnStr, vSQLStr, "EmpNo");
-                                        break;
-                                    case 8:
-                                        vInsuMan = (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_X.GetCell(8).ToString().Trim() : "";
-                                        break;
-                                    case 18:
-                                        vAncedotalResRatio = (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_X.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
-                                        break;
-                                    case 19:
-                                        if (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank)
-                                        {
-                                            vTempStr = vRowTemp_X.GetCell(vColIndex).ToString().Trim();
-                                            vIsNoDeduction = (vTempStr == "免扣") ? "true" : "false";
-                                            vTempStr = vTempStr.Replace("免扣", "");
-                                            if (DateTime.TryParseExact(vTempStr.Replace("扣", ""), "yyy.MM.dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out vTempDate))
-                                            {
-                                                vDeductionDate = vTempDate.AddYears(1911).ToString("yyyy/MM/dd");
-                                                vRemark = "";
-                                            }
-                                            else
-                                            {
-                                                vDeductionDate = "";
-                                                vRemark = vTempStr;
-                                            }
-                                        }
-                                        else
-                                        {
-                                            vIsNoDeduction = "false";
-                                            vDeductionDate = "";
-                                        }
-                                        break;
-                                    case 20:
-                                        if (vRemark != "")
-                                        {
-                                            vRemark = (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank) ? vRemark + Environment.NewLine + vRowTemp_X.GetCell(vColIndex).ToString().Trim() : vRemark;
-                                        }
-                                        else
-                                        {
-                                            vRemark = (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_X.GetCell(20).ToString().Trim() : "";
-                                        }
-                                        break;
-                                }
-                            }
-                            /*
-                            vDepNo_Temp = vRowTemp_X.GetCell(1).ToString().Trim();
-                            vSQLStr = "select [Name] from Department where DepNo = '" + vDepNo_Temp + "' ";
-                            vDepName_Temp = PF.GetValue(vConnStr, vSQLStr, "Name");
-                            vBuildDate = (DateTime.ParseExact(vRowTemp_X.GetCell(3).ToString().Trim(), "yyy.MM.dd", CultureInfo.InvariantCulture).AddYears(1911)).ToString("yyyy/MM/dd");
-                            //2023.08.18 CaseNo 改用建單當下的年月取單號，而不是用發生日期取單號
-                            //vCaseNo = (DateTime.Parse(vBuildDate).Year - 1911).ToString("D3") + DateTime.Parse(vBuildDate).Month.ToString("D2") + "A";
-                            vCaseNo = (DateTime.Today.Year - 1911).ToString("D3") + DateTime.Today.Month.ToString("D2") + "A";
-                            vSQLStr = "select MAX(CaseNo) CaseNo from AnecdoteCase where CaseNo like '" + vCaseNo + "%' ";
-                            vTempIndex = (PF.GetValue(vConnStr, vSQLStr, "CaseNo")).Replace(vCaseNo, "").Trim();
-                            vTempIndex = (vTempIndex != "") ? (int.Parse(vTempIndex) + 1).ToString("D4") : "0001";
-                            vCaseNo = vCaseNo + vTempIndex;
-                            vBuildMan = vLoginID;
-                            vCar_ID = (vRowTemp_X.GetCell(4).CellType != CellType.Blank) ? vRowTemp_X.GetCell(4).ToString().Trim() : "";
-                            vDriverName = vRowTemp_X.GetCell(5).ToString().Trim();
-                            vSQLStr = "select EmpNo from Employee where [Name] = '" + vDriverName + "' ";
-                            vDriver = PF.GetValue(vConnStr, vSQLStr, "EmpNo");
-                            vInsuMan = (vRowTemp_X.GetCell(8).CellType != CellType.Blank) ? vRowTemp_X.GetCell(8).ToString().Trim() : "";
-                            vAncedotalResRatio = (vRowTemp_X.GetCell(18).CellType != CellType.Blank) ? vRowTemp_X.GetCell(18).ToString().Trim().Replace(",", "") : "0";
-                            vRemark = "";
-                            vDeductionDate = "";
-                            if (vRowTemp_X.GetCell(19).CellType != CellType.Blank)
-                            {
-                                vTempStr = vRowTemp_X.GetCell(19).ToString().Trim();
-                                vIsNoDeduction = (vTempStr == "免扣") ? "true" : "false";
-                                vTempStr = vTempStr.Replace("免扣", "");
-                                //vTempStr = vTempStr.Replace("扣", "");
-                                if (DateTime.TryParseExact(vTempStr.Replace("扣", ""), "yyy.MM.dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out vTempDate))
-                                {
-                                    vDeductionDate = vTempDate.AddYears(1911).ToString("yyyy/MM/dd");
-                                    vRemark = "";
-                                }
-                                else
-                                {
-                                    vDeductionDate = "";
-                                    vRemark = vTempStr;
-                                }
-                            }
-                            else
-                            {
-                                vIsNoDeduction = "false";
-                                vDeductionDate = "";
-                            }
-                            if (vRemark != "")
-                            {
-                                vRemark = (vRowTemp_X.GetCell(20).CellType != CellType.Blank) ? vRemark + Environment.NewLine + vRowTemp_X.GetCell(20).ToString().Trim() : vRemark;
-                            }
-                            else
-                            {
-                                vRemark = (vRowTemp_X.GetCell(20).CellType != CellType.Blank) ? vRowTemp_X.GetCell(20).ToString().Trim() : "";
-                            } //*/
-
-                            using (SqlDataSource dsTemp = new SqlDataSource())
-                            {
-                                dsTemp.ConnectionString = (vConnStr != "") ? vConnStr : PF.GetConnectionStr(Request.ApplicationPath);
-                                dsTemp.InsertCommand = "insert into AnecdoteCase " + Environment.NewLine +
-                                                       "       (CaseNo, HasInsurance, DepNo, DepName, BuildDate, BuildMan, Car_ID, Driver, DriverName, " + Environment.NewLine +
-                                                       "        InsuMan, AnecdotalResRatio, IsNoDeduction, DeductionDate, Remark)" + Environment.NewLine +
-                                                       "values (@CaseNo, @HasInsurance, @DepNo, @DepName, @BuildDate, @BuildMan, @Car_ID, @Driver, @DriverName, " + Environment.NewLine +
-                                                       "        @InsuMan, @AnecdotalResRatio, @IsNoDeduction, @DeductionDate, @Remark)";
-                                dsTemp.InsertParameters.Clear(); //先清空參數
-                                dsTemp.InsertParameters.Add(new Parameter("CaseNo", DbType.String, vCaseNo));
-                                dsTemp.InsertParameters.Add(new Parameter("HasInsurance", DbType.Boolean, "false")); //先全部用 "未出險" 轉入
-                                dsTemp.InsertParameters.Add(new Parameter("DepNo", DbType.String, vDepNo_Temp));
-                                dsTemp.InsertParameters.Add(new Parameter("DepName", DbType.String, vDepName_Temp));
-                                dsTemp.InsertParameters.Add(new Parameter("BuildDate", DbType.Date, vBuildDate));
-                                dsTemp.InsertParameters.Add(new Parameter("BuildMan", DbType.String, vBuildMan));
-                                dsTemp.InsertParameters.Add(new Parameter("Car_ID", DbType.String, vCar_ID));
-                                dsTemp.InsertParameters.Add(new Parameter("Driver", DbType.String, vDriver));
-                                dsTemp.InsertParameters.Add(new Parameter("DriverName", DbType.String, vDriverName));
-                                dsTemp.InsertParameters.Add(new Parameter("InsuMan", DbType.String, vInsuMan));
-                                dsTemp.InsertParameters.Add(new Parameter("AnecdotalResRatio", DbType.Double, vAncedotalResRatio));
-                                dsTemp.InsertParameters.Add(new Parameter("IsNoDeduction", DbType.Boolean, vIsNoDeduction));
-                                dsTemp.InsertParameters.Add(new Parameter("DeductionDate", DbType.Date, vDeductionDate));
-                                dsTemp.InsertParameters.Add(new Parameter("Remark", DbType.String, (vRemark != "") ? vRemark : String.Empty));
-                                dsTemp.Insert();
-                            }
-                        }
-
-                        if (vRowTemp_X.GetCell(6).CellType != CellType.Blank)
-                        {
-                            vSQLStr = "select MAX(Items) MaxItem from AnecdoteCaseB where CaseNo = '" + vCaseNo + "' ";
-                            vTempIndex = PF.GetValue(vConnStr, vSQLStr, "MaxItem");
-                            vItems = (vTempIndex != "") ? (int.Parse(vTempIndex) + 1).ToString("D4") : "0001";
-                            vCaseNoItems = vCaseNo + vItems;
-                            // 2023.10.19 避免發生 EXCEL 欄位空白導致欄位對應錯亂
-                            vRelationship = "";
-                            vRelCar_ID = "";
-                            vRemarkB = "";
-                            vEstimatedAmount = "0";
-                            vThirdInsurance = "0";
-                            vCompInsurance = "0";
-                            vDriverSharing = "0";
-                            vCompanySharing = "0";
-                            vCarDamageAMT = "0";
-                            vPersonDamageAMT = "0";
-                            vRelationComp = "0";
-                            vPassengerInsu = "0";
-                            vReconciliationDate = "";
-                            for (int iColumnIndex = 0; iColumnIndex < vRowTemp_X.Cells.Count; iColumnIndex++)
-                            {
-                                vColIndex = vRowTemp_X.Cells[iColumnIndex].ColumnIndex;
-                                switch (vColIndex)
-                                {
-                                    case 6:
-                                        vRelationship = (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_X.GetCell(vColIndex).ToString().Trim() : "";
-                                        break;
-                                    case 7:
-                                        vRelCar_ID = (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_X.GetCell(vColIndex).ToString().Trim() : "";
-                                        break;
-                                    case 9:
-                                        vEstimatedAmount = (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_X.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
-                                        if (Int32.TryParse(vEstimatedAmount, out vTempINT))
-                                        {
-                                            vEstimatedAmount = vTempINT.ToString();
-                                            vRemarkB = "";
-                                        }
-                                        else
-                                        {
-                                            vRemarkB = vEstimatedAmount;
-                                            vEstimatedAmount = "0";
-                                        }
-                                        break;
-                                    case 10:
-                                        vThirdInsurance = (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_X.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
-                                        break;
-                                    case 11:
-                                        vCompInsurance = (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_X.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
-                                        break;
-                                    case 12:
-                                        vDriverSharing = (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_X.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
-                                        break;
-                                    case 13:
-                                        vCompanySharing = (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_X.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
-                                        break;
-                                    case 14:
-                                        vCarDamageAMT = (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_X.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
-                                        break;
-                                    case 15:
-                                        vPersonDamageAMT = (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_X.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
-                                        break;
-                                    case 16:
-                                        vRelationComp = (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_X.GetCell(vColIndex).ToString().Trim().Replace(",", "") : "0";
-                                        break;
-                                    case 17:
-                                        vTempStr = (vRowTemp_X.GetCell(vColIndex).CellType != CellType.Blank) ? vRowTemp_X.GetCell(vColIndex).ToString().Trim() : "";
-                                        vTempStr = vTempStr.Replace("和解", "");
-                                        vTempStr = vTempStr.Replace("自行", "");
-                                        vPassengerInsu = "0"; //乘客險先用 0 轉入
-                                        vReconciliationDate = (vTempStr != "") ? (DateTime.ParseExact(vTempStr, "yyy.MM.dd", CultureInfo.InvariantCulture).AddYears(1911)).ToString("yyyy/MM/dd") : vTempStr;
-                                        break;
-                                }
-                            }
-                            /*
-                            vRelationship = (vRowTemp_X.GetCell(6).CellType != CellType.Blank) ? vRowTemp_X.GetCell(6).ToString().Trim() : "";
-                            vRelCar_ID = (vRowTemp_X.GetCell(7).CellType != CellType.Blank) ? vRowTemp_X.GetCell(7).ToString().Trim() : "";
-                            vEstimatedAmount = (vRowTemp_X.GetCell(9).CellType != CellType.Blank) ? vRowTemp_X.GetCell(9).ToString().Trim().Replace(",", "") : "0";
-                            if (Int32.TryParse(vEstimatedAmount, out vTempINT))
-                            {
-                                vEstimatedAmount = vTempINT.ToString();
-                                vRemarkB = "";
-                            }
-                            else
-                            {
-                                vRemarkB = vEstimatedAmount;
-                                vEstimatedAmount = "0";
-                            }
-                            vThirdInsurance = (vRowTemp_X.GetCell(10).CellType != CellType.Blank) ? vRowTemp_X.GetCell(10).ToString().Trim().Replace(",", "") : "0";
-                            vCompInsurance = (vRowTemp_X.GetCell(11).CellType != CellType.Blank) ? vRowTemp_X.GetCell(11).ToString().Trim().Replace(",", "") : "0";
-                            vDriverSharing = (vRowTemp_X.GetCell(12).CellType != CellType.Blank) ? vRowTemp_X.GetCell(12).ToString().Trim().Replace(",", "") : "0";
-                            vCompanySharing = (vRowTemp_X.GetCell(13).CellType != CellType.Blank) ? vRowTemp_X.GetCell(13).ToString().Trim().Replace(",", "") : "0";
-                            vCarDamageAMT = (vRowTemp_X.GetCell(14).CellType != CellType.Blank) ? vRowTemp_X.GetCell(14).ToString().Trim().Replace(",", "") : "0";
-                            vPersonDamageAMT = (vRowTemp_X.GetCell(15).CellType != CellType.Blank) ? vRowTemp_X.GetCell(15).ToString().Trim().Replace(",", "") : "0";
-                            vRelationComp = (vRowTemp_X.GetCell(16).CellType != CellType.Blank) ? vRowTemp_X.GetCell(16).ToString().Trim().Replace(",", "") : "0";
-                            vTempStr = (vRowTemp_X.GetCell(17).CellType != CellType.Blank) ? vRowTemp_X.GetCell(17).ToString().Trim() : "";
-                            vTempStr = vTempStr.Replace("和解", "");
-                            vTempStr = vTempStr.Replace("自行", "");
-                            vPassengerInsu = "0"; //乘客險先用 0 轉入
-                            vReconciliationDate = (vTempStr != "") ? (DateTime.ParseExact(vTempStr, "yyy.MM.dd", CultureInfo.InvariantCulture).AddYears(1911)).ToString("yyyy/MM/dd") : vTempStr;
-                            //*/
-
-                            using (SqlDataSource dsTempB = new SqlDataSource())
-                            {
-                                dsTempB.ConnectionString = (vConnStr != "") ? vConnStr : PF.GetConnectionStr(Request.ApplicationPath);
-                                dsTempB.InsertCommand = "INSERT INTO AnecdoteCaseB " + Environment.NewLine +
-                                                        "      (CaseNo, Items, CaseNoItems, Relationship, RelCar_ID, EstimatedAmount, ThirdInsurance, CompInsurance, " + Environment.NewLine +
-                                                        "       DriverSharing, CompanySharing, CarDamageAMT, PersonDamageAMT, RelationComp, ReconciliationDate, " + Environment.NewLine +
-                                                        "       PassengerInsu, Remark) " + Environment.NewLine +
-                                                        "values(@CaseNo, @Items, @CaseNoItems, @Relationship, @RelCar_ID, @EstimatedAmount, @ThirdInsurance, @CompInsurance, " + Environment.NewLine +
-                                                        "       @DriverSharing, @CompanySharing, @CarDamageAMT, @PersonDamageAMT, @RelationComp, @ReconciliationDate, " + Environment.NewLine +
-                                                        "       @PassengerInsu, @Remark)";
-                                dsTempB.InsertParameters.Clear(); //先清空參數
-                                dsTempB.InsertParameters.Add(new Parameter("CaseNo", DbType.String, vCaseNo));
-                                dsTempB.InsertParameters.Add(new Parameter("Items", DbType.String, vItems));
-                                dsTempB.InsertParameters.Add(new Parameter("CaseNoItems", DbType.String, vCaseNoItems));
-                                dsTempB.InsertParameters.Add(new Parameter("Relationship", DbType.String, vRelationship));
-                                dsTempB.InsertParameters.Add(new Parameter("RelCar_ID", DbType.String, vRelCar_ID));
-                                dsTempB.InsertParameters.Add(new Parameter("EstimatedAmount", DbType.Int32, vEstimatedAmount));
-                                dsTempB.InsertParameters.Add(new Parameter("ThirdInsurance", DbType.Int32, vThirdInsurance));
-                                dsTempB.InsertParameters.Add(new Parameter("CompInsurance", DbType.Int32, vCompInsurance));
-                                dsTempB.InsertParameters.Add(new Parameter("DriverSharing", DbType.Int32, vDriverSharing));
-                                dsTempB.InsertParameters.Add(new Parameter("CompanySharing", DbType.Int32, vCompanySharing));
-                                dsTempB.InsertParameters.Add(new Parameter("CarDamageAMT", DbType.Int32, vCarDamageAMT));
-                                dsTempB.InsertParameters.Add(new Parameter("PersonDamageAMT", DbType.Int32, vPersonDamageAMT));
-                                dsTempB.InsertParameters.Add(new Parameter("RelationComp", DbType.Int32, vRelationComp));
-                                dsTempB.InsertParameters.Add(new Parameter("ReconciliationDate", DbType.Date, vReconciliationDate));
-                                dsTempB.InsertParameters.Add(new Parameter("Remark", DbType.String, (vRemarkB != "") ? vRemarkB : String.Empty));
-                                dsTempB.InsertParameters.Add(new Parameter("PassengerInsu", DbType.Int32, vPassengerInsu));
-                                dsTempB.Insert();
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// 主檔資料更新
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void bbOK_Edit_Click(object sender, EventArgs e)
-        {
-            Label eCaseNo_Edit = (Label)fvAnecdoteCaseA_Data.FindControl("eCaseNo_Edit");
-            if (eCaseNo_Edit != null)
-            {
-                string vCaseNo_Temp = eCaseNo_Edit.Text.Trim(); //先取回單號
-
-                if (vConnStr == "")
-                {
-                    vConnStr = PF.GetConnectionStr(Request.ApplicationPath); //取得資料庫連線字串
-                }
-                try
-                {
-                    //複製一份到異動檔
-                    DateTime vModifyDate = DateTime.Today;
-                    string vHistoryNo = vModifyDate.Year.ToString("D4") + vModifyDate.Month.ToString("D2") + "MODA";
-                    string vSQLStr_Temp = "select max(HistoryNo) MaxNo from AnecdoteCaseHistory where HistoryNo like '" + vHistoryNo + "%'";
-                    string vMaxNo = PF.GetValue(vConnStr, vSQLStr_Temp, "MaxNo");
-                    string vIndex_Str = (vMaxNo.Trim() != "") ? vMaxNo.Replace(vHistoryNo, "").Trim() : "0";
-                    int vNewIndex = Int32.Parse(vIndex_Str) + 1;
-                    string vNewHistoryNo = vHistoryNo + vNewIndex.ToString("D4");
-                    vSQLStr_Temp = "INSERT INTO [dbo].[AnecdoteCaseHistory] " + Environment.NewLine +
-                                   "            ([HistoryNo],[CaseNo],[HasInsurance],[DepNo],[DepName],[BuildDate],[BuildMan],[Car_ID],[Driver], " + Environment.NewLine +
-                                   "             [DriverName],[InsuMan],[AnecdotalResRatio],[IsNoDeduction],[DeductionDate],[Remark]," + Environment.NewLine +
-                                   "             [ModifyType],[ModifyDate],[ModifyMan],[CaseOccurrence],[ERPCouseNo],[CaseClose], " + Environment.NewLine +
-                                   "             [IsExemption], [PaidAmount], [InsuAmount], [PenaltyRatio], [Penalty]) " + Environment.NewLine +
-                                   "select '" + vNewHistoryNo + "',[CaseNo],[HasInsurance],[DepNo],[DepName],[BuildDate],[BuildMan],[Car_ID],[Driver], " + Environment.NewLine +
-                                   "       [DriverName],[InsuMan],[AnecdotalResRatio],[IsNoDeduction],[DeductionDate],[Remark]," + Environment.NewLine +
-                                   "       'EDIT',GetDate(),'" + vLoginID + "',[CaseOccurrence],[ERPCouseNo],[CaseClose], " + Environment.NewLine +
-                                   "       [IsExemption], [PaidAmount], [InsuAmount], [PenaltyRatio], [Penalty] " + Environment.NewLine +
-                                   "  from [dbo].[AnecdoteCase] " + Environment.NewLine +
-                                   " where CaseNo = '" + vCaseNo_Temp + "' ";
-                    PF.ExecSQL(vConnStr, vSQLStr_Temp);
-
-                    //開始真正的進行更新
-                    Label eHasInsuranceTitle_Edit = (Label)fvAnecdoteCaseA_Data.FindControl("eHasInsuranceTitle_Edit");
-                    TextBox eDepNo_Edit = (TextBox)fvAnecdoteCaseA_Data.FindControl("eDepNo_Edit");
-                    Label eDepName_Edit = (Label)fvAnecdoteCaseA_Data.FindControl("edepName_Edit");
-                    TextBox eCar_ID_Edit = (TextBox)fvAnecdoteCaseA_Data.FindControl("eCarID_Edit");
-                    TextBox eDriver_Edit = (TextBox)fvAnecdoteCaseA_Data.FindControl("eDriver_Edit");
-                    Label eDriverName_Edit = (Label)fvAnecdoteCaseA_Data.FindControl("eDriverName_Edit");
-                    TextBox eInsuMan_Edit = (TextBox)fvAnecdoteCaseA_Data.FindControl("eInsuMan_Edit");
-                    TextBox eAnecdotalResRatio_Edit = (TextBox)fvAnecdoteCaseA_Data.FindControl("eAnecdotalResRatio_Edit");
-                    Label eIsNoDeductionTitle_Edit = (Label)fvAnecdoteCaseA_Data.FindControl("eIsNoDeductionTitle_Edit");
-                    TextBox eDeductionDate_Edit = (TextBox)fvAnecdoteCaseA_Data.FindControl("eDeductionDate_Edit");
-                    TextBox eRemark_Edit = (TextBox)fvAnecdoteCaseA_Data.FindControl("eRemark_Edit");
-                    TextBox eBuildDate_Edit = (TextBox)fvAnecdoteCaseA_Data.FindControl("eBuildDate_Edit");
-                    TextBox eCaseOccurrence_Edit = (TextBox)fvAnecdoteCaseA_Data.FindControl("eCaseOccurrence_Edit");
-                    Label eCaseCloseTitle_Edit = (Label)fvAnecdoteCaseA_Data.FindControl("eCaseCloseTitle_Edit");
-                    Label eIsExemption_Edit = (Label)fvAnecdoteCaseA_Data.FindControl("eIsExemption_Edit");
-                    TextBox ePaidAmount_Edit = (TextBox)fvAnecdoteCaseA_Data.FindControl("ePaidAmount_Edit");
-                    TextBox eInsuAmount_Edit = (TextBox)fvAnecdoteCaseA_Data.FindControl("eInsuAmount_Edit");
-                    TextBox ePenaltyRatio_Edit = (TextBox)fvAnecdoteCaseA_Data.FindControl("ePenaltyRatio_Edit");
-                    Label ePenalty_Edit = (Label)fvAnecdoteCaseA_Data.FindControl("ePenalty_Edit");
-
-                    string vHasInsurance_Temp = (eHasInsuranceTitle_Edit.Text.Trim() != "") ? eHasInsuranceTitle_Edit.Text.Trim() : "False";
-                    string vDepNo_Temp = eDepNo_Edit.Text.Trim();
-                    string vDepName_Temp = eDepName_Edit.Text.Trim();
-                    string vCarID_Temp = eCar_ID_Edit.Text.Trim().ToUpper();
-                    string vDriver_Temp = eDriver_Edit.Text.Trim();
-                    string vDriverName_Temp = eDriverName_Edit.Text.Trim();
-                    string vInsuMan_Temp = eInsuMan_Edit.Text.Trim();
-                    string vAnecdotalResRatio_Temp = eAnecdotalResRatio_Edit.Text.Trim();
-                    string vIsNoDeduction_Temp = (eIsNoDeductionTitle_Edit.Text.Trim() != "") ? eIsNoDeductionTitle_Edit.Text.Trim() : "False";
-                    string vDeductionDate_Temp = (eDeductionDate_Edit.Text.Trim() != "") ? DateTime.Parse(eDeductionDate_Edit.Text.Trim()).ToShortDateString() : "";
-                    string vRemark_Temp = eRemark_Edit.Text.Trim();
-                    string vBuildDate_Temp = (eBuildDate_Edit.Text.Trim() != "") ? DateTime.Parse(eBuildDate_Edit.Text.Trim()).ToShortDateString() : "";
-                    string vCaseOccurrence_Temp = eCaseOccurrence_Edit.Text.Trim();
-                    string vCaseClose_Temp = (eCaseCloseTitle_Edit.Text.Trim() != "") ? eCaseCloseTitle_Edit.Text.Trim() : "False";
-                    string vIsExemption_Temp = (eIsExemption_Edit.Text.Trim() != "") ? eIsExemption_Edit.Text.Trim() : "N";
-                    double vPaidAmount_D = 0.0;
-                    string vPaidAmount_Temp = (Double.TryParse(ePaidAmount_Edit.Text.Trim(), out vPaidAmount_D)) ? vPaidAmount_D.ToString() : "0.0";
-                    double vInsuAmount_D = 0.0;
-                    string vInsuAmount_Temp = (double.TryParse(eInsuAmount_Edit.Text.Trim(), out vInsuAmount_D)) ? vInsuAmount_D.ToString() : "0.0";
-                    double vPenaltyRatio_D = 0.0;
-                    string vPenaltyRatio_Temp = (double.TryParse(ePenaltyRatio_Edit.Text.Trim(), out vPenaltyRatio_D)) ? vPenaltyRatio_D.ToString() : "0.0";
-                    double vPenalty_D = 0.0;
-                    string vPenalty_Temp = (double.TryParse(ePenalty_Edit.Text.Trim(), out vPenalty_D)) ? vPenalty_D.ToString() : "0.0";
-
-
-                    sdsAnecdoteCaseA_Data.UpdateCommand = "UPDATE AnecdoteCase " + Environment.NewLine +
-                                                          "   SET HasInsurance = @HasInsurance, DepNo = @DepNo, DepName = @DepName, Car_ID = @Car_ID, Driver = @Driver, " + Environment.NewLine +
-                                                          "       DriverName = @DriverName, InsuMan = @InsuMan, AnecdotalResRatio = @AnecdotalResRatio, IsNoDeduction = @IsNoDeduction, " + Environment.NewLine +
-                                                          "       DeductionDate = @DeductionDate, Remark = @Remark, BuildDate = @BuildDate, CaseOccurrence = @CaseOccurrence, CaseClose = @CaseClose, " + Environment.NewLine +
-                                                          "       IsExemption = @IsExemption, PaidAmount = @PaidAmount, InsuAmount = @InsuAmount, PenaltyRatio = @PenaltyRatio, Penalty = @Penalty " + Environment.NewLine +
-                                                          " WHERE (CaseNo = @CaseNo)";
-                    sdsAnecdoteCaseA_Data.UpdateParameters.Clear();
-                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("CaseNo", DbType.String, vCaseNo_Temp));
-                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("HasInsurance", DbType.Boolean, vHasInsurance_Temp));
-                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("DepNo", DbType.String, vDepNo_Temp));
-                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("DepName", DbType.String, vDepName_Temp));
-                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("Car_ID", DbType.String, vCarID_Temp));
-                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("Driver", DbType.String, vDriver_Temp));
-                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("DriverName", DbType.String, vDriverName_Temp));
-                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("InsuMan", DbType.String, vInsuMan_Temp));
-                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("AnecdotalResRatio", DbType.Double, (vAnecdotalResRatio_Temp != "") ? vAnecdotalResRatio_Temp : string.Empty));
-                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("IsNoDeduction", DbType.Boolean, vIsNoDeduction_Temp));
-                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("DeductionDate", DbType.Date, (vDeductionDate_Temp != "") ? vDeductionDate_Temp : string.Empty));
-                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("Remark", DbType.String, (vRemark_Temp != "") ? vRemark_Temp : string.Empty));
-                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("BuildDate", DbType.Date, (vBuildDate_Temp != "") ? vBuildDate_Temp : string.Empty));
-                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("CaseOccurrence", DbType.String, (vCaseOccurrence_Temp != "") ? vCaseOccurrence_Temp : string.Empty));
-                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("CaseClose", DbType.Boolean, vCaseClose_Temp));
-                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("IsExemption", DbType.String, vIsExemption_Temp));
-                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("PaidAmount", DbType.Double, vPaidAmount_Temp));
-                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("InsuAmount", DbType.Double, vInsuAmount_Temp));
-                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("PenaltyRatio", DbType.Double, vPenaltyRatio_Temp));
-                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("Penalty", DbType.Double, vPenalty_Temp));
-
-                    sdsAnecdoteCaseA_Data.Update();
-                    fvAnecdoteCaseA_Data.ChangeMode(FormViewMode.ReadOnly);
-                    gridAnecdoteCaseA_List.DataBind();
-                }
-                catch (Exception eMessage)
-                {
-                    Response.Write("<Script language='Javascript'>");
-                    Response.Write("alert('" + eMessage.Message + "')");
-                    Response.Write("</" + "Script>");
-                }
-            }
-        }
-
-        protected void eDepNo_Edit_TextChanged(object sender, EventArgs e)
-        {
-            if (vConnStr == "")
-            {
-                vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
-            }
-            TextBox eDepNo_Edit = (TextBox)fvAnecdoteCaseA_Data.FindControl("eDepNo_Edit");
-            if (eDepNo_Edit != null)
-            {
-                Label eDepName_Edit = (Label)fvAnecdoteCaseA_Data.FindControl("eDepName_Edit");
-                string vDepNo_Temp = eDepNo_Edit.Text.Trim();
-                string vSQLStr_Temp = "select [Name] from Department where DepNo = '" + vDepNo_Temp.Trim() + "' ";
-                string vDepName_Temp = PF.GetValue(vConnStr, vSQLStr_Temp, "Name");
-                if (vDepName_Temp == "")
-                {
-                    vDepName_Temp = vDepNo_Temp.Trim();
-                    vSQLStr_Temp = "select DepNo from Department where [Name] = '" + vDepName_Temp.Trim() + "' ";
-                    vDepNo_Temp = PF.GetValue(vConnStr, vSQLStr_Temp, "DepNo");
-                }
-                eDepNo_Edit.Text = vDepNo_Temp.Trim();
-                eDepName_Edit.Text = vDepName_Temp.Trim();
-            }
-        }
-
-        protected void eDriver_Edit_TextChanged(object sender, EventArgs e)
-        {
-            if (vConnStr == "")
-            {
-                vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
-            }
-            TextBox eDriver_Edit = (TextBox)fvAnecdoteCaseA_Data.FindControl("eDriver_Edit");
-            if (eDriver_Edit != null)
-            {
-                Label eDriverName_Edit = (Label)fvAnecdoteCaseA_Data.FindControl("eDriverName_Edit");
-                string vDriver_Temp = eDriver_Edit.Text.Trim();
-                string vSQLStr_Temp = "select [Name] from Employee where EmpNo = '" + vDriver_Temp.Trim() + "' ";
-                string vDriverName_Temp = PF.GetValue(vConnStr, vSQLStr_Temp, "Name");
-                if (vDriverName_Temp == "")
-                {
-                    vDriverName_Temp = vDriver_Temp.Trim();
-                    vSQLStr_Temp = "select EmpNo from Employee where [Name] = '" + vDriverName_Temp.Trim() + "' ";
-                    vDriver_Temp = PF.GetValue(vConnStr, vSQLStr_Temp, "EmpNo");
-                }
-                eDriver_Edit.Text = vDriver_Temp.Trim();
-                eDriverName_Edit.Text = vDriverName_Temp.Trim();
-            }
-        }
-
-        /// <summary>
-        /// 變更 "出險" 選項
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void eHasInsurance_Edit_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckBox eHasInsurance_Edit = (CheckBox)fvAnecdoteCaseA_Data.FindControl("eHasInsurance_Edit");
-            if (eHasInsurance_Edit != null)
-            {
-                Label eHasInsuranceTitle_Edit = (Label)fvAnecdoteCaseA_Data.FindControl("eHasInsuranceTitle_Edit");
-                eHasInsuranceTitle_Edit.Text = (eHasInsurance_Edit.Checked == true) ? "True" : "False";
-            }
-        }
-
-        /// <summary>
-        /// 變更 "不扣精勤" 選項
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void eIsNoDeduction_Edit_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckBox eIsNoDeduction_Edit = (CheckBox)fvAnecdoteCaseA_Data.FindControl("eIsNoDeduction_Edit");
-            if (eIsNoDeduction_Edit != null)
-            {
-                Label eIsNoDeductionTitle_Edit = (Label)fvAnecdoteCaseA_Data.FindControl("eIsNoDeductionTitle_Edit");
-                eIsNoDeductionTitle_Edit.Text = (eIsNoDeduction_Edit.Checked == true) ? "True" : "False";
-            }
-        }
-
-        /// <summary>
-        /// 新增主檔資料
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void bbOK_INS_Click(object sender, EventArgs e)
-        {
-            if (vConnStr == "")
-            {
-                vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
-            }
-            TextBox eBuildDate_INS = (TextBox)fvAnecdoteCaseA_Data.FindControl("eBuildDate_INS");
-            TextBox eDepNo_INS = (TextBox)fvAnecdoteCaseA_Data.FindControl("eDepNo_INS");
-            try
-            {
-                if ((eBuildDate_INS != null) && ((eDepNo_INS != null) && (eDepNo_INS.Text.Trim() != "")))
-                {
-                    DateTime vBuildDate = DateTime.Parse(eBuildDate_INS.Text.Trim());
-                    //2023.08.18 CaseNo 改用建單日期取單號，而不是用發生日期取單號
-                    //string vCaseNo_FirstCode = (vBuildDate.Year - 1911).ToString() + vBuildDate.Month.ToString("D2") + "A";
-                    string vCaseNo_FirstCode = (DateTime.Today.Year - 1911).ToString() + DateTime.Today.Month.ToString("D2") + "A";
-                    string vSQLStr_Temp = "select max(CaseNo) MaxNo from AnecdoteCase where CaseNo like '" + vCaseNo_FirstCode + "%' ";
-                    string vMaxNo = PF.GetValue(vConnStr, vSQLStr_Temp, "MaxNo");
-                    string vIndexStr = (vMaxNo.Trim() != "") ? vMaxNo.Replace(vCaseNo_FirstCode, "").Trim() : "0";
-                    int vIndex = Int32.Parse(vIndexStr) + 1;
-                    string vCaseNo_Temp = vCaseNo_FirstCode + vIndex.ToString("D4");
-                    string vBuildDateStr_Temp = (eBuildDate_INS.Text != "") ? vBuildDate.ToShortDateString() : "";
-                    Label eHasInsuranceTitle_INS = (Label)fvAnecdoteCaseA_Data.FindControl("eHasInsuranceTitle_INS");
-                    string vHasInsurance_Temp = (eHasInsuranceTitle_INS.Text.Trim() != "") ? eHasInsuranceTitle_INS.Text.Trim() : "False";
-                    Label eDepName_INS = (Label)fvAnecdoteCaseA_Data.FindControl("eDepName_INS");
-                    string vDepNo_Temp = eDepNo_INS.Text.Trim();
-                    string vDepName_Temp = eDepName_INS.Text.Trim();
-                    TextBox eCarID_INS = (TextBox)fvAnecdoteCaseA_Data.FindControl("eCarID_INS");
-                    string vCarID_Temp = eCarID_INS.Text.Trim().ToUpper();
-                    TextBox eDriver_INS = (TextBox)fvAnecdoteCaseA_Data.FindControl("eDriver_INS");
-                    Label eDriverName_INS = (Label)fvAnecdoteCaseA_Data.FindControl("eDriverName_INS");
-                    string vDriver_Temp = eDriver_INS.Text.Trim();
-                    string vDriverName_Temp = eDriverName_INS.Text.Trim();
-                    TextBox eInsuMan_INS = (TextBox)fvAnecdoteCaseA_Data.FindControl("eInsuMan_INS");
-                    string vInsuMan_Temp = eInsuMan_INS.Text.Trim();
-                    TextBox eAnecdotalResRatio_INS = (TextBox)fvAnecdoteCaseA_Data.FindControl("eAnecdotalResRatio_INS");
-                    string vAnecdotalResRatio_Temp = eAnecdotalResRatio_INS.Text.Trim();
-                    Label eIsNoDeductionTitle_INS = (Label)fvAnecdoteCaseA_Data.FindControl("eIsNoDeductionTitle_INS");
-                    string vIsNoDeduction_Temp = (eIsNoDeductionTitle_INS.Text.Trim() != "") ? eIsNoDeductionTitle_INS.Text.Trim() : "False";
-                    TextBox eDeductionDate_INS = (TextBox)fvAnecdoteCaseA_Data.FindControl("eDeductionDate_INS");
-                    DateTime vDeductionDate = (eDeductionDate_INS.Text.Trim() != "") ? DateTime.Parse(eDeductionDate_INS.Text.Trim()) : DateTime.Today;
-                    string vDeductionDateStr_Temp = (eDeductionDate_INS.Text.Trim() != "") ? vDeductionDate.ToShortDateString() : "";
-                    TextBox eRemark_INS = (TextBox)fvAnecdoteCaseA_Data.FindControl("eRemark_INS");
-                    string vRemark_Temp = eRemark_INS.Text.Trim();
-                    TextBox eCaseOccurrence_INS = (TextBox)fvAnecdoteCaseA_Data.FindControl("eCaseOccurrence_INS");
-                    string vCaseOccurrence_Temp = eCaseOccurrence_INS.Text.Trim();
-                    Label eCaseCloseTitle_INS = (Label)fvAnecdoteCaseA_Data.FindControl("eCaseCloseTitle_INS");
-                    string vCaseClose_Temp = (eCaseCloseTitle_INS.Text.Trim() != "") ? eCaseCloseTitle_INS.Text.Trim() : "False";
-                    Label eIsExemption_INS = (Label)fvAnecdoteCaseA_Data.FindControl("eIsExemption_INS");
-                    string vIsExemption_Temp = (eIsExemption_INS.Text.Trim() != "") ? eIsExemption_INS.Text.Trim() : "N";
-                    TextBox ePaidAmount_INS = (TextBox)fvAnecdoteCaseA_Data.FindControl("ePaidAmount_INS");
-                    double vPaidAmount_D = 0.0;
-                    string vPaidAmount_Temp = (Double.TryParse(ePaidAmount_INS.Text.Trim(), out vPaidAmount_D)) ? vPaidAmount_D.ToString() : "0.0";
-                    TextBox eInsuAmount_INS = (TextBox)fvAnecdoteCaseA_Data.FindControl("eInsuAmount_INS");
-                    double vInsuAmount_D = 0.0;
-                    string vInsuAmount_Temp = (double.TryParse(eInsuAmount_INS.Text.Trim(), out vInsuAmount_D)) ? vInsuAmount_D.ToString() : "0.0";
-                    TextBox ePenaltyRatio_INS = (TextBox)fvAnecdoteCaseA_Data.FindControl("ePenaltyRatio_INS");
-                    double vPenaltyRatio_D = 0.0;
-                    string vPenaltyRatio_Temp = (double.TryParse(ePenaltyRatio_INS.Text.Trim(), out vPenaltyRatio_D)) ? vPenaltyRatio_D.ToString() : "0.0";
-                    Label ePenalty_INS = (Label)fvAnecdoteCaseA_Data.FindControl("ePenalty_INS");
-                    double vPenalty_D = 0.0;
-                    string vPenalty_Temp = (double.TryParse(ePenalty_INS.Text.Trim(), out vPenalty_D)) ? vPenalty_D.ToString() : "0.0";
-
-                    sdsAnecdoteCaseA_Data.InsertCommand = "INSERT INTO AnecdoteCase " + Environment.NewLine +
-                                                          "       (CaseNo, HasInsurance, DepNo, DepName, BuildDate, BuildMan, Car_ID, Driver, DriverName, " + Environment.NewLine +
-                                                          "        InsuMan, AnecdotalResRatio, IsNoDeduction, DeductionDate, Remark, CaseOccurrence, CaseClose, " + Environment.NewLine +
-                                                          "        IsExemption, PaidAmount, InsuAmount, PenaltyRatio, Penalty) " + Environment.NewLine +
-                                                          "VALUES (@CaseNo, @HasInsurance, @DepNo, @DepName, @BuildDate, @BuildMan, @Car_ID, @Driver, @DriverName, " + Environment.NewLine +
-                                                          "        @InsuMan, @AnecdotalResRatio, @IsNoDeduction, @DeductionDate, @Remark, @CaseOccurrence, @CaseClose, " + Environment.NewLine +
-                                                          "        @IsExemption, @PaidAmount, @InsuAmount, @PenaltyRatio, @Penalty)";
-                    sdsAnecdoteCaseA_Data.InsertParameters.Clear();
-                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("CaseNo", DbType.String, vCaseNo_Temp.Trim()));
-                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("HasInsurance", DbType.Boolean, vHasInsurance_Temp));
-                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("DepNo", DbType.String, (vDepNo_Temp != "") ? vDepNo_Temp : String.Empty));
-                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("DepName", DbType.String, (vDepName_Temp != "") ? vDepName_Temp : String.Empty));
-                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("BuildDate", DbType.Date, (vBuildDateStr_Temp != "") ? vBuildDateStr_Temp : String.Empty));
-                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("BuildMan", DbType.String, vLoginID));
-                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("Car_ID", DbType.String, (vCarID_Temp != "") ? vCarID_Temp : String.Empty));
-                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("Driver", DbType.String, (vDriver_Temp != "") ? vDriver_Temp : String.Empty));
-                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("DriverName", DbType.String, (vDriverName_Temp != "") ? vDriverName_Temp : String.Empty));
-                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("InsuMan", DbType.String, (vInsuMan_Temp != "") ? vInsuMan_Temp : String.Empty));
-                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("AnecdotalResRatio", DbType.Double, (vAnecdotalResRatio_Temp != "") ? vAnecdotalResRatio_Temp : String.Empty));
-                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("IsNoDeduction", DbType.Boolean, (vIsNoDeduction_Temp != "") ? vIsNoDeduction_Temp : "False"));
-                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("DeductionDate", DbType.Date, (vDeductionDateStr_Temp != "") ? vDeductionDateStr_Temp : String.Empty));
-                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("Remark", DbType.String, (vRemark_Temp != "") ? vRemark_Temp : String.Empty));
-                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("CaseOccurrence", DbType.String, (vCaseOccurrence_Temp != "") ? vCaseOccurrence_Temp : String.Empty));
-                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("CaseClose", DbType.Boolean, (vCaseClose_Temp != "") ? vCaseClose_Temp : "False"));
-                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("IsExemption", DbType.String, vIsExemption_Temp));
-                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("PaidAmount", DbType.Double, vPaidAmount_Temp));
-                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("InsuAmount", DbType.Double, vInsuAmount_Temp));
-                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("PenaltyRatio", DbType.Double, vPenaltyRatio_Temp));
-                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("Penalty", DbType.Double, vPenalty_Temp));
-                    sdsAnecdoteCaseA_Data.Insert();
-                    fvAnecdoteCaseA_Data.ChangeMode(FormViewMode.ReadOnly);
-                    gridAnecdoteCaseA_List.DataBind();
-                    fvAnecdoteCaseA_Data.DataBind();
-                }
-                else if ((eDepNo_INS != null) && (eDepNo_INS.Text.Trim() == ""))
-                {
-                    Response.Write("<Script language='Javascript'>");
-                    Response.Write("alert('站別不可空白！')");
-                    Response.Write("</" + "Script>");
-                    eDepNo_INS.Focus();
-                }
-            }
-            catch (Exception eMessage)
-            {
-                Response.Write("<Script language='Javascript'>");
-                Response.Write("alert('" + eMessage.Message + "')");
-                Response.Write("</" + "Script>");
-                //throw;
-            }
-        }
-
-        protected void eDepNo_INS_TextChanged(object sender, EventArgs e)
-        {
-            if (vConnStr == "")
-            {
-                vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
-            }
-            TextBox eDepNo_INS = (TextBox)fvAnecdoteCaseA_Data.FindControl("eDepNo_INS");
-            Label eDepName_INS = (Label)fvAnecdoteCaseA_Data.FindControl("eDepName_INS");
-            if (eDepNo_INS != null)
-            {
-                string vDepNo_Temp = eDepNo_INS.Text.Trim();
-                string vSQLStr_Temp = "select [Name] from Department where DepNo = '" + vDepNo_Temp.Trim() + "' ";
-                string vDepName_Temp = PF.GetValue(vConnStr, vSQLStr_Temp, "Name");
-                if (vDepName_Temp == "")
-                {
-                    vDepName_Temp = vDepNo_Temp.Trim();
-                    vSQLStr_Temp = "select DepNo from Department where [Name] = '" + vDepName_Temp.Trim() + "' ";
-                    vDepNo_Temp = PF.GetValue(vConnStr, vSQLStr_Temp, "DepNo");
-                }
-                eDepNo_INS.Text = vDepNo_Temp.Trim();
-                eDepName_INS.Text = vDepName_Temp.Trim();
-            }
-        }
-
-        protected void eDriver_INS_TextChanged(object sender, EventArgs e)
-        {
-            if (vConnStr == "")
-            {
-                vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
-            }
-            TextBox eDriver_INS = (TextBox)fvAnecdoteCaseA_Data.FindControl("eDriver_INS");
-            Label eDriverName_INS = (Label)fvAnecdoteCaseA_Data.FindControl("eDriverName_INS");
-            if (eDriver_INS != null)
-            {
-                string vDriver_Temp = eDriver_INS.Text.Trim();
-                string vSQLStr_Temp = "select [Name] from Employee where EmpNo = '" + vDriver_Temp.Trim() + "' ";
-                string vDriverName_Temp = PF.GetValue(vConnStr, vSQLStr_Temp, "Name");
-                if (vDriverName_Temp == "")
-                {
-                    vDriverName_Temp = vDriver_Temp.Trim();
-                    vSQLStr_Temp = "select EmpNo from Employee where [Name] = '" + vDriverName_Temp.Trim() + "' ";
-                    vDriver_Temp = PF.GetValue(vConnStr, vSQLStr_Temp, "EmpNo");
-                }
-                eDriver_INS.Text = vDriver_Temp.Trim();
-                eDriverName_INS.Text = vDriverName_Temp.Trim();
-            }
-        }
-
-        /// <summary>
-        /// 變更 "出險" 選項
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void eHasInsurance_INS_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckBox eHasInsurance_INS = (CheckBox)fvAnecdoteCaseA_Data.FindControl("eHasInsurance_INS");
-            Label eHasInsuranceTitle_INS = (Label)fvAnecdoteCaseA_Data.FindControl("eHasInsuranceTitle_INS");
-            eHasInsuranceTitle_INS.Text = (eHasInsurance_INS.Checked == true) ? "True" : "False";
-        }
-
-        /// <summary>
-        /// 變更 "不扣精勤" 選項
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void eIsNoDeduction_INS_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckBox eIsNoDeduction_INS = (CheckBox)fvAnecdoteCaseA_Data.FindControl("eIsNoDeduction_INS");
-            Label eIsNoDeductionTitle_INS = (Label)fvAnecdoteCaseA_Data.FindControl("eIsNoDeductionTitle_INS");
-            eIsNoDeductionTitle_INS.Text = (eIsNoDeduction_INS.Checked == true) ? "True" : "False";
-        }
-
-        /// <summary>
-        /// 主檔刪除
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void bbDelete_Edit_Click(object sender, EventArgs e)
-        {
-            Label eCaseNo_List = (Label)fvAnecdoteCaseA_Data.FindControl("eCaseNo_List");
-            if (eCaseNo_List != null)
-            {
-                if (vConnStr == "")
-                {
-                    vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
-                }
-                try
-                {
-                    //取回要刪除的肇事單號
-                    string vCaseNo_Temp = eCaseNo_List.Text.Trim();
-                    //因為是刪主檔，所以要連 B 檔和 C 檔都一起刪，可是 C 檔沒有異動檔所以只針對 B 檔做異動
-                    DateTime vDelDate = DateTime.Today;
-                    string vHistoryNo = vDelDate.Year.ToString("D4") + vDelDate.Month.ToString("D2") + "DELA";
-                    string vSQLStr_Temp = "select max(HistoryNo) MaxNo from AnecdoteCaseHistory where HistoryNo like '" + vHistoryNo + "%' ";
-                    string vMaxNo = PF.GetValue(vConnStr, vSQLStr_Temp, "MaxNo");
-                    //string vIndex_Str = (vMaxNo.Trim() != "") ? vMaxNo.Replace(vHistoryNo, "").Trim() : "0";
-                    string vIndex_Str = vMaxNo.Replace(vHistoryNo, "").Trim();
-                    int vIndex = (vIndex_Str != "") ? Int32.Parse(vIndex_Str) + 1 : 1;
-                    string vNewHistoryNo = vHistoryNo + vIndex.ToString("D4");
-                    vSQLStr_Temp = "select max(ItemsH) MaxItem from AnecdoteCaseBHistory where HistoryNo = '" + vNewHistoryNo + "' ";
-                    string vMaxItemsH = PF.GetValue(vConnStr, vSQLStr_Temp, "MaxItem");
-                    string vNewItemsH = (vMaxItemsH.Trim() != "") ? Int32.Parse(vMaxItemsH).ToString("D4") : "0001";
-                    string vNewHistoryNoItems = vNewHistoryNo.Trim() + vNewItemsH.Trim();
-                    //複製 B 檔原資料到異動檔
-                    vSQLStr_Temp = "INSERT INTO [dbo].[AnecdoteCaseBHistory] " + Environment.NewLine +
-                                   "            ([HistoryNo],[ItemsH],[HistoryNoItems],[CaseNo],[Items],[CaseNoItems],[Relationship],[RelCar_ID], " + Environment.NewLine +
-                                   "             [EstimatedAmount],[ThirdInsurance],[CompInsurance],[DriverSharing],[CompanySharing],[CarDamageAMT], " + Environment.NewLine +
-                                   "             [PersonDamageAMT],[RelationComp],[ReconciliationDate],[Remark]," + Environment.NewLine +
-                                   "             [ModifyType],[ModifyDate],[ModifyMan],[PassengerInsu])" + Environment.NewLine +
-                                   "select '" + vNewHistoryNo + "','" + vNewItemsH + "','" + vNewHistoryNoItems + "',[CaseNo],[Items],[CaseNoItems],[Relationship], " + Environment.NewLine +
-                                   "       [RelCar_ID],[EstimatedAmount],[ThirdInsurance],[CompInsurance],[DriverSharing],[CompanySharing], " + Environment.NewLine +
-                                   "       [CarDamageAMT],[PersonDamageAMT],[RelationComp],[ReconciliationDate],[Remark], " + Environment.NewLine +
-                                   "       'DELA',GetDate(),'" + vLoginID + "',[PassengerInsu] " + Environment.NewLine +
-                                   "  from [dbo].[AnecdoteCaseB] " + Environment.NewLine +
-                                   " where CaseNo = '" + vCaseNo_Temp + "' ";
-                    PF.ExecSQL(vConnStr, vSQLStr_Temp);
-                    //複製 A 檔原資料到異動檔
-                    vSQLStr_Temp = "INSERT INTO [dbo].[AnecdoteCaseHistory] " + Environment.NewLine +
-                                   "            ([HistoryNo],[CaseNo],[HasInsurance],[DepNo],[DepName],[BuildDate],[BuildMan],[Car_ID],[Driver], " + Environment.NewLine +
-                                   "             [DriverName],[InsuMan],[AnecdotalResRatio],[IsNoDeduction],[DeductionDate],[Remark]," + Environment.NewLine +
-                                   "             [ModifyType],[ModifyDate],[ModifyMan],[CaseOccurrence],[ERPCouseNo],[CaseClose]) " + Environment.NewLine +
-                                   "select '" + vNewHistoryNo + "',[CaseNo],[HasInsurance],[DepNo],[DepName],[BuildDate],[BuildMan],[Car_ID],[Driver], " + Environment.NewLine +
-                                   "       [DriverName],[InsuMan],[AnecdotalResRatio],[IsNoDeduction],[DeductionDate],[Remark]," + Environment.NewLine +
-                                   "       'DELA',GetDate(),'" + vLoginID + "',[CaseOccurrence],[ERPCouseNo],[CaseClose] " + Environment.NewLine +
-                                   "  from [dbo].[AnecdoteCase] " + Environment.NewLine +
-                                   " where CaseNo = '" + vCaseNo_Temp + "' ";
-                    PF.ExecSQL(vConnStr, vSQLStr_Temp);
-                    //開始刪除
-                    using (SqlDataSource dsDelTemp = new SqlDataSource())
-                    {
-                        dsDelTemp.ConnectionString = vConnStr;
-                        //刪除 C 檔
-                        dsDelTemp.DeleteCommand = "delete AnecdoteCaseC where CaseNo = @CaseNo ";
-                        dsDelTemp.DeleteParameters.Clear();
-                        dsDelTemp.DeleteParameters.Add(new Parameter("CaseNo", DbType.String, vCaseNo_Temp.Trim()));
-                        dsDelTemp.Delete();
-                        //刪除 B 檔
-                        dsDelTemp.DeleteCommand = "delete AnecdoteCaseB where CaseNo = @CaseNo ";
-                        dsDelTemp.DeleteParameters.Clear();
-                        dsDelTemp.DeleteParameters.Add(new Parameter("CaseNo", DbType.String, vCaseNo_Temp.Trim()));
-                        dsDelTemp.Delete();
-                        //刪除 A 檔
-                        dsDelTemp.DeleteCommand = "delete AnecdoteCase where CaseNo = @CaseNo ";
-                        dsDelTemp.DeleteParameters.Clear();
-                        dsDelTemp.DeleteParameters.Add(new Parameter("CaseNo", DbType.String, vCaseNo_Temp.Trim()));
-                        dsDelTemp.Delete();
-                    }
-                    fvAnecdoteCaseA_Data.ChangeMode(FormViewMode.ReadOnly);
-                    gridAnecdoteCaseA_List.DataBind();
-                    fvAnecdoteCaseA_Data.DataBind();
-                }
-                catch (Exception eMessage)
-                {
-                    Response.Write("<Script language='Javascript'>");
-                    Response.Write("alert('" + eMessage.Message + "')");
-                    Response.Write("</" + "Script>");
-                }
-            }
-        }
-
-        /// <summary>
-        /// FormView [fvAnecdoteCaseA_Data] 已經完成資料繫結
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void fvAnecdoteCaseA_Data_DataBound(object sender, EventArgs e)
-        {
-            bool vAllowDep = ((vLoginID.ToUpper() == "SUPERVISOR") || (vLoginDepNo == "09") || (vLoginDepNo == "06"));
-            switch (fvAnecdoteCaseA_Data.CurrentMode)
-            {
-                case FormViewMode.ReadOnly:
-                    //plSearch.Visible = true;
-                    plDetailDataShow.Visible = ((gridAnecdoteCaseA_List.Rows.Count > 0) && (gridAnecdoteCaseA_List.SelectedIndex >= 0));
-                    Button bbExportERP_Temp = (Button)fvAnecdoteCaseA_Data.FindControl("bbExportERP_List");
-                    if (bbExportERP_Temp != null)
-                    {
-                        Label eERPCouseNo_Temp = (Label)fvAnecdoteCaseA_Data.FindControl("eERPCouseNo_List");
-                        Button bbDelERP_Temp = (Button)fvAnecdoteCaseA_Data.FindControl("bbDelERP_List");
-                        bbExportERP_Temp.Visible = ((vAllowDep) && (eERPCouseNo_Temp.Text.Trim() == ""));
-                        bbDelERP_Temp.Visible = ((vAllowDep) && (eERPCouseNo_Temp.Text.Trim() != ""));
-                        Label eIsExemption_Temp = (Label)fvAnecdoteCaseA_Data.FindControl("eIsExemption_List");
-                        if (eIsExemption_Temp != null)
-                        {
-                            CheckBox cbIsExemption_Temp = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbIsExemption_List");
-                            cbIsExemption_Temp.Checked = (eIsExemption_Temp.Text.Trim().ToUpper() == "Y");
-                        }
-                    }
-                    /* 以下是用來限制各車站人員登入之後的權限用的...現在都先開放不限制
-                    if (vConnStr == "")
-                    {
-                        vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
-                    }
-                    string vStationNo_FV = PF.GetValue(vConnStr, "select DepNo from Department where DepNo = '" + vDepNo + "' and InSHReport = 'V'", "DepNo");
-                    Button bbInsert_List = (Button)fvAnecdoteCaseA_Data.FindControl("bbNew_List");
-                    Button bbInsert_Empty = (Button)fvAnecdoteCaseA_Data.FindControl("bbNew_Empty");
-                    Button bbEdit_List = (Button)fvAnecdoteCaseA_Data.FindControl("bbEdit_List");
-                    Button bbDelete_List = (Button)fvAnecdoteCaseA_Data.FindControl("bbDel_List");
-
-                    if (bbInsert_List != null)
-                    {
-                        bbInsert_List.Visible = (vStationNo_FV == "");
-                    }
-                    if (bbInsert_Empty != null)
-                    {
-                        bbInsert_Empty.Visible = (vStationNo_FV == "");
-                    }
-                    if (bbEdit_List != null)
-                    {
-                        bbEdit_List.Visible = (vStationNo_FV == "");
-                    }
-                    if (bbDelete_List != null)
-                    {
-                        bbDelete_List.Visible = (vStationNo_FV == "");
-                    } //*/
-                    break;
-                case FormViewMode.Edit:
-                    //plSearch.Visible = false;
-                    plDetailDataShow.Visible = false;
-                    TextBox eDeductionDate_Edit = (TextBox)fvAnecdoteCaseA_Data.FindControl("eDeductionDate_Edit");
-                    if (eDeductionDate_Edit != null)
-                    {
-                        string vDeductionDate_EditURL = "InputDate_ChineseYears.aspx?TextboxID=" + eDeductionDate_Edit.ClientID;
-                        string vDeductionDate_EditScript = "window.open('" + vDeductionDate_EditURL + "','','height=315, width=350,status=no,toolbar=no,menubar=no,location=no','')";
-                        eDeductionDate_Edit.Attributes["onClick"] = vDeductionDate_EditScript;
-                    }
-                    TextBox eBuildDate_Edit = (TextBox)fvAnecdoteCaseA_Data.FindControl("eBuildDate_Edit");
-                    if (eBuildDate_Edit != null)
-                    {
-                        string vBuildDate_EditURL = "InputDate_ChineseYears.aspx?TextboxID=" + eBuildDate_Edit.ClientID;
-                        string vBuildDate_EditScript = "window.open('" + vBuildDate_EditURL + "','','height=315, width=350,status=no,toolbar=no,menubar=no,location=no','')";
-                        eBuildDate_Edit.Attributes["onClick"] = vBuildDate_EditScript;
-                    }
-                    Label eIsExemption_Edit = (Label)fvAnecdoteCaseA_Data.FindControl("eIsExemption_Edit");
-                    if (eIsExemption_Edit != null)
-                    {
-                        CheckBox cbIsExemption_Edit = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbIsExemption_Edit");
-                        cbIsExemption_Edit.Checked = (eIsExemption_Edit.Text.Trim().ToUpper() == "Y");
-                    }
-                    break;
-                case FormViewMode.Insert:
-                    //plSearch.Visible = false;
-                    plDetailDataShow.Visible = false;
-                    TextBox eBuildDate_INS = (TextBox)fvAnecdoteCaseA_Data.FindControl("eBuildDate_INS");
-                    if (eBuildDate_INS != null)
-                    {
-                        //建檔日期
-                        eBuildDate_INS.Text = DateTime.Today.ToString("yyyy/MM/dd");
-                        string vBuildDate_INSURL = "InputDate_ChineseYears.aspx?TextboxID=" + eBuildDate_INS.ClientID;
-                        string vBuildDate_INSScript = "window.open('" + vBuildDate_INSURL + "','','height=315, width=350,status=no,toolbar=no,menubar=no,location=no','')";
-                        eBuildDate_INS.Attributes["onClick"] = vBuildDate_INSScript;
-                        //建檔人工號
-                        Label eBuildMan_INS = (Label)fvAnecdoteCaseA_Data.FindControl("eBuildMan_INS");
-                        eBuildMan_INS.Text = vLoginID;
-                        //建檔人姓名
-                        Label eBuildManName_INS = (Label)fvAnecdoteCaseA_Data.FindControl("eBuildManName_INS");
-                        eBuildManName_INS.Text = Session["LoginName"].ToString().Trim();
-                        //精勤扣款日期
-                        TextBox eDeductionDate_INS = (TextBox)fvAnecdoteCaseA_Data.FindControl("eDeductionDate_INS");
-                        string vDeductionDate_INSURL = "InputDate_ChineseYears.aspx?TextboxID=" + eDeductionDate_INS.ClientID;
-                        string vDeductionDate_INSScript = "window.open('" + vDeductionDate_INSURL + "','','height=315, width=350,status=no,toolbar=no,menubar=no,location=no','')";
-                        eDeductionDate_INS.Attributes["onClick"] = vDeductionDate_INSScript;
-                    }
-                    Label eIsExemption_INS = (Label)fvAnecdoteCaseA_Data.FindControl("eIsExemption_INS");
-                    if (eIsExemption_INS != null)
-                    {
-                        CheckBox cbIsExemption_INS = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbIsExemption_INS");
-                        cbIsExemption_INS.Checked = (eIsExemption_INS.Text.Trim().ToUpper() == "Y");
-                    }
-                    break;
-            }
-        }
-
-        /// <summary>
-        /// 更新 B 檔資料
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void bbOKCaseB_Edit_Click(object sender, EventArgs e)
-        {
-            if (vConnStr == "")
-            {
-                vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
-            }
-            try
-            {
-                Label eCaseNo_Edit = (Label)fvAnecdoteCaseB_Data.FindControl("eCaseBCaseNo_Edit");
-                if (eCaseNo_Edit != null)
-                {
-                    //雖然是異動 B 檔，還是要在 A 檔的異動記錄加入一筆資料
-                    DateTime vModifyDate = DateTime.Today;
-                    string vHistoryNo = vModifyDate.Year.ToString("D4") + vModifyDate.Month.ToString("D2") + "MODB";
-                    string vSQLStr_Temp = "select max(HistoryNo) MaxNo from AnecdoteCaseHistory where HistoryNo like '" + vHistoryNo + "%' ";
-                    string vMaxNo = PF.GetValue(vConnStr, vSQLStr_Temp, "MaxNo");
-                    string vIndex_Str = (vMaxNo.Replace(vHistoryNo, "").Trim() != "") ? vMaxNo.Replace(vHistoryNo, "").Trim() : "0";
-                    int vIndex = Int32.Parse(vIndex_Str) + 1;
-                    string vNewHistoryNo = vHistoryNo + vIndex.ToString("D4");
-                    string vCaseNo_Temp = eCaseNo_Edit.Text.Trim();
-                    //寫入 A 檔異動記錄
-                    vSQLStr_Temp = "INSERT INTO [dbo].[AnecdoteCaseHistory] " + Environment.NewLine +
-                                   "            ([HistoryNo],[CaseNo],[HasInsurance],[DepNo],[DepName],[BuildDate],[BuildMan],[Car_ID],[Driver], " + Environment.NewLine +
-                                   "             [DriverName],[InsuMan],[AnecdotalResRatio],[IsNoDeduction],[DeductionDate],[Remark]," + Environment.NewLine +
-                                   "             [ModifyType],[ModifyDate],[ModifyMan],[CaseOccurrence],[ERPCouseNo],[CaseClose]) " + Environment.NewLine +
-                                   "select '" + vNewHistoryNo + "',[CaseNo],[HasInsurance],[DepNo],[DepName],[BuildDate],[BuildMan],[Car_ID],[Driver], " + Environment.NewLine +
-                                   "       [DriverName],[InsuMan],[AnecdotalResRatio],[IsNoDeduction],[DeductionDate],[Remark]," + Environment.NewLine +
-                                   "       'MODB',GetDate(),'" + vLoginID + "',[CaseOccurrence],[ERPCouseNo],[CaseClose] " + Environment.NewLine +
-                                   "  from [dbo].[AnecdoteCase] " + Environment.NewLine +
-                                   " where CaseNo = '" + vCaseNo_Temp + "' ";
-                    PF.ExecSQL(vConnStr, vSQLStr_Temp);
-                    //寫入 B 檔異動記錄
-                    Label eCaseNoItems_Edit = (Label)fvAnecdoteCaseB_Data.FindControl("eCaseBCaseNoItems_Edit");
-                    string vCaseNoItems_Temp = eCaseNoItems_Edit.Text.Trim();
-                    vSQLStr_Temp = "select max(Items) MaxItem from AnecdoteCaseBHistory where HistoryNo = '" + vNewHistoryNo + "' ";
-                    vMaxNo = PF.GetValue(vConnStr, vSQLStr_Temp, "MaxItem");
-                    int vItems = (vMaxNo != "") ? Int32.Parse(vMaxNo.Trim()) + 1 : 1;
-                    //複製 B 檔原資料到異動檔
-                    vSQLStr_Temp = "INSERT INTO [dbo].[AnecdoteCaseBHistory] " + Environment.NewLine +
-                                   "            ([HistoryNo],[ItemsH],[HistoryNoItems],[CaseNo],[Items],[CaseNoItems],[Relationship],[RelCar_ID], " + Environment.NewLine +
-                                   "             [EstimatedAmount],[ThirdInsurance],[CompInsurance],[DriverSharing],[CompanySharing],[CarDamageAMT], " + Environment.NewLine +
-                                   "             [PersonDamageAMT],[RelationComp],[ReconciliationDate],[Remark]," + Environment.NewLine +
-                                   "             [ModifyType],[ModifyDate],[ModifyMan],[PassengerInsu])" + Environment.NewLine +
-                                   "select '" + vNewHistoryNo + "','" + vItems.ToString("D4") + "','" + vNewHistoryNo + vItems.ToString("D4") + "',[CaseNo],[Items],[CaseNoItems], " + Environment.NewLine +
-                                   "       [Relationship],[RelCar_ID],[EstimatedAmount],[ThirdInsurance],[CompInsurance],[DriverSharing],[CompanySharing], " + Environment.NewLine +
-                                   "       [CarDamageAMT],[PersonDamageAMT],[RelationComp],[ReconciliationDate],[Remark], " + Environment.NewLine +
-                                   "       'MODB',GetDate(),'" + vLoginID + "',[PassengerInsu] " + Environment.NewLine +
-                                   "  from [dbo].[AnecdoteCaseB] " + Environment.NewLine +
-                                   " where CaseNoItems = '" + vCaseNoItems_Temp + "' ";
-                    PF.ExecSQL(vConnStr, vSQLStr_Temp);
-
-                    //實際開始更新資料
-                    TextBox eRelationship_Edit = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCaseBRelationship_Edit");
-                    string vRelationship_Temp = eRelationship_Edit.Text.Trim();
-                    TextBox eRelCarID_Edit = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCaseBRelCarID_Edit");
-                    string vRelCarID_Temp = eRelCarID_Edit.Text.Trim().ToUpper();
-                    TextBox eEstimatedAmount_Edit = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCaseBEstimatedAmount_Edit");
-                    string vEstimatedAmount_Temp = eEstimatedAmount_Edit.Text.Trim();
-                    TextBox eThirdInsurance_Edit = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCaseBThirdInsurance_Edit");
-                    string vThirdInsurance_Temp = eThirdInsurance_Edit.Text.Trim();
-                    TextBox eCompInsurance_Edit = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCaseBCompInsurance_Edit");
-                    string vCompInsurance_Temp = eCompInsurance_Edit.Text.Trim();
-                    TextBox eDriverSharing_Edit = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCaseBDriverSharing_Edit");
-                    string vDriverSharing_Temp = eDriverSharing_Edit.Text.Trim();
-                    TextBox eCompanySharing_Edit = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCaseBCompanySharing_Edit");
-                    string vCompanySharing_Temp = eCompanySharing_Edit.Text.Trim();
-                    TextBox eCarDamageAMT_Edit = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCaseBCarDamageAMT_Edit");
-                    string vCarDamageAMT_Temp = eCarDamageAMT_Edit.Text.Trim();
-                    TextBox ePersonDamageAMT_Edit = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCaseBPersonDamageAMT_Edit");
-                    string vPersonDamageAMT_Temp = ePersonDamageAMT_Edit.Text.Trim();
-                    TextBox eRelationComp_Edit = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCaseBRelationComp_Edit");
-                    string vRelationComp_Temp = eRelationComp_Edit.Text.Trim();
-                    TextBox eReconciliationDate_Edit = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCaseBReconciliationDate_Edit");
-                    string vReconciliationDate_Temp = (eReconciliationDate_Edit.Text.Trim() != "") ? DateTime.Parse(eReconciliationDate_Edit.Text.Trim()).ToShortDateString() : "";
-                    TextBox ePassengerInsu_Edit = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCaseBPassengerInsu_Edit");
-                    string vPassengerInsu_Temp = ePassengerInsu_Edit.Text.Trim();
-                    TextBox eRemark_Edit = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCaseBRemark_Edit");
-                    string vRemark_Temp = eRemark_Edit.Text.Trim();
-
-                    sdsAnecdoteCaseB_Data.UpdateCommand = "UPDATE AnecdoteCaseB " + Environment.NewLine +
-                                                          "   SET Relationship = @Relationship, RelCar_ID = @RelCar_ID, EstimatedAmount = @EstimatedAmount, " + Environment.NewLine +
-                                                          "       ThirdInsurance = @ThirdInsurance, CompInsurance = @CompInsurance, DriverSharing = @DriverSharing, " + Environment.NewLine +
-                                                          "       CompanySharing = @CompanySharing, CarDamageAMT = @CarDamageAMT, PersonDamageAMT = @PersonDamageAMT, " + Environment.NewLine +
-                                                          "       RelationComp = @RelationComp, ReconciliationDate = @ReconciliationDate, PassengerInsu = @PassengerInsu, " + Environment.NewLine +
-                                                          "       Remark = @Remark WHERE (CaseNoItems = @CaseNoItems)";
-                    sdsAnecdoteCaseB_Data.UpdateParameters.Clear();
-                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("Relationship", DbType.String, (vRelationship_Temp.Trim() != "") ? vRelationship_Temp.Trim() : String.Empty));
-                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("RelCar_ID", DbType.String, (vRelCarID_Temp.Trim() != "") ? vRelCarID_Temp.Trim() : String.Empty));
-                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("EstimatedAmount", DbType.Double, (vEstimatedAmount_Temp.Trim() != "") ? vEstimatedAmount_Temp.Trim() : String.Empty));
-                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("ThirdInsurance", DbType.Double, (vThirdInsurance_Temp.Trim() != "") ? vThirdInsurance_Temp.Trim() : String.Empty));
-                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("CompInsurance", DbType.Double, (vCompInsurance_Temp.Trim() != "") ? vCompInsurance_Temp.Trim() : String.Empty));
-                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("DriverSharing", DbType.Double, (vDriverSharing_Temp.Trim() != "") ? vDriverSharing_Temp.Trim() : String.Empty));
-                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("CompanySharing", DbType.Double, (vCompanySharing_Temp.Trim() != "") ? vCompanySharing_Temp.Trim() : String.Empty));
-                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("CarDamageAMT", DbType.Double, (vCarDamageAMT_Temp.Trim() != "") ? vCarDamageAMT_Temp.Trim() : String.Empty));
-                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("PersonDamageAMT", DbType.Double, (vPersonDamageAMT_Temp.Trim() != "") ? vPersonDamageAMT_Temp.Trim() : String.Empty));
-                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("RelationComp", DbType.Double, (vRelationComp_Temp.Trim() != "") ? vRelationComp_Temp.Trim() : String.Empty));
-                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("ReconciliationDate", DbType.Date, (vReconciliationDate_Temp.Trim() != "") ? vReconciliationDate_Temp.Trim() : String.Empty));
-                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("PassengerInsu", DbType.Double, (vPassengerInsu_Temp.Trim() != "") ? vPassengerInsu_Temp.Trim() : String.Empty));
-                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("Remark", DbType.String, (vRemark_Temp.Trim() != "") ? vRemark_Temp.Trim() : String.Empty));
-                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("CaseNoItems", DbType.String, vCaseNoItems_Temp.Trim()));
-
-                    sdsAnecdoteCaseB_Data.Update();
-                    fvAnecdoteCaseB_Data.ChangeMode(FormViewMode.ReadOnly);
-                    gridAnecdoteCaseB_List.DataBind();
-                    fvAnecdoteCaseB_Data.DataBind();
-                }
-            }
-            catch (Exception eMessage)
-            {
-                Response.Write("<Script language='Javascript'>");
-                Response.Write("alert('" + eMessage.Message + "')");
-                Response.Write("</" + "Script>");
-                //throw;
-            }
-        }
-
-        /// <summary>
-        /// 新增 B 檔資料
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void bbOKCaseB_INS_Click(object sender, EventArgs e)
-        {
-            if (vConnStr == "")
-            {
-                vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
-            }
-            try
-            {
-                Label eCaseBCaseNo_INS = (Label)fvAnecdoteCaseB_Data.FindControl("eCaseBCaseNo_INS");
-                if (eCaseBCaseNo_INS != null)
-                {
-                    string vCaseNo_Temp = eCaseBCaseNo_INS.Text.Trim();
-                    string vSQLStr_Temp = "select max(Items) MAxItem from AnecdoteCaseB where CaseNo = '" + vCaseNo_Temp + "' ";
-                    string vMaxItem = PF.GetValue(vConnStr, vSQLStr_Temp, "MaxItem");
-                    int vItem = (vMaxItem != "") ? Int32.Parse(vMaxItem) + 1 : 1;
-                    string vNewItems = vItem.ToString("D4");
-                    string vNewCaseNoItems = vCaseNo_Temp.Trim() + vItem.ToString("D4");
-                    TextBox eRelationship_INS = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCaseBRelationship_INS");
-                    string vRelationship_Temp = eRelationship_INS.Text.Trim();
-                    TextBox eRelCarID_INS = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCaseBRelCarID_INS");
-                    string vRelCarID_Temp = eRelCarID_INS.Text.Trim().ToUpper();
-                    TextBox eEstimatedAmount_INS = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCaseBEstimatedAmount_INS");
-                    string vEstimatedAmount_Temp = eEstimatedAmount_INS.Text.Trim();
-                    TextBox eThirdInsurance_INS = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCaseBThirdInsurance_INS");
-                    string vThirdInsurance_Temp = eThirdInsurance_INS.Text.Trim();
-                    TextBox eCompInsurance_INS = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCaseBCompInsurance_INS");
-                    string vCompInsurance_Temp = eCompInsurance_INS.Text.Trim();
-                    TextBox eDriverSharing_INS = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCaseBDriverSharing_INS");
-                    string vDriverSharing_Temp = eDriverSharing_INS.Text.Trim();
-                    TextBox eCompanySharing_INS = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCaseBCompanySharing_INS");
-                    string vCompanySharing_Temp = eCompanySharing_INS.Text.Trim();
-                    TextBox eCarDamageAMT_INS = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCaseBCarDamageAMT_INS");
-                    string vCarDamageAMT_Temp = eCarDamageAMT_INS.Text.Trim();
-                    TextBox ePersonDamageAMT_INS = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCaseBPersonDamageAMT_INS");
-                    string vPersonDamageAMT_Temp = ePersonDamageAMT_INS.Text.Trim();
-                    TextBox eRelationComp_INS = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCaseBRelationComp_INS");
-                    string vRelationComp_Temp = eRelationComp_INS.Text.Trim();
-                    TextBox eReconciliationDate_INS = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCaseBReconciliationDate_INS");
-                    string vReconciliationDate_Temp = (eReconciliationDate_INS.Text.Trim() != "") ? DateTime.Parse(eReconciliationDate_INS.Text.Trim()).ToShortDateString() : "";
-                    TextBox ePassengerInsu_INS = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCaseBPassengerInsu_INS");
-                    string vPassengerInsu_Temp = ePassengerInsu_INS.Text.Trim();
-                    TextBox eRemark_INS = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCaseBRemark_INS");
-                    string vRemark_Temp = eRemark_INS.Text.Trim();
-
-                    sdsAnecdoteCaseB_Data.InsertCommand = "INSERT INTO AnecdoteCaseB " + Environment.NewLine +
-                                                          "            (CaseNo, Items, CaseNoItems, Relationship, RelCar_ID, EstimatedAmount, ThirdInsurance, CompInsurance, " + Environment.NewLine +
-                                                          "             DriverSharing, CompanySharing, CarDamageAMT, PersonDamageAMT, RelationComp, ReconciliationDate, " + Environment.NewLine +
-                                                          "             PassengerInsu, Remark) " + Environment.NewLine +
-                                                          "     VALUES (@CaseNo, @Items, @CaseNoItems, @Relationship, @RelCar_ID, @EstimatedAmount, @ThirdInsurance, @CompInsurance, " + Environment.NewLine +
-                                                          "             @DriverSharing, @CompanySharing, @CarDamageAMT, @PersonDamageAMT, @RelationComp, @ReconciliationDate, @PassengerInsu, @Remark)";
-
-                    sdsAnecdoteCaseB_Data.InsertParameters.Clear();
-                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("CaseNo", DbType.String, vCaseNo_Temp.Trim()));
-                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("Items", DbType.String, vNewItems.Trim()));
-                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("CaseNoItems", DbType.String, vNewCaseNoItems.Trim()));
-                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("Relationship", DbType.String, (vRelationship_Temp.Trim() != "") ? vRelationship_Temp.Trim() : String.Empty));
-                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("RelCar_ID", DbType.String, (vRelCarID_Temp.Trim() != "") ? vRelCarID_Temp.Trim() : String.Empty));
-                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("EstimatedAmount", DbType.Double, (vEstimatedAmount_Temp.Trim() != "") ? vEstimatedAmount_Temp.Trim() : String.Empty));
-                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("ThirdInsurance", DbType.Double, (vThirdInsurance_Temp.Trim() != "") ? vThirdInsurance_Temp.Trim() : String.Empty));
-                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("CompInsurance", DbType.Double, (vCompInsurance_Temp.Trim() != "") ? vCompInsurance_Temp.Trim() : String.Empty));
-                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("DriverSharing", DbType.Double, (vDriverSharing_Temp.Trim() != "") ? vDriverSharing_Temp.Trim() : String.Empty));
-                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("CompanySharing", DbType.Double, (vCompanySharing_Temp.Trim() != "") ? vCompanySharing_Temp.Trim() : String.Empty));
-                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("CarDamageAMT", DbType.Double, (vCarDamageAMT_Temp.Trim() != "") ? vCarDamageAMT_Temp.Trim() : String.Empty));
-                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("PersonDamageAMT", DbType.Double, (vPersonDamageAMT_Temp.Trim() != "") ? vPersonDamageAMT_Temp.Trim() : String.Empty));
-                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("RelationComp", DbType.Double, (vRelationComp_Temp.Trim() != "") ? vRelationComp_Temp.Trim() : String.Empty));
-                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("ReconciliationDate", DbType.Date, (vReconciliationDate_Temp.Trim() != "") ? vReconciliationDate_Temp.Trim() : String.Empty));
-                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("PassengerInsu", DbType.Double, (vPassengerInsu_Temp.Trim() != "") ? vPassengerInsu_Temp.Trim() : String.Empty));
-                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("Remark", DbType.String, (vRemark_Temp.Trim() != "") ? vRemark_Temp.Trim() : String.Empty));
-
-                    sdsAnecdoteCaseB_Data.Insert();
-
-                    fvAnecdoteCaseB_Data.ChangeMode(FormViewMode.ReadOnly);
-                    gridAnecdoteCaseB_List.DataBind();
-                    fvAnecdoteCaseB_Data.DataBind();
-                }
-            }
-            catch (Exception eMessage)
-            {
-                Response.Write("<Script language='Javascript'>");
-                Response.Write("alert('" + eMessage.Message + "')");
-                Response.Write("</" + "Script>");
-                //throw;
-            }
-        }
-
-        /// <summary>
-        /// 刪除 B 檔資料
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void bbDelCaseB_List_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                Label eCaseBCaseNo_List = (Label)fvAnecdoteCaseB_Data.FindControl("eCaseBCaseNo_List");
-                if (eCaseBCaseNo_List != null)
-                {
-                    //雖然是刪除 B 檔，還是要在 A 檔的異動記錄加入一筆資料
-                    DateTime vModifyDate = DateTime.Today;
-                    string vHistoryNo = vModifyDate.Year.ToString("D4") + vModifyDate.Month.ToString("D2") + "DELB";
-                    string vSQLStr_Temp = "select max(HistoryNo) MaxNo from AnecdoteCaseHistory where HistoryNo like '" + vHistoryNo + "%' ";
-                    string vMaxNo = PF.GetValue(vConnStr, vSQLStr_Temp, "MaxNo");
-                    string vIndex_Str = (vMaxNo.Replace(vHistoryNo, "").Trim() != "") ? vMaxNo.Replace(vHistoryNo, "").Trim() : "0";
-                    int vIndex = Int32.Parse(vIndex_Str) + 1;
-                    string vNewHistoryNo = vHistoryNo + vIndex.ToString("D4");
-                    string vCaseNo_Temp = eCaseBCaseNo_List.Text.Trim();
-                    //寫入 A 檔異動記錄
-                    vSQLStr_Temp = "INSERT INTO [dbo].[AnecdoteCaseHistory] " + Environment.NewLine +
-                                   "            ([HistoryNo],[CaseNo],[HasInsurance],[DepNo],[DepName],[BuildDate],[BuildMan],[Car_ID],[Driver], " + Environment.NewLine +
-                                   "             [DriverName],[InsuMan],[AnecdotalResRatio],[IsNoDeduction],[DeductionDate],[Remark]," + Environment.NewLine +
-                                   "             [ModifyType],[ModifyDate],[ModifyMan],[CaseOccurrence],[ERPCouseNo],[CaseClose]) " + Environment.NewLine +
-                                   "select '" + vNewHistoryNo + "',[CaseNo],[HasInsurance],[DepNo],[DepName],[BuildDate],[BuildMan],[Car_ID],[Driver], " + Environment.NewLine +
-                                   "       [DriverName],[InsuMan],[AnecdotalResRatio],[IsNoDeduction],[DeductionDate],[Remark]," + Environment.NewLine +
-                                   "       'DELB',GetDate(),'" + vLoginID + "',[CaseOccurrence],[ERPCouseNo],[CaseClose] " + Environment.NewLine +
-                                   "  from [dbo].[AnecdoteCase] " + Environment.NewLine +
-                                   " where CaseNo = '" + vCaseNo_Temp + "' ";
-                    PF.ExecSQL(vConnStr, vSQLStr_Temp);
-                    //寫入 B 檔異動記錄
-                    Label eCaseNoItems_List = (Label)fvAnecdoteCaseB_Data.FindControl("eCaseBCaseNoItems_List");
-                    string vCaseNoItems_Temp = eCaseNoItems_List.Text.Trim();
-                    vSQLStr_Temp = "select max(Items) MaxItem from AnecdoteCaseBHistory where HistoryNo = '" + vNewHistoryNo + "' ";
-                    vMaxNo = PF.GetValue(vConnStr, vSQLStr_Temp, "MaxItem");
-                    int vItems = (vMaxNo != "") ? Int32.Parse(vMaxNo.Trim()) + 1 : 1;
-                    //複製 B 檔原資料到異動檔
-                    vSQLStr_Temp = "INSERT INTO [dbo].[AnecdoteCaseBHistory] " + Environment.NewLine +
-                                   "            ([HistoryNo],[ItemsH],[HistoryNoItems],[CaseNo],[Items],[CaseNoItems],[Relationship],[RelCar_ID], " + Environment.NewLine +
-                                   "             [EstimatedAmount],[ThirdInsurance],[CompInsurance],[DriverSharing],[CompanySharing],[CarDamageAMT], " + Environment.NewLine +
-                                   "             [PersonDamageAMT],[RelationComp],[ReconciliationDate],[Remark]," + Environment.NewLine +
-                                   "             [ModifyType],[ModifyDate],[ModifyMan],[PassengerInsu])" + Environment.NewLine +
-                                   "select '" + vNewHistoryNo + "','" + vItems.ToString("D4") + "','" + vNewHistoryNo + vItems.ToString("D4") + "',[CaseNo],[Items],[CaseNoItems], " + Environment.NewLine +
-                                   "       [Relationship],[RelCar_ID],[EstimatedAmount],[ThirdInsurance],[CompInsurance],[DriverSharing],[CompanySharing], " + Environment.NewLine +
-                                   "       [CarDamageAMT],[PersonDamageAMT],[RelationComp],[ReconciliationDate],[Remark], " + Environment.NewLine +
-                                   "       'DELB',GetDate(),'" + vLoginID + "',[PassengerInsu] " + Environment.NewLine +
-                                   "  from [dbo].[AnecdoteCaseB] " + Environment.NewLine +
-                                   " where CaseNoItems = '" + vCaseNoItems_Temp + "' ";
-                    PF.ExecSQL(vConnStr, vSQLStr_Temp);
-
-                    //開始刪除
-                    using (SqlDataSource dsDelTemp = new SqlDataSource())
-                    {
-                        dsDelTemp.ConnectionString = vConnStr;
-                        //刪除 B 檔
-                        dsDelTemp.DeleteCommand = "delete AnecdoteCaseB where CaseNoItems = @CaseNoItems ";
-                        dsDelTemp.DeleteParameters.Clear();
-                        dsDelTemp.DeleteParameters.Add(new Parameter("CaseNoItems", DbType.String, vCaseNoItems_Temp.Trim()));
-                        dsDelTemp.Delete();
-                    }
-                    fvAnecdoteCaseB_Data.ChangeMode(FormViewMode.ReadOnly);
-                    gridAnecdoteCaseB_List.DataBind();
-                    fvAnecdoteCaseB_Data.DataBind();
-                }
-            }
-            catch (Exception eMessage)
-            {
-                Response.Write("<Script language='Javascript'>");
-                Response.Write("alert('" + eMessage.Message + "')");
-                Response.Write("</" + "Script>");
-                //throw;
-            }
-        }
-
-        protected void fvAnecdoteCaseB_Data_DataBound(object sender, EventArgs e)
-        {
-            string vTempDateURL = "";
-            string vTempDateScript = "";
-
-            switch (fvAnecdoteCaseB_Data.CurrentMode)
-            {
-                case FormViewMode.ReadOnly:
-                    break;
-                case FormViewMode.Edit:
-                    TextBox eCaseBReconciliationDate_Edit = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCaseBReconciliationDate_Edit");
-                    if (eCaseBReconciliationDate_Edit != null)
-                    {
-                        vTempDateURL = "InputDate_ChineseYears.aspx?TextboxID=" + eCaseBReconciliationDate_Edit.ClientID;
-                        vTempDateScript = "window.open('" + vTempDateURL + "','','height=315, width=350,status=no,toolbar=no,menubar=no,location=no','')";
-                        eCaseBReconciliationDate_Edit.Attributes["onClick"] = vTempDateScript;
-                    }
-                    break;
-                case FormViewMode.Insert:
-                    Label eCaseNo_List = (Label)fvAnecdoteCaseA_Data.FindControl("eCaseNo_List");
-                    string vCaseNo = eCaseNo_List.Text.Trim();
-                    Label eCaseBCaseNo = (Label)fvAnecdoteCaseB_Data.FindControl("eCaseBCaseNo_INS");
-                    eCaseBCaseNo.Text = vCaseNo;
-                    TextBox eCaseBReconciliationDate_INS = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCaseBReconciliationDate_INS");
-                    if (eCaseBReconciliationDate_INS != null)
-                    {
-                        vTempDateURL = "InputDate_ChineseYears.aspx?TextboxID=" + eCaseBReconciliationDate_INS.ClientID;
-                        vTempDateScript = "window.open('" + vTempDateURL + "','','height=315, width=350,status=no,toolbar=no,menubar=no,location=no','')";
-                        eCaseBReconciliationDate_INS.Attributes["onClick"] = vTempDateScript;
-                    }
-                    break;
-            }
-        }
-
-        /// <summary>
-        /// 匯出 EXCEL
+        /// 匯出 EXCEL 檔案
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1796,6 +257,8 @@ namespace TyBus_Intranet_Test_V3
             {
                 vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
             }
+            eErrorMSG_Main.Text = "";
+            eErrorMSG_Main.Visible = false;
             HSSFWorkbook wbExcel = new HSSFWorkbook();
             //Excel 工作表
             HSSFSheet wsExcel;
@@ -1835,7 +298,7 @@ namespace TyBus_Intranet_Test_V3
 
             string vHeaderText = "";
             int vLinesNo = 0;
-            string vSelStr = GetSelectStr_Excel();
+            string vSelStr = GetSelStr_Excel();
             string vFileName = "肇事案件處理清冊";
             DateTime vBuDate;
 
@@ -1849,63 +312,101 @@ namespace TyBus_Intranet_Test_V3
                     //查詢結果有資料的時候才執行
                     //新增一個工作表
                     wsExcel = (HSSFSheet)wbExcel.CreateSheet(vFileName);
-                    //寫入標題列
-                    vLinesNo = 0;
-                    wsExcel.CreateRow(vLinesNo);
-                    for (int i = 0; i < drExcel.FieldCount; i++)
+                    try
                     {
-                        vHeaderText = (drExcel.GetName(i) == "CaseNo") ? "序號" :
-                                      (drExcel.GetName(i) == "HasInsurance") ? "是否出險" :
-                                      (drExcel.GetName(i) == "DepNo") ? "" :
-                                      (drExcel.GetName(i) == "DepName") ? "站別" :
-                                      (drExcel.GetName(i) == "BuildDate") ? "發生日期" :
-                                      (drExcel.GetName(i) == "BuildMan") ? "" :
-                                      (drExcel.GetName(i) == "BuildManName") ? "建檔人" :
-                                      (drExcel.GetName(i) == "Car_ID") ? "牌照號碼" :
-                                      (drExcel.GetName(i) == "Driver") ? "" :
-                                      (drExcel.GetName(i) == "DriverName") ? "駕駛員" :
-                                      (drExcel.GetName(i) == "InsuMan") ? "保險經辦人" :
-                                      (drExcel.GetName(i) == "AnecdotalResRatio") ? "肇責比率" :
-                                      (drExcel.GetName(i) == "IsNoDeduction") ? "免扣精勤" :
-                                      (drExcel.GetName(i) == "DeductionDate") ? "扣發日期" :
-                                      (drExcel.GetName(i) == "Remark") ? "備註" :
-                                      (drExcel.GetName(i) == "CaseOccurrence") ? "肇事經過" : drExcel.GetName(i);
-                        wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellValue(vHeaderText);
-                        wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csTitle;
-                    }
-                    vLinesNo++;
-                    while (drExcel.Read())
-                    {
+                        //寫入標題列
+                        vLinesNo = 0;
                         wsExcel.CreateRow(vLinesNo);
                         for (int i = 0; i < drExcel.FieldCount; i++)
                         {
-                            wsExcel.GetRow(vLinesNo).CreateCell(i);
-                            if (((drExcel.GetName(i) == "DeductionDate") ||
-                                 (drExcel.GetName(i) == "BuildDate")) && (drExcel[i].ToString() != ""))
-                            {
-                                string vTempStr = drExcel[i].ToString();
-                                vBuDate = DateTime.Parse(drExcel[i].ToString());
-                                wsExcel.GetRow(vLinesNo).GetCell(i).SetCellType(CellType.String);
-                                wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(vBuDate.Year.ToString("D4") + "/" + vBuDate.ToString("MM/dd"));
-                                wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csData;
-                            }
-                            else if ((drExcel.GetName(i) == "AnecdotalResRatio") && (drExcel[i].ToString() != ""))
-                            {
-                                wsExcel.GetRow(vLinesNo).GetCell(i).SetCellType(CellType.Numeric);
-                                wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(double.Parse(drExcel[i].ToString()));
-                                wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csData_Int;
-                            }
-                            else
-                            {
-                                wsExcel.GetRow(vLinesNo).GetCell(i).SetCellType(CellType.String);
-                                wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(drExcel[i].ToString());
-                                wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csData;
-                            }
+                            vHeaderText = (drExcel.GetName(i) == "CaseNo") ? "肇事單號" :
+                                          (drExcel.GetName(i) == "HasInsurance") ? "是否出險" :
+                                          (drExcel.GetName(i) == "DepNo") ? "" :
+                                          (drExcel.GetName(i) == "DepName") ? "站別" :
+                                          (drExcel.GetName(i) == "BuildDate") ? "發生日期" :
+                                          (drExcel.GetName(i) == "BuildMan") ? "" :
+                                          (drExcel.GetName(i) == "BuildManName") ? "建檔人" :
+                                          (drExcel.GetName(i) == "Car_ID") ? "牌照號碼" :
+                                          (drExcel.GetName(i) == "Driver") ? "" :
+                                          (drExcel.GetName(i) == "DriverName") ? "駕駛員" :
+                                          (drExcel.GetName(i) == "InsuMan") ? "保險經辦人" :
+                                          (drExcel.GetName(i) == "AnecdotalResRatio") ? "肇責比率" :
+                                          (drExcel.GetName(i) == "IsNoDeduction") ? "免扣精勤" :
+                                          (drExcel.GetName(i) == "DeductionDate") ? "扣發日期" :
+                                          (drExcel.GetName(i) == "Remark") ? "備註" :
+                                          (drExcel.GetName(i) == "CaseOccurrence") ? "肇事經過" :
+                                          (drExcel.GetName(i) == "ERPCouseNo") ? "ERP單號" :
+                                          (drExcel.GetName(i) == "CaseClose") ? "是否和解" :
+                                          (drExcel.GetName(i) == "IsExemption") ? "是否裁定免責" :
+                                          (drExcel.GetName(i) == "PaidAmount") ? "已自付總額" :
+                                          (drExcel.GetName(i) == "Penalty") ? "罰款分擔金額" :
+                                          (drExcel.GetName(i) == "PenaltyRatio") ? "罰款分擔比例" :
+                                          (drExcel.GetName(i) == "InsuAmount") ? "保險理賠金" :
+                                          (drExcel.GetName(i) == "IDCardNo") ? "身分證號" :
+                                          (drExcel.GetName(i) == "Birthday") ? "出生日期" :
+                                          (drExcel.GetName(i) == "Assumeday") ? "到職日期" :
+                                          (drExcel.GetName(i) == "TelephoneNo") ? "連絡電話" :
+                                          (drExcel.GetName(i) == "Address") ? "戶籍地址" :
+                                          (drExcel.GetName(i) == "PersonDamage") ? "體傷" :
+                                          (drExcel.GetName(i) == "CarDamage") ? "車 (財) 損" :
+                                          (drExcel.GetName(i) == "ReportDate") ? "報告日期" :
+                                          (drExcel.GetName(i) == "CaseDate") ? "事件日期" :
+                                          (drExcel.GetName(i) == "CaseTime") ? "事件時間" :
+                                          (drExcel.GetName(i) == "OutReportNo") ? "登記聯單編號" :
+                                          (drExcel.GetName(i) == "CasePosition") ? "事件地點" :
+                                          (drExcel.GetName(i) == "PoliceUnit") ? "警方受理單位" :
+                                          (drExcel.GetName(i) == "PoliceName") ? "承辦員警" :
+                                          (drExcel.GetName(i) == "HasVideo") ? "是否有行車影像" :
+                                          (drExcel.GetName(i) == "NoVideoReason") ? "無行車影像原因" :
+                                          (drExcel.GetName(i) == "HasCaseData") ? "是否已申請案件資料" :
+                                          (drExcel.GetName(i) == "ModifyMan") ? "修改人" :
+                                          (drExcel.GetName(i) == "ModifyDate") ? "修改日期" :
+                                          (drExcel.GetName(i) == "HasAccReport") ? "是否申請鑑定" : drExcel.GetName(i);
+                            wsExcel.GetRow(vLinesNo).CreateCell(i).SetCellValue(vHeaderText);
+                            wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csTitle;
                         }
                         vLinesNo++;
-                    }
-                    try
-                    {
+                        while (drExcel.Read())
+                        {
+                            wsExcel.CreateRow(vLinesNo);
+                            for (int i = 0; i < drExcel.FieldCount; i++)
+                            {
+                                wsExcel.GetRow(vLinesNo).CreateCell(i);
+                                if (((drExcel.GetName(i).ToUpper() == "DEDUCTIONDATE") ||
+                                     (drExcel.GetName(i).ToUpper() == "BUILDDATE") ||
+                                     (drExcel.GetName(i).ToUpper() == "BIRTHDAY") ||
+                                     (drExcel.GetName(i).ToUpper() == "ASSUMEDAY") ||
+                                     (drExcel.GetName(i).ToUpper() == "REPORTDATE") ||
+                                     (drExcel.GetName(i).ToUpper() == "CASEDATE") ||
+                                     (drExcel.GetName(i).ToUpper() == "MODIFYDATE")) && (drExcel[i].ToString() != ""))
+                                {
+                                    //日期欄位
+                                    string vTempStr = drExcel[i].ToString();
+                                    vBuDate = DateTime.Parse(drExcel[i].ToString());
+                                    wsExcel.GetRow(vLinesNo).GetCell(i).SetCellType(CellType.String);
+                                    wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(vBuDate.Year.ToString("D4") + "/" + vBuDate.ToString("MM/dd"));
+                                    wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csData;
+                                }
+                                else if ((drExcel.GetName(i).ToUpper() == "ANECDOTALRESRATIO") ||
+                                         (drExcel.GetName(i).ToUpper() == "PAIDAMOUNT") ||
+                                         (drExcel.GetName(i).ToUpper() == "PENALY") ||
+                                         (drExcel.GetName(i).ToUpper() == "PENALYRATIO") ||
+                                         (drExcel.GetName(i).ToUpper() == "INSUAMOUNT") && (drExcel[i].ToString() != ""))
+                                {
+                                    //浮點數欄位
+                                    wsExcel.GetRow(vLinesNo).GetCell(i).SetCellType(CellType.Numeric);
+                                    wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(double.Parse(drExcel[i].ToString()));
+                                    wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csData_Int;
+                                }
+                                else
+                                {
+                                    wsExcel.GetRow(vLinesNo).GetCell(i).SetCellType(CellType.String);
+                                    wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(drExcel[i].ToString());
+                                    wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csData;
+                                }
+                            }
+                            vLinesNo++;
+                        }
                         var msTarget = new NPOIMemoryStream();
                         msTarget.AllowClose = false;
                         wbExcel.Write(msTarget);
@@ -1950,46 +451,1640 @@ namespace TyBus_Intranet_Test_V3
                     }
                     catch (Exception eMessage)
                     {
-                        Response.Write("<Script language='Javascript'>");
-                        Response.Write("alert('" + eMessage.Message + "')");
-                        Response.Write("</" + "Script>");
+                        eErrorMSG_Main.Text = eMessage.Message;
+                        eErrorMSG_Main.Visible = true;
                     }
+                }
+                else
+                {
+                    eErrorMSG_Main.Text = "查無資料可匯出！";
+                    eErrorMSG_Main.Visible = true;
                 }
             }
         }
 
-        protected void eDriver_Search_TextChanged(object sender, EventArgs e)
+        /// <summary>
+        /// 回主畫面
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void bbCancel_Click(object sender, EventArgs e)
         {
-            string vDriver = eDriver_Search.Text.Trim();
-            string vDriverName = "";
-            string vSQLStr_Temp = "select [Name] from  Employee where EmpNo = '" + vDriver + "' ";
+            Response.Redirect("~/default.aspx");
+        }
+
+        /// <summary>
+        /// A 檔 FormView 已經完成資料繫結
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void fvAnecdoteCaseA_Data_DataBound(object sender, EventArgs e)
+        {
+            Label eCaseNo_A;
+            TextBox eBuildDate;
+            TextBox eReportDate;
+            TextBox eDeductionDate;
+            TextBox eBirthday;
+            TextBox eCaseDate;
+            TextBox eBuildMan;
+            CheckBox cbHasInsurance;
+            CheckBox cbCaseClose;
+            CheckBox cbIsNoDeduction;
+            CheckBox cbHasVideo;
+            CheckBox cbHasAccReport;
+            CheckBox cbIsExemption;
+            Label eHasInsurance;
+            Label eCaseClose;
+            Label eIsNoDeduction;
+            Label eHasVideo;
+            Label eHasCaseData;
+            Label eHasAccReport;
+            Label eIsExemption;
+            Label eBuildManName;
+            RadioButtonList rbHasCaseData;
+
+            bool vAllowDep = ((vLoginID.ToUpper() == "SUPERVISOR") || (vLoginDepNo == "09") || (vLoginDepNo == "06"));
+            switch (fvAnecdoteCaseA_Data.CurrentMode)
+            {
+                case FormViewMode.ReadOnly:
+                    plDetailDataShow.Visible = ((gridAnecdoteCaseA_List.Rows.Count > 0) && (gridAnecdoteCaseA_List.SelectedIndex >= 0));
+                    //在畫面上尋找 bbExportERP_List 這個按鈕，有被實體化才往下做
+                    Button bbExportERP = (Button)fvAnecdoteCaseA_Data.FindControl("bbExportERP_List");
+                    if (bbExportERP != null)
+                    {
+                        Label eERPCouseNo = (Label)fvAnecdoteCaseA_Data.FindControl("eERPCauseNo_List");
+                        Button bbDelERP = (Button)fvAnecdoteCaseA_Data.FindControl("bbDelERP_List");
+                        bbExportERP.Visible = ((vAllowDep) && (eERPCouseNo.Text.Trim() == ""));
+                        bbDelERP.Visible = ((vAllowDep) && (eERPCouseNo.Text.Trim() != ""));
+                        //設定 CheckBox 勾選狀態
+                        cbHasInsurance = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbHasInsurance_List");
+                        eHasInsurance = (Label)fvAnecdoteCaseA_Data.FindControl("eHasInsurance_List");
+                        cbHasInsurance.Checked = (eHasInsurance.Text.Trim().ToUpper() == "TRUE") ? true : false;
+                        cbCaseClose = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbCaseClose_List");
+                        eCaseClose = (Label)fvAnecdoteCaseA_Data.FindControl("eCaseClose_List");
+                        cbCaseClose.Checked = (eCaseClose.Text.Trim().ToUpper() == "TRUE") ? true : false;
+                        cbIsNoDeduction = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbIsNoDeduction_List");
+                        eIsNoDeduction = (Label)fvAnecdoteCaseA_Data.FindControl("eIsNoDeduction_List");
+                        cbIsNoDeduction.Checked = (eIsNoDeduction.Text.Trim().ToUpper() == "TRUE") ? true : false;
+                        cbHasVideo = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbHasVideo_List");
+                        eHasVideo = (Label)fvAnecdoteCaseA_Data.FindControl("eHasVideo_List");
+                        cbHasVideo.Checked = (eHasVideo.Text.Trim().ToUpper() == "Y") ? true : false;
+                        rbHasCaseData = (RadioButtonList)fvAnecdoteCaseA_Data.FindControl("rbHasCaseData_List");
+                        eHasCaseData = (Label)fvAnecdoteCaseA_Data.FindControl("eHasCaseData_List");
+                        rbHasCaseData.SelectedIndex = rbHasCaseData.Items.IndexOf(rbHasCaseData.Items.FindByValue(eHasCaseData.Text.Trim().ToUpper()));
+                        cbHasAccReport = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbHasAccReport_List");
+                        eHasAccReport = (Label)fvAnecdoteCaseA_Data.FindControl("eHasAccReport_List");
+                        cbHasAccReport.Checked = (eHasAccReport.Text.Trim().ToUpper() == "Y") ? true : false;
+                        cbIsExemption = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbIsExemption_List");
+                        eIsExemption = (Label)fvAnecdoteCaseA_Data.FindControl("eIsExemption_List");
+                        cbIsExemption.Checked = (eIsExemption.Text.Trim().ToUpper() == "Y") ? true : false;
+                    }
+                    break;
+                case FormViewMode.Edit:
+                    //先在畫面上尋找 eCaseNo_A 這個欄位，這個欄位有被實體化才往下做
+                    eCaseNo_A = (Label)fvAnecdoteCaseA_Data.FindControl("eCaseNo_A_Edit");
+                    if (eCaseNo_A != null)
+                    {
+                        //設定幾個日期輸入欄位的動作
+                        eBuildDate = (TextBox)fvAnecdoteCaseA_Data.FindControl("eBuildDate_Edit");
+                        vCaseDateURL = "InputDate_ChineseYears.aspx?TextboxID=" + eBuildDate.ClientID;
+                        vCaseDateScript = "window.open('" + vCaseDateURL + "','','height=315, width=350,status=no,toolbar=no,menubar=no,location=no','')";
+                        eBuildDate.Attributes["onClick"] = vCaseDateScript;
+                        eReportDate = (TextBox)fvAnecdoteCaseA_Data.FindControl("eReportDate_Edit");
+                        vCaseDateURL = "InputDate_ChineseYears.aspx?TextboxID=" + eReportDate.ClientID;
+                        vCaseDateScript = "window.open('" + vCaseDateURL + "','','height=315, width=350,status=no,toolbar=no,menubar=no,location=no','')";
+                        eReportDate.Attributes["onClick"] = vCaseDateScript;
+                        eDeductionDate = (TextBox)fvAnecdoteCaseA_Data.FindControl("eDeductionDate_Edit");
+                        vCaseDateURL = "InputDate_ChineseYears.aspx?TextboxID=" + eDeductionDate.ClientID;
+                        vCaseDateScript = "window.open('" + vCaseDateURL + "','','height=315, width=350,status=no,toolbar=no,menubar=no,location=no','')";
+                        eDeductionDate.Attributes["onClick"] = vCaseDateScript;
+                        eBirthday = (TextBox)fvAnecdoteCaseA_Data.FindControl("eBirthday_Edit");
+                        vCaseDateURL = "InputDate_ChineseYears.aspx?TextboxID=" + eBirthday.ClientID;
+                        vCaseDateScript = "window.open('" + vCaseDateURL + "','','height=315, width=350,status=no,toolbar=no,menubar=no,location=no','')";
+                        eBirthday.Attributes["onClick"] = vCaseDateScript;
+                        eCaseDate = (TextBox)fvAnecdoteCaseA_Data.FindControl("eCaseDate_Edit");
+                        vCaseDateURL = "InputDate_ChineseYears.aspx?TextboxID=" + eCaseDate.ClientID;
+                        vCaseDateScript = "window.open('" + vCaseDateURL + "','','height=315, width=350,status=no,toolbar=no,menubar=no,location=no','')";
+                        eCaseDate.Attributes["onClick"] = vCaseDateScript;
+                        //設定 CheckBox 勾選狀態
+                        cbHasInsurance = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbHasInsurance_Edit");
+                        eHasInsurance = (Label)fvAnecdoteCaseA_Data.FindControl("eHasInsurance_Edit");
+                        cbHasInsurance.Checked = (eHasInsurance.Text.Trim().ToUpper() == "TRUE");
+                        cbCaseClose = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbCaseClose_Edit");
+                        eCaseClose = (Label)fvAnecdoteCaseA_Data.FindControl("eCaseClose_Edit");
+                        cbCaseClose.Checked = (eCaseClose.Text.Trim().ToUpper() == "TRUE");
+                        cbIsNoDeduction = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbIsNoDeduction_Edit");
+                        eIsNoDeduction = (Label)fvAnecdoteCaseA_Data.FindControl("eIsNoDeduction_Edit");
+                        cbIsNoDeduction.Checked = (eIsNoDeduction.Text.Trim().ToUpper() == "TRUE");
+                        cbHasVideo = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbHasVideo_Edit");
+                        eHasVideo = (Label)fvAnecdoteCaseA_Data.FindControl("eHasVideo_Edit");
+                        cbHasVideo.Checked = (eHasVideo.Text.Trim().ToUpper() == "Y");
+                        rbHasCaseData = (RadioButtonList)fvAnecdoteCaseA_Data.FindControl("rbHasCaseData_Edit");
+                        eHasCaseData = (Label)fvAnecdoteCaseA_Data.FindControl("eHasCaseData_Edit");
+                        rbHasCaseData.SelectedIndex = rbHasCaseData.Items.IndexOf(rbHasCaseData.Items.FindByValue(eHasCaseData.Text.Trim().ToUpper()));
+                        cbHasAccReport = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbHasAccReport_Edit");
+                        eHasAccReport = (Label)fvAnecdoteCaseA_Data.FindControl("eHasAccReport_Edit");
+                        cbHasAccReport.Checked = (eHasAccReport.Text.Trim().ToUpper() == "Y");
+                        cbIsExemption = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbIsExemption_Edit");
+                        eIsExemption = (Label)fvAnecdoteCaseA_Data.FindControl("eIsExemption_Edit");
+                        cbIsExemption.Checked = (eIsExemption.Text.Trim().ToUpper() == "Y");
+                    }
+                    break;
+                case FormViewMode.Insert:
+                    //先在畫面上尋找 eCaseNo_A 這個欄位，這個欄位有被實體化才往下做
+                    eCaseNo_A = (Label)fvAnecdoteCaseA_Data.FindControl("eCaseNo_A_INS");
+                    if (eCaseNo_A != null)
+                    {
+                        //建檔人直接預帶登入人
+                        eBuildMan = (TextBox)fvAnecdoteCaseA_Data.FindControl("eBuildMan_INS");
+                        eBuildMan.Text = vLoginID;
+                        eBuildManName = (Label)fvAnecdoteCaseA_Data.FindControl("eBuildManName_INS");
+                        eBuildManName.Text = vLoginName;
+                        //設定幾個日期輸入欄位的動作
+                        eBuildDate = (TextBox)fvAnecdoteCaseA_Data.FindControl("eBuildDate_INS");
+                        vCaseDateURL = "InputDate_ChineseYears.aspx?TextboxID=" + eBuildDate.ClientID;
+                        vCaseDateScript = "window.open('" + vCaseDateURL + "','','height=315, width=350,status=no,toolbar=no,menubar=no,location=no','')";
+                        eBuildDate.Attributes["onClick"] = vCaseDateScript;
+                        eBuildDate.Text = DateTime.Today.ToShortDateString(); //出險日期預帶當天
+                        eReportDate = (TextBox)fvAnecdoteCaseA_Data.FindControl("eReportDate_INS");
+                        vCaseDateURL = "InputDate_ChineseYears.aspx?TextboxID=" + eReportDate.ClientID;
+                        vCaseDateScript = "window.open('" + vCaseDateURL + "','','height=315, width=350,status=no,toolbar=no,menubar=no,location=no','')";
+                        eReportDate.Attributes["onClick"] = vCaseDateScript;
+                        eDeductionDate = (TextBox)fvAnecdoteCaseA_Data.FindControl("eDeductionDate_INS");
+                        vCaseDateURL = "InputDate_ChineseYears.aspx?TextboxID=" + eDeductionDate.ClientID;
+                        vCaseDateScript = "window.open('" + vCaseDateURL + "','','height=315, width=350,status=no,toolbar=no,menubar=no,location=no','')";
+                        eDeductionDate.Attributes["onClick"] = vCaseDateScript;
+                        eBirthday = (TextBox)fvAnecdoteCaseA_Data.FindControl("eBirthday_INS");
+                        vCaseDateURL = "InputDate_ChineseYears.aspx?TextboxID=" + eBirthday.ClientID;
+                        vCaseDateScript = "window.open('" + vCaseDateURL + "','','height=315, width=350,status=no,toolbar=no,menubar=no,location=no','')";
+                        eBirthday.Attributes["onClick"] = vCaseDateScript;
+                        eCaseDate = (TextBox)fvAnecdoteCaseA_Data.FindControl("eCaseDate_INS");
+                        vCaseDateURL = "InputDate_ChineseYears.aspx?TextboxID=" + eCaseDate.ClientID;
+                        vCaseDateScript = "window.open('" + vCaseDateURL + "','','height=315, width=350,status=no,toolbar=no,menubar=no,location=no','')";
+                        eCaseDate.Attributes["onClick"] = vCaseDateScript;
+                        //設定 CheckBox 勾選狀態
+                        cbHasInsurance = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbHasInsurance_INS");
+                        eHasInsurance = (Label)fvAnecdoteCaseA_Data.FindControl("eHasInsurance_INS");
+                        cbHasInsurance.Checked = false;
+                        eHasInsurance.Text = "false";
+                        cbCaseClose = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbCaseClose_INS");
+                        eCaseClose = (Label)fvAnecdoteCaseA_Data.FindControl("eCaseClose_INS");
+                        cbCaseClose.Checked = false;
+                        eCaseClose.Text = "false";
+                        cbIsNoDeduction = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbIsNoDeduction_INS");
+                        eIsNoDeduction = (Label)fvAnecdoteCaseA_Data.FindControl("eIsNoDeduction_INS");
+                        cbIsNoDeduction.Checked = false;
+                        eIsNoDeduction.Text = "false";
+                        cbHasVideo = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbHasVideo_INS");
+                        eHasVideo = (Label)fvAnecdoteCaseA_Data.FindControl("eHasVideo_INS");
+                        cbHasVideo.Checked = false;
+                        eHasVideo.Text = "N";
+                        rbHasCaseData = (RadioButtonList)fvAnecdoteCaseA_Data.FindControl("rbHasCaseData_INS");
+                        eHasCaseData = (Label)fvAnecdoteCaseA_Data.FindControl("eHasCaseData_INS");
+                        rbHasCaseData.SelectedIndex = 0;
+                        eHasCaseData.Text = "Y";
+                        cbHasAccReport = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbHasAccReport_INS");
+                        eHasAccReport = (Label)fvAnecdoteCaseA_Data.FindControl("eHasAccReport_INS");
+                        cbHasAccReport.Checked = false;
+                        eHasAccReport.Text = "N";
+                        cbIsExemption = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbIsExemption_INS");
+                        eIsExemption = (Label)fvAnecdoteCaseA_Data.FindControl("eIsExemption_INS");
+                        cbIsExemption.Checked = false;
+                        eIsExemption.Text = "N";
+                    }
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// 主檔確定編輯
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void bbOK_Edit_Click(object sender, EventArgs e)
+        {
             if (vConnStr == "")
             {
                 vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
             }
-            vDriverName = PF.GetValue(vConnStr, vSQLStr_Temp, "Name");
-            if (vDriverName == "")
+            eErrorMSG_A.Text = "";
+            eErrorMSG_A.Visible = false;
+            Label eCaseNo_A = (Label)fvAnecdoteCaseA_Data.FindControl("eCaseNo_A_Edit");
+            try
             {
-                vDriverName = vDriver;
-                vSQLStr_Temp = "select EmpNo from Employee where [Name] = '" + vDriverName + "' order by EmpNo DESC";
-                vDriver = PF.GetValue(vConnStr, vSQLStr_Temp, "EmpNo");
+                if ((eCaseNo_A != null) && (eCaseNo_A.Text.Trim() != ""))
+                {
+                    DateTime vModifyDate = DateTime.Today;
+                    string vCaseNo_Temp = eCaseNo_A.Text.Trim(); //先取回單號
+                    //寫入記錄
+                    string vRecordNote = "異動肇事單主檔資料_" + vCaseNo_Temp + Environment.NewLine +
+                                         "異動日期：" + vModifyDate.ToString("yyyy/MM/dd HH:mm:ss") + Environment.NewLine +
+                                         "肇事單號：[" + vCaseNo_Temp + "]" + Environment.NewLine +
+                                         "異動人工號：" + vLoginID + Environment.NewLine +
+                                         "AnecdoteCase.aspx";
+                    PF.InsertOperateRecord(vConnStr, vLoginID, vComputerName, vRecordNote);
+                    //複製舊資料到異動檔
+                    string vHistoryNo = vModifyDate.Year.ToString("D4") + vModifyDate.Month.ToString("D2") + "MODA";
+                    string vSQLStr_Temp = "select max(HistoryNo) MaxNo from AnecdoteCaseHistory where HistoryNo like '" + vHistoryNo + "%'";
+                    string vMaxNo = PF.GetValue(vConnStr, vSQLStr_Temp, "MaxNo");
+                    string vIndex_Str = (vMaxNo.Trim() != "") ? vMaxNo.Replace(vHistoryNo, "").Trim() : "0";
+                    int vNewIndex = Int32.Parse(vIndex_Str) + 1;
+                    string vNewHistoryNo = vHistoryNo + vNewIndex.ToString("D4");
+                    vSQLStr_Temp = "insert into AnecdoteCaseHistory " + Environment.NewLine +
+                                   "       (HistoryNo, CaseNo, HasInsurance, DepNo, DepName, BuildDate, BuildMan, Car_ID, Driver, DriverName, InsuMan, " + Environment.NewLine +
+                                   "        AnecdotalResRatio, IsNoDeduction, DeductionDate, Remark, CaseOccurrence, ERPCouseNo, CaseClose, IsExemption, " + Environment.NewLine +
+                                   "        PaidAmount, Penalty, PenaltyRatio, InsuAmount, IDCardNo, Birthday, Assumeday, TelephoneNo, Address, " + Environment.NewLine +
+                                   "        PersonDamage, CarDamage, ReportDate, CaseDate, CaseTime, OutReportNo, PoliceUnit, PoliceName, HasVideo, " + Environment.NewLine +
+                                   "        NoVideoReason, HasCaseData, ModifyType, ModifyMan, ModifyDate) " + Environment.NewLine +
+                                   "select '" + vNewHistoryNo + "', CaseNo, HasInsurance, DepNo, DepName, BuildDate, BuildMan, Car_ID, Driver, DriverName, InsuMan, " + Environment.NewLine +
+                                   "       AnecdotalResRatio, IsNoDeduction, DeductionDate, Remark, CaseOccurrence, ERPCouseNo, CaseClose, IsExemption, " + Environment.NewLine +
+                                   "       PaidAmount, Penalty, PenaltyRatio, InsuAmount, IDCardNo, Birthday, Assumeday, TelephoneNo, Address, " + Environment.NewLine +
+                                   "       PersonDamage, CarDamage, ReportDate, CaseDate, CaseTime, OutReportNo, PoliceUnit, PoliceName, HasVideo, " + Environment.NewLine +
+                                   "       NoVideoReason, HasCaseData, 'EDIT', '" + vLoginID + "', GetDate() " + Environment.NewLine +
+                                   "  from AnecdoteCase " + Environment.NewLine +
+                                   " where CaseNo = '" + vCaseNo_Temp + "' ";
+                    PF.ExecSQL(vConnStr, vSQLStr_Temp);
+                    //更新主檔資料
+                    TextBox eBuildDate = (TextBox)fvAnecdoteCaseA_Data.FindControl("eBuildDate_Edit");
+                    TextBox eDepNo = (TextBox)fvAnecdoteCaseA_Data.FindControl("eDepNo_Edit");
+                    Label eHasInsurance = (Label)fvAnecdoteCaseA_Data.FindControl("eHasInsurance_Edit");
+                    Label eDepName = (Label)fvAnecdoteCaseA_Data.FindControl("eDepName_Edit");
+                    TextBox eCar_ID = (TextBox)fvAnecdoteCaseA_Data.FindControl("eCar_ID_Edit");
+                    TextBox eDriver = (TextBox)fvAnecdoteCaseA_Data.FindControl("eDriver_Edit");
+                    Label eDriverName = (Label)fvAnecdoteCaseA_Data.FindControl("eDriverName_Edit");
+                    TextBox eInsuMan = (TextBox)fvAnecdoteCaseA_Data.FindControl("eInsuMan_Edit");
+                    TextBox eAnecdotalResRatio = (TextBox)fvAnecdoteCaseA_Data.FindControl("eAnecdotalResRatio_Edit");
+                    Label eIsNoDeduction = (Label)fvAnecdoteCaseA_Data.FindControl("eIsNoDeduction_Edit");
+                    TextBox eDeductionDate = (TextBox)fvAnecdoteCaseA_Data.FindControl("eDeductionDate_Edit");
+                    TextBox eRemark_A = (TextBox)fvAnecdoteCaseA_Data.FindControl("eRemark_A_Edit");
+                    TextBox eCaseOccurrence = (TextBox)fvAnecdoteCaseA_Data.FindControl("eCaseOccurrence_Edit");
+                    Label eERPCouseNo = (Label)fvAnecdoteCaseA_Data.FindControl("eERPCouseNo_Edit");
+                    Label eCaseClose = (Label)fvAnecdoteCaseA_Data.FindControl("eCaseClose_Edit");
+                    Label eIsExemption = (Label)fvAnecdoteCaseA_Data.FindControl("eIsExemption_Edit");
+                    TextBox ePaidAmount = (TextBox)fvAnecdoteCaseA_Data.FindControl("ePaidAmount_Edit");
+                    TextBox ePenalty = (TextBox)fvAnecdoteCaseA_Data.FindControl("ePenalty_Edit");
+                    TextBox ePenaltyRatio = (TextBox)fvAnecdoteCaseA_Data.FindControl("ePenaltyRatio_Edit");
+                    TextBox eInsuAmount = (TextBox)fvAnecdoteCaseA_Data.FindControl("eInsuAmount_Edit");
+                    TextBox eIDCardNo = (TextBox)fvAnecdoteCaseA_Data.FindControl("eIDCardNo_Edit");
+                    TextBox eBirthday = (TextBox)fvAnecdoteCaseA_Data.FindControl("eBirthday_Edit");
+                    Label eAssumeday = (Label)fvAnecdoteCaseA_Data.FindControl("eAssumeday_Edit");
+                    TextBox eTelephoneNo = (TextBox)fvAnecdoteCaseA_Data.FindControl("eTelephoneNo_Edit");
+                    TextBox eAddress = (TextBox)fvAnecdoteCaseA_Data.FindControl("eAddress_Edit");
+                    TextBox ePersonDamage = (TextBox)fvAnecdoteCaseA_Data.FindControl("ePersonDamage_Edit");
+                    TextBox eCarDamage = (TextBox)fvAnecdoteCaseA_Data.FindControl("eCarDamage_Edit");
+                    TextBox eReportDate = (TextBox)fvAnecdoteCaseA_Data.FindControl("eReportDate_Edit");
+                    TextBox eCaseDate = (TextBox)fvAnecdoteCaseA_Data.FindControl("eCaseDate_Edit");
+                    TextBox eCaseTime = (TextBox)fvAnecdoteCaseA_Data.FindControl("eCaseTime_Edit");
+                    TextBox eOutReportNo = (TextBox)fvAnecdoteCaseA_Data.FindControl("eOutReportNo_Edit");
+                    TextBox ePoliceUnit = (TextBox)fvAnecdoteCaseA_Data.FindControl("ePoliceUnit_Edit");
+                    TextBox ePoliceName = (TextBox)fvAnecdoteCaseA_Data.FindControl("ePoliceName_Edit");
+                    Label eHasVideo = (Label)fvAnecdoteCaseA_Data.FindControl("eHasVideo_Edit");
+                    TextBox eNoVideoReason = (TextBox)fvAnecdoteCaseA_Data.FindControl("eNoVideoReason_Edit");
+                    Label eHasCaseData = (Label)fvAnecdoteCaseA_Data.FindControl("eHasCaseData_Edit");
+                    TextBox eBuildMan = (TextBox)fvAnecdoteCaseA_Data.FindControl("eBuildMan_Edit");
+
+                    vSQLStr_Temp = "update [dbo].[AnecdoteCase] " + Environment.NewLine +
+                                   "   set HasInsurance = @HasInsurance, DepNo = @DepNo, DepName = @DepName, BuildDate = @BuildDate, Car_ID = @Car_ID, " + Environment.NewLine +
+                                   "       Driver = @Driver, DriverName = @DriverName, InsuMan = @InsuMan, AnecdotalResRatio = @AnecdotalResRatio, " + Environment.NewLine +
+                                   "       IsNoDeduction = @IsNoDeduction, DeductionDate = @DeductionDate, Remark = @Remark, ModifyDate = GetDate(), " + Environment.NewLine +
+                                   "       ModifyMan = @ModifyMan, CaseOccurrence = @CaseOccurrence, ERPCouseNo = @ERPCouseNo, CaseClose = @CaseClose, " + Environment.NewLine +
+                                   "       IsExemption = @IsExemption, PaidAmount = @PaidAmount, Penalty = @Penalty, PenaltyRatio = @PenaltyRatio, " + Environment.NewLine +
+                                   "       InsuAmount = @InsuAmount, IDCardNo = @IDCardNo, Birthday = @Birthday, Assumeday = @Assumeday, TelephoneNo = @TelephoneNo, " + Environment.NewLine +
+                                   "       Address = @Address, PersonDamage = @PersonDamage, CarDamage = @CarDamage, ReportDate = @ReportDate, CaseDate = @CaseDate, " + Environment.NewLine +
+                                   "       CaseTime = @CaseTime, OutReportNo = @OutReportNo, PoliceUnit = @PoliceUnit, PoliceName = @PoliceName, HasVideo = @HasVideo, " + Environment.NewLine +
+                                   "       NoVideoReason = @NoVideoReason, HasCaseData = @HasCaseData, BuildMan = @BuildMan " + Environment.NewLine +
+                                   " where CaseNo = @CaseNo";
+                    sdsAnecdoteCaseA_Data.UpdateCommand = vSQLStr_Temp;
+                    DateTime vTempDate;
+                    double vTempFloat;
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Clear();
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("HasInsurance", DbType.Boolean, (eHasInsurance.Text.Trim() != "") ? eHasInsurance.Text.Trim() : "False"));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("DepNo", DbType.String, eDepNo.Text.Trim()));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("DepName", DbType.String, eDepName.Text.Trim()));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("BuildDate", DbType.Date, DateTime.TryParse(eBuildDate.Text.Trim(), out vTempDate) ? vTempDate.ToShortDateString() : String.Empty));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("Car_ID", DbType.String, eCar_ID.Text.Trim()));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("Driver", DbType.String, eDriver.Text.Trim()));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("DriverName", DbType.String, eDriverName.Text.Trim()));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("InsuMan", DbType.String, eInsuMan.Text.Trim()));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("AnecdotalResRatio", DbType.Double, double.TryParse(eAnecdotalResRatio.Text.Trim(), out vTempFloat) ? vTempFloat.ToString() : "0.0"));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("IsNoDeduction", DbType.Boolean, (eIsNoDeduction.Text.Trim() != "") ? eIsNoDeduction.Text.Trim() : "False"));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("DeductionDate", DbType.Date, DateTime.TryParse(eDeductionDate.Text.Trim(), out vTempDate) ? vTempDate.ToShortDateString() : String.Empty));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("Remark", DbType.String, eRemark_A.Text.Trim()));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("ModifyMan", DbType.String, vLoginID));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("CaseOccurrence", DbType.String, eCaseOccurrence.Text.Trim()));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("ERPCouseNo", DbType.String, eERPCouseNo.Text.Trim()));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("CaseClose", DbType.Boolean, (eCaseClose.Text.Trim() != "") ? eCaseClose.Text.Trim() : "False"));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("IsExemption", DbType.String, (eIsExemption.Text.Trim() != "") ? eIsExemption.Text.Trim() : "N"));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("PaidAmount", DbType.Double, double.TryParse(ePaidAmount.Text.Trim(), out vTempFloat) ? vTempFloat.ToString() : "0.0"));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("Penalty", DbType.Double, double.TryParse(ePenalty.Text.Trim(), out vTempFloat) ? vTempFloat.ToString() : "0.0"));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("PenaltyRatio", DbType.Double, double.TryParse(ePenaltyRatio.Text.Trim(), out vTempFloat) ? vTempFloat.ToString() : "0.0"));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("InsuAmount", DbType.Double, double.TryParse(eInsuAmount.Text.Trim(), out vTempFloat) ? vTempFloat.ToString() : "0.0"));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("IDCardNo", DbType.String, eIDCardNo.Text.Trim()));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("Birthday", DbType.Date, DateTime.TryParse(eBirthday.Text.Trim(), out vTempDate) ? vTempDate.ToShortDateString() : String.Empty));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("Assumeday", DbType.Date, DateTime.TryParse(eAssumeday.Text.Trim(), out vTempDate) ? vTempDate.ToShortDateString() : String.Empty));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("TelephoneNo", DbType.String, eTelephoneNo.Text.Trim()));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("Address", DbType.String, eAddress.Text.Trim()));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("PersonDamage", DbType.String, ePersonDamage.Text.Trim()));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("CarDamage", DbType.String, eCarDamage.Text.Trim()));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("ReportDate", DbType.Date, DateTime.TryParse(eReportDate.Text.Trim(), out vTempDate) ? vTempDate.ToShortDateString() : String.Empty));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("CaseDate", DbType.Date, DateTime.TryParse(eCaseDate.Text.Trim(), out vTempDate) ? vTempDate.ToShortDateString() : String.Empty));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("CaseTime", DbType.String, eCaseTime.Text.Trim()));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("OutReportNo", DbType.String, eOutReportNo.Text.Trim()));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("PoliceUnit", DbType.String, ePoliceUnit.Text.Trim()));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("PoliceName", DbType.String, ePoliceName.Text.Trim()));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("HasVideo", DbType.String, (eHasVideo.Text.Trim() != "") ? eHasVideo.Text.Trim() : "N"));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("NoVideoReson", DbType.String, eNoVideoReason.Text.Trim()));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("HasCaseData", DbType.String, (eHasCaseData.Text.Trim() != "") ? eHasCaseData.Text.Trim() : "X"));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("BuildMan", DbType.String, eBuildMan.Text.Trim()));
+                    sdsAnecdoteCaseA_Data.UpdateParameters.Add(new Parameter("CaseNo", DbType.String, vCaseNo_Temp));
+                    sdsAnecdoteCaseA_Data.Update();
+                    gridAnecdoteCaseA_List.DataBind();
+                    fvAnecdoteCaseA_Data.ChangeMode(FormViewMode.ReadOnly);
+                }
             }
-            eDriver_Search.Text = vDriver.Trim();
-            eDriverName_Search.Text = vDriverName.Trim();
+            catch (Exception eMessage)
+            {
+                eErrorMSG_A.Text = eMessage.Message;
+                eErrorMSG_A.Visible = true;
+            }
         }
 
-        protected void bbExportERP_Click(object sender, EventArgs e)
+        /// <summary>
+        /// 編輯頁面選擇是否出險
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void cbHasInsurance_Edit_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox cbHasInsurance = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbHasInsurance_Edit");
+            Label eHasInsurance = (Label)fvAnecdoteCaseA_Data.FindControl("eHasInsurance_Edit");
+            if (cbHasInsurance != null)
+            {
+                eHasInsurance.Text = cbHasInsurance.Checked ? "True" : "False";
+            }
+        }
+
+        /// <summary>
+        /// 編輯頁面選擇是否和解
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void cbCaseClose_Edit_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox cbCaseClose = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbCaseClose_Edit");
+            Label eCaseClose = (Label)fvAnecdoteCaseA_Data.FindControl("eCaseClose_Edit");
+            if (cbCaseClose != null)
+            {
+                eCaseClose.Text = cbCaseClose.Checked ? "True" : "False";
+            }
+        }
+
+        /// <summary>
+        /// 編輯頁面輸入建檔人
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void eBuildMan_Edit_TextChanged(object sender, EventArgs e)
+        {
+            TextBox eBuildMan = (TextBox)fvAnecdoteCaseA_Data.FindControl("eBuildMan_Edit");
+            Label eBuildManName = (Label)fvAnecdoteCaseA_Data.FindControl("eBuildManName_Edit");
+            if (eBuildMan != null)
+            {
+                if (vConnStr == "")
+                {
+                    vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
+                }
+                string vBuildMan = eBuildMan.Text.Trim();
+                string vSQLStr_Temp = "select [Name] from Employee where EmpNo = '" + vBuildMan + "' ";
+                string vBuildManName = PF.GetValue(vConnStr, vSQLStr_Temp, "Name");
+                if (vBuildManName == "")
+                {
+                    vBuildManName = eBuildMan.Text.Trim();
+                    vSQLStr_Temp = "select top 1 EmpNo from Employee where [Name] = '" + vBuildManName + "' order by Assumeday DESC";
+                    vBuildMan = PF.GetValue(vConnStr, vSQLStr_Temp, "EmpNo");
+                }
+                eBuildMan.Text = vBuildMan.Trim();
+                eBuildManName.Text = vBuildManName.Trim();
+            }
+        }
+
+        /// <summary>
+        /// 編輯頁面選擇是否免扣精勤
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void cbIsNoDeduction_Edit_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox cbIsNoDeduction = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbIsNoDeduction_Edit");
+            Label eIsNoDeduction = (Label)fvAnecdoteCaseA_Data.FindControl("eIsNoDeduction_Edit");
+            if (cbIsNoDeduction != null)
+            {
+                eIsNoDeduction.Text = cbIsNoDeduction.Checked ? "True" : "False";
+            }
+        }
+
+        /// <summary>
+        /// 編輯畫面輸入車號
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void eCar_ID_Edit_TextChanged(object sender, EventArgs e)
+        {
+            TextBox eCar_ID = (TextBox)fvAnecdoteCaseA_Data.FindControl("eCar_ID_Edit");
+            TextBox eDepNo = (TextBox)fvAnecdoteCaseA_Data.FindControl("eDepNo_Edit");
+            Label eDepName = (Label)fvAnecdoteCaseA_Data.FindControl("eDepName_Edit");
+            TextBox eDriver = (TextBox)fvAnecdoteCaseA_Data.FindControl("eDriver_Edit");
+            Label eDriverName = (Label)fvAnecdoteCaseA_Data.FindControl("eDriverName_Edit");
+            TextBox eIDCardNo = (TextBox)fvAnecdoteCaseA_Data.FindControl("eIDCardNo_Edit");
+            TextBox eBirthday = (TextBox)fvAnecdoteCaseA_Data.FindControl("eBirthday_Edit");
+            Label eAssumeday = (Label)fvAnecdoteCaseA_Data.FindControl("eAssumeday_Edit");
+            TextBox eTelephoneNo = (TextBox)fvAnecdoteCaseA_Data.FindControl("eTelephoneNo_Edit");
+            TextBox eAddress = (TextBox)fvAnecdoteCaseA_Data.FindControl("eAddress_Edit");
+            DateTime vBirthday;
+            DateTime vAssumeday;
+            if (eCar_ID != null)
+            {
+                if (vConnStr == "")
+                {
+                    vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
+                }
+                string vCar_ID = eCar_ID.Text.Trim();
+                string vSQLStr_Temp = "select isnull(a.Driver, '') + ',' + isnull(e.[Name], '') + ',' + isnull(a.CompanyNo, '') + ',' + isnull(d.[Name], '') as ResultStr " + Environment.NewLine +
+                                      "  from Car_infoA a left join Department d on d.DepNo = a.CompanyNo " + Environment.NewLine +
+                                      "                   left join Employee e on e.EmpNo = a.Driver " + Environment.NewLine +
+                                      " where a.Car_ID = '" + vCar_ID + "' ";
+                string vResultStr = PF.GetValue(vConnStr, vSQLStr_Temp, "ResultStr");
+                string[] vaResult = vResultStr.Split(',');
+                if (vaResult[0].ToString() != "")
+                {
+                    eDriver.Text = vaResult[0].ToString();
+                    eDriverName.Text = vResultStr[1].ToString();
+                    vSQLStr_Temp = "select (IDCardNo + ',' + convert(varchar(10), Birthday, 111) + ',' + convert(varchar(10), Assumeday, 111) + ',' + " + Environment.NewLine +
+                                   "       case when isnull(CellPhone, '') <> '' then CellPhone else TelNo1 end + ',' + Addr1) as ResultStr " + Environment.NewLine +
+                                   "  from Employee " + Environment.NewLine +
+                                   " where EmpNo = '" + vaResult[0].ToString() + "' ";
+                    vResultStr = PF.GetValue(vConnStr, vSQLStr_Temp, "ResultStr");
+                    string[] vaDriverData = vResultStr.Split(',');
+                    eIDCardNo.Text = vaDriverData[0].ToString();
+                    eBirthday.Text = DateTime.TryParse(vaDriverData[1].ToString(), out vBirthday) ? (vBirthday.Year - 3822).ToString() + '/' + vBirthday.ToString("MM/dd") : "";
+                    eAssumeday.Text = DateTime.TryParse(vaDriverData[2].ToString(), out vAssumeday) ? (vAssumeday.Year - 3822).ToString() + '/' + vAssumeday.ToString("MM/dd") : "";
+                    eTelephoneNo.Text = vaDriverData[3].ToString();
+                    eAddress.Text = vaDriverData[4].ToString();
+                }
+                eDepNo.Text = vaResult[2].ToString();
+                eDepName.Text = vaResult[3].ToString();
+            }
+        }
+
+        /// <summary>
+        /// 編輯頁面輸入所屬單位
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void eDepNo_Edit_TextChanged(object sender, EventArgs e)
+        {
+            TextBox eDepNo = (TextBox)fvAnecdoteCaseA_Data.FindControl("eDepNo_Edit");
+            Label eDepName = (Label)fvAnecdoteCaseA_Data.FindControl("eDepName_Edit");
+            if (eDepNo != null)
+            {
+                if (vConnStr == "")
+                {
+                    vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
+                }
+                string vDepNo = eDepNo.Text.Trim();
+                string vSQLStr_Temp = "select [Name] from Department where DepNo = '" + vDepNo + "' ";
+                string vDepName = PF.GetValue(vConnStr, vSQLStr_Temp, "Name");
+                if (vDepName == "")
+                {
+                    vDepName = eDepNo.Text.Trim();
+                    vSQLStr_Temp = "select top 1 DepNo from Department where [Name] = '" + vDepName + "' order by DepNo";
+                    vDepNo = PF.GetValue(vConnStr, vSQLStr_Temp, "DepNo");
+                }
+                eDepNo.Text = vDepNo.Trim();
+                eDepName.Text = vDepName.Trim();
+            }
+        }
+
+        /// <summary>
+        /// 編輯頁面輸入駕駛員資料
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void eDriver_Edit_TextChanged(object sender, EventArgs e)
+        {
+            TextBox eDriver = (TextBox)fvAnecdoteCaseA_Data.FindControl("eDriver_Edit");
+            Label eDriverName = (Label)fvAnecdoteCaseA_Data.FindControl("eDriverName_Edit");
+            TextBox eIDCardNo = (TextBox)fvAnecdoteCaseA_Data.FindControl("eIDCardNo_Edit");
+            TextBox eBirthday = (TextBox)fvAnecdoteCaseA_Data.FindControl("eBirthday_Edit");
+            Label eAssumeday = (Label)fvAnecdoteCaseA_Data.FindControl("eAssumeday_Edit");
+            TextBox eTelephoneNo = (TextBox)fvAnecdoteCaseA_Data.FindControl("eTelephoneNo_Edit");
+            TextBox eAddress = (TextBox)fvAnecdoteCaseA_Data.FindControl("eAddress_Edit");
+            DateTime vBirthday;
+            DateTime vAssumeday;
+            if (eDriver != null)
+            {
+                if (vConnStr == "")
+                {
+                    vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
+                }
+                string vDriver = eDriver.Text.Trim();
+                string vSQLStr_Temp = "select [Name] from Employee where EmpNo = '" + vDriver + "' ";
+                string vDriverName = PF.GetValue(vConnStr, vSQLStr_Temp, "Name");
+                if (vDriverName == "")
+                {
+                    vDriverName = eDriver.Text.Trim();
+                    vSQLStr_Temp = "select top 1 EmpNo from Employee where [Name] = '" + vDriverName + "' order by Assumeday DESC";
+                    vDriver = PF.GetValue(vConnStr, vSQLStr_Temp, "EmpNo");
+                }
+                eDriver.Text = vDriver.Trim();
+                eDriverName.Text = vDriverName.Trim();
+                if (eDriver.Text.Trim() != "")
+                {
+                    vSQLStr_Temp = "select (IDCardNo + ',' + convert(varchar(10), Birthday, 111) + ',' + convert(varchar(10), Assumeday, 111) + ',' + " + Environment.NewLine +
+                                   "       case when isnull(CellPhone, '') <> '' then CellPhone else TelNo1 end + ',' + Addr1) as ResultStr " + Environment.NewLine +
+                                   "  from Employee " + Environment.NewLine +
+                                   " where EmpNo = '" + vDriver.Trim() + "' ";
+                    string vResultStr = PF.GetValue(vConnStr, vSQLStr_Temp, "ResultStr");
+                    string[] vaDriverData = vResultStr.Split(',');
+                    eIDCardNo.Text = vaDriverData[0].ToString();
+                    eBirthday.Text = DateTime.TryParse(vaDriverData[1].ToString(), out vBirthday) ? (vBirthday.Year - 3822).ToString() + '/' + vBirthday.ToString("MM/dd") : "";
+                    eAssumeday.Text = DateTime.TryParse(vaDriverData[2].ToString(), out vAssumeday) ? (vAssumeday.Year - 3822).ToString() + '/' + vAssumeday.ToString("MM/dd") : "";
+                    eTelephoneNo.Text = vaDriverData[3].ToString();
+                    eAddress.Text = vaDriverData[4].ToString();
+                }
+            }
+        }
+
+        protected void cbHasVideo_Edit_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox cbHasVideo = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbHasVideo_Edit");
+            Label eHasVideo = (Label)fvAnecdoteCaseA_Data.FindControl("eHasVideo_Edit");
+            if (cbHasVideo != null)
+            {
+                eHasVideo.Text = cbHasVideo.Checked ? "Y" : "N";
+            }
+        }
+
+        protected void rbHasCaseData_Edit_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RadioButtonList rbHasCaseData = (RadioButtonList)fvAnecdoteCaseA_Data.FindControl("rbHasCaseData_Edit");
+            Label eHasCaseData = (Label)fvAnecdoteCaseA_Data.FindControl("eHasCaseData_Edit");
+            if (rbHasCaseData != null)
+            {
+                eHasCaseData.Text = rbHasCaseData.SelectedValue.Trim();
+            }
+        }
+
+        protected void cbHasAccReport_Edit_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox cbHasAccReport = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbHasAccReport_Edit");
+            Label eHasAccReport = (Label)fvAnecdoteCaseA_Data.FindControl("eHasAccReport_Edit");
+            if (cbHasAccReport != null)
+            {
+                eHasAccReport.Text = cbHasAccReport.Checked ? "Y" : "N";
+            }
+        }
+
+        protected void cbIsExemption_Edit_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox cbIsExemption = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbIsExemption_Edit");
+            Label eIsExemption = (Label)fvAnecdoteCaseA_Data.FindControl("eIsExemption_Edit");
+            if (cbIsExemption != null)
+            {
+                eIsExemption.Text = cbIsExemption.Checked ? "Y" : "N";
+            }
+        }
+
+        /// <summary>
+        /// 主檔新增確定
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void bbOK_INS_Click(object sender, EventArgs e)
+        {
+            if (vConnStr == "")
+            {
+                vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
+            }
+            eErrorMSG_A.Text = "";
+            eErrorMSG_A.Visible = false;
+            TextBox eBuildDate = (TextBox)fvAnecdoteCaseA_Data.FindControl("eBuildDate_INS");
+            TextBox eDepNo = (TextBox)fvAnecdoteCaseA_Data.FindControl("eDepNo_INS");
+            try
+            {
+                if ((eBuildDate != null) && (eDepNo != null) && (eDepNo.Text.Trim() != ""))
+                {
+                    //產生新單號
+                    string vCaseNo_INS;
+                    string vCaseNo_FirstCode = (DateTime.Today.Year - 1911).ToString() + DateTime.Today.Month.ToString("D2") + "A";
+                    string vSQLStr_INS = "select max(CaseNo) MaxNo from AnecdoteCase where CaseNo like '" + vCaseNo_FirstCode + "%' ";
+                    string vMaxNo = PF.GetValue(vConnStr, vSQLStr_INS, "MaxNo");
+                    string vIndexStr = (vMaxNo.Trim() != "") ? vMaxNo.Replace(vCaseNo_FirstCode, "").Trim() : "0";
+                    int vIndex = Int32.Parse(vIndexStr) + 1;
+                    vCaseNo_INS = vCaseNo_FirstCode + vIndex.ToString("D4");
+                    DateTime vToday = DateTime.Today;
+                    //寫入記錄
+                    string vRecordNote = "新增肇事單主檔資料_" + vCaseNo_INS + Environment.NewLine +
+                                         "建檔日期：" + vToday.ToString("yyyy/MM/dd HH:mm:ss") + Environment.NewLine +
+                                         "肇事單號：[" + vCaseNo_INS + "]" + Environment.NewLine +
+                                         "建檔人工號：" + vLoginID + Environment.NewLine +
+                                         "AnecdoteCase.aspx";
+                    PF.InsertOperateRecord(vConnStr, vLoginID, vComputerName, vRecordNote);
+                    //取得欄位
+                    Label eHasInsurance = (Label)fvAnecdoteCaseA_Data.FindControl("eHasInsurance_INS");
+                    Label eDepName = (Label)fvAnecdoteCaseA_Data.FindControl("eDepName_INS");
+                    TextBox eCar_ID = (TextBox)fvAnecdoteCaseA_Data.FindControl("eCar_ID_INS");
+                    TextBox eDriver = (TextBox)fvAnecdoteCaseA_Data.FindControl("eDriver_INS");
+                    Label eDriverName = (Label)fvAnecdoteCaseA_Data.FindControl("eDriverName_INS");
+                    TextBox eInsuMan = (TextBox)fvAnecdoteCaseA_Data.FindControl("eInsuMan_INS");
+                    TextBox eAnecdotalResRatio = (TextBox)fvAnecdoteCaseA_Data.FindControl("eAnecdotalResRatio_INS");
+                    Label eIsNoDeduction = (Label)fvAnecdoteCaseA_Data.FindControl("eIsNoDeduction_INS");
+                    TextBox eDeductionDate = (TextBox)fvAnecdoteCaseA_Data.FindControl("eDeductionDate_INS");
+                    TextBox eRemark_A = (TextBox)fvAnecdoteCaseA_Data.FindControl("eRemark_A_INS");
+                    TextBox eCaseOccurrence = (TextBox)fvAnecdoteCaseA_Data.FindControl("eCaseOccurrence_INS");
+                    Label eERPCouseNo = (Label)fvAnecdoteCaseA_Data.FindControl("eERPCouseNo_INS");
+                    Label eCaseClose = (Label)fvAnecdoteCaseA_Data.FindControl("eCaseClose_INS");
+                    Label eIsExemption = (Label)fvAnecdoteCaseA_Data.FindControl("eIsExemption_INS");
+                    TextBox ePaidAmount = (TextBox)fvAnecdoteCaseA_Data.FindControl("ePaidAmount_INS");
+                    TextBox ePenalty = (TextBox)fvAnecdoteCaseA_Data.FindControl("ePenalty_INS");
+                    TextBox ePenaltyRatio = (TextBox)fvAnecdoteCaseA_Data.FindControl("ePenaltyRatio_INS");
+                    TextBox eInsuAmount = (TextBox)fvAnecdoteCaseA_Data.FindControl("eInsuAmount_INS");
+                    TextBox eIDCardNo = (TextBox)fvAnecdoteCaseA_Data.FindControl("eIDCardNo_INS");
+                    TextBox eBirthday = (TextBox)fvAnecdoteCaseA_Data.FindControl("eBirthday_INS");
+                    Label eAssumeday = (Label)fvAnecdoteCaseA_Data.FindControl("eAssumeday_INS");
+                    TextBox eTelephoneNo = (TextBox)fvAnecdoteCaseA_Data.FindControl("eTelephoneNo_INS");
+                    TextBox eAddress = (TextBox)fvAnecdoteCaseA_Data.FindControl("eAddress_INS");
+                    TextBox ePersonDamage = (TextBox)fvAnecdoteCaseA_Data.FindControl("ePersonDamage_INS");
+                    TextBox eCarDamage = (TextBox)fvAnecdoteCaseA_Data.FindControl("eCarDamage_INS");
+                    TextBox eReportDate = (TextBox)fvAnecdoteCaseA_Data.FindControl("eReportDate_INS");
+                    TextBox eCaseDate = (TextBox)fvAnecdoteCaseA_Data.FindControl("eCaseDate_INS");
+                    TextBox eCaseTime = (TextBox)fvAnecdoteCaseA_Data.FindControl("eCaseTime_INS");
+                    TextBox eOutReportNo = (TextBox)fvAnecdoteCaseA_Data.FindControl("eOutReportNo_INS");
+                    TextBox ePoliceUnit = (TextBox)fvAnecdoteCaseA_Data.FindControl("ePoliceUnit_INS");
+                    TextBox ePoliceName = (TextBox)fvAnecdoteCaseA_Data.FindControl("ePoliceName_INS");
+                    Label eHasVideo = (Label)fvAnecdoteCaseA_Data.FindControl("eHasVideo_INS");
+                    TextBox eNoVideoReason = (TextBox)fvAnecdoteCaseA_Data.FindControl("eNoVideoReason_INS");
+                    Label eHasCaseData = (Label)fvAnecdoteCaseA_Data.FindControl("eHasCaseData_INS");
+
+                    //開始寫入
+                    vSQLStr_INS = "insert into AnecdoteCase " + Environment.NewLine +
+                                  "       (CaseNo, HasInsurance, DepNo, DepName, BuildDate, BuildMan, Car_ID, Driver, DriverName, InsuMan, " + Environment.NewLine +
+                                  "        AnecdotalResRatio, IsNoDeduction, DeductionDate, Remark, CaseOccurrence, ERPCouseNo, CaseClose, IsExemption, " + Environment.NewLine +
+                                  "        PaidAmount, Penalty, PenaltyRatio, InsuAmount, IDCardNo, Birthday, Assumeday, TelephoneNo, Address, " + Environment.NewLine +
+                                  "        PersonDamage, CarDamage, ReportDate, CaseDate, CaseTime, OutReportNo, PoliceUnit, PoliceName, HasVideo, " + Environment.NewLine +
+                                  "        NoVideoReason, HasCaseData) " + Environment.NewLine +
+                                  "values (@CaseNo, @HasInsurance, @DepNo, @DepName, @BuildDate, @BuildMan, @Car_ID, @Driver, @DriverName, @InsuMan, " + Environment.NewLine +
+                                  "        @AnecdotalResRatio, @IsNoDeduction, @DeductionDate, @Remark, @CaseOccurrence, @ERPCouseNo, @CaseClose, @IsExemption, " + Environment.NewLine +
+                                  "        @PaidAmount, @Penalty, @PenaltyRatio, @InsuAmount, @IDCardNo, @Birthday, @Assumeday, @TelephoneNo, @Address, " + Environment.NewLine +
+                                  "        @PersonDamage, @CarDamage, @ReportDate, @CaseDate, @CaseTime, @OutReportNo, @PoliceUnit, @PoliceName, @HasVideo, " + Environment.NewLine +
+                                  "        @NoVideoReason, @HasCaseData)";
+                    sdsAnecdoteCaseA_Data.InsertCommand = vSQLStr_INS;
+                    sdsAnecdoteCaseA_Data.InsertParameters.Clear();
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("HasInsurance", DbType.Boolean, (eHasInsurance.Text.Trim() != "") ? eHasInsurance.Text.Trim() : "False"));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("DepNo", DbType.String, (eDepNo.Text.Trim() != "") ? eDepNo.Text.Trim() : String.Empty));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("DepName", DbType.String, (eDepName.Text.Trim() != "") ? eDepName.Text.Trim() : String.Empty));
+                    DateTime vTempDate;
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("BuildDate", DbType.Date, DateTime.TryParse(eBuildDate.Text.Trim(), out vTempDate) ? vTempDate.ToShortDateString() : String.Empty));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("BuildMan", DbType.String, vLoginID));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("Car_ID", DbType.String, (eCar_ID.Text.Trim() != "") ? eCar_ID.Text.Trim() : String.Empty));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("Driver", DbType.String, (eDriver.Text.Trim() != "") ? eDriver.Text.Trim() : String.Empty));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("DriverName", DbType.String, (eDriverName.Text.Trim() != "") ? eDriverName.Text.Trim() : String.Empty));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("InsuMan", DbType.String, (eInsuMan.Text.Trim() != "") ? eInsuMan.Text.Trim() : String.Empty));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("AnecdotalResRatio", DbType.Double, (eAnecdotalResRatio.Text.Trim() != "") ? eAnecdotalResRatio.Text.Trim() : "0.0"));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("IsNoDeduction", DbType.Boolean, (eIsNoDeduction.Text.Trim() != "") ? eIsNoDeduction.Text.Trim() : "False"));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("DeductionDate", DbType.Date, DateTime.TryParse(eDeductionDate.Text.Trim(), out vTempDate) ? vTempDate.ToShortDateString() : String.Empty));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("Remark", DbType.String, (eRemark_A.Text.Trim() != "") ? eRemark_A.Text.Trim() : String.Empty));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("ModifyMan", DbType.String, vLoginID));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("CaseOccurrence", DbType.String, (eCaseOccurrence.Text.Trim() != "") ? eCaseOccurrence.Text.Trim() : String.Empty));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("ERPCouseNo", DbType.String, (eERPCouseNo.Text.Trim() != "") ? eERPCouseNo.Text.Trim() : String.Empty));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("CaseClose", DbType.Boolean, (eCaseClose.Text.Trim() != "") ? eCaseClose.Text.Trim() : "False"));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("IsExemption", DbType.String, (eIsExemption.Text.Trim() != "") ? eIsExemption.Text.Trim() : "N"));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("PaidAmount", DbType.Double, (ePaidAmount.Text.Trim() != "") ? ePaidAmount.Text.Trim() : "0.0"));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("Penalty", DbType.Double, (ePenalty.Text.Trim() != "") ? ePenalty.Text.Trim() : "0.0"));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("PenaltyRatio", DbType.Double, (ePenaltyRatio.Text.Trim() != "") ? ePenaltyRatio.Text.Trim() : "0.0"));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("InsuAmount", DbType.Double, (eInsuAmount.Text.Trim() != "") ? eInsuAmount.Text.Trim() : "0.0"));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("IDCardNo", DbType.String, (eIDCardNo.Text.Trim() != "") ? eIDCardNo.Text.Trim() : String.Empty));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("Birthday", DbType.Date, DateTime.TryParse(eBirthday.Text.Trim(), out vTempDate) ? vTempDate.ToShortDateString() : String.Empty));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("Assumeday", DbType.Date, DateTime.TryParse(eAssumeday.Text.Trim(), out vTempDate) ? vTempDate.ToShortDateString() : String.Empty));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("TelePhoneNo", DbType.String, (eTelephoneNo.Text.Trim() != "") ? eTelephoneNo.Text.Trim() : String.Empty));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("Address", DbType.String, (eAddress.Text.Trim() != "") ? eAddress.Text.Trim() : String.Empty));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("PersonDamage", DbType.String, (ePersonDamage.Text.Trim() != "") ? ePersonDamage.Text.Trim() : String.Empty));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("CarDamage", DbType.String, (eCarDamage.Text.Trim() != "") ? eCarDamage.Text.Trim() : String.Empty));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("ReportDate", DbType.Date, DateTime.TryParse(eReportDate.Text.Trim(), out vTempDate) ? vTempDate.ToShortDateString() : String.Empty));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("CaseDate", DbType.Date, DateTime.TryParse(eCaseDate.Text.Trim(), out vTempDate) ? vTempDate.ToShortDateString() : String.Empty));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("CaseTime", DbType.String, (eCaseTime.Text.Trim() != "") ? eCaseTime.Text.Trim() : String.Empty));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("OutReportNo", DbType.String, (eOutReportNo.Text.Trim() != "") ? eOutReportNo.Text.Trim() : String.Empty));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("PoliceUnit", DbType.String, (ePoliceUnit.Text.Trim() != "") ? ePoliceUnit.Text.Trim() : String.Empty));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("PoliceName", DbType.String, (ePoliceName.Text.Trim() != "") ? ePoliceName.Text.Trim() : String.Empty));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("HasVideo", DbType.String, (eHasVideo.Text.Trim() != "") ? eHasVideo.Text.Trim() : "N"));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("NoVideoReason", DbType.String, (eNoVideoReason.Text.Trim() != "") ? eNoVideoReason.Text.Trim() : String.Empty));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("HasCaseData", DbType.String, (eHasCaseData.Text.Trim() != "") ? eHasCaseData.Text.Trim() : "X"));
+                    sdsAnecdoteCaseA_Data.InsertParameters.Add(new Parameter("CaseNo", DbType.String, vCaseNo_INS));
+                    sdsAnecdoteCaseA_Data.Insert();
+                    fvAnecdoteCaseA_Data.ChangeMode(FormViewMode.ReadOnly);
+                    gridAnecdoteCaseA_List.DataBind();
+                    fvAnecdoteCaseA_Data.DataBind();
+                }
+                else
+                {
+                    eErrorMSG_A.Text = "站別不可空白！";
+                    eErrorMSG_A.Visible = true;
+                    eDepNo.Focus();
+                }
+            }
+            catch (Exception eMessage)
+            {
+                eErrorMSG_A.Text = eMessage.Message;
+                eErrorMSG_A.Visible = true;
+            }
+        }
+
+        /// <summary>
+        /// 新增畫面變更 "已出險" 選項
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void cbHasInsurance_INS_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox cbHasInsurance = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbHasInsurance_INS");
+            Label eHasInsurance = (Label)fvAnecdoteCaseA_Data.FindControl("eHasInsurance_INS");
+            if (cbHasInsurance != null)
+            {
+                eHasInsurance.Text = cbHasInsurance.Checked ? "True" : "False";
+            }
+        }
+
+        /// <summary>
+        /// 新增畫面變更 "已和解" 選項
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void cbCaseClose_INS_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox cbCaseClose = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbCaseClose_INS");
+            Label eCaseClose = (Label)fvAnecdoteCaseA_Data.FindControl("eCaseClose_INS");
+            if (cbCaseClose != null)
+            {
+                eCaseClose.Text = cbCaseClose.Checked ? "True" : "False";
+            }
+        }
+
+        /// <summary>
+        /// 新增畫面建檔人變更
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void eBuildMan_INS_TextChanged(object sender, EventArgs e)
+        {
+            TextBox eBuildMan = (TextBox)fvAnecdoteCaseA_Data.FindControl("eBuildMan_INS");
+            Label eBuildManName = (Label)fvAnecdoteCaseA_Data.FindControl("eBuildManName_INS");
+            if (eBuildMan != null)
+            {
+                if (vConnStr == "")
+                {
+                    vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
+                }
+                string vBuildMan = eBuildMan.Text.Trim();
+                string vSQLStr_Temp = "select [Name] from Employee where EmpNo = '" + vBuildMan + "' ";
+                string vBuildManName = PF.GetValue(vConnStr, vSQLStr_Temp, "Name");
+                if (vBuildManName == "")
+                {
+                    vBuildManName = eBuildMan.Text.Trim();
+                    vSQLStr_Temp = "select top 1 EmpNo from Employee where [Name] = '" + vBuildManName + "' order by Assumeday DESC";
+                    vBuildMan = PF.GetValue(vConnStr, vSQLStr_Temp, "EmpNo");
+                }
+                eBuildMan.Text = vBuildMan.Trim();
+                eBuildManName.Text = vBuildManName.Trim();
+            }
+        }
+
+        /// <summary>
+        /// 新增畫面變更 "不扣精勤" 選項
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void cbIsNoDeduction_INS_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox cbIsNoDeduction = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbIsNoDeduction_INS");
+            Label eIsNoDeduction = (Label)fvAnecdoteCaseA_Data.FindControl("eIsNoDeduction_INS");
+            if (cbIsNoDeduction != null)
+            {
+                eIsNoDeduction.Text = cbIsNoDeduction.Checked ? "True" : "False";
+            }
+        }
+
+        /// <summary>
+        /// 新增畫面變更車號
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void eCar_ID_INS_TextChanged(object sender, EventArgs e)
+        {
+            TextBox eCar_ID = (TextBox)fvAnecdoteCaseA_Data.FindControl("eCar_ID_INS");
+            TextBox eDepNo = (TextBox)fvAnecdoteCaseA_Data.FindControl("eDepNo_INS");
+            Label eDepName = (Label)fvAnecdoteCaseA_Data.FindControl("eDepName_INS");
+            TextBox eDriver = (TextBox)fvAnecdoteCaseA_Data.FindControl("eDriver_INS");
+            Label eDriverName = (Label)fvAnecdoteCaseA_Data.FindControl("eDriverName_INS");
+            TextBox eIDCardNo = (TextBox)fvAnecdoteCaseA_Data.FindControl("eIDCardNo_INS");
+            TextBox eBirthday = (TextBox)fvAnecdoteCaseA_Data.FindControl("eBirthday_INS");
+            Label eAssumeday = (Label)fvAnecdoteCaseA_Data.FindControl("eAssumeday_INS");
+            TextBox eTelephoneNo = (TextBox)fvAnecdoteCaseA_Data.FindControl("eTelephoneNo_INS");
+            TextBox eAddress = (TextBox)fvAnecdoteCaseA_Data.FindControl("eAddress_INS");
+            DateTime vBirthday;
+            DateTime vAssumeday;
+            if (eCar_ID != null)
+            {
+                if (vConnStr == "")
+                {
+                    vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
+                }
+                string vCar_ID = eCar_ID.Text.Trim();
+                string vSQLStr_Temp = "select isnull(a.Driver, '') + ',' + isnull(e.[Name], '') + ',' + isnull(a.CompanyNo, '') + ',' + isnull(d.[Name], '') as ResultStr " + Environment.NewLine +
+                                      "  from Car_infoA a left join Department d on d.DepNo = a.CompanyNo " + Environment.NewLine +
+                                      "                   left join Employee e on e.EmpNo = a.Driver " + Environment.NewLine +
+                                      " where a.Car_ID = '" + vCar_ID + "' ";
+                string vResultStr = PF.GetValue(vConnStr, vSQLStr_Temp, "ResultStr");
+                string[] vaResult = vResultStr.Split(',');
+                if (vaResult[0].ToString() != "")
+                {
+                    eDriver.Text = vaResult[0].ToString();
+                    eDriverName.Text = vResultStr[1].ToString();
+                    vSQLStr_Temp = "select (IDCardNo + ',' + convert(varchar(10), Birthday, 111) + ',' + convert(varchar(10), Assumeday, 111) + ',' + " + Environment.NewLine +
+                                   "       case when isnull(CellPhone, '') <> '' then CellPhone else TelNo1 end + ',' + Addr1) as ResultStr " + Environment.NewLine +
+                                   "  from Employee " + Environment.NewLine +
+                                   " where EmpNo = '" + vaResult[0].ToString() + "' ";
+                    vResultStr = PF.GetValue(vConnStr, vSQLStr_Temp, "ResultStr");
+                    string[] vaDriverData = vResultStr.Split(',');
+                    eIDCardNo.Text = vaDriverData[0].ToString();
+                    eBirthday.Text = DateTime.TryParse(vaDriverData[1].ToString(), out vBirthday) ? (vBirthday.Year - 3822).ToString() + '/' + vBirthday.ToString("MM/dd") : "";
+                    eAssumeday.Text = DateTime.TryParse(vaDriverData[2].ToString(), out vAssumeday) ? (vAssumeday.Year - 3822).ToString() + '/' + vAssumeday.ToString("MM/dd") : "";
+                    eTelephoneNo.Text = vaDriverData[3].ToString();
+                    eAddress.Text = vaDriverData[4].ToString();
+                }
+                eDepNo.Text = vaResult[2].ToString();
+                eDepName.Text = vaResult[3].ToString();
+            }
+        }
+
+        /// <summary>
+        /// 新增畫面變更所屬單位
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void eDepNo_INS_TextChanged(object sender, EventArgs e)
+        {
+            TextBox eDepNo = (TextBox)fvAnecdoteCaseA_Data.FindControl("eDepNo_INS");
+            Label eDepName = (Label)fvAnecdoteCaseA_Data.FindControl("eDepName_INS");
+            if (eDepNo != null)
+            {
+                if (vConnStr == "")
+                {
+                    vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
+                }
+                string vDepNo = eDepNo.Text.Trim();
+                string vSQLStr_Temp = "select [Name] from Department where DepNo = '" + vDepNo + "' ";
+                string vDepName = PF.GetValue(vConnStr, vSQLStr_Temp, "Name");
+                if (vDepName == "")
+                {
+                    vDepName = eDepNo.Text.Trim();
+                    vSQLStr_Temp = "select top 1 DepNo from Department where [Name] = '" + vDepName + "' order by DepNo";
+                    vDepNo = PF.GetValue(vConnStr, vSQLStr_Temp, "DepNo");
+                }
+                eDepNo.Text = vDepNo.Trim();
+                eDepName.Text = vDepName.Trim();
+            }
+        }
+
+        /// <summary>
+        /// 新增畫面變更駕駛員
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void eDriver_INS_TextChanged(object sender, EventArgs e)
+        {
+            TextBox eDriver = (TextBox)fvAnecdoteCaseA_Data.FindControl("eDriver_INS");
+            Label eDriverName = (Label)fvAnecdoteCaseA_Data.FindControl("eDriverName_INS");
+            TextBox eIDCardNo = (TextBox)fvAnecdoteCaseA_Data.FindControl("eIDCardNo_INS");
+            TextBox eBirthday = (TextBox)fvAnecdoteCaseA_Data.FindControl("eBirthday_INS");
+            Label eAssumeday = (Label)fvAnecdoteCaseA_Data.FindControl("eAssumeday_INS");
+            TextBox eTelephoneNo = (TextBox)fvAnecdoteCaseA_Data.FindControl("eTelephoneNo_INS");
+            TextBox eAddress = (TextBox)fvAnecdoteCaseA_Data.FindControl("eAddress_INS");
+            DateTime vBirthday;
+            DateTime vAssumeday;
+            if (eDriver != null)
+            {
+                if (vConnStr == "")
+                {
+                    vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
+                }
+                string vDriver = eDriver.Text.Trim();
+                string vSQLStr_Temp = "select [Name] from Employee where EmpNo = '" + vDriver + "' ";
+                string vDriverName = PF.GetValue(vConnStr, vSQLStr_Temp, "Name");
+                if (vDriverName == "")
+                {
+                    vDriverName = eDriver.Text.Trim();
+                    vSQLStr_Temp = "select top 1 EmpNo from Employee where [Name] = '" + vDriverName + "' order by Assumeday DESC";
+                    vDriver = PF.GetValue(vConnStr, vSQLStr_Temp, "EmpNo");
+                }
+                eDriver.Text = vDriver.Trim();
+                eDriverName.Text = vDriverName.Trim();
+                if (eDriver.Text.Trim() != "")
+                {
+                    vSQLStr_Temp = "select (IDCardNo + ',' + convert(varchar(10), Birthday, 111) + ',' + convert(varchar(10), Assumeday, 111) + ',' + " + Environment.NewLine +
+                                   "       case when isnull(CellPhone, '') <> '' then CellPhone else TelNo1 end + ',' + Addr1) as ResultStr " + Environment.NewLine +
+                                   "  from Employee " + Environment.NewLine +
+                                   " where EmpNo = '" + vDriver.Trim() + "' ";
+                    string vResultStr = PF.GetValue(vConnStr, vSQLStr_Temp, "ResultStr");
+                    string[] vaDriverData = vResultStr.Split(',');
+                    eIDCardNo.Text = vaDriverData[0].ToString();
+                    eBirthday.Text = DateTime.TryParse(vaDriverData[1].ToString(), out vBirthday) ? (vBirthday.Year - 3822).ToString() + '/' + vBirthday.ToString("MM/dd") : "";
+                    eAssumeday.Text = DateTime.TryParse(vaDriverData[2].ToString(), out vAssumeday) ? (vAssumeday.Year - 3822).ToString() + '/' + vAssumeday.ToString("MM/dd") : "";
+                    eTelephoneNo.Text = vaDriverData[3].ToString();
+                    eAddress.Text = vaDriverData[4].ToString();
+                }
+            }
+        }
+
+        protected void cbHasVideo_INS_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox cbHasVideo = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbHasVideo_INS");
+            Label eHasVideo = (Label)fvAnecdoteCaseA_Data.FindControl("eHasVideo_INS");
+            if (cbHasVideo != null)
+            {
+                eHasVideo.Text = cbHasVideo.Checked ? "Y" : "N";
+            }
+        }
+
+        protected void rbHasCaseData_INS_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RadioButtonList rbHasCaseData = (RadioButtonList)fvAnecdoteCaseA_Data.FindControl("rbHasCaseData_INS");
+            Label eHasCaseData = (Label)fvAnecdoteCaseA_Data.FindControl("eHasCaseData_INS");
+            if (rbHasCaseData != null)
+            {
+                eHasCaseData.Text = rbHasCaseData.SelectedValue.Trim();
+            }
+        }
+
+        protected void cbHasAccReport_INS_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox cbHasAccReport = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbHasAccReport_INS");
+            Label eHasAccReport = (Label)fvAnecdoteCaseA_Data.FindControl("eHasAccReport_INS");
+            if (cbHasAccReport != null)
+            {
+                eHasAccReport.Text = cbHasAccReport.Checked ? "Y" : "N";
+            }
+        }
+
+        protected void cbIsExemption_INS_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox cbIsExemption = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbIsExemption_INS");
+            Label eIsExemption = (Label)fvAnecdoteCaseA_Data.FindControl("eIsExemption_INS");
+            if (cbIsExemption != null)
+            {
+                eIsExemption.Text = cbIsExemption.Checked ? "Y" : "N";
+            }
+        }
+
+        protected void gridAnecdoteCaseA_List_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gridAnecdoteCaseA_List.PageIndex = e.NewPageIndex;
+            gridAnecdoteCaseA_List.DataBind();
+        }
+
+        /// <summary>
+        /// 主檔刪除
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void bbDel_Main_Click(object sender, EventArgs e)
+        {
+            eErrorMSG_A.Text = "";
+            eErrorMSG_A.Visible = false;
+            Label eCaseNo_List = (Label)fvAnecdoteCaseA_Data.FindControl("eCaseNo_A_List");
+            if (eCaseNo_List != null)
+            {
+                if (vConnStr == "")
+                {
+                    vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
+                }
+                try
+                {
+                    //取回要刪除的肇事單號
+                    string vCaseNo_Temp = eCaseNo_List.Text.Trim();
+                    DateTime vDelDate = DateTime.Today;
+                    //記錄操作
+                    string vRecordNote = "刪除肇事單資料_" + vCaseNo_Temp + Environment.NewLine +
+                                         "刪除日期：" + vDelDate.ToString("yyyy/MM/dd HH:mm:ss") + Environment.NewLine +
+                                         "肇事單號：[" + vCaseNo_Temp + "]" + Environment.NewLine +
+                                         "刪除人工號：" + vLoginID + Environment.NewLine +
+                                         "AnecdoteCase.aspx";
+                    PF.InsertOperateRecord(vConnStr, vLoginID, vComputerName, vRecordNote);
+                    //因為是刪主檔，所以要連 B 檔和 C 檔都一起刪，可是 C 檔沒有異動檔所以只針對 B 檔做異動
+                    string vHistoryNo = vDelDate.Year.ToString("D4") + vDelDate.Month.ToString("D2") + "DELA";
+                    string vSQLStr_Temp = "select max(HistoryNo) MaxNo from AnecdoteCaseHistory where HistoryNo like '" + vHistoryNo + "%' ";
+                    string vMaxNo = PF.GetValue(vConnStr, vSQLStr_Temp, "MaxNo");
+                    string vIndex_Str = vMaxNo.Replace(vHistoryNo, "").Trim();
+                    int vIndex = (vIndex_Str != "") ? Int32.Parse(vIndex_Str) + 1 : 1;
+                    string vNewHistoryNo = vHistoryNo + vIndex.ToString("D4");
+                    vSQLStr_Temp = "select max(ItemsH) MaxItem from AnecdoteCaseBHistory where HistoryNo = '" + vNewHistoryNo + "' ";
+                    string vMaxItemsH = PF.GetValue(vConnStr, vSQLStr_Temp, "MaxItem");
+                    string vNewItemsH = (vMaxItemsH.Trim() != "") ? Int32.Parse(vMaxItemsH).ToString("D4") : "0001";
+                    string vNewHistoryNoItems = vNewHistoryNo.Trim() + vNewItemsH.Trim();
+                    //複製 B 檔原資料到異動檔
+                    vSQLStr_Temp = "INSERT INTO [dbo].[AnecdoteCaseBHistory] " + Environment.NewLine +
+                                   "            ([HistoryNo], [ItemsH], [HistoryNoItems], [CaseNo], [Items], [CaseNoItems], [Relationship], [RelCar_ID], " + Environment.NewLine +
+                                   "             [EstimatedAmount], [ThirdInsurance], [CompInsurance], [DriverSharing], [CompanySharing], [CarDamageAMT], " + Environment.NewLine +
+                                   "             [PersonDamageAMT], [RelationComp], [ReconciliationDate], [Remark], [ModifyType], [ModifyDate], [ModifyMan], " + Environment.NewLine +
+                                   "             [PassengerInsu], [RelGender], [RelTelNo1], [RelTelNo2], [RelCarType], [RelPersonDamage], [RelCarDamage], " + Environment.NewLine +
+                                   "             [RelNote])" + Environment.NewLine +
+                                   "select '" + vNewHistoryNo + "', '" + vNewItemsH + "', '" + vNewHistoryNoItems + "', [CaseNo], [Items], [CaseNoItems], [Relationship], " + Environment.NewLine +
+                                   "       [RelCar_ID], [EstimatedAmount], [ThirdInsurance], [CompInsurance], [DriverSharing], [CompanySharing], [CarDamageAMT], " + Environment.NewLine +
+                                   "       [PersonDamageAMT], [RelationComp], [ReconciliationDate], [Remark], 'DELA', GetDate(), '" + vLoginID + "', [PassengerInsu], " + Environment.NewLine +
+                                   "       [RelGender], [RelTelNo1], [RelTelNo2], [RelCarType], [RelPersonDamage], [RelCarDamage], [RelNote] " + Environment.NewLine +
+                                   "  from [dbo].[AnecdoteCaseB] " + Environment.NewLine +
+                                   " where CaseNo = '" + vCaseNo_Temp + "' ";
+                    PF.ExecSQL(vConnStr, vSQLStr_Temp);
+                    //複製 A 檔原資料到異動檔
+                    vSQLStr_Temp = "INSERT INTO [dbo].[AnecdoteCaseHistory] " + Environment.NewLine +
+                                   "            ([HistoryNo], [CaseNo], [HasInsurance], [DepNo], [DepName], [BuildDate], [BuildMan], [Car_ID], [Driver], " + Environment.NewLine +
+                                   "             [DriverName], [InsuMan], [AnecdotalResRatio], [IsNoDeduction], [DeductionDate], [Remark], [ModifyType], " + Environment.NewLine +
+                                   "             [ModifyDate], [ModifyMan], [CaseOccurrence], [ERPCouseNo], [CaseClose], [IsExemption], [PaidAmount], " + Environment.NewLine +
+                                   "             [Penalty], [PenaltyRatio], [InsuAmount], [IDCardNo], [Birthday], [Assumeday], [TelephoneNo], [Address], " + Environment.NewLine +
+                                   "             [PersonDamage], [CarDamage], [ReportDate], [CaseDate], [CaseTime], [OutReportNo], [PoliceUnit], [PoliceName], " + Environment.NewLine +
+                                   "             [HasVideo], [NoVideoReason], [HasCaseData]) " + Environment.NewLine +
+                                   "select '" + vNewHistoryNo + "', [CaseNo], [HasInsurance], [DepNo], [DepName], [BuildDate], [BuildMan], [Car_ID], [Driver], " + Environment.NewLine +
+                                   "       [DriverName], [InsuMan], [AnecdotalResRatio], [IsNoDeduction], [DeductionDate], [Remark], 'DELA', GetDate(), '" + vLoginID + "', " + Environment.NewLine +
+                                   "       [CaseOccurrence], [ERPCouseNo], [CaseClose], [IsExemption], [PaidAmount], [Penalty], [PenaltyRatio], [InsuAmount], [IDCardNo], " + Environment.NewLine +
+                                   "       [Birthday], [Assumeday], [TelephoneNo], [Address], [PersonDamage], [CarDamage], [ReportDate], [CaseDate], [CaseTime], " + Environment.NewLine +
+                                   "       [OutReportNo], [PoliceUnit], [PoliceName], [HasVideo], [NoVideoReason], [HasCaseData] " + Environment.NewLine +
+                                   "  from [dbo].[AnecdoteCase] " + Environment.NewLine +
+                                   " where CaseNo = '" + vCaseNo_Temp + "' ";
+                    PF.ExecSQL(vConnStr, vSQLStr_Temp);
+                    //開始刪除
+                    using (SqlDataSource dsDelTemp = new SqlDataSource())
+                    {
+                        dsDelTemp.ConnectionString = vConnStr;
+                        //刪除 C 檔
+                        dsDelTemp.DeleteCommand = "delete AnecdoteCaseC where CaseNo = @CaseNo ";
+                        dsDelTemp.DeleteParameters.Clear();
+                        dsDelTemp.DeleteParameters.Add(new Parameter("CaseNo", DbType.String, vCaseNo_Temp.Trim()));
+                        dsDelTemp.Delete();
+                        //刪除 B 檔
+                        dsDelTemp.DeleteCommand = "delete AnecdoteCaseB where CaseNo = @CaseNo ";
+                        dsDelTemp.DeleteParameters.Clear();
+                        dsDelTemp.DeleteParameters.Add(new Parameter("CaseNo", DbType.String, vCaseNo_Temp.Trim()));
+                        dsDelTemp.Delete();
+                        //刪除 A 檔
+                        dsDelTemp.DeleteCommand = "delete AnecdoteCase where CaseNo = @CaseNo ";
+                        dsDelTemp.DeleteParameters.Clear();
+                        dsDelTemp.DeleteParameters.Add(new Parameter("CaseNo", DbType.String, vCaseNo_Temp.Trim()));
+                        dsDelTemp.Delete();
+                    }
+                    CaseDataBind();
+                }
+                catch (Exception eMessage)
+                {
+                    eErrorMSG_A.Visible = true;
+                    eErrorMSG_A.Text = eMessage.Message;
+                }
+            }
+            else
+            {
+                eErrorMSG_A.Text = "請先選擇要刪除的肇事單";
+                eErrorMSG_A.Visible = true;
+            }
+        }
+
+        /// <summary>
+        /// 明細 FormView 完成資料繫結
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void fvAnecdoteCaseB_Data_DataBound(object sender, EventArgs e)
+        {
+            string vTempDateURL = "";
+            string vTempDateScript = "";
+            DropDownList ddlRelCarType;
+            Label eRelCarType;
+            TextBox eReconciliationDate;
+            switch (fvAnecdoteCaseB_Data.CurrentMode)
+            {
+                case FormViewMode.ReadOnly:
+                    ddlRelCarType = (DropDownList)fvAnecdoteCaseB_Data.FindControl("ddlRelCarType_List");
+                    if (ddlRelCarType != null)
+                    {
+                        eRelCarType = (Label)fvAnecdoteCaseB_Data.FindControl("eRelCarType_List");
+                        if (eRelCarType.Text.Trim() == "")
+                        {
+                            eRelCarType.Text = "00";
+                        }
+                        ddlRelCarType.SelectedIndex = ddlRelCarType.Items.IndexOf(ddlRelCarType.Items.FindByValue(eRelCarType.Text.Trim()));
+                    }
+                    break;
+                case FormViewMode.Edit:
+                    eReconciliationDate = (TextBox)fvAnecdoteCaseB_Data.FindControl("eReconciliationDate_Edit");
+                    if (eReconciliationDate != null)
+                    {
+                        vTempDateURL = "InputDate_ChineseYears.aspx?TextboxID=" + eReconciliationDate.ClientID;
+                        vTempDateScript = "window.open('" + vTempDateURL + "','','height=315, width=350,status=no,toolbar=no,menubar=no,location=no','')";
+                        eReconciliationDate.Attributes["onClick"] = vTempDateScript;
+                    }
+                    ddlRelCarType = (DropDownList)fvAnecdoteCaseB_Data.FindControl("ddlRelCarType_Edit");
+                    eRelCarType = (Label)fvAnecdoteCaseB_Data.FindControl("eRelCarType_Edit");
+                    if (eRelCarType.Text.Trim() == "")
+                    {
+                        eRelCarType.Text = "00";
+                    }
+                    ddlRelCarType.SelectedIndex = ddlRelCarType.Items.IndexOf(ddlRelCarType.Items.FindByValue(eRelCarType.Text.Trim()));
+                    break;
+                case FormViewMode.Insert:
+                    eReconciliationDate = (TextBox)fvAnecdoteCaseB_Data.FindControl("eReconciliationDate_INS");
+                    if (eReconciliationDate != null)
+                    {
+                        vTempDateURL = "InputDate_ChineseYears.aspx?TextboxID=" + eReconciliationDate.ClientID;
+                        vTempDateScript = "window.open('" + vTempDateURL + "','','height=315, width=350,status=no,toolbar=no,menubar=no,location=no','')";
+                        eReconciliationDate.Attributes["onClick"] = vTempDateScript;
+                    }
+                    ddlRelCarType = (DropDownList)fvAnecdoteCaseB_Data.FindControl("ddlRelCarType_INS");
+                    eRelCarType = (Label)fvAnecdoteCaseB_Data.FindControl("eRelCarType_INS");
+                    ddlRelCarType.SelectedIndex = 0;
+                    eRelCarType.Text = "00";
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// 編輯明細畫面確定修改
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void bbDetailOK_Edit_Click(object sender, EventArgs e)
+        {
+            eErrorMSG_B.Text = "";
+            eErrorMSG_B.Visible = false;
+            if (vConnStr == "")
+            {
+                vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
+            }
+            Label eCaseNo_B = (Label)fvAnecdoteCaseB_Data.FindControl("eCaseNo_B_Edit");
+            if (eCaseNo_B != null)
+            {
+                string vSQLStr_Temp = "";
+                int vTempINT;
+                DateTime vTempDate;
+                double vTempFloat;
+                Label eItems = (Label)fvAnecdoteCaseB_Data.FindControl("eItems_Edit");
+                Label eCaseNoItems = (Label)fvAnecdoteCaseB_Data.FindControl("eCaseNoItems_Edit");
+                string vCaseNo = eCaseNo_B.Text.Trim();
+                string vItems = eItems.Text.Trim();
+                string vCaseNoItems = eCaseNoItems.Text.Trim();
+                try
+                {
+                    //寫入記錄
+                    string vRecordNote = "修改肇事明細資料_" + vCaseNo + Environment.NewLine +
+                                         "建檔日期：" + DateTime.Today.ToString("yyyy/MM/dd HH:mm:ss") + Environment.NewLine +
+                                         "肇事單號：[ " + vCaseNo + " ]" + Environment.NewLine +
+                                         "明細項次：[ " + vItems + " ]" + Environment.NewLine +
+                                         "異動人工號：" + vLoginID + Environment.NewLine +
+                                         "AnecdoteCase.aspx";
+                    PF.InsertOperateRecord(vConnStr, vLoginID, vComputerName, vRecordNote);
+                    //在主檔的異動記錄加入一筆資料
+                    DateTime vModifyDate = DateTime.Today;
+                    //先產生異動單號
+                    string vHistoryNo = vModifyDate.Year.ToString("D4") + vModifyDate.Month.ToString("D2") + "MODB";
+                    vSQLStr_Temp = "select max(HistoryNo) MaxNo from AnecdoteCaseHistory where HistoryNo like '" + vHistoryNo + "%' ";
+                    string vMaxNo = PF.GetValue(vConnStr, vSQLStr_Temp, "MaxNo");
+                    Int32 vIndex;
+                    string vIndex_Str = Int32.TryParse(vMaxNo.Replace(vHistoryNo, "").Trim(), out vIndex) ? (vIndex + 1).ToString("D4") : "0001";
+                    string vNewHistoryNo = vHistoryNo + vIndex_Str;
+                    //寫入主檔異動資料
+                    vSQLStr_Temp = "INSERT INTO AnecdoteCaseHistory " + Environment.NewLine +
+                                   "            (HistoryNo, CaseNo, HasInsurance, DepNo, DepName, BuildDate, BuildMan, Car_ID, Driver, " + Environment.NewLine +
+                                   "             DriverName, InsuMan, AnecdotalResRatio, IsNoDeduction, DeductionDate, Remark, ModifyType, " + Environment.NewLine +
+                                   "             ModifyDate, ModifyMan, CaseOccurrence, ERPCouseNo, CaseClose, IsExemption, PaidAmount, " + Environment.NewLine +
+                                   "             Penalty, PenaltyRatio, InsuAmount, IDCardNo, Birthday, Assumeday, TelephoneNo, Address, " + Environment.NewLine +
+                                   "             PersonDamage, CarDamage, ReportDate, CaseDate, CaseTime, OutReportNo, PoliceUnit, PoliceName, " + Environment.NewLine +
+                                   "             HasVideo, NoVideoReason, HasCaseData) " + Environment.NewLine +
+                                   "select '" + vNewHistoryNo + "', CaseNo, HasInsurance, DepNo, DepName, BuildDate, BuildMan, Car_ID, Driver, " + Environment.NewLine +
+                                   "       DriverName, InsuMan, AnecdotalResRatio, IsNoDeduction, DeductionDate, Remark, 'MODB', GetDate(), '" + vLoginID + "', " + Environment.NewLine +
+                                   "       CaseOccurrence, ERPCouseNo, CaseClose, IsExemption, PaidAmount, Penalty, PenaltyRatio, InsuAmount, IDCardNo, " + Environment.NewLine +
+                                   "       Birthday, Assumeday, TelephoneNo, Address, PersonDamage, CarDamage, ReportDate, CaseDate, CaseTime, " + Environment.NewLine +
+                                   "       OutReportNo, PoliceUnit, PoliceName, HasVideo, NoVideoReason, HasCaseData " + Environment.NewLine +
+                                   "  from AnecdoteCase " + Environment.NewLine +
+                                   " where CaseNo = '" + vCaseNo + "' ";
+                    PF.ExecSQL(vConnStr, vSQLStr_Temp);
+                    //產生明細異動記錄
+                    vSQLStr_Temp = "select max(Items) MaxItem from AnecdoteCaseBHistory where HistoryNo = '" + vNewHistoryNo + "' ";
+                    vMaxNo = PF.GetValue(vConnStr, vSQLStr_Temp, "MaxItem");
+                    int vNewItems = (vMaxNo != "") ? Int32.Parse(vMaxNo) + 1 : 1;
+                    string vNewItemsStr = vNewItems.ToString("D4");
+                    //寫入明細異動資料
+                    vSQLStr_Temp = "INSERT INTO AnecdoteCaseBHistory " + Environment.NewLine +
+                                   "            (HistoryNo, ItemsH, HistoryNoItems, CaseNo, Items, CaseNoItems, Relationship, RelCar_ID, " + Environment.NewLine +
+                                   "             EstimatedAmount, ThirdInsurance, CompInsurance, DriverSharing, CompanySharing, CarDamageAMT, " + Environment.NewLine +
+                                   "             PersonDamageAMT, RelationComp, ReconciliationDate, Remark, ModifyType, ModifyDate, ModifyMan, " + Environment.NewLine +
+                                   "             PassengerInsu, RelGender, RelTelNo1, RelTelNo2, RelCarType, RelPersonDamage, RelCarDamage, RelNote)" + Environment.NewLine +
+                                   "select '" + vNewHistoryNo + "', '" + vNewItemsStr + "', '" + vNewHistoryNo + vNewItemsStr + "', " + Environment.NewLine +
+                                   "       CaseNo, Items, CaseNoItems, Relationship, RelCar_ID, EstimatedAmount, ThirdInsurance, CompInsurance, DriverSharing, " + Environment.NewLine +
+                                   "       CompanySharing, CarDamageAMT, PersonDamageAMT, RelationComp, ReconciliationDate, Remark, 'MODB', GetDate(),  " + Environment.NewLine +
+                                   "       '" + vLoginID + "', PassengerInsu, RelGender, RelTelNo1, RelTelNo2, RelCarType, RelPersonDamage, RelCarDamage, RelNote " + Environment.NewLine +
+                                   "  from AnecdoteCaseB " + Environment.NewLine +
+                                   " where CaseNoItems = '" + vCaseNoItems + "' ";
+                    PF.ExecSQL(vConnStr, vSQLStr_Temp);
+                    //開始更新明細資料
+                    vSQLStr_Temp = "update AnecdoteCaseB " + Environment.NewLine +
+                                   "   set Relationship = @Relationship, RelCar_ID = @RelCar_ID, EstimatedAmount = @EstimatedAmount, ThirdInsurance = @ThirdInsurance, " + Environment.NewLine +
+                                   "       CompInsurance = @CompInsurance, DriverSharing = @DriverSharing, CompanySharing = @CompanySharing, CarDamageAMT = @CarDamageAMT, " + Environment.NewLine +
+                                   "       PersonDamageAMT = @PersonDamageAMT, RelationComp = @RelationComp, ReconciliationDate = @ReconciliationDate, Remark = @Remark, " + Environment.NewLine +
+                                   "       ModifyDate = GetDate(), ModifyMan = '" + vLoginID + "', PassengerInsu = @PassengerInsu, RelGender = @RelGender, " + Environment.NewLine +
+                                   "       RelTelNo1 = @RelTelNo1, RelTelNo2 = @RelTelNo2, RelCarType = @RelCarType, RelPersonDamage = @RelPersonDamage, " + Environment.NewLine +
+                                   "       RelCarDamage = @RelCarDamage, RelNote = @RelNote " + Environment.NewLine +
+                                   " where CaseNoItems = @CaseNoItems ";
+                    sdsAnecdoteCaseB_Data.UpdateCommand = vSQLStr_Temp;
+                    sdsAnecdoteCaseB_Data.UpdateParameters.Clear();
+                    TextBox eRelationship = (TextBox)fvAnecdoteCaseB_Data.FindControl("eRelationship_Edit");
+                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("Relationship", DbType.String, (eRelationship.Text.Trim() != "") ? eRelationship.Text.Trim() : String.Empty));
+                    TextBox eRelCar_ID = (TextBox)fvAnecdoteCaseB_Data.FindControl("eRelCar_ID_Edit");
+                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("RelCar_ID", DbType.String, (eRelCar_ID.Text.Trim() != "") ? eRelCar_ID.Text.Trim() : String.Empty));
+                    TextBox eEstimatedAmount = (TextBox)fvAnecdoteCaseB_Data.FindControl("eEstimatedAmount_Edit");
+                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("EstimatedAmount", DbType.Int32, Int32.TryParse(eEstimatedAmount.Text.Trim(), out vTempINT) ? vTempINT.ToString() : "0"));
+                    TextBox eThirdInsurance = (TextBox)fvAnecdoteCaseB_Data.FindControl("eThirdInsurance_Edit");
+                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("ThirdInsurance", DbType.Int32, Int32.TryParse(eThirdInsurance.Text.Trim(), out vTempINT) ? vTempINT.ToString() : "0"));
+                    TextBox eCompInsurance = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCompInsurance_Edit");
+                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("CompInsurance", DbType.Int32, Int32.TryParse(eCompInsurance.Text.Trim(), out vTempINT) ? vTempINT.ToString() : "0"));
+                    TextBox eDriverSharing = (TextBox)fvAnecdoteCaseB_Data.FindControl("eDriverSharing_Edit");
+                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("DriverSharing", DbType.Int32, Int32.TryParse(eDriverSharing.Text.Trim(), out vTempINT) ? vTempINT.ToString() : "0"));
+                    TextBox eCompanySharing = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCompanySharing_Edit");
+                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("CompanySharing", DbType.Int32, Int32.TryParse(eCompanySharing.Text.Trim(), out vTempINT) ? vTempINT.ToString() : "0"));
+                    TextBox eCarDamageAMT = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCarDamageAMT_Edit");
+                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("CarDamageAMT", DbType.Int32, Int32.TryParse(eCarDamageAMT.Text.Trim(), out vTempINT) ? vTempINT.ToString() : "0"));
+                    TextBox ePersonDamageAMT = (TextBox)fvAnecdoteCaseB_Data.FindControl("ePersonDamageAMT_Edit");
+                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("PersonDamageAMT", DbType.Int32, Int32.TryParse(ePersonDamageAMT.Text.Trim(), out vTempINT) ? vTempINT.ToString() : "0"));
+                    TextBox eRelationComp = (TextBox)fvAnecdoteCaseB_Data.FindControl("eRelationComp_Edit");
+                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("RelationComp", DbType.Int32, Int32.TryParse(eRelationComp.Text.Trim(), out vTempINT) ? vTempINT.ToString() : "0"));
+                    TextBox eReconciliationDate = (TextBox)fvAnecdoteCaseB_Data.FindControl("eReconciliationDate_Edit");
+                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("ReconciliationDate", DbType.Date, DateTime.TryParse(eReconciliationDate.Text.Trim(), out vTempDate) ? vTempDate.ToShortDateString() : String.Empty));
+                    TextBox ePassengerInsu = (TextBox)fvAnecdoteCaseB_Data.FindControl("ePassengerInsu_Edit");
+                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("PassengerInsu", DbType.Double, double.TryParse(ePassengerInsu.Text.Trim(), out vTempFloat) ? vTempFloat.ToString() : "0.0"));
+                    TextBox eRemark = (TextBox)fvAnecdoteCaseB_Data.FindControl("eRemark_B_Edit");
+                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("Remark", DbType.String, (eRemark.Text.Trim() != "") ? eRemark.Text.Trim() : String.Empty));
+                    TextBox eRelGender = (TextBox)fvAnecdoteCaseB_Data.FindControl("eRelGender_Edit");
+                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("RelGender", DbType.String, (eRelGender.Text.Trim() != "") ? eRelGender.Text.Trim() : String.Empty));
+                    TextBox eRelTelNo1 = (TextBox)fvAnecdoteCaseB_Data.FindControl("eRelTelNo1_Edit");
+                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("RelTelNo1", DbType.String, (eRelTelNo1.Text.Trim() != "") ? eRelTelNo1.Text.Trim() : String.Empty));
+                    TextBox eRelTelNo2 = (TextBox)fvAnecdoteCaseB_Data.FindControl("eRelTelNo2_Edit");
+                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("RelTelNo2", DbType.String, (eRelTelNo2.Text.Trim() != "") ? eRelTelNo2.Text.Trim() : String.Empty));
+                    Label eRelCarType = (Label)fvAnecdoteCaseB_Data.FindControl("eRelCarType_Edit");
+                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("RelCarType", DbType.String, (eRelCarType.Text.Trim() != "") ? eRelCarType.Text.Trim() : "00"));
+                    TextBox eRelPersonDamage = (TextBox)fvAnecdoteCaseB_Data.FindControl("eRelPersonDamage_Edit");
+                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("RelPersonDamage", DbType.String, (eRelPersonDamage.Text.Trim() != "") ? eRelPersonDamage.Text.Trim() : String.Empty));
+                    TextBox eRelCarDamage = (TextBox)fvAnecdoteCaseB_Data.FindControl("eRelCarDamage_Edit");
+                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("RelCarDamage", DbType.String, (eRelCarDamage.Text.Trim() != "") ? eRelCarDamage.Text.Trim() : String.Empty));
+                    TextBox eRelNote = (TextBox)fvAnecdoteCaseB_Data.FindControl("eRelNote_Edit");
+                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("RelNote", DbType.String, (eRelNote.Text.Trim() != "") ? eRelNote.Text.Trim() : String.Empty));
+                    sdsAnecdoteCaseB_Data.UpdateParameters.Add(new Parameter("CaseNoItems", DbType.String, vCaseNoItems));
+                    sdsAnecdoteCaseB_Data.Update();
+                    fvAnecdoteCaseB_Data.ChangeMode(FormViewMode.ReadOnly);
+                    gridAnecdoteCaseB_List.DataBind();
+                    fvAnecdoteCaseB_Data.DataBind();
+                }
+                catch (Exception eMessage)
+                {
+                    eErrorMSG_B.Text = eMessage.Message;
+                    eErrorMSG_B.Visible = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 編輯明細畫面選擇車種
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void ddlRelCarType_Edit_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DropDownList ddlRelCarType = (DropDownList)fvAnecdoteCaseB_Data.FindControl("ddlRelCarType_Edit");
+            Label eRelCarType = (Label)fvAnecdoteCaseB_Data.FindControl("eRelCarType_Edit");
+            if (ddlRelCarType != null)
+            {
+                eRelCarType.Text = ddlRelCarType.SelectedValue.Trim();
+            }
+        }
+
+        /// <summary>
+        /// 新增明細畫面確定新增
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void bbDetailOK_INS_Click(object sender, EventArgs e)
+        {
+            eErrorMSG_B.Text = "";
+            eErrorMSG_B.Visible = false;
+            if (vConnStr == "")
+            {
+                vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
+            }
+            try
+            {
+                Label eCaseNo_B = (Label)fvAnecdoteCaseB_Data.FindControl("eCaseNo_B_INS");
+                DateTime vTempDate;
+                double vTempFloat;
+                if (eCaseNo_B != null)
+                {
+                    string vSQLStr_INSB = "select max(Items) MaxItems from AnecdoteCaseB where CaseNo = '" + eCaseNo_B.Text.Trim() + "' ";
+                    string vMaxItems = PF.GetValue(vConnStr, vSQLStr_INSB, "MaxItems");
+                    int vTempINT;
+                    string vNewItems = Int32.TryParse(vMaxItems, out vTempINT) ? (vTempINT + 1).ToString("D4") : "0001";
+                    string vCaseNoItems = eCaseNo_B.Text.Trim() + vNewItems;
+                    //寫入記錄
+                    string vRecordNote = "新增肇事單明細資料_" + eCaseNo_B.Text.Trim() + Environment.NewLine +
+                                         "建檔日期：" + DateTime.Today.ToString("yyyy/MM/dd HH:mm:ss") + Environment.NewLine +
+                                         "肇事單號：[" + eCaseNo_B.Text.Trim() + "]" + Environment.NewLine +
+                                         "明細項次：[" + vNewItems + "]" + Environment.NewLine +
+                                         "建檔人工號：" + vLoginID + Environment.NewLine +
+                                         "AnecdoteCase.aspx";
+                    PF.InsertOperateRecord(vConnStr, vLoginID, vComputerName, vRecordNote);
+                    vSQLStr_INSB = "insert into AnecdoteCaseB " + Environment.NewLine +
+                                   "       (CaseNo, Items, CaseNoItems, Relationship, RelCar_ID, EstimatedAmount, ThirdInsurance, CompInsurance, DriverSharing, CompanySharing, " + Environment.NewLine +
+                                   "        CarDamageAMT, PersonDamageAMT, RelationComp, ReconciliationDate, PassengerInsu, Remark, RelGender, RelTelNo1, RelTelNo2, RelCarType, " + Environment.NewLine +
+                                   "        RelPersonDamage, RelCarDamage, RelNote)" + Environment.NewLine +
+                                   "values (@CaseNo, @Items, @CaseNoItems, @Relationship, @RelCar_ID, @EstimatedAmount, @ThirdInsurance, @CompInsurance, @DriverSharing, @CompanySharing, " + Environment.NewLine +
+                                   "        @CarDamageAMT, @PersonDamageAMT, @RelationComp, @ReconciliationDate, @PassengerInsu, @Remark, @RelGender, @RelTelNo1, @RelTelNo2, @RelCarType, " + Environment.NewLine +
+                                   "        @RelPersonDamage, @RelCarDamage, @RelNote)";
+                    sdsAnecdoteCaseB_Data.InsertCommand = vSQLStr_INSB;
+                    sdsAnecdoteCaseB_Data.InsertParameters.Clear();
+                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("CaseNo", DbType.String, eCaseNo_B.Text.Trim()));
+                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("Items", DbType.String, vNewItems));
+                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("CaseNoItems", DbType.String, vCaseNoItems));
+                    TextBox eRelationship = (TextBox)fvAnecdoteCaseB_Data.FindControl("eRelationship_INS");
+                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("Relationship", DbType.String, (eRelationship.Text.Trim() != "") ? eRelationship.Text.Trim() : String.Empty));
+                    TextBox eRelCar_ID = (TextBox)fvAnecdoteCaseB_Data.FindControl("eRelCar_ID_INS");
+                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("RelCar_ID", DbType.String, (eRelCar_ID.Text.Trim() != "") ? eRelCar_ID.Text.Trim() : String.Empty));
+                    TextBox eEstimatedAmount = (TextBox)fvAnecdoteCaseB_Data.FindControl("eEstimatedAmount_INS");
+                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("EstimatedAmount", DbType.Int32, Int32.TryParse(eEstimatedAmount.Text.Trim(), out vTempINT) ? vTempINT.ToString() : "0"));
+                    TextBox eThirdInsurance = (TextBox)fvAnecdoteCaseB_Data.FindControl("eThirdInsurance_INS");
+                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("ThirdInsurance", DbType.Int32, Int32.TryParse(eThirdInsurance.Text.Trim(), out vTempINT) ? vTempINT.ToString() : "0"));
+                    TextBox eCompInsurance = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCompInsurance_INS");
+                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("CompInsurance", DbType.Int32, Int32.TryParse(eCompInsurance.Text.Trim(), out vTempINT) ? vTempINT.ToString() : "0"));
+                    TextBox eDriverSharing = (TextBox)fvAnecdoteCaseB_Data.FindControl("eDriverSharing_INS");
+                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("DriverSharing", DbType.Int32, Int32.TryParse(eDriverSharing.Text.Trim(), out vTempINT) ? vTempINT.ToString() : "0"));
+                    TextBox eCompanySharing = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCompanySharing_INS");
+                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("CompanySharing", DbType.Int32, Int32.TryParse(eCompanySharing.Text.Trim(), out vTempINT) ? vTempINT.ToString() : "0"));
+                    TextBox eCarDamageAMT = (TextBox)fvAnecdoteCaseB_Data.FindControl("eCarDamageAMT_INS");
+                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("CarDamageAMT", DbType.Int32, Int32.TryParse(eCarDamageAMT.Text.Trim(), out vTempINT) ? vTempINT.ToString() : "0"));
+                    TextBox ePersonDamageAMT = (TextBox)fvAnecdoteCaseB_Data.FindControl("ePersonDamageAMT_INS");
+                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("PersonDamageAMT", DbType.Int32, Int32.TryParse(ePersonDamageAMT.Text.Trim(), out vTempINT) ? vTempINT.ToString() : "0"));
+                    TextBox eRelationComp = (TextBox)fvAnecdoteCaseB_Data.FindControl("eRelationComp_INS");
+                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("RelationComp", DbType.Int32, Int32.TryParse(eRelationComp.Text.Trim(), out vTempINT) ? vTempINT.ToString() : "0"));
+                    TextBox eReconciliationDate = (TextBox)fvAnecdoteCaseB_Data.FindControl("eReconciliationDate_INS");
+                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("ReconciliationDate", DbType.Date, DateTime.TryParse(eReconciliationDate.Text.Trim(), out vTempDate) ? vTempDate.ToShortDateString() : String.Empty));
+                    TextBox ePassengerInsu = (TextBox)fvAnecdoteCaseB_Data.FindControl("ePassengerInsu_INS");
+                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("PassengerInsu", DbType.Double, double.TryParse(ePassengerInsu.Text.Trim(), out vTempFloat) ? vTempFloat.ToString() : "0.0"));
+                    TextBox eRemark = (TextBox)fvAnecdoteCaseB_Data.FindControl("eRemark_B_INS");
+                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("Remark", DbType.String, (eRemark.Text.Trim() != "") ? eRemark.Text.Trim() : String.Empty));
+                    TextBox eRelGender = (TextBox)fvAnecdoteCaseB_Data.FindControl("eRelGender_INS");
+                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("RelGender", DbType.String, (eRelGender.Text.Trim() != "") ? eRelGender.Text.Trim() : String.Empty));
+                    TextBox eRelTelNo1 = (TextBox)fvAnecdoteCaseB_Data.FindControl("eRelTelNo1_INS");
+                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("RelTelNo1", DbType.String, (eRelTelNo1.Text.Trim() != "") ? eRelTelNo1.Text.Trim() : String.Empty));
+                    TextBox eRelTelNo2 = (TextBox)fvAnecdoteCaseB_Data.FindControl("eRelTelNo2_INS");
+                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("RelTelNo2", DbType.String, (eRelTelNo2.Text.Trim() != "") ? eRelTelNo2.Text.Trim() : String.Empty));
+                    Label eRelCarType = (Label)fvAnecdoteCaseB_Data.FindControl("eRelCarType_INS");
+                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("RelCarType", DbType.String, (eRelCarType.Text.Trim() != "") ? eRelCarType.Text.Trim() : "00"));
+                    TextBox eRelPersonDamage = (TextBox)fvAnecdoteCaseB_Data.FindControl("RelPersonDamage");
+                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("RelPersonDamage", DbType.String, (eRelPersonDamage.Text.Trim() != "") ? eRelPersonDamage.Text.Trim() : String.Empty));
+                    TextBox eRelCarDamage = (TextBox)fvAnecdoteCaseB_Data.FindControl("eRelCarDamage_INS");
+                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("RelCarDamage", DbType.String, (eRelCarDamage.Text.Trim() != "") ? eRelCarDamage.Text.Trim() : String.Empty));
+                    TextBox eRelNote = (TextBox)fvAnecdoteCaseB_Data.FindControl("eRelNote_INS");
+                    sdsAnecdoteCaseB_Data.InsertParameters.Add(new Parameter("RelNote", DbType.String, (eRelNote.Text.Trim() != "") ? eRelNote.Text.Trim() : String.Empty));
+                    sdsAnecdoteCaseB_Data.Insert();
+                    fvAnecdoteCaseB_Data.ChangeMode(FormViewMode.ReadOnly);
+                    gridAnecdoteCaseB_List.DataBind();
+                    fvAnecdoteCaseB_Data.DataBind();
+                }
+            }
+            catch (Exception eMessage)
+            {
+                eErrorMSG_B.Text = eMessage.Message;
+                eErrorMSG_B.Visible = true;
+            }
+        }
+
+        /// <summary>
+        /// 新增明細畫面選擇車種
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void ddlRelCarType_INS_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DropDownList ddlRelCarType = (DropDownList)fvAnecdoteCaseB_Data.FindControl("ddlRelCarType_INS");
+            Label eRelCarType = (Label)fvAnecdoteCaseB_Data.FindControl("eRelCarType_INS");
+            if (ddlRelCarType != null)
+            {
+                eRelCarType.Text = ddlRelCarType.SelectedValue.Trim();
+            }
+        }
+
+        /// <summary>
+        /// 明細刪除
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void bbDel_Detail_Click(object sender, EventArgs e)
+        {
+            eErrorMSG_B.Text = "";
+            eErrorMSG_B.Visible = false;
+            try
+            {
+                Label eCaseNoItems = (Label)fvAnecdoteCaseB_Data.FindControl("eCaseNoItems_List");
+                Label eCaseNo = (Label)fvAnecdoteCaseB_Data.FindControl("eCaseNo_B_List");
+                if ((eCaseNoItems != null) && (eCaseNoItems.Text.Trim() != ""))
+                {
+                    //找不到明細序號或是序號是空白就不進行刪除的動作
+                    if (vConnStr == "")
+                    {
+                        vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
+                    }
+                    //雖然是刪除明細，還是要在主檔的異動記錄加入一筆資料
+                    DateTime vModifyDate = DateTime.Today;
+                    //先取回異動記錄序號的最大值
+                    string vHistoryNo = vModifyDate.Year.ToString("D4") + vModifyDate.Month.ToString("D2") + "DELB";
+                    string vSQLStr_Temp = "select max(HistoryNo) MaxNo from AnecdoteCaseHistory where HistoryNo like '" + vHistoryNo + "%' ";
+                    string vMaxNo = PF.GetValue(vConnStr, vSQLStr_Temp, "MaxNo");
+                    string vIndexStr = (vMaxNo.Replace(vHistoryNo, "").Trim() != "") ? vMaxNo.Replace(vHistoryNo, "").Trim() : "0";
+                    int vIndex = Int32.Parse(vIndexStr) + 1;
+                    //產生新的異動記錄序號
+                    string vNewHistoryNo = vHistoryNo + vIndex.ToString("D4");
+                    string vCaseNo_Temp = eCaseNo.Text.Trim();
+                    //寫入主檔異動記錄
+                    vSQLStr_Temp = "INSERT INTO AnecdoteCaseHistory " + Environment.NewLine +
+                                   "            (HistoryNo, CaseNo, HasInsurance, DepNo, DepName, BuildDate, BuildMan, Car_ID, Driver, " + Environment.NewLine +
+                                   "             DriverName, InsuMan, AnecdotalResRatio, IsNoDeduction, DeductionDate, Remark, ModifyType, " + Environment.NewLine +
+                                   "             ModifyDate, ModifyMan, CaseOccurrence, ERPCouseNo, CaseClose, IsExemption, PaidAmount, " + Environment.NewLine +
+                                   "             Penalty, PenaltyRatio, InsuAmount, IDCardNo, Birthday, Assumeday, TelephoneNo, Address, " + Environment.NewLine +
+                                   "             PersonDamage, CarDamage, ReportDate, CaseDate, CaseTime, OutReportNo, PoliceUnit, PoliceName, " + Environment.NewLine +
+                                   "             HasVideo, NoVideoReason, HasCaseData) " + Environment.NewLine +
+                                   "select '" + vNewHistoryNo + "', CaseNo, HasInsurance, DepNo, DepName, BuildDate, BuildMan, Car_ID, Driver, " + Environment.NewLine +
+                                   "       DriverName, InsuMan, AnecdotalResRatio, IsNoDeduction, DeductionDate, Remark, 'EDITA', GetDate(), '" + vLoginID + "', " + Environment.NewLine +
+                                   "       CaseOccurrence, ERPCouseNo, CaseClose, IsExemption, PaidAmount, Penalty, PenaltyRatio, InsuAmount, IDCardNo, " + Environment.NewLine +
+                                   "       Birthday, Assumeday, TelephoneNo, Address, PersonDamage, CarDamage, ReportDate, CaseDate, CaseTime, " + Environment.NewLine +
+                                   "       OutReportNo, PoliceUnit, PoliceName, HasVideo, NoVideoReason, HasCaseData " + Environment.NewLine +
+                                   "  from AnecdoteCase " + Environment.NewLine +
+                                   " where CaseNo = '" + vCaseNo_Temp + "' ";
+                    PF.ExecSQL(vConnStr, vSQLStr_Temp);
+                    //寫入明細異動記錄
+                    //先取回異動記錄序號的最大值
+                    vSQLStr_Temp = "select max(ItemsH) MaxItems from AnecdoteCaseBHistory where HistoryNo = '" + vNewHistoryNo + "' ";
+                    vMaxNo = PF.GetValue(vConnStr, vSQLStr_Temp, "MaxItems");
+                    int vItems = (vMaxNo != "") ? Int32.Parse(vMaxNo) + 1 : 1;
+                    //複製明細原資料到異動檔
+                    vSQLStr_Temp = "INSERT INTO AnecdoteCaseBHistory " + Environment.NewLine +
+                                   "            (HistoryNo, ItemsH, HistoryNoItems, CaseNo, Items, CaseNoItems, Relationship, RelCar_ID, " + Environment.NewLine +
+                                   "             EstimatedAmount, ThirdInsurance, CompInsurance, DriverSharing, CompanySharing, CarDamageAMT, " + Environment.NewLine +
+                                   "             PersonDamageAMT, RelationComp, ReconciliationDate, Remark, ModifyType, ModifyDate, ModifyMan, " + Environment.NewLine +
+                                   "             PassengerInsu, RelGender, RelTelNo1, RelTelNo2, RelCarType, RelPersonDamage, RelCarDamage, RelNote)" + Environment.NewLine +
+                                   "select '" + vNewHistoryNo + "', '" + vItems.ToString("D4") + "', '" + vNewHistoryNo + vItems.ToString("D4") + "', " + Environment.NewLine +
+                                   "       CaseNo, Items, CaseNoItems, Relationship, RelCar_ID, EstimatedAmount, ThirdInsurance, CompInsurance, DriverSharing, " + Environment.NewLine +
+                                   "       CompanySharing, CarDamageAMT, PersonDamageAMT, RelationComp, ReconciliationDate, Remark, 'DELB', GetDate(),  " + Environment.NewLine +
+                                   "       '" + vLoginID + "', PassengerInsu, RelGender, RelTelNo1, RelTelNo2, RelCarType, RelPersonDamage, RelCarDamage, RelNote " + Environment.NewLine +
+                                   "  from AnecdoteCaseB " + Environment.NewLine +
+                                   " where CaseNoItems = '" + eCaseNoItems.Text.Trim() + "' ";
+                    PF.ExecSQL(vConnStr, vSQLStr_Temp);
+                    //開始刪除明細
+                    string vDelStr_B = "delete from AnecdoteCaseB where CaseNoItems = @CaseNoItems";
+                    sdsAnecdoteCaseB_Data.DeleteCommand = vDelStr_B;
+                    sdsAnecdoteCaseB_Data.DeleteParameters.Clear();
+                    sdsAnecdoteCaseB_Data.DeleteParameters.Add(new Parameter("CaseNoItems", DbType.String, eCaseNoItems.Text.Trim()));
+                    sdsAnecdoteCaseB_Data.Delete();
+                    gridAnecdoteCaseB_List.DataBind();
+                    fvAnecdoteCaseB_Data.DataBind();
+                }
+            }
+            catch (Exception eMessage)
+            {
+                eErrorMSG_B.Text = eMessage.Message;
+                eErrorMSG_B.Visible = true;
+            }
+        }
+
+        /// <summary>
+        /// 取回審議通知需要的資料
+        /// </summary>
+        /// <returns></returns>
+        private DataTable GetReportData()
+        {
+            if (vConnStr == "")
+            {
+                vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
+            }
+            DataTable dtResult = new DataTable();
+            Label eCaseNo_Temp = (Label)fvAnecdoteCaseA_Data.FindControl("eCaseNo_List");
+            string vResultStr = (eCaseNo_Temp != null) ?
+                                "select DepName, Car_ID, CaseOccurrence, Driver, DriverName, IsExemption, PaidAmount, InsuAmount, PenaltyRatio, Penalty " + Environment.NewLine +
+                                "  from AnecdoteCase " + Environment.NewLine +
+                                " where CaseNo = @CaseNo " : "";
+            if (vResultStr != "")
+            {
+                using (SqlConnection connTemp = new SqlConnection(vConnStr))
+                {
+                    SqlDataAdapter daTemp = new SqlDataAdapter(vResultStr, connTemp);
+                    daTemp.SelectCommand.Parameters.Clear();
+                    daTemp.SelectCommand.Parameters.Add(new SqlParameter("CaseNo", eCaseNo_Temp.Text.Trim()));
+                    connTemp.Open();
+                    daTemp.Fill(dtResult);
+                }
+            }
+            return dtResult;
+        }
+
+        /// <summary>
+        /// 列印審議通知
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void bbPrintNote_Click(object sender, EventArgs e)
+        {
+            DataTable dtReport = GetReportData();
+            ReportDataSource rdsPrint = new ReportDataSource("AnecdoteCaseP", dtReport);
+
+            rvPrint.LocalReport.DataSources.Clear();
+            rvPrint.LocalReport.ReportPath = @"Report\AnecdoteCaseP2.rdlc";
+            rvPrint.LocalReport.DataSources.Add(rdsPrint);
+            rvPrint.LocalReport.Refresh();
+            plPrint.Visible = true;
+            plMainDataShow.Visible = false;
+            plDetailDataShow.Visible = false;
+            plSearch.Visible = false;
+        }
+
+        /// <summary>
+        /// 列印肇事報告表
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void bbPrintReport_Click(object sender, EventArgs e)
+        {
+            eErrorMSG_Main.Text = "";
+            eErrorMSG_Main.Visible = false;
+            Label eCaseNo = (Label)fvAnecdoteCaseA_Data.FindControl("eCaseNo_A_List");
+            if (eCaseNo != null)
+            {
+                if (vConnStr == "")
+                {
+                    vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
+                }
+                string vSQLStr_Print = "select b.CaseNoItems, a.DepName, convert(varchar(10), a.ReportDate, 111) ReportDate, a.Driver, a.DriverName, a.IDCardNo, " + Environment.NewLine +
+                                       "       convert(varchar(10), a.Birthday, 111) Birthday, convert(varchar(10), a.Assumeday, 111) Assumeday, a.Car_ID, " + Environment.NewLine +
+                                       "	   a.TelephoneNo, a.[Address], a.PersonDamage, a.CarDamage, b.Relationship, b.RelGender, b.RelTelNo1,b.RelTelNo2, " + Environment.NewLine +
+                                       "	   case when b.RelCarType = '00' then '' when b.RelCarType = '01' then '行人 (含輪椅)' " + Environment.NewLine +
+                                       "            when b.RelCarType = '02' then '腳踏車' when b.RelCarType = '03' then '機車 (含電動二輪)' " + Environment.NewLine +
+                                       "            when b.RelCarType = '04' then '自小客貨' when b.RelCarType = '05' then '營小客貨' " + Environment.NewLine +
+                                       "            when b.RelCarType = '06' then '大客車' else '其他' end RelCarType, " + Environment.NewLine +
+                                       "       b.RelCar_ID, b.RelPersonDamage, b.RelCarDamage, convert(varchar(10), a.CaseDate, 111) CaseDate, a.CaseTime, " + Environment.NewLine +
+                                       "	   a.OutReportNo, a.CasePosition, a.PoliceUnit, a.PoliceName, a.CaseOccurrence, b.RelNote, " + Environment.NewLine +
+                                       "	   a.HasVideo, a.NoVideoReason, a.HasCaseData, a.HasAccReport " + Environment.NewLine +
+                                       "  from AnecdoteCase a left join AnecdoteCaseB b on b.CaseNo = a.CaseNo " + Environment.NewLine +
+                                       " where a.CaseNo = @CaseNo ";
+                using (SqlConnection connPrint=new SqlConnection(vConnStr))
+                {
+                    SqlDataAdapter daPrint = new SqlDataAdapter(vSQLStr_Print, connPrint);
+                    daPrint.SelectCommand.Parameters.Clear();
+                    daPrint.SelectCommand.Parameters.Add(new SqlParameter("CaseNo", eCaseNo.Text.Trim()));
+                    connPrint.Open();
+                    DataTable dtPrint = new DataTable();
+                    daPrint.Fill(dtPrint);
+                    ReportDataSource rdsPrint = new ReportDataSource("AnecdoteReportP", dtPrint);
+
+                    rvPrint.LocalReport.DataSources.Clear();
+                    rvPrint.LocalReport.ReportPath = @"Report\AnecdoteReportP.rdlc";
+                    rvPrint.LocalReport.DataSources.Add(rdsPrint);
+                    rvPrint.LocalReport.Refresh();
+                    plPrint.Visible = true;
+                    plMainDataShow.Visible = false;
+                    plDetailDataShow.Visible = false;
+                    plSearch.Visible = false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// ERP同步
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void bbERPSync_Click(object sender, EventArgs e)
         {
             string vSQLStr_Temp = "";
-            Label eCaseNo_Temp = (Label)fvAnecdoteCaseA_Data.FindControl("eCaseNo_List");
+            eErrorMSG_Main.Text = "";
+            eErrorMSG_Main.Visible = false;
+            Label eCaseNo_Temp = (Label)fvAnecdoteCaseA_Data.FindControl("eCaseNo_A_List");
             if (eCaseNo_Temp != null)
             {
                 Label eDepNo_Temp = (Label)fvAnecdoteCaseA_Data.FindControl("eDepNo_List");
                 Label eBuildDate_Temp = (Label)fvAnecdoteCaseA_Data.FindControl("eBuildDate_List");
-                Label eCarID_Temp = (Label)fvAnecdoteCaseA_Data.FindControl("eCarID_List");
+                Label eCarID_Temp = (Label)fvAnecdoteCaseA_Data.FindControl("eCar_ID_List");
                 Label eBuildMan_Temp = (Label)fvAnecdoteCaseA_Data.FindControl("eBuildMan_List");
                 Label eDriver_Temp = (Label)fvAnecdoteCaseA_Data.FindControl("eDriver_List");
-                TextBox eRemark_Temp = (TextBox)fvAnecdoteCaseA_Data.FindControl("eRemark_List");
+                TextBox eRemark_Temp = (TextBox)fvAnecdoteCaseA_Data.FindControl("eRemark_A_List");
                 TextBox eCaseOccurrence_Temp = (TextBox)fvAnecdoteCaseA_Data.FindControl("eCaseOccurrence_List");
                 Label eERPCouseNo_Temp = (Label)fvAnecdoteCaseA_Data.FindControl("eERPCouseNo_List");
                 string vCaseNo = eCaseNo_Temp.Text.Trim();
@@ -2066,36 +2161,22 @@ namespace TyBus_Intranet_Test_V3
                 }
                 catch (Exception eMessage)
                 {
-                    Response.Write("<Script language='Javascript'>");
-                    Response.Write("alert('" + eMessage.Message + "')");
-                    Response.Write("</" + "Script>");
+                    eErrorMSG_Main.Text = eMessage.Message;
+                    eErrorMSG_Main.Visible = true;
                 }
             }
         }
 
-        protected void eCaseClose_Edit_CheckedChanged(object sender, EventArgs e)
+        /// <summary>
+        /// 取消同步
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void bbDelERP_Click(object sender, EventArgs e)
         {
-            CheckBox cbCaseClose_Temp = (CheckBox)fvAnecdoteCaseA_Data.FindControl("eCaseClose_Edit");
-            Label eCaseCloseTitle_Temp = (Label)fvAnecdoteCaseA_Data.FindControl("eCaseCloseTitle_Edit");
-            if (cbCaseClose_Temp != null)
-            {
-                eCaseCloseTitle_Temp.Text = (cbCaseClose_Temp.Checked == true) ? "True" : "False";
-            }
-        }
-
-        protected void eCaseClose_INS_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckBox cbCaseClose_Temp = (CheckBox)fvAnecdoteCaseA_Data.FindControl("eCaseClose_INS");
-            Label eCaseCloseTitle_Temp = (Label)fvAnecdoteCaseA_Data.FindControl("eCaseCloseTitle_INS");
-            if (cbCaseClose_Temp != null)
-            {
-                eCaseCloseTitle_Temp.Text = (cbCaseClose_Temp.Checked == true) ? "True" : "False";
-            }
-        }
-
-        protected void bbDelERP_List_Click(object sender, EventArgs e)
-        {
-            Label eCaseNo_Temp = (Label)fvAnecdoteCaseA_Data.FindControl("eCaseNo_List");
+            eErrorMSG_Main.Text = "";
+            eErrorMSG_Main.Visible = false;
+            Label eCaseNo_Temp = (Label)fvAnecdoteCaseA_Data.FindControl("eCaseNo_A_List");
             Label eERPCouseNo_Temp = (Label)fvAnecdoteCaseA_Data.FindControl("eERPCouseNo_List");
             if ((eERPCouseNo_Temp != null) && (eERPCouseNo_Temp.Text.Trim() != ""))
             {
@@ -2133,168 +2214,23 @@ namespace TyBus_Intranet_Test_V3
                 }
                 catch (Exception eMessage)
                 {
-                    Response.Write("<Script language='Javascript'>");
-                    Response.Write("alert('" + eMessage.Message + "')");
-                    Response.Write("</" + "Script>");
+                    eErrorMSG_Main.Text = eMessage.Message;
+                    eErrorMSG_Main.Visible = true;
                 }
             }
         }
 
-        protected void cbIsExemption_Edit_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckBox cbIsExemption = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbIsExemption_Edit");
-            if (cbIsExemption != null)
-            {
-                Label eIsExemption = (Label)fvAnecdoteCaseA_Data.FindControl("eIsExemption_Edit");
-                eIsExemption.Text = (cbIsExemption.Checked) ? "Y" : "N";
-            }
-        }
-
-        protected void ePaidAmount_Edit_TextChanged(object sender, EventArgs e)
-        {
-            TextBox ePaidAmount = (TextBox)fvAnecdoteCaseA_Data.FindControl("ePaidAmount_Edit");
-            if (ePaidAmount != null)
-            {
-                TextBox eInsuAmount = (TextBox)fvAnecdoteCaseA_Data.FindControl("eInsuAmount_Edit");
-                TextBox ePenaltyRatio = (TextBox)fvAnecdoteCaseA_Data.FindControl("ePenaltyRatio_Edit");
-                Label ePenalty = (Label)fvAnecdoteCaseA_Data.FindControl("ePenalty_Edit");
-                double vPenaltyRatio;
-                double vInsuAmount;
-                if ((double.TryParse(eInsuAmount.Text.Trim(), out vInsuAmount)) && (double.TryParse(ePenaltyRatio.Text.Trim(), out vPenaltyRatio)))
-                {
-                    ePenalty.Text = CalPenaltyAmount(vInsuAmount, vPenaltyRatio).ToString();
-                }
-            }
-        }
-
-        protected void cbIsExemption_INS_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckBox cbIsExemption = (CheckBox)fvAnecdoteCaseA_Data.FindControl("cbIsExemption_INS");
-            if (cbIsExemption != null)
-            {
-                Label eIsExemption = (Label)fvAnecdoteCaseA_Data.FindControl("eIsExemption_INS");
-                eIsExemption.Text = (cbIsExemption.Checked) ? "Y" : "N";
-            }
-        }
-
-        protected void ePaidAmount_INS_TextChanged(object sender, EventArgs e)
-        {
-            TextBox ePaidAmount = (TextBox)fvAnecdoteCaseA_Data.FindControl("ePaidAmount_INS");
-            if (ePaidAmount != null)
-            {
-                TextBox eInsuAmount = (TextBox)fvAnecdoteCaseA_Data.FindControl("eInsuAmount_INS");
-                TextBox ePenaltyRatio = (TextBox)fvAnecdoteCaseA_Data.FindControl("ePenaltyRatio_INS");
-                Label ePenalty = (Label)fvAnecdoteCaseA_Data.FindControl("ePenalty_INS");
-                double vPenaltyRatio;
-                double vInsuAmount;
-                if ((double.TryParse(eInsuAmount.Text.Trim(), out vInsuAmount)) && (double.TryParse(ePenaltyRatio.Text.Trim(), out vPenaltyRatio)))
-                {
-                    ePenalty.Text = CalPenaltyAmount(vInsuAmount, vPenaltyRatio).ToString();
-                }
-            }
-        }
-
-        protected void bbReport_Click(object sender, EventArgs e)
-        {
-            DataTable dtReport = GetReportData(); 
-            ReportDataSource rdsPrint = new ReportDataSource("AnecdoteCaseP", dtReport);
-
-            rvPrint.LocalReport.DataSources.Clear();
-            rvPrint.LocalReport.ReportPath = @"Report\AnecdoteCaseP2.rdlc";
-            rvPrint.LocalReport.DataSources.Add(rdsPrint);
-            rvPrint.LocalReport.Refresh();
-            plPrint.Visible = true;
-            plMainDataShow.Visible = false;
-            plDetailDataShow.Visible = false;
-            plSearch.Visible = false;
-        }
-
+        /// <summary>
+        /// 結束報表預覽
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void bbCloseReport_Click(object sender, EventArgs e)
         {
             plPrint.Visible = false;
             plSearch.Visible = true;
             plMainDataShow.Visible = true;
             plDetailDataShow.Visible = true;
-        }
-
-        private DataTable GetReportData()
-        {
-            if (vConnStr == "")
-            {
-                vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
-            }
-            DataTable dtResult = new DataTable();
-            Label eCaseNo_Temp = (Label)fvAnecdoteCaseA_Data.FindControl("eCaseNo_List");
-            string vResultStr = (eCaseNo_Temp != null) ?
-                                "select DepName, Car_ID, CaseOccurrence, Driver, DriverName, IsExemption, PaidAmount, InsuAmount, PenaltyRatio, Penalty " + Environment.NewLine +
-                                "  from AnecdoteCase " + Environment.NewLine +
-                                " where CaseNo = @CaseNo " : "";
-            if (vResultStr != "")
-            {
-                using (SqlConnection connTemp = new SqlConnection(vConnStr))
-                {
-                    SqlDataAdapter daTemp = new SqlDataAdapter(vResultStr, connTemp);
-                    daTemp.SelectCommand.Parameters.Clear();
-                    daTemp.SelectCommand.Parameters.Add(new SqlParameter("CaseNo", eCaseNo_Temp.Text.Trim()));
-                    connTemp.Open();
-                    daTemp.Fill(dtResult);
-                }
-            }
-            return dtResult;
-        }
-
-        private double CalPenaltyAmount(double fInsuAmount, double fPenaltyRatio)
-        {
-            double vPenalty = 0.0;
-            double vBaseAmount = fInsuAmount / 4.0;
-            double vBaseAmount2 = (fInsuAmount - 200000) / 4.0;
-            double vCalRatio_Low = 0.0;
-            double vCalRatio_High = 0.0;
-
-            if (fPenaltyRatio <= 20.0)
-            {
-                vCalRatio_Low = 0.1;
-                vCalRatio_High = 0.05;
-            }
-            else if ((fPenaltyRatio > 20.0) && (fPenaltyRatio <= 30.0))
-            {
-                vCalRatio_Low = 0.1;
-                vCalRatio_High = 0.05;
-            }
-            else if ((fPenaltyRatio > 30.0) && (fPenaltyRatio <= 40.0))
-            {
-                vCalRatio_Low = 0.15;
-                vCalRatio_High = 0.1;
-            }
-            else if ((fPenaltyRatio > 40.0) && (fPenaltyRatio <= 50.0))
-            {
-                vCalRatio_Low = 0.15;
-                vCalRatio_High = 0.1;
-            }
-            else if ((fPenaltyRatio > 50.0) && (fPenaltyRatio <= 60.0))
-            {
-                vCalRatio_Low = 0.2;
-                vCalRatio_High = 0.1;
-            }
-            else if ((fPenaltyRatio > 60.0) && (fPenaltyRatio <= 70.0))
-            {
-                vCalRatio_Low = 0.25;
-                vCalRatio_High = 0.15;
-            }
-            else if ((fPenaltyRatio > 70.0) && (fPenaltyRatio <= 80.0))
-            {
-                vCalRatio_Low = 0.25;
-                vCalRatio_High = 0.15;
-            }
-            else if (fPenaltyRatio > 80.0)
-            {
-                vCalRatio_Low = 0.25;
-                vCalRatio_High = 0.15;
-            }
-            vPenalty = (fInsuAmount <= 200000) ?
-                       (double)Math.Round(vBaseAmount * vCalRatio_Low, 0, MidpointRounding.AwayFromZero) :
-                       (double)Math.Round(((50000 * vCalRatio_Low) + (vBaseAmount2 * vCalRatio_High)), 0, MidpointRounding.AwayFromZero);
-            return vPenalty;
         }
     }
 }

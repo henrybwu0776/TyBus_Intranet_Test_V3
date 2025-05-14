@@ -1,0 +1,321 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="AnecdoteReportP" targetNamespace="http://tempuri.org/AnecdoteReportP.xsd" xmlns:mstns="http://tempuri.org/AnecdoteReportP.xsd" xmlns="http://tempuri.org/AnecdoteReportP.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="AnecdoteReportPTableAdapter" GeneratorDataComponentClassName="AnecdoteReportPTableAdapter" Name="AnecdoteReportP" UserDataComponentName="AnecdoteReportPTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>select b.CaseNoItems, a.DepName, convert(varchar(10), a.ReportDate, 111) ReportDate, a.Driver, a.DriverName, a.IDCardNo, a.Car_ID,
+       convert(varchar(10), a.Birthday, 111) Birthday, convert(varchar(10), a.Assumeday, 111) Assumeday, 
+	   a.TelephoneNo, a.[Address], a.PersonDamage, a.CarDamage, b.Relationship, b.RelGender, b.RelTelNo1,b.RelTelNo2,
+	   case when b.RelCarType = '00' then '' when b.RelCarType = '01' then '行人 (含輪椅)' 
+			when b.RelCarType = '02' then '腳踏車' when b.RelCarType = '03' then '機車 (含電動二輪)'
+			when b.RelCarType = '04' then '自小客貨' when b.RelCarType = '05' then '營小客貨'
+			when b.RelCarType = '06' then '大客車' else '其他' end RelCarType,
+       b.RelCar_ID, b.RelPersonDamage, b.RelCarDamage, convert(varchar(10), a.CaseDate, 111) CaseDate, a.CaseTime,
+	   a.OutReportNo, a.CasePosition, a.PoliceUnit, a.PoliceName, a.CaseOccurrence, b.RelNote, 
+	   a.HasVideo, a.NoVideoReason, a.HasCaseData, a.HasAccReport
+  from AnecdoteCase a left join AnecdoteCaseB b on b.CaseNo = a.CaseNo
+where isnull(a.CaseNo, '') = ''</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="DepName" DataSetColumn="DepName" />
+              <Mapping SourceColumn="ReportDate" DataSetColumn="ReportDate" />
+              <Mapping SourceColumn="Driver" DataSetColumn="Driver" />
+              <Mapping SourceColumn="DriverName" DataSetColumn="DriverName" />
+              <Mapping SourceColumn="IDCardNo" DataSetColumn="IDCardNo" />
+              <Mapping SourceColumn="Birthday" DataSetColumn="Birthday" />
+              <Mapping SourceColumn="Assumeday" DataSetColumn="Assumeday" />
+              <Mapping SourceColumn="TelephoneNo" DataSetColumn="TelephoneNo" />
+              <Mapping SourceColumn="Address" DataSetColumn="Address" />
+              <Mapping SourceColumn="PersonDamage" DataSetColumn="PersonDamage" />
+              <Mapping SourceColumn="CarDamage" DataSetColumn="CarDamage" />
+              <Mapping SourceColumn="Relationship" DataSetColumn="Relationship" />
+              <Mapping SourceColumn="RelGender" DataSetColumn="RelGender" />
+              <Mapping SourceColumn="RelTelNo1" DataSetColumn="RelTelNo1" />
+              <Mapping SourceColumn="RelTelNo2" DataSetColumn="RelTelNo2" />
+              <Mapping SourceColumn="RelCarType" DataSetColumn="RelCarType" />
+              <Mapping SourceColumn="RelCar_ID" DataSetColumn="RelCar_ID" />
+              <Mapping SourceColumn="RelPersonDamage" DataSetColumn="RelPersonDamage" />
+              <Mapping SourceColumn="RelCarDamage" DataSetColumn="RelCarDamage" />
+              <Mapping SourceColumn="CaseDate" DataSetColumn="CaseDate" />
+              <Mapping SourceColumn="CaseTime" DataSetColumn="CaseTime" />
+              <Mapping SourceColumn="OutReportNo" DataSetColumn="OutReportNo" />
+              <Mapping SourceColumn="CasePosition" DataSetColumn="CasePosition" />
+              <Mapping SourceColumn="PoliceUnit" DataSetColumn="PoliceUnit" />
+              <Mapping SourceColumn="PoliceName" DataSetColumn="PoliceName" />
+              <Mapping SourceColumn="CaseOccurrence" DataSetColumn="CaseOccurrence" />
+              <Mapping SourceColumn="RelNote" DataSetColumn="RelNote" />
+              <Mapping SourceColumn="HasVideo" DataSetColumn="HasVideo" />
+              <Mapping SourceColumn="NoVideoReason" DataSetColumn="NoVideoReason" />
+              <Mapping SourceColumn="HasCaseData" DataSetColumn="HasCaseData" />
+              <Mapping SourceColumn="HasAccReport" DataSetColumn="HasAccReport" />
+              <Mapping SourceColumn="CaseNoItems" DataSetColumn="CaseNoItems" />
+              <Mapping SourceColumn="Car_ID" DataSetColumn="Car_ID" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="AnecdoteReportP" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="AnecdoteReportP" msprop:Generator_UserDSName="AnecdoteReportP">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="AnecdoteReportP" msprop:Generator_TableClassName="AnecdoteReportPDataTable" msprop:Generator_TableVarName="tableAnecdoteReportP" msprop:Generator_RowChangedName="AnecdoteReportPRowChanged" msprop:Generator_TablePropName="_AnecdoteReportP" msprop:Generator_RowDeletingName="AnecdoteReportPRowDeleting" msprop:Generator_RowChangingName="AnecdoteReportPRowChanging" msprop:Generator_RowEvHandlerName="AnecdoteReportPRowChangeEventHandler" msprop:Generator_RowDeletedName="AnecdoteReportPRowDeleted" msprop:Generator_RowClassName="AnecdoteReportPRow" msprop:Generator_UserTableName="AnecdoteReportP" msprop:Generator_RowEvArgName="AnecdoteReportPRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DepName" msprop:Generator_ColumnVarNameInTable="columnDepName" msprop:Generator_ColumnPropNameInRow="DepName" msprop:Generator_ColumnPropNameInTable="DepNameColumn" msprop:Generator_UserColumnName="DepName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ReportDate" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnReportDate" msprop:Generator_ColumnPropNameInRow="ReportDate" msprop:Generator_ColumnPropNameInTable="ReportDateColumn" msprop:Generator_UserColumnName="ReportDate" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Driver" msprop:Generator_ColumnVarNameInTable="columnDriver" msprop:Generator_ColumnPropNameInRow="Driver" msprop:Generator_ColumnPropNameInTable="DriverColumn" msprop:Generator_UserColumnName="Driver" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DriverName" msprop:Generator_ColumnVarNameInTable="columnDriverName" msprop:Generator_ColumnPropNameInRow="DriverName" msprop:Generator_ColumnPropNameInTable="DriverNameColumn" msprop:Generator_UserColumnName="DriverName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IDCardNo" msprop:Generator_ColumnVarNameInTable="columnIDCardNo" msprop:Generator_ColumnPropNameInRow="IDCardNo" msprop:Generator_ColumnPropNameInTable="IDCardNoColumn" msprop:Generator_UserColumnName="IDCardNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Birthday" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBirthday" msprop:Generator_ColumnPropNameInRow="Birthday" msprop:Generator_ColumnPropNameInTable="BirthdayColumn" msprop:Generator_UserColumnName="Birthday" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Assumeday" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnAssumeday" msprop:Generator_ColumnPropNameInRow="Assumeday" msprop:Generator_ColumnPropNameInTable="AssumedayColumn" msprop:Generator_UserColumnName="Assumeday" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TelephoneNo" msprop:Generator_ColumnVarNameInTable="columnTelephoneNo" msprop:Generator_ColumnPropNameInRow="TelephoneNo" msprop:Generator_ColumnPropNameInTable="TelephoneNoColumn" msprop:Generator_UserColumnName="TelephoneNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="15" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Address" msprop:Generator_ColumnVarNameInTable="columnAddress" msprop:Generator_ColumnPropNameInRow="Address" msprop:Generator_ColumnPropNameInTable="AddressColumn" msprop:Generator_UserColumnName="Address" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PersonDamage" msprop:Generator_ColumnVarNameInTable="columnPersonDamage" msprop:Generator_ColumnPropNameInRow="PersonDamage" msprop:Generator_ColumnPropNameInTable="PersonDamageColumn" msprop:Generator_UserColumnName="PersonDamage" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CarDamage" msprop:Generator_ColumnVarNameInTable="columnCarDamage" msprop:Generator_ColumnPropNameInRow="CarDamage" msprop:Generator_ColumnPropNameInTable="CarDamageColumn" msprop:Generator_UserColumnName="CarDamage" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Relationship" msprop:Generator_ColumnVarNameInTable="columnRelationship" msprop:Generator_ColumnPropNameInRow="Relationship" msprop:Generator_ColumnPropNameInTable="RelationshipColumn" msprop:Generator_UserColumnName="Relationship" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="128" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="RelGender" msprop:Generator_ColumnVarNameInTable="columnRelGender" msprop:Generator_ColumnPropNameInRow="RelGender" msprop:Generator_ColumnPropNameInTable="RelGenderColumn" msprop:Generator_UserColumnName="RelGender" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="4" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="RelTelNo1" msprop:Generator_ColumnVarNameInTable="columnRelTelNo1" msprop:Generator_ColumnPropNameInRow="RelTelNo1" msprop:Generator_ColumnPropNameInTable="RelTelNo1Column" msprop:Generator_UserColumnName="RelTelNo1" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="15" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="RelTelNo2" msprop:Generator_ColumnVarNameInTable="columnRelTelNo2" msprop:Generator_ColumnPropNameInRow="RelTelNo2" msprop:Generator_ColumnPropNameInTable="RelTelNo2Column" msprop:Generator_UserColumnName="RelTelNo2" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="15" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="RelCarType" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRelCarType" msprop:Generator_ColumnPropNameInRow="RelCarType" msprop:Generator_ColumnPropNameInTable="RelCarTypeColumn" msprop:Generator_UserColumnName="RelCarType" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="17" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="RelCar_ID" msprop:Generator_ColumnVarNameInTable="columnRelCar_ID" msprop:Generator_ColumnPropNameInRow="RelCar_ID" msprop:Generator_ColumnPropNameInTable="RelCar_IDColumn" msprop:Generator_UserColumnName="RelCar_ID" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="128" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="RelPersonDamage" msprop:Generator_ColumnVarNameInTable="columnRelPersonDamage" msprop:Generator_ColumnPropNameInRow="RelPersonDamage" msprop:Generator_ColumnPropNameInTable="RelPersonDamageColumn" msprop:Generator_UserColumnName="RelPersonDamage" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="RelCarDamage" msprop:Generator_ColumnVarNameInTable="columnRelCarDamage" msprop:Generator_ColumnPropNameInRow="RelCarDamage" msprop:Generator_ColumnPropNameInTable="RelCarDamageColumn" msprop:Generator_UserColumnName="RelCarDamage" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CaseDate" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnCaseDate" msprop:Generator_ColumnPropNameInRow="CaseDate" msprop:Generator_ColumnPropNameInTable="CaseDateColumn" msprop:Generator_UserColumnName="CaseDate" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CaseTime" msprop:Generator_ColumnVarNameInTable="columnCaseTime" msprop:Generator_ColumnPropNameInRow="CaseTime" msprop:Generator_ColumnPropNameInTable="CaseTimeColumn" msprop:Generator_UserColumnName="CaseTime" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="5" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="OutReportNo" msprop:Generator_ColumnVarNameInTable="columnOutReportNo" msprop:Generator_ColumnPropNameInRow="OutReportNo" msprop:Generator_ColumnPropNameInTable="OutReportNoColumn" msprop:Generator_UserColumnName="OutReportNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="24" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CasePosition" msprop:Generator_ColumnVarNameInTable="columnCasePosition" msprop:Generator_ColumnPropNameInRow="CasePosition" msprop:Generator_ColumnPropNameInTable="CasePositionColumn" msprop:Generator_UserColumnName="CasePosition" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PoliceUnit" msprop:Generator_ColumnVarNameInTable="columnPoliceUnit" msprop:Generator_ColumnPropNameInRow="PoliceUnit" msprop:Generator_ColumnPropNameInTable="PoliceUnitColumn" msprop:Generator_UserColumnName="PoliceUnit" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PoliceName" msprop:Generator_ColumnVarNameInTable="columnPoliceName" msprop:Generator_ColumnPropNameInRow="PoliceName" msprop:Generator_ColumnPropNameInTable="PoliceNameColumn" msprop:Generator_UserColumnName="PoliceName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="24" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CaseOccurrence" msprop:Generator_ColumnVarNameInTable="columnCaseOccurrence" msprop:Generator_ColumnPropNameInRow="CaseOccurrence" msprop:Generator_ColumnPropNameInTable="CaseOccurrenceColumn" msprop:Generator_UserColumnName="CaseOccurrence" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="RelNote" msprop:Generator_ColumnVarNameInTable="columnRelNote" msprop:Generator_ColumnPropNameInRow="RelNote" msprop:Generator_ColumnPropNameInTable="RelNoteColumn" msprop:Generator_UserColumnName="RelNote" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="HasVideo" msprop:Generator_ColumnVarNameInTable="columnHasVideo" msprop:Generator_ColumnPropNameInRow="HasVideo" msprop:Generator_ColumnPropNameInTable="HasVideoColumn" msprop:Generator_UserColumnName="HasVideo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="NoVideoReason" msprop:Generator_ColumnVarNameInTable="columnNoVideoReason" msprop:Generator_ColumnPropNameInRow="NoVideoReason" msprop:Generator_ColumnPropNameInTable="NoVideoReasonColumn" msprop:Generator_UserColumnName="NoVideoReason" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="24" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="HasCaseData" msprop:Generator_ColumnVarNameInTable="columnHasCaseData" msprop:Generator_ColumnPropNameInRow="HasCaseData" msprop:Generator_ColumnPropNameInTable="HasCaseDataColumn" msprop:Generator_UserColumnName="HasCaseData" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="HasAccReport" msprop:Generator_ColumnVarNameInTable="columnHasAccReport" msprop:Generator_ColumnPropNameInRow="HasAccReport" msprop:Generator_ColumnPropNameInTable="HasAccReportColumn" msprop:Generator_UserColumnName="HasAccReport" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CaseNoItems" msprop:Generator_ColumnVarNameInTable="columnCaseNoItems" msprop:Generator_ColumnPropNameInRow="CaseNoItems" msprop:Generator_ColumnPropNameInTable="CaseNoItemsColumn" msprop:Generator_UserColumnName="CaseNoItems" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Car_ID" msprop:Generator_ColumnVarNameInTable="columnCar_ID" msprop:Generator_ColumnPropNameInRow="Car_ID" msprop:Generator_ColumnPropNameInTable="Car_IDColumn" msprop:Generator_UserColumnName="Car_ID" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1">
+      <xs:selector xpath=".//mstns:AnecdoteReportP" />
+      <xs:field xpath="mstns:CaseNoItems" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>
