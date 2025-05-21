@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Amaterasu_Function;
+﻿using Amaterasu_Function;
+using Microsoft.Reporting.WebForms;
 using NPOI.HSSF.UserModel;
 using NPOI.HSSF.Util;
 using NPOI.SS.UserModel;
-using NPOI.XSSF.UserModel;
-using Microsoft.Reporting.WebForms;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.IO;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace TyBus_Intranet_Test_V3
 {

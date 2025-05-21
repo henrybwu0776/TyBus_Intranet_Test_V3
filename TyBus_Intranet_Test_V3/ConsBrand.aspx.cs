@@ -255,7 +255,7 @@ namespace TyBus_Intranet_Test_V3
             lbErrorMessage.Visible = false;
             lbErrorMessage.Text = "";
             string vTempStr = "";
-            string vBrandCodeTemp = gridBrandList.SelectedDataKey.ToString().Trim();
+            string vBrandCodeTemp = gridBrandList.SelectedDataKey.Value.ToString().Trim();
             if (!string.IsNullOrEmpty(vBrandCodeTemp))
             {
                 vTempStr = "select a.BrandCode, a.BrandName, a.BelongGroup, a.Remark, " + Environment.NewLine +
@@ -267,7 +267,7 @@ namespace TyBus_Intranet_Test_V3
                 {
                     SqlCommand cmdTemp = new SqlCommand(vTempStr, connTemp);
                     cmdTemp.Parameters.Clear();
-                    cmdTemp.Parameters.Add(new Parameter("BrandCode", DbType.String, vBrandCodeTemp));
+                    cmdTemp.Parameters.Add(new SqlParameter("BrandCode", vBrandCodeTemp));
                     connTemp.Open();
                     SqlDataReader drTemp = cmdTemp.ExecuteReader();
                     if (drTemp.HasRows)
@@ -293,7 +293,8 @@ namespace TyBus_Intranet_Test_V3
                 lbErrorMessage.Visible = true;
                 lbErrorMessage.Text = "請選擇廠商！";
             }
-            Page.DataBind();      
+            Page.DataBind();
+            ddlBelongGroup.SelectedIndex = ddlBelongGroup.Items.IndexOf(ddlBelongGroup.Items.FindByValue(vdBelongGroup));
         }
 
         protected void eBrandCode_TextChanged(object sender, EventArgs e)
@@ -319,6 +320,17 @@ namespace TyBus_Intranet_Test_V3
                 lbErrorMessage.Text = "廠商代碼不可空白！";
                 eBrandCode.Focus();
             }
+        }
+
+        protected void gridBrandList_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gridBrandList.PageIndex = e.NewPageIndex;
+            gridBrandList.DataBind();
+        }
+
+        protected void ddlBelongGroup_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            eBelongGroup.Text = ddlBelongGroup.SelectedValue.Trim();
         }
     }
 }

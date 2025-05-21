@@ -51,10 +51,10 @@
         </table>
     </asp:Panel>
     <asp:Panel ID="plShow" runat="server" CssClass="ShowPanel">
-        <asp:GridView ID="gridBrandList" runat="server" AutoGenerateColumns="False" CellPadding="4" ForeColor="#333333" GridLines="None" Width="100%" AllowPaging="True" DataKeyNames="BrandCode" OnSelectedIndexChanged="gridBrandList_SelectedIndexChanged">
+        <asp:GridView ID="gridBrandList" runat="server" AutoGenerateColumns="False" CellPadding="4" ForeColor="#333333" GridLines="None" Width="100%" AllowPaging="True" DataKeyNames="BrandCode" OnSelectedIndexChanged="gridBrandList_SelectedIndexChanged" PageSize="5" OnPageIndexChanging="gridBrandList_PageIndexChanging">
             <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
             <Columns>
-                <asp:ButtonField ButtonType="Button" Text="選擇" />
+                <asp:CommandField ButtonType="Button" InsertVisible="False" ShowCancelButton="False" ShowSelectButton="True" />
                 <asp:BoundField DataField="BrandCode" HeaderText="廠牌代碼" />
                 <asp:BoundField DataField="BrandName" HeaderText="廠牌名稱" />
                 <asp:BoundField DataField="BelongGroup" HeaderText="隸屬群組" />
@@ -87,14 +87,14 @@
                     <asp:Label ID="lbBrandCode" runat="server" CssClass="text-Right-Blue" Text="廠牌名" Width="95%" />
                 </td>
                 <td class="ColHeight ColBorder ColWidth-5Col" colspan="2">
-                    <asp:TextBox ID="eBrandCode" runat="server" CssClass="text-Left-Black" Text='<%# vdBrandCode %>' AutoPostBack="true" OnTextChanged="eBrandCode_TextChanged" Width="35%" />
+                    <asp:TextBox ID="eBrandCode" runat="server" CssClass="text-Left-Black" Text='<%# vdBrandCode %>' AutoPostBack="true" OnTextChanged="eBrandCode_TextChanged" Width="35%" MaxLength="4" />
                     <asp:TextBox ID="eBrandName" runat="server" CssClass="text-Left-Black" Text='<%# vdBrandName %>' Width="60%" />
                 </td>
                 <td class="ColHeight ColBorder ColWidth-5Col">
                     <asp:Label ID="lbBelongGroup" runat="server" CssClass="text-Right-Blue" Text="隸屬群組" Width="95%" />
                 </td>
                 <td class="ColHeight ColBorder ColWidth-5Col">
-                    <asp:DropDownList ID="ddlBelongGroup" runat="server" CssClass="text-Left-Black" Width="95%">
+                    <asp:DropDownList ID="ddlBelongGroup" runat="server" CssClass="text-Left-Black" AutoPostBack="true" OnSelectedIndexChanged="ddlBelongGroup_SelectedIndexChanged" Width="95%">
                         <asp:ListItem Text="" Value="" Selected="True" />
                         <asp:ListItem Text="通用" Value="00" />
                         <asp:ListItem Text="一般雜項類" Value="02" />

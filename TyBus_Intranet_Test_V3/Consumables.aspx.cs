@@ -13,7 +13,7 @@ using System.Web.UI.WebControls;
 
 namespace TyBus_Intranet_Test_V3
 {
-    public partial class Consumables : Page
+    public partial class Consumables : System.Web.UI.Page
     {
         PublicFunction PF = new PublicFunction(); //加入公用程式碼參考
         private string vLoginID = "";
@@ -26,33 +26,10 @@ namespace TyBus_Intranet_Test_V3
         private string vComputerName = ""; //2021.09.27 新增
         private string vConnStr = "";
         private DateTime vToday = DateTime.Today;
-        private DataTable dtShowData;
-
-        //資料繫結用的變數
-        public string vdConsNo;
-        public string vdConsName;
-        public string vdConsType;
-        public string vdConsUnit;
-        public string vdConsColor;
-        public string vdConsSpec; //規格
-        public string vdStockQty;
-        public string vdAvgPrice;
-        public string vdLastInDate;
-        public string vdLastOutDate;
-        public string vdConsSpec2; //尺寸
-        public string vdStoreLocation; //庫位
-        public string vdIsStopUse;
-        public string vdInOrder;
-        public string vdBuDate;
-        public string vdBuMan;
-        public string vdModifyDate;
-        public string vdModifyMan;
-        public string vdRemark;
-        public string vdBrand;
-        public string vdLastInPrice;
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
             if (Session["LoginID"] != null)
             {
                 vLoginID = (Session["LoginID"] != null) ? Session["LoginID"].ToString().Trim() : "";
@@ -75,7 +52,6 @@ namespace TyBus_Intranet_Test_V3
                     if (!IsPostBack)
                     {
                         plReport.Visible = false;
-                        SetInputMode(false);
                         Session["ConsMode"] = "LIST";
                     }
                     else
@@ -91,35 +67,6 @@ namespace TyBus_Intranet_Test_V3
             else
             {
                 Response.Redirect("~/default.aspx");
-            }
-        }
-
-        /// <summary>
-        /// 設定畫面欄位是否可以編輯
-        /// </summary>
-        /// <param name="fMode">true：可編輯；false：不可編輯</param>
-        private void SetInputMode(bool fMode)
-        {
-            bbInsert.Visible = !fMode;
-            bbEdit.Visible = !fMode;
-            bbStopUse.Visible = !fMode;
-            bbDelete.Visible = !fMode;
-            bbOK.Visible = fMode;
-            bbCancel.Visible = fMode;
-            foreach (Control cTemp in plShowData.Controls)
-            {
-                if (cTemp is TextBox)
-                {
-                    (cTemp as TextBox).Enabled = fMode;
-                }
-                else if (cTemp is CheckBox)
-                {
-                    (cTemp as CheckBox).Enabled = fMode;
-                }
-                else if (cTemp is DropDownList)
-                {
-                    (cTemp as DropDownList).Enabled = fMode;
-                }
             }
         }
 
@@ -144,76 +91,19 @@ namespace TyBus_Intranet_Test_V3
                 if (drTemp.HasRows)
                 {
                     ddlConsType_Search.Items.Clear();
-                    ddlConsType.Items.Clear();
                     while (drTemp.Read())
                     {
                         ListItem liTemp = new ListItem(drTemp["ClassTxt"].ToString().Trim(), drTemp["ClassNo"].ToString().Trim());
                         ddlConsType_Search.Items.Add(liTemp);
-                        ddlConsType.Items.Add(liTemp);
                     }
                 }
-            }
-            //取回耗材單位
-            vSelectStr_Temp = "select cast('' as varchar) ClassNo, cast('' as varchar) ClassTxt " + Environment.NewLine +
-                              " union all" + Environment.NewLine +
-                              "select ClassNo, ClassTxt from DBDICB where FKey = '耗材庫存        CONSUMABLES     ConsUnit' order by ClassNo";
-            using (SqlConnection connTemp = new SqlConnection(vConnStr))
-            {
-                SqlCommand cmdTemp = new SqlCommand(vSelectStr_Temp, connTemp);
-                connTemp.Open();
-                SqlDataReader drTemp = cmdTemp.ExecuteReader();
-                if (drTemp.HasRows)
-                {
-                    ddlConsUnit.Items.Clear();
-                    while (drTemp.Read())
-                    {
-                        ListItem liTemp = new ListItem(drTemp["ClassTxt"].ToString().Trim(), drTemp["ClassNo"].ToString().Trim());
-                        ddlConsUnit.Items.Add(liTemp);
-                    }
-                }
-            }
-            //取回廠商
-            vSelectStr_Temp = "select cast('' as varchar) BrandCode, cast('' as varchar) BrandName " + Environment.NewLine +
-                              " union all " + Environment.NewLine +
-                              "select BrandCode, BrandName from ConsBrand where BelongGroup in ('00', '02') order by BrandCode ";
-            using (SqlConnection connTemp = new SqlConnection(vConnStr))
-            {
-                SqlCommand cmdTemp = new SqlCommand(vSelectStr_Temp, connTemp);
-                connTemp.Open();
-                SqlDataReader drTemp = cmdTemp.ExecuteReader();
-                if (drTemp.HasRows)
-                {
-                    ddlBrand.Items.Clear();
-                    while (drTemp.Read())
-                    {
-                        ListItem liTemp = new ListItem(drTemp["BrandName"].ToString().Trim(), drTemp["BrandCode"].ToString().Trim());
-                        ddlBrand.Items.Add(liTemp);
-                    }
-                }
-            }
-
-        }
-
-        protected void eConsNo_Search_TextChanged(object sender, EventArgs e)
-        {
-            lbErrorMSG_ConsName.Text = "";
-            lbErrorMSG_ConsName.Visible = false;
-            string vTempStr = "";
-            if (vConnStr == "")
-            {
-                vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
-            }
-            string vConsNo = eConsNo_Search.Text.Trim();
-            vTempStr = "select ConsName from Consumables where ConsNo = '" + vConsNo + "' ";
-            string vConsName = PF.GetValue(vConnStr, vTempStr, "ConsName");
-            if (vConsName == "")
-            {
-                eConsNo_Search.Text = "";
-                lbErrorMSG_ConsName.Text = "查無 [ " + vConsNo + " ] 料號";
-                lbErrorMSG_ConsName.Visible = true;
             }
         }
 
+        /// <summary>
+        /// 取回查詢字串
+        /// </summary>
+        /// <returns></returns>
         private string OpenListStr()
         {
             string vResultStr = "";
@@ -231,6 +121,11 @@ namespace TyBus_Intranet_Test_V3
             return vResultStr;
         }
 
+        /// <summary>
+        /// 查詢資料
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void bbSearch_Click(object sender, EventArgs e)
         {
             if (vConnStr == "")
@@ -238,23 +133,8 @@ namespace TyBus_Intranet_Test_V3
                 vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
             }
             string vListStr = OpenListStr();
-            using (SqlConnection connShowList = new SqlConnection(vConnStr))
-            {
-                SqlDataAdapter daShowList = new SqlDataAdapter(vListStr, connShowList);
-                connShowList.Open();
-                if (dtShowData != null)
-                {
-                    dtShowData.Clear();
-                }
-                else
-                {
-                    dtShowData = new DataTable();
-                }
-                daShowList.Fill(dtShowData);
-            }
-            gvShowList.DataSourceID = "";
-            gvShowList.DataSource = dtShowData;
-            gvShowList.DataBind();
+            sdsShowDataList.SelectCommand = vListStr;
+            gridShowList.DataBind();
         }
 
         /// <summary>
@@ -264,10 +144,12 @@ namespace TyBus_Intranet_Test_V3
         /// <param name="e"></param>
         protected void bbPrintCheckList_Click(object sender, EventArgs e)
         {
-            //Int32 vTempINT = 0;
+            eErrorMSG_Main.Text = "";
+            eErrorMSG_Main.Visible = false;
             double vTempFloat = 0.0;
-            string vSQLStrTemp = "select ConsNo, Brand, ConsName, isnull(ConsType, '') ConsType, isnull(ConsColor, '') ConsColor, " + Environment.NewLine +
-                                 "       isnull(StockQty, '') StockQty, cast('' as varchar) as InventoryQty, StoreLocation " + Environment.NewLine +
+            string vSQLStrTemp = "select ConsNo, isnull(ConsType, '') ConsType, ConsName, isnull(ConsUnit, '') ConsUnit, Brand, " + Environment.NewLine +
+                                 "       isnull(ConsColor, '') ConsColor, isnull(ConsSpec, '') ConsSpec, isnull(ConsSpec2, '') ConsSpec2, " + Environment.NewLine +
+                                 "       isnull(StockQty, '') StockQty, cast('' as varchar) as InventoryQty " + Environment.NewLine +
                                  "  from Consumables " + Environment.NewLine +
                                  " order by ConsType, ConsNo";
             if (vConnStr == "")
@@ -337,12 +219,14 @@ namespace TyBus_Intranet_Test_V3
                     {
                         vHeaderText = (drExcel.GetName(vCellCount).ToUpper() == "CONSNO") ? "庫存編號" :
                                       (drExcel.GetName(vCellCount).ToUpper() == "BRAND") ? "廠牌" :
-                                      (drExcel.GetName(vCellCount).ToUpper() == "CONSNAME") ? "庫存品項" :
-                                      (drExcel.GetName(vCellCount).ToUpper() == "CONSTYPE") ? "庫存類別" :
+                                      (drExcel.GetName(vCellCount).ToUpper() == "CONSNAME") ? "品名" :
+                                      (drExcel.GetName(vCellCount).ToUpper() == "CONSTYPE") ? "類別" :
                                       (drExcel.GetName(vCellCount).ToUpper() == "CONSCOLOR") ? "顏色" :
                                       (drExcel.GetName(vCellCount).ToUpper() == "STOCKQTY") ? "現有庫存量" :
                                       (drExcel.GetName(vCellCount).ToUpper() == "INVENTORYQTY") ? "實際盤點量" :
-                                      (drExcel.GetName(vCellCount).ToUpper() == "STORELOCATION") ? "庫存位置" :
+                                      (drExcel.GetName(vCellCount).ToUpper() == "CONSUNIT") ? "單位" :
+                                      (drExcel.GetName(vCellCount).ToUpper() == "CONSSPEC") ? "規格" :
+                                      (drExcel.GetName(vCellCount).ToUpper() == "CONSSPEC2") ? "尺寸" :
                                       drExcel.GetName(vCellCount).Trim();
                         wsExcel.GetRow(vLinesNo).CreateCell(vCellCount).SetCellValue(vHeaderText);
                         wsExcel.GetRow(vLinesNo).GetCell(vCellCount).CellStyle = csTitle;
@@ -415,9 +299,8 @@ namespace TyBus_Intranet_Test_V3
                     }
                     catch (Exception eMessage)
                     {
-                        Response.Write("<Script language='Javascript'>");
-                        Response.Write("alert('" + eMessage.Message + "')");
-                        Response.Write("</" + "Script>");
+                        eErrorMSG_Main.Text = eMessage.Message;
+                        eErrorMSG_Main.Visible = true;
                     }
                 }
             }
@@ -430,198 +313,273 @@ namespace TyBus_Intranet_Test_V3
         /// <param name="e"></param>
         protected void bbUpdateReserve_Search_Click(object sender, EventArgs e)
         {
-            string vSQLStrTemp = "";
-            string vSheetNo = "";
-            string vRemarkA = "";
-            string vConsNo_Temp = "";
-            double vStockQTY_Temp = 0.0;
-            double vInventory_Temp = 0.0;
-            double vQtyDift = 0.0;
-            string vRemarkB = "";
-            string vItems = "";
-            string vSheetNoItems = "";
-            Int32 vTempINT = 0;
-            Int32 vIndex_Count = 0;
-            Int32 vQtyMode = 0;
-
+            eErrorMSG_Main.Text = "";
+            eErrorMSG_Main.Visible = false;
             if (vConnStr == "")
             {
                 vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
             }
-            if (fuExcel.FileName != "")
+            string vSQLStr_Temp = "";
+            string vSheetNo = "";
+            string vSheetNoItems = "";
+            string vMaxIndex = "";
+            int vIndex = 0;
+            string vItems = "";
+            string vSheetRemark = DateTime.Today.ToShortDateString() + "_盤點作業";
+            string vSheetRemarkB = DateTime.Today.ToShortDateString() + "_盤點數量更新" + Environment.NewLine;
+            string vFirstCode = "";
+            string vIndex_S = "";
+            string vConsNo_Temp = "";
+            string vConsName_Temp = "";
+            string vBrand_Temp = "";
+            string vConsType_Temp = "";
+            string vConsUnit_Temp = "";
+            string vConsColor_Temp = "";
+            string vConsSpec_Temp = "";
+            string vConsSpec2_Temp = "";
+            int vTempINT;
+            int vInventoryQty_Temp = 0;
+            int vStockQty_Temp = 0;
+            int vQtyDift = 0;
+            int vQtyMode = 1;
+
+            if (fuExcel.FileName != "") //有選擇匯入用的檔案
             {
-                //有選擇檔案才往下走
-                string vExtName = Path.GetExtension(fuExcel.FileName);
+                string vExtName = Path.GetExtension(fuExcel.FileName); //取回轉入檔的副檔名
                 switch (vExtName)
                 {
                     //根據不同的副檔名來判斷版本
                     case ".xls": //舊版 EXCEL (97-2003) 格式
-                        HSSFWorkbook wbExcel_H = new HSSFWorkbook(fuExcel.FileContent);
-                        HSSFSheet sheetExcel_H = (HSSFSheet)wbExcel_H.GetSheetAt(0); //取回第一個工作表
-                        if (sheetExcel_H.LastRowNum > 0)
+                        try
                         {
-                            using (SqlDataSource dsTempA = new SqlDataSource())
+                            HSSFWorkbook wbExcel_H = new HSSFWorkbook(fuExcel.FileContent); //開啟 EXCEL 檔
+                            HSSFSheet sheetExcel_H = (HSSFSheet)wbExcel_H.GetSheetAt(0); //取回第一個工作表
+                            if (sheetExcel_H.LastRowNum > 0) //判斷工作表有沒有內容
                             {
-                                vSheetNo = PF.GetIASheetNo(vConnStr, "SS");
-                                vRemarkA = DateTime.Today.ToShortDateString() + " 盤點作業";
-                                dsTempA.ConnectionString = vConnStr;
-                                dsTempA.InsertCommand = "insert into ConsSheetA(SheetNo, SheetMode, BuDate, BuMan, SheetStatus, StatusDate, RemarkA)" + Environment.NewLine +
-                                                        "values(@SheetNo, 'SS', GetDate(), @BuMan, '998', GetDate(), @RemarkA)";
-                                dsTempA.InsertParameters.Clear();
-                                dsTempA.InsertParameters.Add(new Parameter("SheetNo", DbType.String, vSheetNo));
-                                dsTempA.InsertParameters.Add(new Parameter("BuMan", DbType.String, vLoginID));
-                                dsTempA.InsertParameters.Add(new Parameter("RemarkA", DbType.String, vRemarkA));
-                                dsTempA.Insert();
-                            }
-                            for (int i = 0; i <= sheetExcel_H.LastRowNum; i++)
-                            {
-                                HSSFRow vRowExcel_H = (HSSFRow)sheetExcel_H.GetRow(i);
-                                if ((vRowExcel_H != null) && (vRowExcel_H.Cells[0].StringCellValue.Trim() != "庫存編號"))
+                                //先寫入表頭
+                                vSheetNo = PF.GetConsSheetNo(vConnStr, "SS");
+                                using (SqlDataSource dsTempA = new SqlDataSource())
                                 {
-                                    vConsNo_Temp = vRowExcel_H.Cells[0].StringCellValue.Trim();
-                                    vStockQTY_Temp = Int32.TryParse(vRowExcel_H.Cells[5].ToString().Trim(), out vTempINT) ? vTempINT : 0;
-                                    vInventory_Temp = Int32.TryParse(vRowExcel_H.Cells[6].ToString().Trim(), out vTempINT) ? vTempINT : 0;
-                                    vQtyMode = ((vInventory_Temp - vStockQTY_Temp) < 0) ? -1 : 1;
-                                    vQtyDift = Math.Abs(vInventory_Temp - vStockQTY_Temp);
-                                    vSQLStrTemp = "select MAX(Items) MaxItem from ConsSheetB where SheetNo = '" + vSheetNo + "' ";
-                                    vSQLStrTemp = "select MAX(Items) MaxItem from ConsSheetB where SheetNo = '" + vSheetNo + "' ";
-                                    vIndex_Count = Int32.TryParse(PF.GetValue(vConnStr, vSQLStrTemp, "MaxItem"), out vTempINT) ? vTempINT + 1 : 1;
-                                    vItems = vIndex_Count.ToString("D4").Trim();
-                                    vSheetNoItems = vSheetNo + vItems;
-                                    vRemarkB = DateTime.Today.ToShortDateString() + " 盤點數量更新" + Environment.NewLine;
-                                    using (SqlDataSource dsTempB = new SqlDataSource())
+                                    dsTempA.ConnectionString = vConnStr;
+                                    dsTempA.InsertCommand = "insert into ConsSheetA(SheetNo, SheetMode, BuDate, BuMan, SheetStatus, StatusDate, RemarkA)" + Environment.NewLine +
+                                                            "values(@SheetNo, 'SS', GetDate(), @BuMan, '998', GetDate(), @RemarkA)";
+                                    dsTempA.InsertParameters.Clear();
+                                    dsTempA.InsertParameters.Add(new Parameter("SheetNo", DbType.String, vSheetNo));
+                                    dsTempA.InsertParameters.Add(new Parameter("BuMan", DbType.String, vLoginID));
+                                    dsTempA.InsertParameters.Add(new Parameter("RemarkA", DbType.String, vSheetRemark));
+                                    dsTempA.Insert();
+                                }
+                                //準備寫入耗材盤點量
+                                for (int i = 0; i <= sheetExcel_H.LastRowNum; i++)
+                                {
+                                    //逐行讀取資料
+                                    HSSFRow vRowExcel_H = (HSSFRow)sheetExcel_H.GetRow(i);
+                                    if ((vRowExcel_H != null) && (vRowExcel_H.Cells[0].StringCellValue.Trim() != "庫存編號"))
                                     {
-                                        dsTempB.ConnectionString = vConnStr;
-                                        dsTempB.InsertCommand = "insert into ConsSheetB(SheetNoItems, SheetNo, Items, ConsNo, Price, Quantity, Amount, RemarkB, " + Environment.NewLine +
-                                                                "QtyMode, ItemStatus, BuMan, BuDate)" + Environment.NewLine +
-                                                                "values (@SheetNoItems, @SheetNo, @Items, @ConsNo, 0, @Quantity, 0, @RemarkB, " + Environment.NewLine +
-                                                                "        @QtyMode, '001', @BuMan, GetDate())";
-                                        dsTempB.InsertParameters.Clear();
-                                        dsTempB.InsertParameters.Add(new Parameter("SheetNoItems", DbType.String, vSheetNoItems));
-                                        dsTempB.InsertParameters.Add(new Parameter("SheetNo", DbType.String, vSheetNo));
-                                        dsTempB.InsertParameters.Add(new Parameter("Items", DbType.String, vItems));
-                                        dsTempB.InsertParameters.Add(new Parameter("ConsNo", DbType.String, vConsNo_Temp));
-                                        dsTempB.InsertParameters.Add(new Parameter("Quantity", DbType.Int32, vQtyDift.ToString()));
-                                        dsTempB.InsertParameters.Add(new Parameter("RemarkB", DbType.String, vRemarkB));
-                                        dsTempB.InsertParameters.Add(new Parameter("QtyMode", DbType.Int32, vQtyMode.ToString()));
-                                        dsTempB.InsertParameters.Add(new Parameter("BuMan", DbType.String, vLoginID));
-                                        try
+                                        //讀回來的資料列不是空值，或者不是標題列
+                                        vConsNo_Temp = vRowExcel_H.Cells[0].StringCellValue.Trim();
+                                        vConsType_Temp = vRowExcel_H.Cells[1].StringCellValue.Trim();
+                                        vConsName_Temp = vRowExcel_H.Cells[2].StringCellValue.Trim();
+                                        vConsUnit_Temp = vRowExcel_H.Cells[3].StringCellValue.Trim();
+                                        vBrand_Temp = vRowExcel_H.Cells[4].StringCellValue.Trim();
+                                        vConsColor_Temp = vRowExcel_H.Cells[5].StringCellValue.Trim();
+                                        vConsSpec_Temp = vRowExcel_H.Cells[6].StringCellValue.Trim();
+                                        vConsSpec2_Temp = vRowExcel_H.Cells[7].StringCellValue.Trim();
+                                        if (vConsNo_Temp == "")
                                         {
-                                            dsTempB.Insert();
-                                            string vRecordNote = "匯入庫存量" + Environment.NewLine +
-                                                                 "IAConsumables.aspx";
-                                            PF.InsertOperateRecord(vConnStr, vLoginID, vComputerName, vRecordNote);
+                                            //料號欄位是空白，表示是新料號
+                                            vFirstCode = vConsType_Temp.Trim() + "-02-";
+                                            vSQLStr_Temp = "select max(ConsNo) MaxNo from Consumables where ConsNo like '" + vFirstCode + "%' ";
+                                            vMaxIndex = PF.GetValue(vConnStr, vSQLStr_Temp, "MaxNo");
+                                            vIndex_S = Int32.TryParse(vMaxIndex.Replace(vFirstCode, ""), out vIndex) ? (vIndex + 1).ToString("D4") : "0001";
+                                            vConsNo_Temp = vFirstCode + vIndex_S;
+                                            using (SqlDataSource dsConsTemp = new SqlDataSource())
+                                            {
+                                                dsConsTemp.ConnectionString = vConnStr;
+                                                dsConsTemp.InsertCommand = "insert into Consumables " + Environment.NewLine +
+                                                                           "       (ConsNo, ConsName, ConsType, Brand, ConsUnit, ConsColor, ConsSpec, ConsSpec2, BuMan, BuDate) " + Environment.NewLine +
+                                                                           "values (@ConsNo, @ConsName, @ConsType, @Brand, @ConsUnit, @ConsColor, @ConsSpec, @ConsSpec2, @BuMan, GetDate())";
+                                                dsConsTemp.InsertParameters.Clear();
+                                                dsConsTemp.InsertParameters.Add(new Parameter("ConsNo", DbType.String, vConsNo_Temp));
+                                                dsConsTemp.InsertParameters.Add(new Parameter("ConsName", DbType.String, vConsName_Temp));
+                                                dsConsTemp.InsertParameters.Add(new Parameter("ConsType", DbType.String, vConsType_Temp));
+                                                dsConsTemp.InsertParameters.Add(new Parameter("Brand", DbType.String, vBrand_Temp));
+                                                dsConsTemp.InsertParameters.Add(new Parameter("ConsUnit", DbType.String, vConsUnit_Temp));
+                                                dsConsTemp.InsertParameters.Add(new Parameter("ConsColor", DbType.String, vConsColor_Temp));
+                                                dsConsTemp.InsertParameters.Add(new Parameter("ConsSpec", DbType.String, vConsSpec_Temp));
+                                                dsConsTemp.InsertParameters.Add(new Parameter("ConsSpec2", DbType.String, vConsSpec2_Temp));
+                                                dsConsTemp.InsertParameters.Add(new Parameter("BuMan", DbType.String, vLoginID));
+                                                dsConsTemp.Insert();
+                                            }
                                         }
-                                        catch (Exception eMessage)
+                                        vStockQty_Temp = Int32.TryParse(vRowExcel_H.Cells[8].ToString().Trim(), out vTempINT) ? vTempINT : 0;
+                                        vInventoryQty_Temp = Int32.TryParse(vRowExcel_H.Cells[9].ToString().Trim(), out vTempINT) ? vTempINT : 0;
+                                        vQtyMode = (vInventoryQty_Temp > vStockQty_Temp) ? 1 : -1;
+                                        vQtyDift = Math.Abs(vInventoryQty_Temp - vStockQty_Temp);
+                                        vSQLStr_Temp = "select max(Items) MaxNo from ConsSheetB where SheetNo = '" + vSheetNo + "' ";
+                                        vMaxIndex = PF.GetValue(vConnStr, vSQLStr_Temp, "MaxNo");
+                                        vItems = Int32.TryParse(vMaxIndex, out vIndex) ? (vIndex + 1).ToString("D4") : "0001";
+                                        vSheetNoItems = vSheetNo + vItems;
+                                        using (SqlDataSource dsTempB = new SqlDataSource())
                                         {
-                                            Response.Write("<Script language='Javascript'>");
-                                            Response.Write("alert('" + eMessage.Message + "')");
-                                            Response.Write("</" + "Script>");
+                                            dsTempB.ConnectionString = vConnStr;
+                                            dsTempB.InsertCommand = "insert into ConsSheetB(SheetNoItems, SheetNo, Items, ConsNo, Price, Quantity, Amount, RemarkB, " + Environment.NewLine +
+                                                                    "QtyMode, ItemStatus, BuMan, BuDate)" + Environment.NewLine +
+                                                                    "values (@SheetNoItems, @SheetNo, @Items, @ConsNo, 0, @Quantity, 0, @RemarkB, " + Environment.NewLine +
+                                                                    "        @QtyMode, '001', @BuMan, GetDate())";
+                                            dsTempB.InsertParameters.Clear();
+                                            dsTempB.InsertParameters.Add(new Parameter("SheetNoItems", DbType.String, vSheetNoItems));
+                                            dsTempB.InsertParameters.Add(new Parameter("SheetNo", DbType.String, vSheetNo));
+                                            dsTempB.InsertParameters.Add(new Parameter("Items", DbType.String, vItems));
+                                            dsTempB.InsertParameters.Add(new Parameter("ConsNo", DbType.String, vConsNo_Temp));
+                                            dsTempB.InsertParameters.Add(new Parameter("Quantity", DbType.Int32, vQtyDift.ToString()));
+                                            dsTempB.InsertParameters.Add(new Parameter("RemarkB", DbType.String, vSheetRemarkB));
+                                            dsTempB.InsertParameters.Add(new Parameter("QtyMode", DbType.Int32, vQtyMode.ToString()));
+                                            dsTempB.InsertParameters.Add(new Parameter("BuMan", DbType.String, vLoginID));
+                                            dsTempB.Insert();
                                         }
                                     }
                                 }
+                                string vRecordNote = "匯入庫存量" + Environment.NewLine +
+                                                     "盤點單號：" + vSheetNo + Environment.NewLine +
+                                                     "IAConsumables.aspx";
+                                PF.InsertOperateRecord(vConnStr, vLoginID, vComputerName, vRecordNote);
+                            }
+                            else
+                            {
+                                eErrorMSG_Main.Text = "查無資料";
+                                eErrorMSG_Main.Visible = true;
                             }
                         }
-                        else
+                        catch (Exception eMessage)
                         {
-                            Response.Write("<Script language='Javascript'>");
-                            Response.Write("alert('查無資料。')");
-                            Response.Write("</" + "Script>");
+                            eErrorMSG_Main.Text = eMessage.Message;
+                            eErrorMSG_Main.Visible = true;
                         }
                         break;
-
                     case ".xlsx": //新版 EXCEL (2010 後) 格式
-                        XSSFWorkbook wbExcel_X = new XSSFWorkbook(fuExcel.FileContent);
-                        XSSFSheet sheetExcel_X = (XSSFSheet)wbExcel_X.GetSheetAt(0); //取回第一個工作表
-                        if (sheetExcel_X.LastRowNum > 0)
+                        try
                         {
-                            using (SqlDataSource dsTempA = new SqlDataSource())
+                            XSSFWorkbook wbExcel_X = new XSSFWorkbook(fuExcel.FileContent); //開啟 EXCEL 檔
+                            XSSFSheet sheetExcel_X = (XSSFSheet)wbExcel_X.GetSheetAt(0); //取回第一個工作表
+                            if (sheetExcel_X.LastRowNum > 0) //判斷工作表有沒有內容
                             {
-                                vSheetNo = PF.GetIASheetNo(vConnStr, "SS");
-                                vRemarkA = DateTime.Today.ToShortDateString() + " 盤點作業";
-                                dsTempA.ConnectionString = vConnStr;
-                                dsTempA.InsertCommand = "insert into ConsSheetA(SheetNo, SheetMode, BuDate, BuMan, SheetStatus, StatusDate, RemarkA)" + Environment.NewLine +
-                                                        "values(@SheetNo, 'SS', GetDate(), @BuMan, '998', GetDate(), @RemarkA)";
-                                dsTempA.InsertParameters.Clear();
-                                dsTempA.InsertParameters.Add(new Parameter("SheetNo", DbType.String, vSheetNo));
-                                dsTempA.InsertParameters.Add(new Parameter("BuMan", DbType.String, vLoginID));
-                                dsTempA.InsertParameters.Add(new Parameter("RemarkA", DbType.String, vRemarkA));
-                                dsTempA.Insert();
-                            }
-                            for (int i = 0; i <= sheetExcel_X.LastRowNum; i++)
-                            {
-                                HSSFRow vRowExcel_X = (HSSFRow)sheetExcel_X.GetRow(i);
-                                if ((vRowExcel_X != null) && (vRowExcel_X.Cells[0].StringCellValue.Trim() != "庫存編號"))
+                                //先寫入表頭
+                                vSheetNo = PF.GetConsSheetNo(vConnStr, "SS");
+                                using (SqlDataSource dsTempA = new SqlDataSource())
                                 {
-                                    vConsNo_Temp = vRowExcel_X.Cells[0].StringCellValue.Trim();
-                                    vStockQTY_Temp = Int32.TryParse(vRowExcel_X.Cells[5].ToString().Trim(), out vTempINT) ? vTempINT : 0;
-                                    vInventory_Temp = Int32.TryParse(vRowExcel_X.Cells[6].ToString().Trim(), out vTempINT) ? vTempINT : 0;
-                                    vQtyMode = ((vInventory_Temp - vStockQTY_Temp) < 0) ? -1 : 1;
-                                    vQtyDift = Math.Abs(vInventory_Temp - vStockQTY_Temp);
-                                    vSQLStrTemp = "select MAX(Items) MaxItem from ConsSheetB where SheetNo = '" + vSheetNo + "' ";
-                                    vSQLStrTemp = "select MAX(Items) MaxItem from ConsSheetB where SheetNo = '" + vSheetNo + "' ";
-                                    vIndex_Count = Int32.TryParse(PF.GetValue(vConnStr, vSQLStrTemp, "MaxItem"), out vTempINT) ? vTempINT + 1 : 1;
-                                    vItems = vIndex_Count.ToString("D4").Trim();
-                                    vSheetNoItems = vSheetNo + vItems;
-                                    vRemarkB = DateTime.Today.ToShortDateString() + " 盤點數量更新" + Environment.NewLine;
-                                    using (SqlDataSource dsTempB = new SqlDataSource())
+                                    dsTempA.ConnectionString = vConnStr;
+                                    dsTempA.InsertCommand = "insert into ConsSheetA(SheetNo, SheetMode, BuDate, BuMan, SheetStatus, StatusDate, RemarkA)" + Environment.NewLine +
+                                                            "values(@SheetNo, 'SS', GetDate(), @BuMan, '998', GetDate(), @RemarkA)";
+                                    dsTempA.InsertParameters.Clear();
+                                    dsTempA.InsertParameters.Add(new Parameter("SheetNo", DbType.String, vSheetNo));
+                                    dsTempA.InsertParameters.Add(new Parameter("BuMan", DbType.String, vLoginID));
+                                    dsTempA.InsertParameters.Add(new Parameter("RemarkA", DbType.String, vSheetRemark));
+                                    dsTempA.Insert();
+                                }
+                                //準備寫入耗材盤點量
+                                for (int i = 0; i <= sheetExcel_X.LastRowNum; i++)
+                                {
+                                    //逐行讀取資料
+                                    XSSFRow vRowExcel_X = (XSSFRow)sheetExcel_X.GetRow(i);
+                                    if ((vRowExcel_X != null) && (vRowExcel_X.Cells[0].StringCellValue.Trim() != "庫存編號"))
                                     {
-                                        dsTempB.ConnectionString = vConnStr;
-                                        dsTempB.InsertCommand = "insert into ConsSheetB(SheetNoItems, SheetNo, Items, ConsNo, Price, Quantity, Amount, RemarkB, " + Environment.NewLine +
-                                                                "QtyMode, ItemStatus, BuMan, BuDate)" + Environment.NewLine +
-                                                                "values (@SheetNoItems, @SheetNo, @Items, @ConsNo, 0, @Quantity, 0, @RemarkB, " + Environment.NewLine +
-                                                                "        @QtyMode, '001', @BuMan, GetDate())";
-                                        dsTempB.InsertParameters.Clear();
-                                        dsTempB.InsertParameters.Add(new Parameter("SheetNoItems", DbType.String, vSheetNoItems));
-                                        dsTempB.InsertParameters.Add(new Parameter("SheetNo", DbType.String, vSheetNo));
-                                        dsTempB.InsertParameters.Add(new Parameter("Items", DbType.String, vItems));
-                                        dsTempB.InsertParameters.Add(new Parameter("ConsNo", DbType.String, vConsNo_Temp));
-                                        dsTempB.InsertParameters.Add(new Parameter("Quantity", DbType.Int32, vQtyDift.ToString()));
-                                        dsTempB.InsertParameters.Add(new Parameter("RemarkB", DbType.String, vRemarkB));
-                                        dsTempB.InsertParameters.Add(new Parameter("QtyMode", DbType.Int32, vQtyMode.ToString()));
-                                        dsTempB.InsertParameters.Add(new Parameter("BuMan", DbType.String, vLoginID));
-                                        try
+                                        //讀回來的資料列不是空值，或者不是標題列
+                                        vConsNo_Temp = vRowExcel_X.Cells[0].StringCellValue.Trim();
+                                        vConsType_Temp = vRowExcel_X.Cells[1].StringCellValue.Trim();
+                                        vConsName_Temp = vRowExcel_X.Cells[2].StringCellValue.Trim();
+                                        vConsUnit_Temp = vRowExcel_X.Cells[3].StringCellValue.Trim();
+                                        vBrand_Temp = vRowExcel_X.Cells[4].StringCellValue.Trim();
+                                        vConsColor_Temp = vRowExcel_X.Cells[5].StringCellValue.Trim();
+                                        vConsSpec_Temp = vRowExcel_X.Cells[6].StringCellValue.Trim();
+                                        vConsSpec2_Temp = vRowExcel_X.Cells[7].StringCellValue.Trim();
+                                        if (vConsNo_Temp == "")
                                         {
-                                            dsTempB.Insert();
-                                            string vRecordNote = "匯入庫存量" + Environment.NewLine +
-                                                                 "IAConsumables.aspx";
-                                            PF.InsertOperateRecord(vConnStr, vLoginID, vComputerName, vRecordNote);
+                                            //料號欄位是空白，表示是新料號
+                                            vFirstCode = vConsType_Temp.Trim() + "-02-";
+                                            vSQLStr_Temp = "select max(ConsNo) MaxNo from Consumables where ConsNo like '" + vFirstCode + "%' ";
+                                            vMaxIndex = PF.GetValue(vConnStr, vSQLStr_Temp, "MaxNo");
+                                            vIndex_S = Int32.TryParse(vMaxIndex.Replace(vFirstCode, ""), out vIndex) ? (vIndex + 1).ToString("D4") : "0001";
+                                            vConsNo_Temp = vFirstCode + vIndex_S;
+                                            using (SqlDataSource dsConsTemp = new SqlDataSource())
+                                            {
+                                                dsConsTemp.ConnectionString = vConnStr;
+                                                dsConsTemp.InsertCommand = "insert into Consumables " + Environment.NewLine +
+                                                                           "       (ConsNo, ConsName, ConsType, Brand, ConsUnit, ConsColor, ConsSpec, ConsSpec2, BuMan, BuDate) " + Environment.NewLine +
+                                                                           "values (@ConsNo, @ConsName, @ConsType, @Brand, @ConsUnit, @ConsColor, @ConsSpec, @ConsSpec2, @BuMan, GetDate())";
+                                                dsConsTemp.InsertParameters.Clear();
+                                                dsConsTemp.InsertParameters.Add(new Parameter("ConsNo", DbType.String, vConsNo_Temp));
+                                                dsConsTemp.InsertParameters.Add(new Parameter("ConsName", DbType.String, vConsName_Temp));
+                                                dsConsTemp.InsertParameters.Add(new Parameter("ConsType", DbType.String, vConsType_Temp));
+                                                dsConsTemp.InsertParameters.Add(new Parameter("Brand", DbType.String, vBrand_Temp));
+                                                dsConsTemp.InsertParameters.Add(new Parameter("ConsUnit", DbType.String, vConsUnit_Temp));
+                                                dsConsTemp.InsertParameters.Add(new Parameter("ConsColor", DbType.String, vConsColor_Temp));
+                                                dsConsTemp.InsertParameters.Add(new Parameter("ConsSpec", DbType.String, vConsSpec_Temp));
+                                                dsConsTemp.InsertParameters.Add(new Parameter("ConsSpec2", DbType.String, vConsSpec2_Temp));
+                                                dsConsTemp.InsertParameters.Add(new Parameter("BuMan", DbType.String, vLoginID));
+                                                dsConsTemp.Insert();
+                                            }
                                         }
-                                        catch (Exception eMessage)
+                                        vStockQty_Temp = Int32.TryParse(vRowExcel_X.Cells[8].ToString().Trim(), out vTempINT) ? vTempINT : 0;
+                                        vInventoryQty_Temp = Int32.TryParse(vRowExcel_X.Cells[9].ToString().Trim(), out vTempINT) ? vTempINT : 0;
+                                        vQtyMode = (vInventoryQty_Temp > vStockQty_Temp) ? 1 : -1;
+                                        vQtyDift = Math.Abs(vInventoryQty_Temp - vStockQty_Temp);
+                                        vSQLStr_Temp = "select max(Items) MaxNo from ConsSheetB where SheetNo = '" + vSheetNo + "' ";
+                                        vMaxIndex = PF.GetValue(vConnStr, vSQLStr_Temp, "MaxNo");
+                                        vItems = Int32.TryParse(vMaxIndex, out vIndex) ? (vIndex + 1).ToString("D4") : "0001";
+                                        vSheetNoItems = vSheetNo + vItems;
+                                        using (SqlDataSource dsTempB = new SqlDataSource())
                                         {
-                                            Response.Write("<Script language='Javascript'>");
-                                            Response.Write("alert('" + eMessage.Message + "')");
-                                            Response.Write("</" + "Script>");
+                                            dsTempB.ConnectionString = vConnStr;
+                                            dsTempB.InsertCommand = "insert into ConsSheetB(SheetNoItems, SheetNo, Items, ConsNo, Price, Quantity, Amount, RemarkB, " + Environment.NewLine +
+                                                                    "QtyMode, ItemStatus, BuMan, BuDate)" + Environment.NewLine +
+                                                                    "values (@SheetNoItems, @SheetNo, @Items, @ConsNo, 0, @Quantity, 0, @RemarkB, " + Environment.NewLine +
+                                                                    "        @QtyMode, '001', @BuMan, GetDate())";
+                                            dsTempB.InsertParameters.Clear();
+                                            dsTempB.InsertParameters.Add(new Parameter("SheetNoItems", DbType.String, vSheetNoItems));
+                                            dsTempB.InsertParameters.Add(new Parameter("SheetNo", DbType.String, vSheetNo));
+                                            dsTempB.InsertParameters.Add(new Parameter("Items", DbType.String, vItems));
+                                            dsTempB.InsertParameters.Add(new Parameter("ConsNo", DbType.String, vConsNo_Temp));
+                                            dsTempB.InsertParameters.Add(new Parameter("Quantity", DbType.Int32, vQtyDift.ToString()));
+                                            dsTempB.InsertParameters.Add(new Parameter("RemarkB", DbType.String, vSheetRemarkB));
+                                            dsTempB.InsertParameters.Add(new Parameter("QtyMode", DbType.Int32, vQtyMode.ToString()));
+                                            dsTempB.InsertParameters.Add(new Parameter("BuMan", DbType.String, vLoginID));
+                                            dsTempB.Insert();
                                         }
                                     }
                                 }
+                                string vRecordNote = "匯入庫存量" + Environment.NewLine +
+                                                     "盤點單號：" + vSheetNo + Environment.NewLine +
+                                                     "IAConsumables.aspx";
+                                PF.InsertOperateRecord(vConnStr, vLoginID, vComputerName, vRecordNote);
+                            }
+                            else
+                            {
+                                eErrorMSG_Main.Text = "查無資料";
+                                eErrorMSG_Main.Visible = true;
                             }
                         }
-                        else
+                        catch (Exception eMessage)
                         {
-                            Response.Write("<Script language='Javascript'>");
-                            Response.Write("alert('查無資料。')");
-                            Response.Write("</" + "Script>");
+                            eErrorMSG_Main.Text = eMessage.Message;
+                            eErrorMSG_Main.Visible = true;
                         }
                         break;
-
                     default:
-                        Response.Write("<Script language='Javascript'>");
-                        Response.Write("alert('您指定的檔案不是 EXCEL 檔，請重新確認檔案格式。')");
-                        Response.Write("</" + "Script>");
+                        eErrorMSG_Main.Text = "您指定的檔案不是 EXCEL 檔，請重新確認檔案！";
+                        eErrorMSG_Main.Visible = true;
                         break;
                 }
             }
             else
             {
-                Response.Write("<Script language='Javascript'>");
-                Response.Write("alert('請先選擇盤點結果檔')");
-                Response.Write("</" + "Script>");
+                eErrorMSG_Main.Text = "您沒有選擇要轉入的檔案，請重新確認！";
+                eErrorMSG_Main.Visible = true;
             }
         }
 
         /// <summary>
-        /// 離開
+        /// 離開功能
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -631,360 +589,416 @@ namespace TyBus_Intranet_Test_V3
         }
 
         /// <summary>
-        /// 關閉報表預覽
+        /// 料號查詢輸入
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void bbCloseReport_Click(object sender, EventArgs e)
+        protected void eConsNo_Search_TextChanged(object sender, EventArgs e)
         {
-            plReport.Visible = false;
-            plShowData.Visible = true;
-        }
-
-        protected void gvShowList_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            gvShowList.PageIndex = e.NewPageIndex;
-            gvShowList.DataBind();
-        }
-
-        /// <summary>
-        /// 新增耗材
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void bbInsert_Click(object sender, EventArgs e)
-        {
-            Session["ConsMode"] = "INS";
-            SetInputMode(true);
-            foreach (Control cTemp in plShowData.Controls)
-            {
-                if (cTemp is TextBox)
-                {
-                    (cTemp as TextBox).Text = "";
-                }
-                else if (cTemp is CheckBox)
-                {
-                    (cTemp as CheckBox).Checked = false;
-                }
-                else if ((cTemp is DropDownList) && ((cTemp as DropDownList).Items.Count > 0))
-                {
-                    (cTemp as DropDownList).SelectedIndex = 0;
-                }
-            }
-            eIsStopuse.Text = "N";
-            eInOrder.Text = "N";
-            eBuDate.Text = DateTime.Now.ToString("yyyy/MM/dd");
-        }
-
-        /// <summary>
-        /// 修改耗材資料
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void bbEdit_Click(object sender, EventArgs e)
-        {
-            Session["ConsMode"] = "EDIT";
-            SetInputMode(true);
-        }
-
-        /// <summary>
-        /// 刪除耗材資料
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void bbDelete_Click(object sender, EventArgs e)
-        {
+            lbErrorMSG_ConsName.Text = "";
+            lbErrorMSG_ConsName.Visible = false;
+            string vTempStr = "";
             if (vConnStr == "")
             {
                 vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
             }
-            string vConsNo = eConsNo.Text.Trim();
-            if (vConsNo != "")
+            string vConsNo = eConsNo_Search.Text.Trim();
+            vTempStr = "select ConsName from Consumables where ConsNo = '" + vConsNo + "' ";
+            string vConsName = PF.GetValue(vConnStr, vTempStr, "ConsName");
+            if (vConsName == "")
             {
-                string vTempStr = "delete from Consumables where ConsNo = @ConsNo";
-                using (SqlConnection connDEL = new SqlConnection(vConnStr))
-                {
-                    SqlCommand cmdDEL = new SqlCommand(vTempStr, connDEL);
-                    connDEL.Open();
-                    cmdDEL.Parameters.Clear();
-                    cmdDEL.Parameters.Add(new SqlParameter("ConsNo", vConsNo));
-                    cmdDEL.ExecuteNonQuery();
-                }
+                eConsNo_Search.Text = "";
+                lbErrorMSG_ConsName.Text = "查無 [ " + vConsNo + " ] 料號";
+                lbErrorMSG_ConsName.Visible = true;
             }
         }
 
+        protected void gridShowList_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gridShowList.PageIndex = e.NewPageIndex;
+            gridShowList.DataBind();
+        }
+
         /// <summary>
-        /// 設定停用
+        /// 資料表格完成繫結
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void bbStopUse_Click(object sender, EventArgs e)
+        protected void fvShowList_DataBound(object sender, EventArgs e)
         {
+            DropDownList ddlConsType;
+            Label eConsType;
+            DropDownList ddlConsUnit;
+            Label eConsUnit;
+            CheckBox cbIsStopUse;
+            Label eIsStopUse;
+            CheckBox cbIsInorder;
+            Label eIsInorder;
+            DropDownList ddlBrand;
+            Label eBrand;
+            string vSelectType = "select cast('' as varchar) ClassNo, cast('' as varchar) ClassTxt " + Environment.NewLine +
+                                 " union all" + Environment.NewLine +
+                                 "select ClassNo, ClassTxt from DBDICB where FKey = '耗材庫存        CONSUMABLES     ConsType' order by ClassNo";
+            string vSelectUnit = "select cast('' as varchar) ClassNo, cast('' as varchar) ClassTxt " + Environment.NewLine +
+                                 " union all" + Environment.NewLine +
+                                 "select ClassNo, ClassTxt from DBDICB where FKey = '耗材庫存        CONSUMABLES     ConsUnit' order by ClassNo";
+            string vSelectBrand = "select cast('' as varchar) BrandCode, cast('' as varchar) BrandName " + Environment.NewLine +
+                                  " union all" + Environment.NewLine +
+                                  "select BrandCode, BrandName from ConsBrand where BelongGroup = '02' order by BrandCode ";
             if (vConnStr == "")
             {
                 vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
             }
-            string vConsNo = eConsNo.Text.Trim();
-            if (vConsNo != "")
+            switch (fvShowList.CurrentMode)
             {
-                string vTempStr = "update Consumables set IsStopuse = 'Y' where ConsNo = @ConsNo";
-                using (SqlConnection connStopUse = new SqlConnection(vConnStr))
-                {
-                    SqlCommand cmdStopUse = new SqlCommand(vTempStr, connStopUse);
-                    connStopUse.Open();
-                    cmdStopUse.Parameters.Clear();
-                    cmdStopUse.Parameters.Add(new SqlParameter("ConsNo", vConsNo));
-                    cmdStopUse.ExecuteNonQuery();
-                }
-            }
-        }
-
-        /// <summary>
-        /// 變更選擇
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void gvShowList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string vConsNo = gvShowList.SelectedDataKey.ToString().Trim();
-            if (vConsNo != "")
-            {
-                GetSelectData(vConsNo);
-            }
-        }
-
-        private void GetSelectData(string fConsNo)
-        {
-            if (vConnStr == "")
-            {
-                vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
-            }
-            string vSelectStr = "select ConsNo, ConsName, ConsType, ConsUnit, ConsColor, ConsSpec, ConsSpec2, Brand, " + Environment.NewLine +
-                                "       StockQty, AVGPrice, LastInDate, LastOutDate, StoreLocation, IsStopUse, IsInorder, LastInPrice, " + Environment.NewLine +
-                                "       BuDate, BuMan, e1.[Name] as BuManName, ModifyDate, ModifyMan, e2.[Name] as ModifyManName, Remark " + Environment.NewLine +
-                                "  from Consumables c left join Employee e1 on e1.EmpNo = c.BuMan " + Environment.NewLine +
-                                "                     left join Employee e2 on e2.EmpNo = c.ModifyMan " + Environment.NewLine +
-                                " where ConsNo = @ConsNo ";
-            double vTempNum = 0;
-            DateTime vTempDate;
-            using (SqlConnection connGetData = new SqlConnection(vConnStr))
-            {
-                SqlCommand cmdSelectData = new SqlCommand(vSelectStr, connGetData);
-                connGetData.Open();
-                cmdSelectData.Parameters.Clear();
-                cmdSelectData.Parameters.Add(new SqlParameter("ConsNo", fConsNo));
-                SqlDataReader drSelectData = cmdSelectData.ExecuteReader();
-                if (drSelectData.HasRows)
-                {
-                    while (drSelectData.Read())
+                case FormViewMode.ReadOnly:
+                    cbIsStopUse = (CheckBox)fvShowList.FindControl("cbIsStopUse_List");
+                    if (cbIsStopUse != null)
                     {
-                        vdConsNo = drSelectData["ConsNo"].ToString().Trim();
-                        vdConsName = drSelectData["ConsName"].ToString().Trim();
-                        vdConsType = drSelectData["ConsType"].ToString().Trim();
-                        ddlConsType.SelectedIndex = ddlConsType.Items.IndexOf(ddlConsType.Items.FindByValue(vdConsType));
-                        vdConsUnit = drSelectData["ComsUnit"].ToString().Trim();
-                        ddlConsUnit.SelectedIndex = ddlConsUnit.Items.IndexOf(ddlConsUnit.Items.FindByValue(vdConsUnit));
-                        vdConsColor = drSelectData["ConsColor"].ToString().Trim();
-                        vdConsSpec = drSelectData["ConsSpec"].ToString().Trim();
-                        vdConsSpec2 = drSelectData["ConsSpec2"].ToString().Trim();
-                        vdBrand = drSelectData["Brand"].ToString().Trim();
-                        ddlBrand.SelectedIndex = ddlBrand.Items.IndexOf(ddlBrand.Items.FindByValue(vdBrand));
-                        vdStockQty = (double.TryParse(drSelectData["StockQty"].ToString().Trim(), out vTempNum)) ? vTempNum.ToString() : "0";
-                        vdAvgPrice = (double.TryParse(drSelectData["AVGPrice"].ToString().Trim(), out vTempNum)) ? vTempNum.ToString() : "0";
-                        vdLastInPrice = (double.TryParse(drSelectData["LastInPrice"].ToString().Trim(), out vTempNum)) ? vTempNum.ToString() : "0";
-                        vdLastInDate = (DateTime.TryParse(drSelectData["LastInDate"].ToString().Trim(), out vTempDate)) ? vTempDate.ToString("yyyy/MM/dd") : String.Empty;
-                        vdLastOutDate = (DateTime.TryParse(drSelectData["LastOutDate"].ToString().Trim(), out vTempDate)) ? vTempDate.ToString("yyyy/MM/dd") : String.Empty;
-                        vdBuDate = (DateTime.TryParse(drSelectData["BuDate"].ToString().Trim(), out vTempDate)) ? vTempDate.ToString("yyyy/MM/dd") : String.Empty;
-                        vdModifyDate = (DateTime.TryParse(drSelectData["ModifyDate"].ToString().Trim(), out vTempDate)) ? vTempDate.ToString("yyyy/MM/dd") : String.Empty;
-                        vdStoreLocation = drSelectData["StoreLocation"].ToString().Trim();
-                        vdIsStopUse = drSelectData["IsStopUse"].ToString().Trim();
-                        cbIsStopuse.Checked = (vdIsStopUse.ToUpper() == "Y");
-                        vdInOrder = drSelectData["IsInorder"].ToString().Trim();
-                        cbInOrder.Checked = (vdInOrder.ToUpper() == "Y");
-                        vdBuMan = drSelectData["BuManName"].ToString().Trim();
-                        vdModifyMan = drSelectData["ModifyManName"].ToString().Trim();
-                        vdRemark = drSelectData["Remark"].ToString().Trim();
+                        cbIsInorder = (CheckBox)fvShowList.FindControl("cbIsInorder_List");
+                        eIsStopUse = (Label)fvShowList.FindControl("eIsStopUse_List");
+                        eIsInorder = (Label)fvShowList.FindControl("eIsInorder_List");
+                        cbIsStopUse.Checked = (eIsStopUse.Text.Trim() == "V") ? true : false;
+                        cbIsInorder.Checked = (eIsInorder.Text.Trim() == "V") ? true : false;
                     }
-                }
-                Page.DataBind();
+                    break;
+                case FormViewMode.Edit:
+                    ddlConsType = (DropDownList)fvShowList.FindControl("eConsType_C_Edit");
+                    if (ddlConsType != null)
+                    {
+                        using (SqlConnection connType = new SqlConnection(vConnStr))
+                        {
+                            SqlCommand cmdType = new SqlCommand(vSelectType, connType);
+                            connType.Open();
+                            SqlDataReader drType = cmdType.ExecuteReader();
+                            if (drType.HasRows)
+                            {
+                                ddlConsType.Items.Clear();
+                                while (drType.Read())
+                                {
+                                    ListItem liTemp = new ListItem(drType["ClassTxt"].ToString().Trim(), drType["ClassNo"].ToString().Trim());
+                                    ddlConsType.Items.Add(liTemp);
+                                }
+                            }
+                        }
+                        ddlConsUnit = (DropDownList)fvShowList.FindControl("eConsUnit_C_Edit");
+                        using (SqlConnection connUnit = new SqlConnection(vConnStr))
+                        {
+                            SqlCommand cmdUnit = new SqlCommand(vSelectUnit, connUnit);
+                            connUnit.Open();
+                            SqlDataReader drUnit = cmdUnit.ExecuteReader();
+                            if (drUnit.HasRows)
+                            {
+                                ddlConsUnit.Items.Clear();
+                                while (drUnit.Read())
+                                {
+                                    ListItem liTemp = new ListItem(drUnit["ClassTxt"].ToString().Trim(), drUnit["ClassNo"].ToString().Trim());
+                                    ddlConsUnit.Items.Add(liTemp);
+                                }
+                            }
+                        }
+                        ddlBrand = (DropDownList)fvShowList.FindControl("eBrand_C_Edit");
+                        using (SqlConnection connBrand = new SqlConnection(vConnStr))
+                        {
+                            SqlCommand cmdBrand = new SqlCommand(vSelectBrand, connBrand);
+                            connBrand.Open();
+                            SqlDataReader drBrand = cmdBrand.ExecuteReader();
+                            if (drBrand.HasRows)
+                            {
+                                ddlBrand.Items.Clear();
+                                while (drBrand.Read())
+                                {
+                                    ListItem liTemp = new ListItem(drBrand["BrandCode"].ToString().Trim(), drBrand["BrandName"].ToString().Trim());
+                                    ddlBrand.Items.Add(liTemp);
+                                }
+                            }
+                        }
+                        eConsType = (Label)fvShowList.FindControl("eConsType_Edit");
+                        eConsUnit = (Label)fvShowList.FindControl("eConsUnit_List");
+                        eBrand = (Label)fvShowList.FindControl("eBrand_Edit");
+                        ddlConsType.SelectedIndex = (eConsType.Text.Trim() != "") ? ddlConsType.Items.IndexOf(ddlConsType.Items.FindByValue(eConsType.Text.Trim())) : 0;
+                        ddlConsUnit.SelectedIndex = (eConsUnit.Text.Trim() != "") ? ddlConsUnit.Items.IndexOf(ddlConsUnit.Items.FindByValue(eConsUnit.Text.Trim())) : 0;
+                        ddlBrand.SelectedIndex = (eBrand.Text.Trim() != "") ? ddlBrand.Items.IndexOf(ddlBrand.Items.FindByValue(eBrand.Text.Trim())) : 0;
+                        cbIsStopUse = (CheckBox)fvShowList.FindControl("cbIsStopUse_Edit");
+                        cbIsInorder = (CheckBox)fvShowList.FindControl("cbIsInorder_Edit");
+                        eIsStopUse = (Label)fvShowList.FindControl("eIsStopUse_Edit");
+                        eIsInorder = (Label)fvShowList.FindControl("eIsInorder_Edit");
+                        cbIsStopUse.Checked = (eIsStopUse.Text.Trim() == "V") ? true : false;
+                        cbIsInorder.Checked = (eIsInorder.Text.Trim() == "V") ? true : false;
+                    }
+                    break;
+                case FormViewMode.Insert:
+                    ddlConsType = (DropDownList)fvShowList.FindControl("eConsType_C_INS");
+                    if (ddlConsType != null)
+                    {
+                        using (SqlConnection connType = new SqlConnection(vConnStr))
+                        {
+                            SqlCommand cmdType = new SqlCommand(vSelectType, connType);
+                            connType.Open();
+                            SqlDataReader drType = cmdType.ExecuteReader();
+                            if (drType.HasRows)
+                            {
+                                ddlConsType.Items.Clear();
+                                while (drType.Read())
+                                {
+                                    ListItem liTemp = new ListItem(drType["ClassTxt"].ToString().Trim(), drType["ClassNo"].ToString().Trim());
+                                    ddlConsType.Items.Add(liTemp);
+                                }
+                            }
+                        }
+                        ddlConsUnit = (DropDownList)fvShowList.FindControl("eConsUnit_C_INS");
+                        using (SqlConnection connUnit = new SqlConnection(vConnStr))
+                        {
+                            SqlCommand cmdUnit = new SqlCommand(vSelectUnit, connUnit);
+                            connUnit.Open();
+                            SqlDataReader drUnit = cmdUnit.ExecuteReader();
+                            if (drUnit.HasRows)
+                            {
+                                ddlConsUnit.Items.Clear();
+                                while (drUnit.Read())
+                                {
+                                    ListItem liTemp = new ListItem(drUnit["ClassTxt"].ToString().Trim(), drUnit["ClassNo"].ToString().Trim());
+                                    ddlConsUnit.Items.Add(liTemp);
+                                }
+                            }
+                        }
+                        ddlBrand = (DropDownList)fvShowList.FindControl("eBrand_C_INS");
+                        using (SqlConnection connBrand = new SqlConnection(vConnStr))
+                        {
+                            SqlCommand cmdBrand = new SqlCommand(vSelectBrand, connBrand);
+                            connBrand.Open();
+                            SqlDataReader drBrand = cmdBrand.ExecuteReader();
+                            if (drBrand.HasRows)
+                            {
+                                ddlBrand.Items.Clear();
+                                while (drBrand.Read())
+                                {
+                                    ListItem liTemp = new ListItem(drBrand["BrandCode"].ToString().Trim(), drBrand["BrandName"].ToString().Trim());
+                                    ddlBrand.Items.Add(liTemp);
+                                }
+                            }
+                        }
+                    }
+                    break;
             }
         }
 
         /// <summary>
-        /// 新增資料
+        /// 編輯畫面確定
         /// </summary>
-        private void InsertData()
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void bbOK_Edit_Click(object sender, EventArgs e)
         {
-            if (vConnStr == "")
-            {
-                vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
-            }
-            int vIndexINT = 0;
-            string vIndexStr = "";
-            string vOldConsNo = "";
-
-            string vConsNo_First = eConsType.Text.Trim().ToUpper() + "-" + eBrand.Text.Trim().ToUpper() + "-";
-            vOldConsNo = PF.GetValue(vConnStr, "select top 1 ConsNo from Consumables where ConsNo like '" + vConsNo_First + "%' order by ConsNo DESC", "ConsNo");
-            vIndexStr = Int32.TryParse(vOldConsNo.Replace(vConsNo_First, ""), out vIndexINT) ? (vIndexINT + 1).ToString("D4") : "0001";
-
-            string vConsNo_INS = vConsNo_First + vIndexStr;
-            string vConsName_INS = eConsName.Text.Trim();
-            string vConsType_INS = eConsType.Text.Trim();
-            string vConsUnit_INS = eConsUnit.Text.Trim();
-            string vConsColor_INS = eConsColor.Text.Trim();
-            string vConsSpec_INS = eConsSpec.Text.Trim();
-            string vConsSpec2_INS = eConsSpec2.Text.Trim();
-            string vBrand_INS = eBrand.Text.Trim();
-            string vStoreLocation_INS = eStoreLocation.Text.Trim();
-            string vIsStopUse_INS = (eIsStopuse.Text.Trim().ToUpper() == "Y") ? "Y" : "N";
-            string vIsInorder_INS = (eInOrder.Text.Trim().ToUpper() == "Y") ? "Y" : "N";
-            string vRemark_INS = eRemark.Text.Trim();
-
-            string vInsertStr = "insert into Consumables " + Environment.NewLine +
-                                "       (ConsNo, ConsName, ConsType, ConsUnit, ConsColor, ConsSpec, ConsSpec2, Brand, StockQty, AVGPrice, " + Environment.NewLine +
-                                "        LastInDate, LastOutDate, StoreLocation, IsStopUse, IsInorder, LastInPrice, BuDate, BuMan, Remark)" + Environment.NewLine +
-                                "values (@ConsNo, @ConsName, @ConsType, @ConsUnit, @ConsColor, @ConsSpec, @ConsSpec2, @Brand, 0.0, 0.0, " + Environment.NewLine +
-                                "        NULL, NULL, @StoreLocation, @IsStopUse, @IsInorder, 0.0, GetDate(), @BuMan, @Remark)";
-            using (SqlConnection connINS = new SqlConnection(vConnStr))
-            {
-                SqlCommand cmdINS = new SqlCommand(vInsertStr, connINS);
-                connINS.Open();
-                cmdINS.Parameters.Clear();
-                cmdINS.Parameters.Add(new Parameter("ConsNo", DbType.String, vConsNo_INS));
-                cmdINS.Parameters.Add(new Parameter("ConsName", DbType.String, vConsName_INS));
-                cmdINS.Parameters.Add(new Parameter("ConsType", DbType.String, vConsType_INS));
-                cmdINS.Parameters.Add(new Parameter("ConsUnit", DbType.String, vConsUnit_INS));
-                cmdINS.Parameters.Add(new Parameter("ConsColor", DbType.String, vConsColor_INS));
-                cmdINS.Parameters.Add(new Parameter("ConsSpec", DbType.String, vConsSpec_INS));
-                cmdINS.Parameters.Add(new Parameter("ConsSpec2", DbType.String, vConsSpec2_INS));
-                cmdINS.Parameters.Add(new Parameter("Brand", DbType.String, vBrand_INS));
-                cmdINS.Parameters.Add(new Parameter("StoreLocation", DbType.String, vStoreLocation_INS));
-                cmdINS.Parameters.Add(new Parameter("IsStopUse", DbType.String, vIsStopUse_INS));
-                cmdINS.Parameters.Add(new Parameter("IsInorder", DbType.String, vIsInorder_INS));
-                cmdINS.Parameters.Add(new Parameter("BuMan", DbType.String, vLoginID));
-                cmdINS.Parameters.Add(new Parameter("Remark", DbType.String, vRemark_INS));
-                cmdINS.ExecuteNonQuery();
-            }
+            //先定義可以變更的欄位
+            Label eConsNo = (Label)fvShowList.FindControl("eConsNo_Edit");
+            TextBox eConsName = (TextBox)fvShowList.FindControl("eConsName_Edit");
+            Label eConsType = (Label)fvShowList.FindControl("eConsType_Edit");
+            Label eConsUnit = (Label)fvShowList.FindControl("eConsUnit_Edit");
+            TextBox eConsColor = (TextBox)fvShowList.FindControl("eConsColor_Edit");
+            TextBox eConsSpec = (TextBox)fvShowList.FindControl("eConsSpec_Edit");
+            TextBox eConsSpec2 = (TextBox)fvShowList.FindControl("eConsSpec2_Edit");
+            Label eBrand = (Label)fvShowList.FindControl("eBrand_Edit");
+            TextBox eStoreLocation = (TextBox)fvShowList.FindControl("eStoreLocation_Edit");
+            Label eIsStopUse = (Label)fvShowList.FindControl("eIsStopUse_Edit");
+            Label eIsInorder = (Label)fvShowList.FindControl("eIsInorder_Edit");
+            TextBox eRemark = (TextBox)fvShowList.FindControl("eRemark_Edit");
+            //決定更新的語法
+            string vUpdateStr = "update Consumables " + Environment.NewLine +
+                                "   set ConsName = @ConsName, ConsType = @ConsType, ConsUnit = @ConsUnit, ConsColor = @ConsColor,  " + Environment.NewLine +
+                                "       ConsSpec = @ConsSpec, ConsSpec2 = @ConsSpec2, Brand = @Brand, StoreLocation = @StoreLocation, " + Environment.NewLine +
+                                "       IsStopUse = @IsStopUse, IsInorder = @IsInorder, Remark = @Remark, ModifyMan = @ModifyMan, ModifyDate = GetDate() " + Environment.NewLine +
+                                " where ConsNo = @CVonsNo ";
+            sdsShowDetail.UpdateCommand = vUpdateStr;
+            sdsShowDetail.UpdateParameters.Clear();
+            sdsShowDetail.UpdateParameters.Add(new Parameter("ConsName", DbType.String, eConsName.Text.Trim()));
+            sdsShowDetail.UpdateParameters.Add(new Parameter("ConsType", DbType.String, eConsType.Text.Trim()));
+            sdsShowDetail.UpdateParameters.Add(new Parameter("ConsUnit", DbType.String, eConsUnit.Text.Trim()));
+            sdsShowDetail.UpdateParameters.Add(new Parameter("ConsColor", DbType.String, eConsColor.Text.Trim()));
+            sdsShowDetail.UpdateParameters.Add(new Parameter("ConsSpec", DbType.String, eConsSpec.Text.Trim()));
+            sdsShowDetail.UpdateParameters.Add(new Parameter("ConsSpec2", DbType.String, eConsSpec2.Text.Trim()));
+            sdsShowDetail.UpdateParameters.Add(new Parameter("Brand", DbType.String, eBrand.Text.Trim()));
+            sdsShowDetail.UpdateParameters.Add(new Parameter("StoreLocation", DbType.String, eStoreLocation.Text.Trim()));
+            sdsShowDetail.UpdateParameters.Add(new Parameter("IsStopUse", DbType.String, eIsStopUse.Text.Trim()));
+            sdsShowDetail.UpdateParameters.Add(new Parameter("IsInorder", DbType.String, eIsInorder.Text.Trim()));
+            sdsShowDetail.UpdateParameters.Add(new Parameter("Remark", DbType.String, eRemark.Text.Trim()));
+            sdsShowDetail.UpdateParameters.Add(new Parameter("ModifyMan", DbType.String, vLoginID));
+            sdsShowDetail.UpdateParameters.Add(new Parameter("ConsNo", DbType.String, eConsNo.Text.Trim()));
+            sdsShowDetail.Update();
+            gridShowList.DataBind();
+            fvShowList.DataBind();
         }
 
         /// <summary>
-        /// 修改資料
+        /// 編輯畫面類別下拉選單變更
         /// </summary>
-        private void UpdateData()
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void eConsType_C_Edit_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (vConnStr == "")
-            {
-                vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
-            }
-            if (eConsNo.Text.Trim() != "")
-            {
-                string vUpdateStr = "update Consumables set ConsName = @ConsName, ConsUnit = @ConsUnit, ConsColor = @ConsColor, ConsSpec = @ConsSpec, ConsSpec2 = @ConsSpec2, " + Environment.NewLine +
-                                    "       Brand = @Brand, StoreLocation = @StoreLocation, IsStopUse = @IsStopUse, IsInorder = @IsInorder, Remark = @Remark,  " + Environment.NewLine +
-                                    "       ModifyDate = GetDate(), ModifyMan = @ModifyMan " + Environment.NewLine +
-                                    " where ConsNo = @ConsNo ";
-                string vConsNo_Edit = eConsNo.Text.Trim();
-                string vConsName_Edit = eConsName.Text.Trim();
-                string vConsUnit_Edit = eConsUnit.Text.Trim();
-                string vConsColor_Edit = eConsColor.Text.Trim();
-                string vConsSpec_Edit = eConsSpec.Text.Trim();
-                string vConsSpec2_Edit = eConsSpec2.Text.Trim();
-                string vBrand_Edit = eBrand.Text.Trim();
-                string vStoreLocation_Edit = eStoreLocation.Text.Trim();
-                string vIsStopUse_Edit = (eIsStopuse.Text.Trim().ToUpper() == "Y") ? "Y" : "N";
-                string vIsInorder_Edit = (eInOrder.Text.Trim().ToUpper() == "Y") ? "Y" : "N";
-                string vRemark_Edit = eRemark.Text.Trim();
-                using (SqlConnection connUpdate = new SqlConnection(vConnStr))
-                {
-                    SqlCommand cmdUpdate = new SqlCommand(vUpdateStr, connUpdate);
-                    connUpdate.Open();
-                    cmdUpdate.Parameters.Clear();
-                    cmdUpdate.Parameters.Add(new Parameter("ConsName", DbType.String, vConsName_Edit));
-                    cmdUpdate.Parameters.Add(new Parameter("ConsUnit", DbType.String, vConsUnit_Edit));
-                    cmdUpdate.Parameters.Add(new Parameter("ConsColor", DbType.String, vConsColor_Edit));
-                    cmdUpdate.Parameters.Add(new Parameter("ConsSpec", DbType.String, vConsSpec_Edit));
-                    cmdUpdate.Parameters.Add(new Parameter("ConsSpec2", DbType.String, vConsSpec2_Edit));
-                    cmdUpdate.Parameters.Add(new Parameter("Brand", DbType.String, vBrand_Edit));
-                    cmdUpdate.Parameters.Add(new Parameter("StoreLocation", DbType.String, vStoreLocation_Edit));
-                    cmdUpdate.Parameters.Add(new Parameter("IsStopUse", DbType.String, vIsStopUse_Edit));
-                    cmdUpdate.Parameters.Add(new Parameter("IsInorder", DbType.String, vIsInorder_Edit));
-                    cmdUpdate.Parameters.Add(new Parameter("Remark", DbType.String, vRemark_Edit));
-                    cmdUpdate.Parameters.Add(new Parameter("ModifyMan", DbType.String, vLoginID));
-                    cmdUpdate.Parameters.Add(new Parameter("ConsNo", DbType.String, vConsNo_Edit));
-                    cmdUpdate.ExecuteNonQuery();
-                }
-                CalRealPriceAndQty(vConsNo_Edit);
-            }
+            DropDownList ddlConsType = (DropDownList)fvShowList.FindControl("eConsType_C_Edit");
+            Label eConsType = (Label)fvShowList.FindControl("eConsType_Edit");
+            eConsType.Text = ddlConsType.SelectedValue.Trim();
         }
 
         /// <summary>
-        /// 重新計算指定料件庫存量及平均單價
+        /// 編輯畫面廠商下拉選單變更
         /// </summary>
-        private void CalRealPriceAndQty(string fConsNo)
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void eBrand_C_Edit_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (fConsNo != "")
+            DropDownList ddlBrand = (DropDownList)fvShowList.FindControl("eBrand_C_Edit");
+            Label eBrand = (Label)fvShowList.FindControl("eBrand_Edit");
+            eBrand.Text = ddlBrand.SelectedValue.Trim();
+        }
+
+        protected void eConsUnit_C_Edit_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DropDownList ddlConsUnit = (DropDownList)fvShowList.FindControl("eConsUnit_C_Edit");
+            Label eConsUnit = (Label)fvShowList.FindControl("eConsUnit_Edit");
+            eConsUnit.Text = ddlConsUnit.SelectedValue.Trim();
+        }
+
+        protected void cbIsStopUse_Edit_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox cbIsStopUse = (CheckBox)fvShowList.FindControl("cbIsStopUse_Edit");
+            Label eIsStopUse = (Label)fvShowList.FindControl("eIsStopUse_Edit");
+            eIsStopUse.Text = (cbIsStopUse.Checked) ? "V" : "X";
+        }
+
+        protected void cbIsInorder_Edit_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox cbIsInorder = (CheckBox)fvShowList.FindControl("cbIsInorder_Edit");
+            Label eIsInorder = (Label)fvShowList.FindControl("eIsInorder_Edit");
+            eIsInorder.Text = (cbIsInorder.Checked) ? "V" : "X";
+        }
+
+        /// <summary>
+        /// 新增畫面 "確定" 按鈕
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void InsertButton_Click(object sender, EventArgs e)
+        {
+            eErrorMSG_Main.Text = "";
+            eErrorMSG_Main.Visible = false;
+            DropDownList eConsType_C = (DropDownList)fvShowList.FindControl("eConsType_C_INS");
+            if (eConsType_C != null)
             {
                 if (vConnStr == "")
                 {
                     vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
                 }
-                string vSelectSumStr = "select sum(Quantity * QtyMode) as TotalQty from ConsSheetB where ConsNo = '" + fConsNo + "' ";
-                string vTotalQty = PF.GetValue(vConnStr, vSelectSumStr, "TotalQty");
-                vSelectSumStr = "select sum(Quantity * Price) / sum(Quantity) as AVGPrice " + Environment.NewLine +
-                                "  from ConsSheetB " + Environment.NewLine +
-                                " where ConsNo = '" + fConsNo + "' " + Environment.NewLine +
-                                "   and SheetNo in (select SheetNo from ConsSheetA where SheetMode = 'SI')";
-                string vAVGPrice = PF.GetValue(vConnStr, vSelectSumStr, "AVGPrice");
-                vSelectSumStr = "update Consumables set StockQty = " + vTotalQty + ", AvgPrice = " + vAVGPrice + " where ConsNo = '" + fConsNo + "' ";
-                PF.ExecSQL(vConnStr, vSelectSumStr);
+                Label eConsType = (Label)fvShowList.FindControl("eConsType_INS");
+                if (eConsType.Text.Trim() != "") //有指定類別才繼續
+                {
+                    TextBox eConsName = (TextBox)fvShowList.FindControl("eConsName_INS");
+                    if (eConsName.Text.Trim() != "") //品名不是空白才繼續
+                    {
+                        //決定編號前綴詞
+                        string vFirstCode = eConsType.Text.Trim() + "-02-";
+                        //找出同類別目前最大編號
+                        string vSQLStr = "select MAX(ConsNo) MaxNo from Consumables where ConsNo like '" + vFirstCode + "%' ";
+                        string vOldNo = PF.GetValue(vConnStr, vSQLStr, "MaxNo");
+                        string vNoStr = vOldNo.Replace(vFirstCode, "");
+                        //計算新編號
+                        int vIndex;
+                        string vIndexStr = Int32.TryParse(vNoStr, out vIndex) ? (vIndex + 1).ToString("D4") : "0001";
+                        string vConsNo = vFirstCode + vIndexStr;
+                        //漳備寫入用的 SQL 語法
+                        vSQLStr = "insert into Consumables " + Environment.NewLine +
+                                  "       (ConsNo, ConsName, ConsType, ConsUnit, ConsColor, ConsSpec, ConsSpec2, Brand, StockQty, AVGPrice, " + Environment.NewLine +
+                                  "        LastInPrice, StoreLocation, IsStopUse, IsInorder, Remark, BuDate, BuMan) " + Environment.NewLine +
+                                  "values (@ConsNo, @ConsName, @ConsType, @ConsUnit, @ConsColor, @ConsSpec, @ConsSpec2, @Brand, 0.0, 0.0, " + Environment.NewLine +
+                                  "        0.0, @StoreLocation, @IsStopUse, @IsInorder, @Remark, GetDate(), @BuMan)";
+                        sdsShowDetail.InsertCommand = vSQLStr;
+                        sdsShowDetail.InsertParameters.Clear();
+                        sdsShowDetail.InsertParameters.Add(new Parameter("ConsNo", DbType.String, vConsNo));
+                        sdsShowDetail.InsertParameters.Add(new Parameter("ConsName", DbType.String, eConsName.Text.Trim()));
+                        sdsShowDetail.InsertParameters.Add(new Parameter("ConsType", DbType.String, eConsType.Text.Trim()));
+                        Label eConsUnit = (Label)fvShowList.FindControl("eConsUnit_INS");
+                        sdsShowDetail.InsertParameters.Add(new Parameter("ConsUnit", DbType.String, (eConsUnit.Text.Trim() != "") ? eConsUnit.Text.Trim() : String.Empty));
+                        TextBox eConsColor = (TextBox)fvShowList.FindControl("eConsColor_INS");
+                        sdsShowDetail.InsertParameters.Add(new Parameter("ConsColor", DbType.String, (eConsColor.Text.Trim() != "") ? eConsColor.Text.Trim() : String.Empty));
+                        TextBox eConsSpec = (TextBox)fvShowList.FindControl("eConsSpec_INS");
+                        sdsShowDetail.InsertParameters.Add(new Parameter("ConsSpec", DbType.String, (eConsSpec.Text.Trim() != "") ? eConsSpec.Text.Trim() : String.Empty));
+                        TextBox eConsSpec2 = (TextBox)fvShowList.FindControl("eConsSpec2_INS");
+                        sdsShowDetail.InsertParameters.Add(new Parameter("ConsSpec2", DbType.String, (eConsSpec2.Text.Trim() != "") ? eConsSpec2.Text.Trim() : String.Empty));
+                        Label eBrand = (Label)fvShowList.FindControl("eBrand_INS");
+                        sdsShowDetail.InsertParameters.Add(new Parameter("Brand", DbType.String, (eBrand.Text.Trim() != "") ? eBrand.Text.Trim() : String.Empty));
+                        TextBox eStoreLocation = (TextBox)fvShowList.FindControl("eStoreLocation_INS");
+                        sdsShowDetail.InsertParameters.Add(new Parameter("StoreLocation", DbType.String, (eStoreLocation.Text.Trim() != "") ? eStoreLocation.Text.Trim() : String.Empty));
+                        Label eIsStopUse = (Label)fvShowList.FindControl("eIsStopUse_INS");
+                        sdsShowDetail.InsertParameters.Add(new Parameter("IsStopUse", DbType.String, (eIsStopUse.Text.Trim() != "") ? eIsStopUse.Text.Trim() : "X"));
+                        Label eIsInorder = (Label)fvShowList.FindControl("eIsInorder_INS");
+                        sdsShowDetail.InsertParameters.Add(new Parameter("IsInorder", DbType.String, (eIsInorder.Text.Trim() != "") ? eIsInorder.Text.Trim() : "X"));
+                        TextBox eRemark = (TextBox)fvShowList.FindControl("eRemark_INS");
+                        sdsShowDetail.InsertParameters.Add(new Parameter("Remark", DbType.String, (eRemark.Text.Trim() != "") ? eRemark.Text.Trim() : String.Empty));
+                        sdsShowDetail.InsertParameters.Add(new Parameter("BuMan", DbType.String, vLoginID));
+                        sdsShowDetail.Insert();
+                        gridShowList.DataBind();
+                        fvShowList.DataBind();
+                    }
+                    else
+                    {
+                        eErrorMSG_Main.Text = "請輸入品名！";
+                        eErrorMSG_Main.Visible = true;
+                        eConsName.Focus();
+                    }
+                }
+                else
+                {
+                    eErrorMSG_Main.Text = "請先選擇類別！";
+                    eErrorMSG_Main.Visible = true;
+                    eConsType.Focus();
+                }
             }
         }
 
-        /// <summary>
-        /// 確定
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void bbOK_Click(object sender, EventArgs e)
+        protected void eConsType_C_INS_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (Session["ConsMode"].ToString().Trim())
-            {
-                case "INS":
-                    InsertData();
-                    break;
-                case "EDIT":
-                    UpdateData();
-                    break;
-            }
-            Session["ConsMode"] = "LIST";
-            SetInputMode(false);
-            gvShowList.DataBind();
+            DropDownList ddlConsType = (DropDownList)fvShowList.FindControl("eConsType_C_INS");
+            Label eConsType = (Label)fvShowList.FindControl("eConsType_INS");
+            eConsType.Text = ddlConsType.SelectedValue.Trim();
         }
 
-        /// <summary>
-        /// 取消
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void bbCancel_Click(object sender, EventArgs e)
+        protected void eBrand_C_INS_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Session["ConsMode"] = "LIST";
-            string vConsNo = (gvShowList.SelectedDataKey != null) ? gvShowList.SelectedDataKey.ToString().Trim() : "";
-            if (vConsNo != "")
-            {
-                GetSelectData(vConsNo);
-            }
-            SetInputMode(false);
-            gvShowList.DataBind();
-        }
-
-        /// <summary>
-        /// 選擇廠商
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void ddlBrand_SelectedIndexChanged(object sender, EventArgs e)
-        {
+            DropDownList ddlBrand = (DropDownList)fvShowList.FindControl("eBrand_C_INS");
+            Label eBrand = (Label)fvShowList.FindControl("eBrand_INS");
             eBrand.Text = ddlBrand.SelectedValue.Trim();
+        }
+
+        protected void eConsUnit_C_INS_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DropDownList ddlConsUnit = (DropDownList)fvShowList.FindControl("eConsUnit_C_INS");
+            Label eConsUnit = (Label)fvShowList.FindControl("eConsUnit_INS");
+            eConsUnit.Text = ddlConsUnit.SelectedValue.Trim();
+        }
+
+        protected void bbDelete_List_Click(object sender, EventArgs e)
+        {
+            Label eConsNo = (Label)fvShowList.FindControl("eConsNo_List");
+            if (eConsNo != null)
+            {
+                string vConsNo = eConsNo.Text.Trim();
+                if (vConsNo != "")
+                {
+                    string vDeleteStr = "delete Consumables where ConsNo = @ConsNo";
+                    sdsShowDetail.DeleteCommand = vDeleteStr;
+                    sdsShowDetail.DeleteParameters.Clear();
+                    sdsShowDetail.DeleteParameters.Add(new Parameter("ConsNo", DbType.String, vConsNo));
+                    sdsShowDetail.Delete();
+                    gridShowList.DataBind();
+                    fvShowList.DataBind();
+                }
+            }
+        }
+
+        protected void bbCloseReport_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
