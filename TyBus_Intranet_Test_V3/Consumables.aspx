@@ -28,19 +28,13 @@
                     <asp:Label ID="lbErrorMSG_ConsName" runat="server" CssClass="text-Left-Red" Text="" Width="30%" />
                 </td>
                 <td class="ColHeight ColBorder ColWidth-8Col">
-                    <asp:Label ID="lbConsType_Search" runat="server" CssClass="text-Right-Blue" Text="耗材分類" Width="95%" />
-                </td>
-                <td class="ColHeight ColBorder ColWidth-8Col">
-                    <asp:DropDownList ID="ddlConsType_Search" runat="server" CssClass="text-Left-Black" Width="95%" />
-                </td>
-            </tr>
-            <tr>
-                <td class="ColHeight ColBorder ColWidth-8Col">
                     <asp:Label ID="lbBrand_Search" runat="server" CssClass="text-Right-Blue" Text="廠牌" Width="95%" />
                 </td>
                 <td class="ColHeight ColBorder ColWidth-8Col">
                     <asp:TextBox ID="eBrand_Search" runat="server" CssClass="text-Left-Black" Width="95%" />
                 </td>
+            </tr>
+            <tr>
                 <td class="ColHeight ColWidth-8Col">
                     <asp:Button ID="bbSearch" runat="server" CssClass="button-Black" Text="查詢" OnClick="bbSearch_Click" Width="95%" />
                 </td>
@@ -251,8 +245,8 @@
                 <asp:Button ID="bbInsert_Empty" runat="server" CssClass="button-Blue" Text="新增" CommandName="New" Width="120px" />
             </EmptyDataTemplate>
             <InsertItemTemplate>
-                <asp:Button ID="InsertButton" runat="server" CssClass="button-Black" CausesValidation="True" OnClick="InsertButton_Click" Text="確定" />
-                <asp:Button ID="InsertCancelButton" runat="server" CssClass="button-Red" CausesValidation="False" CommandName="Cancel" Text="取消" />
+                <asp:Button ID="bbOK_INS" runat="server" CssClass="button-Black" CausesValidation="True" OnClick="bbOK_INS_Click" Text="確定" />
+                <asp:Button ID="bbCancel_INS" runat="server" CssClass="button-Red" CausesValidation="False" CommandName="Cancel" Text="取消" />
                 <table class="TableSetting">
                     <tr>
                         <td class="ColHeight ColBorder ColWidth-8Col">

@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="ConsSheet_OrderP" targetNamespace="http://tempuri.org/ConsSheet_OrderP.xsd" xmlns:mstns="http://tempuri.org/ConsSheet_OrderP.xsd" xmlns="http://tempuri.org/ConsSheet_OrderP.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="connERPSQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="connERPSQL (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.connERPSQL.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="ConsSheetA_OrderPTableAdapter" GeneratorDataComponentClassName="ConsSheetA_OrderPTableAdapter" Name="ConsSheetA_OrderP" UserDataComponentName="ConsSheetA_OrderPTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>select a.SheetNo, a.DepNo, d.[Name] DepName, a.AssignMan, e.[Name] AssignManName, 
+       convert(varchar(10), a.BuDate, 111) BuDate
+  from ConsSheetA a left join Department d on d.DepNo = a.DepNo
+                    left join Employee e on e.EmpNo = a.AssignMan</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="SheetNo" DataSetColumn="SheetNo" />
+              <Mapping SourceColumn="DepNo" DataSetColumn="DepNo" />
+              <Mapping SourceColumn="DepName" DataSetColumn="DepName" />
+              <Mapping SourceColumn="AssignMan" DataSetColumn="AssignMan" />
+              <Mapping SourceColumn="AssignManName" DataSetColumn="AssignManName" />
+              <Mapping SourceColumn="BuDate" DataSetColumn="BuDate" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="ConsSheetB_OrderPTableAdapter" GeneratorDataComponentClassName="ConsSheetB_OrderPTableAdapter" Name="ConsSheetB_OrderP" UserDataComponentName="ConsSheetB_OrderPTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="connERPSQL (Web.config)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>select b.SheetNo, b.Items, b.ConsNo, c.ConsName, b.ConsUnit, d.ClassTxt ConsUnit_C,
+       b.Quantity, b.RemarkB
+  from ConsSheetB b left join Consumables c on c.ConsNo = b.ConsNo
+                    left join DBDICB d on d.ClassNo = b.ConsUnit and d.FKey = '耗材庫存        CONSUMABLES     ConsUnit'</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="SheetNo" DataSetColumn="SheetNo" />
+              <Mapping SourceColumn="Items" DataSetColumn="Items" />
+              <Mapping SourceColumn="ConsNo" DataSetColumn="ConsNo" />
+              <Mapping SourceColumn="ConsName" DataSetColumn="ConsName" />
+              <Mapping SourceColumn="ConsUnit" DataSetColumn="ConsUnit" />
+              <Mapping SourceColumn="ConsUnit_C" DataSetColumn="ConsUnit_C" />
+              <Mapping SourceColumn="Quantity" DataSetColumn="Quantity" />
+              <Mapping SourceColumn="RemarkB" DataSetColumn="RemarkB" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="ConsSheet_OrderP" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="ConsSheet_OrderP" msprop:Generator_UserDSName="ConsSheet_OrderP">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ConsSheetA_OrderP" msprop:Generator_TableClassName="ConsSheetA_OrderPDataTable" msprop:Generator_TableVarName="tableConsSheetA_OrderP" msprop:Generator_TablePropName="ConsSheetA_OrderP" msprop:Generator_RowDeletingName="ConsSheetA_OrderPRowDeleting" msprop:Generator_RowChangingName="ConsSheetA_OrderPRowChanging" msprop:Generator_RowEvHandlerName="ConsSheetA_OrderPRowChangeEventHandler" msprop:Generator_RowDeletedName="ConsSheetA_OrderPRowDeleted" msprop:Generator_UserTableName="ConsSheetA_OrderP" msprop:Generator_RowChangedName="ConsSheetA_OrderPRowChanged" msprop:Generator_RowEvArgName="ConsSheetA_OrderPRowChangeEvent" msprop:Generator_RowClassName="ConsSheetA_OrderPRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SheetNo" msprop:Generator_ColumnVarNameInTable="columnSheetNo" msprop:Generator_ColumnPropNameInRow="SheetNo" msprop:Generator_ColumnPropNameInTable="SheetNoColumn" msprop:Generator_UserColumnName="SheetNo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="16" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepNo" msprop:Generator_ColumnVarNameInTable="columnDepNo" msprop:Generator_ColumnPropNameInRow="DepNo" msprop:Generator_ColumnPropNameInTable="DepNoColumn" msprop:Generator_UserColumnName="DepNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepName" msprop:Generator_ColumnVarNameInTable="columnDepName" msprop:Generator_ColumnPropNameInRow="DepName" msprop:Generator_ColumnPropNameInTable="DepNameColumn" msprop:Generator_UserColumnName="DepName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AssignMan" msprop:Generator_ColumnVarNameInTable="columnAssignMan" msprop:Generator_ColumnPropNameInRow="AssignMan" msprop:Generator_ColumnPropNameInTable="AssignManColumn" msprop:Generator_UserColumnName="AssignMan" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AssignManName" msprop:Generator_ColumnVarNameInTable="columnAssignManName" msprop:Generator_ColumnPropNameInRow="AssignManName" msprop:Generator_ColumnPropNameInTable="AssignManNameColumn" msprop:Generator_UserColumnName="AssignManName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BuDate" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBuDate" msprop:Generator_ColumnPropNameInRow="BuDate" msprop:Generator_ColumnPropNameInTable="BuDateColumn" msprop:Generator_UserColumnName="BuDate" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ConsSheetB_OrderP" msprop:Generator_TableClassName="ConsSheetB_OrderPDataTable" msprop:Generator_TableVarName="tableConsSheetB_OrderP" msprop:Generator_TablePropName="ConsSheetB_OrderP" msprop:Generator_RowDeletingName="ConsSheetB_OrderPRowDeleting" msprop:Generator_RowChangingName="ConsSheetB_OrderPRowChanging" msprop:Generator_RowEvHandlerName="ConsSheetB_OrderPRowChangeEventHandler" msprop:Generator_RowDeletedName="ConsSheetB_OrderPRowDeleted" msprop:Generator_UserTableName="ConsSheetB_OrderP" msprop:Generator_RowChangedName="ConsSheetB_OrderPRowChanged" msprop:Generator_RowEvArgName="ConsSheetB_OrderPRowChangeEvent" msprop:Generator_RowClassName="ConsSheetB_OrderPRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SheetNo" msprop:Generator_ColumnVarNameInTable="columnSheetNo" msprop:Generator_ColumnPropNameInRow="SheetNo" msprop:Generator_ColumnPropNameInTable="SheetNoColumn" msprop:Generator_UserColumnName="SheetNo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="16" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Items" msprop:Generator_ColumnVarNameInTable="columnItems" msprop:Generator_ColumnPropNameInRow="Items" msprop:Generator_ColumnPropNameInTable="ItemsColumn" msprop:Generator_UserColumnName="Items">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="4" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ConsNo" msprop:Generator_ColumnVarNameInTable="columnConsNo" msprop:Generator_ColumnPropNameInRow="ConsNo" msprop:Generator_ColumnPropNameInTable="ConsNoColumn" msprop:Generator_UserColumnName="ConsNo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="24" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ConsName" msprop:Generator_ColumnVarNameInTable="columnConsName" msprop:Generator_ColumnPropNameInRow="ConsName" msprop:Generator_ColumnPropNameInTable="ConsNameColumn" msprop:Generator_UserColumnName="ConsName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="128" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ConsUnit" msprop:Generator_ColumnVarNameInTable="columnConsUnit" msprop:Generator_ColumnPropNameInRow="ConsUnit" msprop:Generator_ColumnPropNameInTable="ConsUnitColumn" msprop:Generator_UserColumnName="ConsUnit" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ConsUnit_C" msprop:Generator_ColumnVarNameInTable="columnConsUnit_C" msprop:Generator_ColumnPropNameInRow="ConsUnit_C" msprop:Generator_ColumnPropNameInTable="ConsUnit_CColumn" msprop:Generator_UserColumnName="ConsUnit_C" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Quantity" msprop:Generator_ColumnVarNameInTable="columnQuantity" msprop:Generator_ColumnPropNameInRow="Quantity" msprop:Generator_ColumnPropNameInTable="QuantityColumn" msprop:Generator_UserColumnName="Quantity" type="xs:double" minOccurs="0" />
+              <xs:element name="RemarkB" msprop:Generator_ColumnVarNameInTable="columnRemarkB" msprop:Generator_ColumnPropNameInRow="RemarkB" msprop:Generator_ColumnPropNameInTable="RemarkBColumn" msprop:Generator_UserColumnName="RemarkB" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:ConsSheetA_OrderP" />
+      <xs:field xpath="mstns:SheetNo" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

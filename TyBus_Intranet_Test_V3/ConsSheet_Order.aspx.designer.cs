@@ -11,7 +11,7 @@ namespace TyBus_Intranet_Test_V3
 {
 
 
-    public partial class Consumables
+    public partial class ConsSheet_Order
     {
 
         /// <summary>
@@ -24,76 +24,94 @@ namespace TyBus_Intranet_Test_V3
         protected global::System.Web.UI.WebControls.Panel plSearch;
 
         /// <summary>
-        /// eErrorMSG_Main 控制項。
+        /// lbBuDate_Search 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label eErrorMSG_Main;
+        protected global::System.Web.UI.WebControls.Label lbBuDate_Search;
 
         /// <summary>
-        /// lbConsNo_Search 控制項。
+        /// eBuDate_S_Search 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbConsNo_Search;
+        protected global::System.Web.UI.WebControls.TextBox eBuDate_S_Search;
 
         /// <summary>
-        /// eConsNo_Search 控制項。
+        /// lbSplit_1 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox eConsNo_Search;
+        protected global::System.Web.UI.WebControls.Label lbSplit_1;
 
         /// <summary>
-        /// lbConsName_Search 控制項。
+        /// eBuDate_E_Search 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbConsName_Search;
+        protected global::System.Web.UI.WebControls.TextBox eBuDate_E_Search;
 
         /// <summary>
-        /// eConsName_Search 控制項。
+        /// lbDepNo_Search 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox eConsName_Search;
+        protected global::System.Web.UI.WebControls.Label lbDepNo_Search;
 
         /// <summary>
-        /// lbErrorMSG_ConsName 控制項。
+        /// eDepNo_Search 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbErrorMSG_ConsName;
+        protected global::System.Web.UI.WebControls.TextBox eDepNo_Search;
 
         /// <summary>
-        /// lbBrand_Search 控制項。
+        /// eDepName_Search 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbBrand_Search;
+        protected global::System.Web.UI.WebControls.Label eDepName_Search;
 
         /// <summary>
-        /// eBrand_Search 控制項。
+        /// lbAssignMan_Search 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox eBrand_Search;
+        protected global::System.Web.UI.WebControls.Label lbAssignMan_Search;
+
+        /// <summary>
+        /// eAssignMan_Search 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox eAssignMan_Search;
+
+        /// <summary>
+        /// eAssignManName_Search 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label eAssignManName_Search;
 
         /// <summary>
         /// bbSearch 控制項。
@@ -103,33 +121,6 @@ namespace TyBus_Intranet_Test_V3
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button bbSearch;
-
-        /// <summary>
-        /// bbPrintCheckList 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button bbPrintCheckList;
-
-        /// <summary>
-        /// fuExcel 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload fuExcel;
-
-        /// <summary>
-        /// bbUpdateReserve_Search 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button bbUpdateReserve_Search;
 
         /// <summary>
         /// bbExit 控制項。
@@ -150,49 +141,112 @@ namespace TyBus_Intranet_Test_V3
         protected global::System.Web.UI.ScriptManager smMain;
 
         /// <summary>
-        /// plShowData 控制項。
+        /// plShowData_A 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel plShowData;
+        protected global::System.Web.UI.WebControls.Panel plShowData_A;
 
         /// <summary>
-        /// gridShowList 控制項。
+        /// gridConsSheetA_List 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gridShowList;
+        protected global::System.Web.UI.WebControls.GridView gridConsSheetA_List;
 
         /// <summary>
-        /// fvShowList 控制項。
+        /// sdsConsSheetA_List 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FormView fvShowList;
+        protected global::System.Web.UI.WebControls.SqlDataSource sdsConsSheetA_List;
 
         /// <summary>
-        /// sdsShowDataList 控制項。
+        /// eErrorMSG_A 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource sdsShowDataList;
+        protected global::System.Web.UI.WebControls.Label eErrorMSG_A;
 
         /// <summary>
-        /// sdsShowDetail 控制項。
+        /// fvConsSheetA_Detail 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource sdsShowDetail;
+        protected global::System.Web.UI.WebControls.FormView fvConsSheetA_Detail;
+
+        /// <summary>
+        /// sdsConsSheetA_Detail 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource sdsConsSheetA_Detail;
+
+        /// <summary>
+        /// plShowDetail 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel plShowDetail;
+
+        /// <summary>
+        /// eErrorMSG_B 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label eErrorMSG_B;
+
+        /// <summary>
+        /// gridConsSheetB_List 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gridConsSheetB_List;
+
+        /// <summary>
+        /// sdsConsSheetB_List 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource sdsConsSheetB_List;
+
+        /// <summary>
+        /// fvConsSheetB_Detail 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FormView fvConsSheetB_Detail;
+
+        /// <summary>
+        /// sdsConsSheetB_Detail 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource sdsConsSheetB_Detail;
 
         /// <summary>
         /// plReport 控制項。

@@ -29,7 +29,6 @@ namespace TyBus_Intranet_Test_V3
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
             if (Session["LoginID"] != null)
             {
                 vLoginID = (Session["LoginID"] != null) ? Session["LoginID"].ToString().Trim() : "";
@@ -48,7 +47,7 @@ namespace TyBus_Intranet_Test_V3
                     {
                         vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
                     }
-                    GetItemListData();
+                    //GetItemListData();
                     if (!IsPostBack)
                     {
                         plReport.Visible = false;
@@ -56,7 +55,7 @@ namespace TyBus_Intranet_Test_V3
                     }
                     else
                     {
-
+                        OpenData();
                     }
                 }
                 else
@@ -70,6 +69,7 @@ namespace TyBus_Intranet_Test_V3
             }
         }
 
+        /*
         /// <summary>
         /// 取回下拉選單的內容
         /// </summary>
@@ -98,7 +98,7 @@ namespace TyBus_Intranet_Test_V3
                     }
                 }
             }
-        }
+        } //*/
 
         /// <summary>
         /// 取回查詢字串
@@ -109,16 +109,27 @@ namespace TyBus_Intranet_Test_V3
             string vResultStr = "";
             string vWStr_ConsNo = (eConsNo_Search.Text.Trim() != "") ? "   and ConsNo = '" + eConsNo_Search.Text.Trim() + "' " + Environment.NewLine : "";
             string vWStr_ConsName = (eConsName_Search.Text.Trim() != "") ? "   and ConsName like '%" + eConsName_Search.Text.Trim() + "%' " + Environment.NewLine : "";
-            string vWStr_ConsType = (ddlConsType_Search.SelectedValue.Trim() != "") ? "   and ConsType = '" + ddlConsType_Search.SelectedValue.Trim() + "' " + Environment.NewLine : "";
+            string vWStr_Brand = (eBrand_Search.Text.Trim() != "") ? "   and Brand like '%" + eBrand_Search.Text.Trim() + "%' " + Environment.NewLine : "";
             vResultStr = "select c.ConsNo, c.ConsName, d1.ClassTxt ConsType, c.StockQty, d2.ClassTxt ConsUnit, c.AvgPrice, c.StoreLocation, c.Brand " + Environment.NewLine +
                          "  from Consumables c left join DBDICB d1 on d1.ClassNo = c.ConsType and d1.FKey = '耗材庫存        CONSUMABLES     ConsType' " + Environment.NewLine +
                          "                     left join DBDICB d2 on d2.ClassNo = c.ConsUnit and d2.FKey = '耗材庫存        CONSUMABLES     ConsUnit' " + Environment.NewLine +
                          " where isnull(c.ConsNo, '') != '' " + Environment.NewLine +
                          vWStr_ConsNo +
                          vWStr_ConsName +
-                         vWStr_ConsType +
+                         vWStr_Brand +
                          " order by c.ConsNo";
             return vResultStr;
+        }
+
+        private void OpenData()
+        {
+            if (vConnStr == "")
+            {
+                vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
+            }
+            string vListStr = OpenListStr();
+            sdsShowDataList.SelectCommand = vListStr;
+            gridShowList.DataBind();
         }
 
         /// <summary>
@@ -128,13 +139,7 @@ namespace TyBus_Intranet_Test_V3
         /// <param name="e"></param>
         protected void bbSearch_Click(object sender, EventArgs e)
         {
-            if (vConnStr == "")
-            {
-                vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
-            }
-            string vListStr = OpenListStr();
-            sdsShowDataList.SelectCommand = vListStr;
-            gridShowList.DataBind();
+            OpenData();
         }
 
         /// <summary>
@@ -149,7 +154,7 @@ namespace TyBus_Intranet_Test_V3
             double vTempFloat = 0.0;
             string vSQLStrTemp = "select ConsNo, isnull(ConsType, '') ConsType, ConsName, isnull(ConsUnit, '') ConsUnit, Brand, " + Environment.NewLine +
                                  "       isnull(ConsColor, '') ConsColor, isnull(ConsSpec, '') ConsSpec, isnull(ConsSpec2, '') ConsSpec2, " + Environment.NewLine +
-                                 "       isnull(StockQty, '') StockQty, cast('' as varchar) as InventoryQty " + Environment.NewLine +
+                                 "       isnull(StockQty, '') StockQty, cast('' as varchar) as InventoryQty, isnull(IsStopUse, 'X') IsStopUse " + Environment.NewLine +
                                  "  from Consumables " + Environment.NewLine +
                                  " order by ConsType, ConsNo";
             if (vConnStr == "")
@@ -210,6 +215,7 @@ namespace TyBus_Intranet_Test_V3
 
                     string vFileName = "桃園汽車客運總務課庫存耗材盤點表";
                     string vHeaderText = "";
+                    string vCellValue = "";
                     int vLinesNo = 0;
                     //新增一個工作表
                     wsExcel = (HSSFSheet)wbExcel.CreateSheet(vFileName);
@@ -227,6 +233,7 @@ namespace TyBus_Intranet_Test_V3
                                       (drExcel.GetName(vCellCount).ToUpper() == "CONSUNIT") ? "單位" :
                                       (drExcel.GetName(vCellCount).ToUpper() == "CONSSPEC") ? "規格" :
                                       (drExcel.GetName(vCellCount).ToUpper() == "CONSSPEC2") ? "尺寸" :
+                                      (drExcel.GetName(vCellCount).ToUpper() == "ISSTOPUSE") ? "已停用" :
                                       drExcel.GetName(vCellCount).Trim();
                         wsExcel.GetRow(vLinesNo).CreateCell(vCellCount).SetCellValue(vHeaderText);
                         wsExcel.GetRow(vLinesNo).GetCell(vCellCount).CellStyle = csTitle;
@@ -240,7 +247,9 @@ namespace TyBus_Intranet_Test_V3
                         {
                             wsExcel.GetRow(vLinesNo).CreateCell(i);
                             vHeaderText = drExcel.GetName(i).ToUpper();
-                            if (drExcel[i].ToString().Trim() != "")
+                            vCellValue = drExcel[i].ToString().Trim();
+                            //if (drExcel[i].ToString().Trim() != "")
+                            if (vCellValue != "")
                             {
                                 if ((drExcel.GetName(i).ToUpper() == "STOCKQTY") || (drExcel.GetName(i).ToUpper() == "INVENTORYQTY"))
                                 {
@@ -251,7 +260,7 @@ namespace TyBus_Intranet_Test_V3
                                 else
                                 {
                                     wsExcel.GetRow(vLinesNo).GetCell(i).SetCellType(CellType.String);
-                                    wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(String.Empty);
+                                    wsExcel.GetRow(vLinesNo).GetCell(i).SetCellValue(vCellValue);
                                     wsExcel.GetRow(vLinesNo).GetCell(i).CellStyle = csData;
                                 }
                             }
@@ -337,10 +346,11 @@ namespace TyBus_Intranet_Test_V3
             string vConsColor_Temp = "";
             string vConsSpec_Temp = "";
             string vConsSpec2_Temp = "";
-            int vTempINT;
-            int vInventoryQty_Temp = 0;
-            int vStockQty_Temp = 0;
-            int vQtyDift = 0;
+            string vIsStopUse_Temp = "";
+            Double vTempFloat;
+            Double vInventoryQty_Temp = 0.0;
+            Double vStockQty_Temp = 0.0;
+            Double vQtyDift = 0.0;
             int vQtyMode = 1;
 
             if (fuExcel.FileName != "") //有選擇匯入用的檔案
@@ -377,14 +387,15 @@ namespace TyBus_Intranet_Test_V3
                                     if ((vRowExcel_H != null) && (vRowExcel_H.Cells[0].StringCellValue.Trim() != "庫存編號"))
                                     {
                                         //讀回來的資料列不是空值，或者不是標題列
-                                        vConsNo_Temp = vRowExcel_H.Cells[0].StringCellValue.Trim();
-                                        vConsType_Temp = vRowExcel_H.Cells[1].StringCellValue.Trim();
-                                        vConsName_Temp = vRowExcel_H.Cells[2].StringCellValue.Trim();
-                                        vConsUnit_Temp = vRowExcel_H.Cells[3].StringCellValue.Trim();
-                                        vBrand_Temp = vRowExcel_H.Cells[4].StringCellValue.Trim();
-                                        vConsColor_Temp = vRowExcel_H.Cells[5].StringCellValue.Trim();
-                                        vConsSpec_Temp = vRowExcel_H.Cells[6].StringCellValue.Trim();
-                                        vConsSpec2_Temp = vRowExcel_H.Cells[7].StringCellValue.Trim();
+                                        vConsNo_Temp = vRowExcel_H.Cells[0].StringCellValue.Trim(); //庫存編號
+                                        vConsType_Temp = vRowExcel_H.Cells[1].StringCellValue.Trim(); //類別
+                                        vConsName_Temp = vRowExcel_H.Cells[2].StringCellValue.Trim(); //品名
+                                        vConsUnit_Temp = vRowExcel_H.Cells[3].StringCellValue.Trim(); //單位
+                                        vBrand_Temp = vRowExcel_H.Cells[4].StringCellValue.Trim(); //廠牌
+                                        vConsColor_Temp = vRowExcel_H.Cells[5].StringCellValue.Trim(); //顏色
+                                        vConsSpec_Temp = vRowExcel_H.Cells[6].StringCellValue.Trim(); //規格
+                                        vConsSpec2_Temp = vRowExcel_H.Cells[7].StringCellValue.Trim(); //尺寸
+                                        vIsStopUse_Temp = (vRowExcel_H.Cells[10].StringCellValue.Trim() == "V") ? vRowExcel_H.Cells[10].StringCellValue.Trim() : "X"; //是否停用
                                         if (vConsNo_Temp == "")
                                         {
                                             //料號欄位是空白，表示是新料號
@@ -397,8 +408,8 @@ namespace TyBus_Intranet_Test_V3
                                             {
                                                 dsConsTemp.ConnectionString = vConnStr;
                                                 dsConsTemp.InsertCommand = "insert into Consumables " + Environment.NewLine +
-                                                                           "       (ConsNo, ConsName, ConsType, Brand, ConsUnit, ConsColor, ConsSpec, ConsSpec2, BuMan, BuDate) " + Environment.NewLine +
-                                                                           "values (@ConsNo, @ConsName, @ConsType, @Brand, @ConsUnit, @ConsColor, @ConsSpec, @ConsSpec2, @BuMan, GetDate())";
+                                                                           "       (ConsNo, ConsName, ConsType, Brand, ConsUnit, ConsColor, ConsSpec, ConsSpec2, BuMan, BuDate, IsStopUse) " + Environment.NewLine +
+                                                                           "values (@ConsNo, @ConsName, @ConsType, @Brand, @ConsUnit, @ConsColor, @ConsSpec, @ConsSpec2, @BuMan, GetDate(), @IsStopUse)";
                                                 dsConsTemp.InsertParameters.Clear();
                                                 dsConsTemp.InsertParameters.Add(new Parameter("ConsNo", DbType.String, vConsNo_Temp));
                                                 dsConsTemp.InsertParameters.Add(new Parameter("ConsName", DbType.String, vConsName_Temp));
@@ -409,12 +420,13 @@ namespace TyBus_Intranet_Test_V3
                                                 dsConsTemp.InsertParameters.Add(new Parameter("ConsSpec", DbType.String, vConsSpec_Temp));
                                                 dsConsTemp.InsertParameters.Add(new Parameter("ConsSpec2", DbType.String, vConsSpec2_Temp));
                                                 dsConsTemp.InsertParameters.Add(new Parameter("BuMan", DbType.String, vLoginID));
+                                                dsConsTemp.InsertParameters.Add(new Parameter("IsStopUse", DbType.String, vIsStopUse_Temp));
                                                 dsConsTemp.Insert();
                                             }
                                         }
-                                        vStockQty_Temp = Int32.TryParse(vRowExcel_H.Cells[8].ToString().Trim(), out vTempINT) ? vTempINT : 0;
-                                        vInventoryQty_Temp = Int32.TryParse(vRowExcel_H.Cells[9].ToString().Trim(), out vTempINT) ? vTempINT : 0;
-                                        vQtyMode = (vInventoryQty_Temp > vStockQty_Temp) ? 1 : -1;
+                                        vStockQty_Temp = Double.TryParse(vRowExcel_H.Cells[8].NumericCellValue.ToString().Trim(), out vTempFloat) ? vTempFloat : 0.0; //庫存量
+                                        vInventoryQty_Temp = Double.TryParse(vRowExcel_H.Cells[9].NumericCellValue.ToString().Trim(), out vTempFloat) ? vTempFloat : 0.0; //實際數量
+                                        vQtyMode = (vInventoryQty_Temp >= vStockQty_Temp) ? 1 : -1;
                                         vQtyDift = Math.Abs(vInventoryQty_Temp - vStockQty_Temp);
                                         vSQLStr_Temp = "select max(Items) MaxNo from ConsSheetB where SheetNo = '" + vSheetNo + "' ";
                                         vMaxIndex = PF.GetValue(vConnStr, vSQLStr_Temp, "MaxNo");
@@ -432,7 +444,7 @@ namespace TyBus_Intranet_Test_V3
                                             dsTempB.InsertParameters.Add(new Parameter("SheetNo", DbType.String, vSheetNo));
                                             dsTempB.InsertParameters.Add(new Parameter("Items", DbType.String, vItems));
                                             dsTempB.InsertParameters.Add(new Parameter("ConsNo", DbType.String, vConsNo_Temp));
-                                            dsTempB.InsertParameters.Add(new Parameter("Quantity", DbType.Int32, vQtyDift.ToString()));
+                                            dsTempB.InsertParameters.Add(new Parameter("Quantity", DbType.Double, vQtyDift.ToString()));
                                             dsTempB.InsertParameters.Add(new Parameter("RemarkB", DbType.String, vSheetRemarkB));
                                             dsTempB.InsertParameters.Add(new Parameter("QtyMode", DbType.Int32, vQtyMode.ToString()));
                                             dsTempB.InsertParameters.Add(new Parameter("BuMan", DbType.String, vLoginID));
@@ -493,6 +505,7 @@ namespace TyBus_Intranet_Test_V3
                                         vConsColor_Temp = vRowExcel_X.Cells[5].StringCellValue.Trim();
                                         vConsSpec_Temp = vRowExcel_X.Cells[6].StringCellValue.Trim();
                                         vConsSpec2_Temp = vRowExcel_X.Cells[7].StringCellValue.Trim();
+                                        vIsStopUse_Temp = (vRowExcel_X.Cells[10].StringCellValue.Trim() == "V") ? vRowExcel_X.Cells[10].StringCellValue.Trim() : "X";
                                         if (vConsNo_Temp == "")
                                         {
                                             //料號欄位是空白，表示是新料號
@@ -505,8 +518,8 @@ namespace TyBus_Intranet_Test_V3
                                             {
                                                 dsConsTemp.ConnectionString = vConnStr;
                                                 dsConsTemp.InsertCommand = "insert into Consumables " + Environment.NewLine +
-                                                                           "       (ConsNo, ConsName, ConsType, Brand, ConsUnit, ConsColor, ConsSpec, ConsSpec2, BuMan, BuDate) " + Environment.NewLine +
-                                                                           "values (@ConsNo, @ConsName, @ConsType, @Brand, @ConsUnit, @ConsColor, @ConsSpec, @ConsSpec2, @BuMan, GetDate())";
+                                                                           "       (ConsNo, ConsName, ConsType, Brand, ConsUnit, ConsColor, ConsSpec, ConsSpec2, BuMan, BuDate, IsStopUse) " + Environment.NewLine +
+                                                                           "values (@ConsNo, @ConsName, @ConsType, @Brand, @ConsUnit, @ConsColor, @ConsSpec, @ConsSpec2, @BuMan, GetDate(), @IsStopUse)";
                                                 dsConsTemp.InsertParameters.Clear();
                                                 dsConsTemp.InsertParameters.Add(new Parameter("ConsNo", DbType.String, vConsNo_Temp));
                                                 dsConsTemp.InsertParameters.Add(new Parameter("ConsName", DbType.String, vConsName_Temp));
@@ -517,11 +530,12 @@ namespace TyBus_Intranet_Test_V3
                                                 dsConsTemp.InsertParameters.Add(new Parameter("ConsSpec", DbType.String, vConsSpec_Temp));
                                                 dsConsTemp.InsertParameters.Add(new Parameter("ConsSpec2", DbType.String, vConsSpec2_Temp));
                                                 dsConsTemp.InsertParameters.Add(new Parameter("BuMan", DbType.String, vLoginID));
+                                                dsConsTemp.InsertParameters.Add(new Parameter("IsStopUse", DbType.String, vIsStopUse_Temp));
                                                 dsConsTemp.Insert();
                                             }
                                         }
-                                        vStockQty_Temp = Int32.TryParse(vRowExcel_X.Cells[8].ToString().Trim(), out vTempINT) ? vTempINT : 0;
-                                        vInventoryQty_Temp = Int32.TryParse(vRowExcel_X.Cells[9].ToString().Trim(), out vTempINT) ? vTempINT : 0;
+                                        vStockQty_Temp = Double.TryParse(vRowExcel_X.Cells[8].NumericCellValue.ToString().Trim(), out vTempFloat) ? vTempFloat : 0.0;
+                                        vInventoryQty_Temp = Double.TryParse(vRowExcel_X.Cells[9].NumericCellValue.ToString().Trim(), out vTempFloat) ? vTempFloat : 0.0;
                                         vQtyMode = (vInventoryQty_Temp > vStockQty_Temp) ? 1 : -1;
                                         vQtyDift = Math.Abs(vInventoryQty_Temp - vStockQty_Temp);
                                         vSQLStr_Temp = "select max(Items) MaxNo from ConsSheetB where SheetNo = '" + vSheetNo + "' ";
@@ -540,7 +554,7 @@ namespace TyBus_Intranet_Test_V3
                                             dsTempB.InsertParameters.Add(new Parameter("SheetNo", DbType.String, vSheetNo));
                                             dsTempB.InsertParameters.Add(new Parameter("Items", DbType.String, vItems));
                                             dsTempB.InsertParameters.Add(new Parameter("ConsNo", DbType.String, vConsNo_Temp));
-                                            dsTempB.InsertParameters.Add(new Parameter("Quantity", DbType.Int32, vQtyDift.ToString()));
+                                            dsTempB.InsertParameters.Add(new Parameter("Quantity", DbType.Double, vQtyDift.ToString()));
                                             dsTempB.InsertParameters.Add(new Parameter("RemarkB", DbType.String, vSheetRemarkB));
                                             dsTempB.InsertParameters.Add(new Parameter("QtyMode", DbType.Int32, vQtyMode.ToString()));
                                             dsTempB.InsertParameters.Add(new Parameter("BuMan", DbType.String, vLoginID));
@@ -714,7 +728,7 @@ namespace TyBus_Intranet_Test_V3
                             }
                         }
                         eConsType = (Label)fvShowList.FindControl("eConsType_Edit");
-                        eConsUnit = (Label)fvShowList.FindControl("eConsUnit_List");
+                        eConsUnit = (Label)fvShowList.FindControl("eConsUnit_Edit");
                         eBrand = (Label)fvShowList.FindControl("eBrand_Edit");
                         ddlConsType.SelectedIndex = (eConsType.Text.Trim() != "") ? ddlConsType.Items.IndexOf(ddlConsType.Items.FindByValue(eConsType.Text.Trim())) : 0;
                         ddlConsUnit.SelectedIndex = (eConsUnit.Text.Trim() != "") ? ddlConsUnit.Items.IndexOf(ddlConsUnit.Items.FindByValue(eConsUnit.Text.Trim())) : 0;
@@ -808,7 +822,7 @@ namespace TyBus_Intranet_Test_V3
                                 "   set ConsName = @ConsName, ConsType = @ConsType, ConsUnit = @ConsUnit, ConsColor = @ConsColor,  " + Environment.NewLine +
                                 "       ConsSpec = @ConsSpec, ConsSpec2 = @ConsSpec2, Brand = @Brand, StoreLocation = @StoreLocation, " + Environment.NewLine +
                                 "       IsStopUse = @IsStopUse, IsInorder = @IsInorder, Remark = @Remark, ModifyMan = @ModifyMan, ModifyDate = GetDate() " + Environment.NewLine +
-                                " where ConsNo = @CVonsNo ";
+                                " where ConsNo = @ConsNo ";
             sdsShowDetail.UpdateCommand = vUpdateStr;
             sdsShowDetail.UpdateParameters.Clear();
             sdsShowDetail.UpdateParameters.Add(new Parameter("ConsName", DbType.String, eConsName.Text.Trim()));
@@ -826,6 +840,7 @@ namespace TyBus_Intranet_Test_V3
             sdsShowDetail.UpdateParameters.Add(new Parameter("ConsNo", DbType.String, eConsNo.Text.Trim()));
             sdsShowDetail.Update();
             gridShowList.DataBind();
+            fvShowList.ChangeMode(FormViewMode.ReadOnly);
             fvShowList.DataBind();
         }
 
@@ -879,7 +894,7 @@ namespace TyBus_Intranet_Test_V3
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void InsertButton_Click(object sender, EventArgs e)
+        protected void bbOK_INS_Click(object sender, EventArgs e)
         {
             eErrorMSG_Main.Text = "";
             eErrorMSG_Main.Visible = false;
@@ -938,6 +953,7 @@ namespace TyBus_Intranet_Test_V3
                         sdsShowDetail.InsertParameters.Add(new Parameter("BuMan", DbType.String, vLoginID));
                         sdsShowDetail.Insert();
                         gridShowList.DataBind();
+                        fvShowList.ChangeMode(FormViewMode.ReadOnly);
                         fvShowList.DataBind();
                     }
                     else
