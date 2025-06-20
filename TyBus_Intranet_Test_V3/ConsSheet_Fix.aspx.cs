@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Amaterasu_Function;
+using Microsoft.Reporting.WebForms;
+using System;
+using System.Data;
+using System.Data.SqlClient;
+using System.Globalization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Amaterasu_Function;
-using Microsoft.Reporting.WebForms;
-using System.Data.SqlClient;
-using System.IO;
-using System.Globalization;
-using System.Data;
 
 namespace TyBus_Intranet_Test_V3
 {
@@ -407,11 +403,11 @@ namespace TyBus_Intranet_Test_V3
                 vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
             }
             DateTime vTempDate;
-            string vFirstCode = (vToday.Year - 1911).ToString("D3") + vToday.Month.ToString("D2") + "FS";
+            //string vFirstCode = (vToday.Year - 1911).ToString("D3") + vToday.Month.ToString("D2") + "FS";
             string vSQLStr_Temp;
-            string vMaxIndex;
-            string vNewIndex;
-            int vTempINT;
+            //string vMaxIndex;
+            //string vNewIndex;
+            //int vTempINT;
 
             TextBox eDepNo = (TextBox)fvSheetA_Detail.FindControl("eDepNo_INS");
             if (eDepNo != null)
@@ -419,15 +415,18 @@ namespace TyBus_Intranet_Test_V3
                 TextBox eBuDate = (TextBox)fvSheetA_Detail.FindControl("eBuDateA_INS");
                 TextBox eAssignMan = (TextBox)fvSheetA_Detail.FindControl("eAssignMan_INS");
                 TextBox eRemarkA = (TextBox)fvSheetA_Detail.FindControl("eRemarkA_INS");
+                /* 2025.06.18 改回用共用函式取單號
                 vSQLStr_Temp = "select max(SheetNo) MaxNo from ConsSheetA where SheetNo like '" + vFirstCode + "%' ";
                 vMaxIndex = PF.GetValue(vConnStr, vSQLStr_Temp, "MaxNo");
-                vNewIndex = Int32.TryParse(vMaxIndex.Replace(vFirstCode, ""), out vTempINT) ? (vTempINT + 1).ToString("D4") : "0001";
+                vNewIndex = Int32.TryParse(vMaxIndex.Replace(vFirstCode, ""), out vTempINT) ? (vTempINT + 1).ToString("D4") : "0001"; //*/
+                string vSheetNo = PF.GetConsSheetNo(vConnStr, "FS");
                 vSQLStr_Temp = "insert into ConsSheetA " + Environment.NewLine +
                                "      (SheetNo, SheetMode, BuDate, BuMan, AssignMan, RemarkA, DepNo) " + Environment.NewLine +
                                "values(@SheetNo, 'FS', @BuDate, @BuMan, @AssignMan, @RemarkA, @DepNo) ";
                 sdsSheetA_Detail.InsertCommand = vSQLStr_Temp;
                 sdsSheetA_Detail.InsertParameters.Clear();
-                sdsSheetA_Detail.InsertParameters.Add(new Parameter("SheetNo", DbType.String, vFirstCode + vNewIndex));
+                //sdsSheetA_Detail.InsertParameters.Add(new Parameter("SheetNo", DbType.String, vFirstCode + vNewIndex));
+                sdsSheetA_Detail.InsertParameters.Add(new Parameter("SheetNo", DbType.String, vSheetNo));
                 sdsSheetA_Detail.InsertParameters.Add(new Parameter("BuDate", DbType.Date, DateTime.TryParse(eBuDate.Text.Trim(), out vTempDate) ? vTempDate.ToShortDateString() : String.Empty));
                 sdsSheetA_Detail.InsertParameters.Add(new Parameter("BuMan", DbType.String, vLoginID));
                 sdsSheetA_Detail.InsertParameters.Add(new Parameter("AssignMan", DbType.String, (eAssignMan.Text.Trim() != "") ? eAssignMan.Text.Trim() : String.Empty));

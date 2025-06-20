@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MainPage.Master" AutoEventWireup="true" CodeBehind="ConsSheet_Order.aspx.cs" Inherits="TyBus_Intranet_Test_V3.ConsSheet_Order" %>
 
 <%@ Register Assembly="Microsoft.ReportViewer.WebForms" Namespace="Microsoft.Reporting.WebForms" TagPrefix="rsweb" %>
+
 <asp:Content ID="ConsSheet_OrderForm" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div>
         <a class="titleText-Red">總務耗材請購單</a>
@@ -87,9 +88,9 @@ where isnull(a.SheetMode, '') = 'BS' "></asp:SqlDataSource>
         <asp:Label ID="eErrorMSG_A" runat="server" CssClass="errorMessageText" Visible="false" />
     </div>
     <asp:FormView ID="fvConsSheetA_Detail" runat="server" DataKeyNames="SheetNo" DataSourceID="sdsConsSheetA_Detail" OnDataBound="fvConsSheetA_Detail_DataBound" Width="100%">
-        <EditItemTemplate>            
-            <asp:Button ID="bbOK_Edit" runat="server" CausesValidation="True" CssClass="button-Blue" OnClick="bbOK_Edit_Click" Text="確定" />
-            <asp:Button ID="bbCancel_Edit" runat="server" CausesValidation="False" CssClass="button-Red" CommandName="Cancel" Text="取消" />
+        <EditItemTemplate>
+            <asp:Button ID="bbOK_Edit" runat="server" CausesValidation="True" CssClass="button-Blue" OnClick="bbOK_Edit_Click" Text="確定" Width="120px" />
+            <asp:Button ID="bbCancel_Edit" runat="server" CausesValidation="False" CssClass="button-Red" CommandName="Cancel" Text="取消" Width="120px" />
             <table class="TableSetting">
                 <tr>
                     <td class="ColHeight ColBorder ColWidth-10Col">
@@ -244,12 +245,12 @@ where isnull(a.SheetMode, '') = 'BS' "></asp:SqlDataSource>
             </table>
         </EditItemTemplate>
         <InsertItemTemplate>
-            <asp:Button ID="bbOK_INS" runat="server" CausesValidation="True" CssClass="button-Blue" OnClick="bbOK_INS_Click" Text="確定" />
-            <asp:Button ID="bbCancel_INS" runat="server" CausesValidation="False" CssClass="button-Red" CommandName="Cancel" Text="取消" />
+            <asp:Button ID="bbOK_INS" runat="server" CausesValidation="True" CssClass="button-Blue" OnClick="bbOK_INS_Click" Text="確定" Width="120px" />
+            <asp:Button ID="bbCancel_INS" runat="server" CausesValidation="False" CssClass="button-Red" CommandName="Cancel" Text="取消" Width="120px" />
             <table class="TableSetting">
                 <tr>
                     <td class="ColHeight ColBorder ColWidth-10Col">
-                        <asp:Label ID="lbSheetNo_INS" runat="server" CssClass="text-Right-Blue" Text="請購(修)單號" Width="95%" />
+                        <asp:Label ID="lbSheetNo_INS" runat="server" CssClass="text-Right-Blue" Text="請購單號" Width="95%" />
                     </td>
                     <td class="ColHeight ColBorder ColWidth-10Col">
                         <asp:Label ID="eSheetNo_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("SheetNo") %>' Width="95%" />
@@ -406,11 +407,12 @@ where isnull(a.SheetMode, '') = 'BS' "></asp:SqlDataSource>
             <asp:Button ID="bbNew_List" runat="server" CssClass="button-Black" Text="新增" CommandName="New" Width="120px" />
             <asp:Button ID="bbEdit_List" runat="server" CssClass="button-Blue" Text="修改" CommandName="Edit" Width="120px" />
             <asp:Button ID="bbPrint_List" runat="server" CssClass="button-Black" Text="列印請購單" OnClick="bbPrint_List_Click" Width="120px" />
+            <asp:Button ID="bbAbortA_List" runat="server" CssClass="button-Blue" Text="請購單作廢" OnClick="bbAbortA_List_Click" Width="120px" />
             <asp:Button ID="bbDelete_List" runat="server" CssClass="button-Red" Text="刪除" OnClick="bbDelete_List_Click" Width="120px" />
             <table class="TableSetting">
                 <tr>
                     <td class="ColHeight ColBorder ColWidth-10Col">
-                        <asp:Label ID="lbSheetNo_List" runat="server" CssClass="text-Right-Blue" Text="請購(修)單號" Width="95%" />
+                        <asp:Label ID="lbSheetNo_List" runat="server" CssClass="text-Right-Blue" Text="請購單號" Width="95%" />
                     </td>
                     <td class="ColHeight ColBorder ColWidth-10Col">
                         <asp:Label ID="eSheetNo_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("SheetNo") %>' Width="95%" />
@@ -564,11 +566,7 @@ where isnull(a.SheetMode, '') = 'BS' "></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsConsSheetA_Detail" runat="server" ConnectionString="<%$ ConnectionStrings:connERPSQL %>" SelectCommand="SELECT a.SheetNo, 
        a.SupNo, b.[Name] as SupName, CONVERT (varchar(10), a.BuDate, 111) AS BuDate, a.BuMan,
 	   e2.[Name] as BuManName, a.Amount, a.TaxType, z.ClassTxt as TaxType_C, a.TaxRate, a.TaxAMT, 
-	   a.TotalAmount, a.SheetStatus, a.SheetNote,
-	   CASE WHEN a.SheetStatus = '0' THEN '已開單' 
-	        WHEN a.SheetStatus = '1' THEN '處理中'
-	        WHEN a.SheetStatus = '8' THEN '已作廢' 
-			WHEN a.SheetStatus = '9' THEN '已結案' END AS SheetStatus_C, 
+	   a.TotalAmount, a.SheetStatus, a.SheetNote, z3.ClassTxt as SheetStatus_C, 
 	   convert(varchar(10), a.StatusDate, 111) as StatusDate, a.PayDate, a.PayMode, z2.ClassTxt as PayMode_C, 
 	   a.RemarkA, a.ModifyMan, e3.[Name] as ModifyManName,
 	   convert(varchar(10), a.ModifyDate, 111) as ModifyDate, a.DepNo, d.[Name] as DepName, a.AssignMan,
@@ -580,6 +578,7 @@ where isnull(a.SheetMode, '') = 'BS' "></asp:SqlDataSource>
 					LEFT OUTER JOIN [Custom] b on b.Code = a.SupNo and b.[Types] = 'S'
 					LEFT OUTER JOIN DBDICB as z on z.ClassNo = a.TaxType and z.FKey = '總務請購單      ConsSheetA      TAXTYPE'
 					LEFT OUTER JOIN DBDICB as z2 on z2.ClassNo = a.PayMode and z2.FKey = '總務請購單      ConsSheetA      PayMode'
+                    LEFT OUTER JOIN DBDICB as z3 on z3.ClassNo = a.SheetStatus and z3.FKey = '總務耗材進出單  fmConsSheetA    SheetStatus'
  WHERE a.SheetNo = @SheetNo">
         <SelectParameters>
             <asp:ControlParameter ControlID="gridConsSheetA_List" Name="SheetNo" PropertyName="SelectedValue" />
@@ -613,15 +612,16 @@ where isnull(a.SheetMode, '') = 'BS' "></asp:SqlDataSource>
             <SortedDescendingHeaderStyle BackColor="#15524A" />
         </asp:GridView>
     </asp:Panel>
-    <asp:SqlDataSource ID="sdsConsSheetB_List" runat="server" ConnectionString="<%$ ConnectionStrings:connERPSQL %>" SelectCommand="SELECT b.SheetNo, b.Items, b.SheetNoItems, b.ConsNo, c.ConsName, b.Price, b.Quantity FROM ConsSheetB AS b LEFT OUTER JOIN Consumables AS c ON c.ConsNo = b.ConsNo WHERE (b.SheetNo = @SheetNo)">
+    <asp:SqlDataSource ID="sdsConsSheetB_List" runat="server" ConnectionString="<%$ ConnectionStrings:connERPSQL %>" SelectCommand="SELECT b.SheetNo, b.Items, b.SheetNoItems, b.ConsNo, c.ConsName, b.Price, b.Quantity FROM ConsSheetB AS b LEFT OUTER JOIN Consumables AS c ON c.ConsNo = b.ConsNo WHERE (b.SheetNo = @SheetNo)
+order by SheetNoItems">
         <SelectParameters>
             <asp:ControlParameter ControlID="gridConsSheetA_List" Name="SheetNo" PropertyName="SelectedValue" />
         </SelectParameters>
     </asp:SqlDataSource>
     <asp:FormView ID="fvConsSheetB_Detail" runat="server" DataKeyNames="SheetNoItems" DataSourceID="sdsConsSheetB_Detail" OnDataBound="fvConsSheetB_Detail_DataBound" Width="100%">
         <EditItemTemplate>
-            <asp:Button ID="bbOK_B_Edit" runat="server" CausesValidation="True" OnClick="bbOK_B_Edit_Click" Text="確定" />
-            <asp:Button ID="bbCancel_B_Edit" runat="server" CausesValidation="False" CommandName="Cancel" Text="取消" />
+            <asp:Button ID="bbOK_B_Edit" runat="server" CausesValidation="True" CssClass="button-Blue" OnClick="bbOK_B_Edit_Click" Text="確定" Width="120px" />
+            <asp:Button ID="bbCancel_B_Edit" runat="server" CausesValidation="False" CssClass="button-Red" CommandName="Cancel" Text="取消" Width="120px" />
             <table class="TableSetting">
                 <tr>
                     <td class="ColHeight ColBorder ColWidth-8Col">
@@ -636,7 +636,7 @@ where isnull(a.SheetMode, '') = 'BS' "></asp:SqlDataSource>
                         <asp:Label ID="lbConsMane_Edit" runat="server" CssClass="text-Right-Blue" Text="申請耗材" Width="95%" />
                     </td>
                     <td class="ColHeight ColBorder ColWidth-8Col" colspan="3">
-                        <asp:Textbox ID="eConsNo_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ConsNo") %>' Width="30%" />
+                        <asp:TextBox ID="eConsNo_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ConsNo") %>' Width="30%" />
                         <asp:TextBox ID="eConsName_Edit" runat="server" CssClass="text-Left-Black" Enabled="false" AutoPostBack="true" OnTextChanged="eConsName_Edit_TextChanged" Text='<%# Eval("ConsName") %>' Width="65%" />
                     </td>
                     <td class="ColHeight ColBorder ColWidth-8Col">
@@ -670,7 +670,7 @@ where isnull(a.SheetMode, '') = 'BS' "></asp:SqlDataSource>
                         <asp:Label ID="eConsUnit_Edit" runat="server" Text='<%# Eval("ConsUnit") %>' Visible="false" />
                     </td>
                     <td class="ColHeight ColBorder ColWidth-8Col">
-                        <asp:Label ID="lbAmount_B_Edit" runat="server" CssClass="text-Right-Blue" Text="小計" Width="95%" /> 
+                        <asp:Label ID="lbAmount_B_Edit" runat="server" CssClass="text-Right-Blue" Text="小計" Width="95%" />
                     </td>
                     <td class="ColHeight ColBorder ColWidth-8Col">
                         <asp:Label ID="eAmount_B_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("Amount") %>' Width="95%" />
@@ -686,7 +686,7 @@ where isnull(a.SheetMode, '') = 'BS' "></asp:SqlDataSource>
                 </tr>
                 <tr>
                     <td class="ColHeight ColBorder  ColWidth-8Col">
-                        <asp:Label ID="lbBuMan_B_Edit" runat="server" CssClass="text-Right-Blue" Text="建檔人"  Width="95%" />
+                        <asp:Label ID="lbBuMan_B_Edit" runat="server" CssClass="text-Right-Blue" Text="建檔人" Width="95%" />
                     </td>
                     <td class="ColHeight ColBorder ColWidth-8Col">
                         <asp:Label ID="eBuManName_B_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("BuManName") %>' Width="95%" />
@@ -725,8 +725,8 @@ where isnull(a.SheetMode, '') = 'BS' "></asp:SqlDataSource>
             </table>
         </EditItemTemplate>
         <InsertItemTemplate>
-            <asp:Button ID="bbOK_B_INS" runat="server" CausesValidation="True" OnClick="bbOK_B_INS_Click" Text="確定" />
-            <asp:Button ID="bbCancel_B_INS" runat="server" CausesValidation="False" CommandName="Cancel" Text="取消" />
+            <asp:Button ID="bbOK_B_INS" runat="server" CausesValidation="True" CssClass="button-Blue" OnClick="bbOK_B_INS_Click" Text="確定" Width="120px" />
+            <asp:Button ID="bbCancel_B_INS" runat="server" CausesValidation="False" CssClass="button-Red" CommandName="Cancel" Text="取消" Width="120px" />
             <table class="TableSetting">
                 <tr>
                     <td class="ColHeight ColBorder ColWidth-8Col">
@@ -741,7 +741,7 @@ where isnull(a.SheetMode, '') = 'BS' "></asp:SqlDataSource>
                         <asp:Label ID="lbConsMane_INS" runat="server" CssClass="text-Right-Blue" Text="申請耗材" Width="95%" />
                     </td>
                     <td class="ColHeight ColBorder ColWidth-8Col" colspan="3">
-                        <asp:Textbox ID="eConsNo_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ConsNo") %>' Width="30%" />
+                        <asp:TextBox ID="eConsNo_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ConsNo") %>' Width="30%" />
                         <asp:TextBox ID="eConsName_INS" runat="server" CssClass="text-Left-Black" Enabled="false" AutoPostBack="true" OnTextChanged="eConsName_INS_TextChanged" Text='<%# Eval("ConsName") %>' Width="65%" />
                     </td>
                     <td class="ColHeight ColBorder ColWidth-8Col">
@@ -768,14 +768,14 @@ where isnull(a.SheetMode, '') = 'BS' "></asp:SqlDataSource>
                     <td class="ColHeight ColBorder ColWidth-8Col">
                         <asp:Label ID="lbQuantity_INS" runat="server" CssClass="text-Right-Blue" Text="申請數量" Width="95%" />
                     </td>
-                    <td class="ColHeight ColBorder ColWidth-8Col">                        
+                    <td class="ColHeight ColBorder ColWidth-8Col">
                         <asp:TextBox ID="eQuantity_INS" runat="server" CssClass="text-Left-Black" AutoPostBack="true" OnTextChanged="eQuantity_INS_TextChanged" Text='<%# Eval("Quantity") %>' Width="65%" />
                         <asp:Label ID="eConsUnit_C_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ConsUnit_C") %>' Width="25%" />
                         <asp:Label ID="eQtyMode_INS" runat="server" Text='<%# Eval("QtyMode") %>' Visible="false" />
                         <asp:Label ID="eConsUnit_INS" runat="server" Text='<%# Eval("ConsUnit") %>' Visible="false" />
                     </td>
                     <td class="ColHeight ColBorder ColWidth-8Col">
-                        <asp:Label ID="lbAmount_B_INS" runat="server" CssClass="text-Right-Blue" Text="小計" Width="95%" /> 
+                        <asp:Label ID="lbAmount_B_INS" runat="server" CssClass="text-Right-Blue" Text="小計" Width="95%" />
                     </td>
                     <td class="ColHeight ColBorder ColWidth-8Col">
                         <asp:Label ID="eAmount_B_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("Amount") %>' Width="95%" />
@@ -791,7 +791,7 @@ where isnull(a.SheetMode, '') = 'BS' "></asp:SqlDataSource>
                 </tr>
                 <tr>
                     <td class="ColHeight ColBorder  ColWidth-8Col">
-                        <asp:Label ID="lbBuMan_B_INS" runat="server" CssClass="text-Right-Blue" Text="建檔人"  Width="95%" />
+                        <asp:Label ID="lbBuMan_B_INS" runat="server" CssClass="text-Right-Blue" Text="建檔人" Width="95%" />
                     </td>
                     <td class="ColHeight ColBorder ColWidth-8Col">
                         <asp:Label ID="eBuManName_B_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("BuManName") %>' Width="95%" />
@@ -885,7 +885,7 @@ where isnull(a.SheetMode, '') = 'BS' "></asp:SqlDataSource>
                         <asp:Label ID="eConsUnit_List" runat="server" Text='<%# Eval("ConsUnit") %>' Visible="false" />
                     </td>
                     <td class="ColHeight ColBorder ColWidth-8Col">
-                        <asp:Label ID="lbAmount_B_List" runat="server" CssClass="text-Right-Blue" Text="小計" Width="95%" /> 
+                        <asp:Label ID="lbAmount_B_List" runat="server" CssClass="text-Right-Blue" Text="小計" Width="95%" />
                     </td>
                     <td class="ColHeight ColBorder ColWidth-8Col">
                         <asp:Label ID="eAmount_B_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("Amount") %>' Width="95%" />
@@ -901,7 +901,7 @@ where isnull(a.SheetMode, '') = 'BS' "></asp:SqlDataSource>
                 </tr>
                 <tr>
                     <td class="ColHeight ColBorder  ColWidth-8Col">
-                        <asp:Label ID="lbBuMan_B_List" runat="server" CssClass="text-Right-Blue" Text="建檔人"  Width="95%" />
+                        <asp:Label ID="lbBuMan_B_List" runat="server" CssClass="text-Right-Blue" Text="建檔人" Width="95%" />
                     </td>
                     <td class="ColHeight ColBorder ColWidth-8Col">
                         <asp:Label ID="eBuManName_B_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("BuManName") %>' Width="95%" />
@@ -969,5 +969,5 @@ WHERE (b.SheetNoItems = @SheetNoItems)">
             <LocalReport ReportPath="Report\ConsSheet_OrderP.rdlc" OnSubreportProcessing="Unnamed_SubreportProcessing">
             </LocalReport>
         </rsweb:ReportViewer>
-        </asp:Panel>
+    </asp:Panel>
 </asp:Content>

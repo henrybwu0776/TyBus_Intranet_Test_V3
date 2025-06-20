@@ -646,19 +646,13 @@ namespace Amaterasu_Function
         public string GetConsSheetNo(string fConnStr, string fSheetMode)
         {
             string vResultStr = "";
-            string vSQLStr_Temp = "select max(SheetNo) MaxIndex from ConsSheetA where SheetMode = '" + fSheetMode + "' ";
+            DateTime vToday = DateTime.Today;
+            string vFirstCode = (vToday.Year - 1911).ToString("D3") + vToday.Month.ToString("D2") + fSheetMode;
+            string vSQLStr_Temp = "select max(SheetNo) MaxIndex from ConsSheetA where SheetMode like '" + vFirstCode + "%' ";
             string vOldSheetNo = GetValue(fConnStr, vSQLStr_Temp, "MaxIndex");
-            string vOldIndex = (vOldSheetNo != "") ? vOldSheetNo.Substring(8) : "0";
-            int vNewIndex = 0;
-            if (int.TryParse(vOldIndex, out vNewIndex))
-            {
-                vNewIndex++;
-            }
-            else
-            {
-                vNewIndex = 1;
-            }
-            vResultStr = DateTime.Now.Year.ToString("D4") + DateTime.Now.Month.ToString("D2") + fSheetMode + vNewIndex.ToString("D4");
+            int vTempINT;
+            string vNewIndex = Int32.TryParse(vOldSheetNo.Replace(vFirstCode, ""), out vTempINT) ? (vTempINT + 1).ToString("D4") : "0001";
+            vResultStr = vFirstCode + vNewIndex;
             return vResultStr.Trim();
         }
     }

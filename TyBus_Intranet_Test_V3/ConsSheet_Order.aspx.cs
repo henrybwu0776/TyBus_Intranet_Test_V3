@@ -1,12 +1,9 @@
 ﻿using Amaterasu_Function;
 using Microsoft.Reporting.WebForms;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -67,8 +64,8 @@ namespace TyBus_Intranet_Test_V3
                     }
                     else
                     {
-                        OpenData();
                     }
+                    OpenData();
                 }
                 else
                 {
@@ -132,13 +129,10 @@ namespace TyBus_Intranet_Test_V3
                                   DateTime.TryParse(eBuDate_S_Search.Text.Trim(), out vDate_S) && !DateTime.TryParse(eBuDate_E_Search.Text.Trim(), out vDate_E) ?
                                   "   AND a.BuDate = '" + PF.TransDateString(vDate_S, "B") + "' " + Environment.NewLine : "";
             string vResultStr = "SELECT a.SheetNo, a.SheetNote, a.DepNo, d.NAME AS DepName, a.AssignMan, e.NAME AS AssignManName, " + Environment.NewLine +
-                                "       CONVERT (varchar(10), a.BuDate, 111) AS BuDate, a.TotalAmount, " + Environment.NewLine +
-                                "       CASE WHEN a.SheetStatus = '0' THEN '已開單' " + Environment.NewLine +
-                                "            WHEN a.SheetStatus = '1' THEN '處理中' " + Environment.NewLine +
-                                "            WHEN a.SheetStatus = '8' THEN '已作廢' " + Environment.NewLine +
-                                "            WHEN a.SheetStatus = '9' THEN '已結案' END AS SheetStatus_C " + Environment.NewLine +
+                                "       CONVERT (varchar(10), a.BuDate, 111) AS BuDate, a.TotalAmount, f.ClassTxt AS SheetStatus_C " + Environment.NewLine +
                                 "  FROM ConsSheetA AS a LEFT OUTER JOIN DEPARTMENT AS d ON d.DEPNO = a.DepNo " + Environment.NewLine +
                                 "                       LEFT OUTER JOIN EMPLOYEE AS e ON e.EMPNO = a.AssignMan " + Environment.NewLine +
+                                "                       LEFT OUTER JOIN DBDICB AS f on f.ClassNo = a.SheetStatus and f.FKey = '總務耗材進出單  fmConsSheetA    SheetStatus' " + Environment.NewLine +
                                 " WHERE isnull(a.SheetMode, '') = 'BS' " + Environment.NewLine +
                                 vWStr_DepNo +
                                 vWStr_AssignMan +
@@ -512,12 +506,15 @@ namespace TyBus_Intranet_Test_V3
                 {
                     vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
                 }
+                /* 2025.06.18 改回用共用的函式取單號
                 string vFirstCode = (vToday.Year - 1911).ToString("D3") + vToday.Month.ToString("D2") + "BS";
                 string vSQLStr = "select max(SheetNo) MaxNo from ConsSheetA where SheetNo like '" + vFirstCode + "%' ";
                 string vOldIndex = PF.GetValue(vConnStr, vSQLStr, "MaxNo");
                 Int32 vIndex = 0;
                 string vNewIndes = Int32.TryParse(vOldIndex.Replace(vFirstCode, ""), out vIndex) ? (vIndex + 1).ToString("D4") : "0001";
-                string vSheetNo = vFirstCode + vNewIndes;
+                string vSheetNo = vFirstCode + vNewIndes; //*/
+                string vSQLStr;
+                string vSheetNo = PF.GetConsSheetNo(vConnStr, "BS");
                 TextBox eSupNo = (TextBox)fvConsSheetA_Detail.FindControl("eSupNo_INS");
                 string vSupNo = eSupNo.Text.Trim();
                 TextBox eDepNo = (TextBox)fvConsSheetA_Detail.FindControl("eDepNo_INS");
@@ -541,8 +538,10 @@ namespace TyBus_Intranet_Test_V3
                 TextBox eSheetNote = (TextBox)fvConsSheetA_Detail.FindControl("eSheetNote_INS");
                 string vSheetNote = eSheetNote.Text.Trim();
                 vSQLStr = "insert into ConsSheetA " + Environment.NewLine +
-                          "       (SheetNo, SheetMode, SupNo, DepNo, AssignMan, BuDate, BuMan, Amount, TaxType, TaxRate, TaxAMT, TotalAmount, PayMode, RemarkA, SheetNote) " + Environment.NewLine +
-                          "values (@SheetNo, 'BS', @SupNo, @DepNo, @AssignMan, GetDate(), @BuMan, @Amount, @TaxType, @TaxRate, @TaxAMT, @TotalAmount, @PayMode, @RemarkA, @SheetNote) ";
+                          "       (SheetNo, SheetMode, SupNo, DepNo, AssignMan, BuDate, BuMan, Amount, TaxType, TaxRate, TaxAMT, TotalAmount, " + Environment.NewLine +
+                          "        PayMode, RemarkA, SheetNote, SheetStatus, StatusDate) " + Environment.NewLine +
+                          "values (@SheetNo, 'BS', @SupNo, @DepNo, @AssignMan, GetDate(), @BuMan, @Amount, @TaxType, @TaxRate, @TaxAMT, @TotalAmount, " + Environment.NewLine +
+                          "        @PayMode, @RemarkA, @SheetNote, '000', GetDate()) ";
                 sdsConsSheetA_Detail.InsertCommand = vSQLStr;
                 sdsConsSheetA_Detail.InsertParameters.Clear();
                 sdsConsSheetA_Detail.InsertParameters.Add(new Parameter("SheetNo", DbType.String, vSheetNo));
@@ -772,7 +771,6 @@ namespace TyBus_Intranet_Test_V3
             eErrorMSG_A.Visible = false;
             // 列印請購單
             DataTable dtPrintA;
-            DataTable dtPrintB;
             Label eSheetNo = (Label)fvConsSheetA_Detail.FindControl("eSheetNo_List");
             if (eSheetNo != null)
             {
@@ -786,24 +784,22 @@ namespace TyBus_Intranet_Test_V3
                                     "  from ConsSheetA a left join Department d on d.DepNo = a.DepNo " + Environment.NewLine +
                                     "                    left join Employee e on e.EmpNo = a.AssignMan " + Environment.NewLine +
                                     " where SheetNo = '" + vSheetNo + "' ";
-                using (SqlConnection connSheetA=new SqlConnection(vConnStr))
+                using (SqlConnection connSheetA = new SqlConnection(vConnStr))
                 {
                     SqlDataAdapter daSheetA = new SqlDataAdapter(vSelectStr, connSheetA);
                     connSheetA.Open();
                     dtPrintA = new DataTable();
                     daSheetA.Fill(dtPrintA);
                 }
-                
+
                 string vCompanyName = PF.GetValue(vConnStr, "select [Name] from [Custom] where [Code] = 'A000' and Types = 'O' ", "Name");
                 string vReportName = "請購 (修) 單";
                 string vReportPath = @"Report\ConsSheet_OrderP.rdlc";
                 ReportDataSource rdsPrintA = new ReportDataSource("ConsSheetA_OrderP", dtPrintA);
-                //ReportDataSource rdsPrintB = new ReportDataSource("ConsSheet_OrderPB", dtPrintB);
 
                 rvPrint.LocalReport.DataSources.Clear();
                 rvPrint.LocalReport.ReportPath = vReportPath;
                 rvPrint.LocalReport.DataSources.Add(rdsPrintA);
-                //rvPrint.LocalReport.DataSources.Add(rdsPrintB);
                 rvPrint.LocalReport.SetParameters(new ReportParameter("CompanyName", vCompanyName));
                 rvPrint.LocalReport.SetParameters(new ReportParameter("ReportName", vReportName));
                 rvPrint.LocalReport.Refresh();
@@ -816,7 +812,7 @@ namespace TyBus_Intranet_Test_V3
 
         protected void Unnamed_SubreportProcessing(object sender, SubreportProcessingEventArgs e)
         {
-            if (vConnStr=="")
+            if (vConnStr == "")
             {
                 vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
             }
@@ -1302,6 +1298,94 @@ namespace TyBus_Intranet_Test_V3
             plShowDetail.Visible = true;
             rvPrint.LocalReport.DataSources.Clear();
             plReport.Visible = false;
+        }
+
+        protected void bbAbortA_List_Click(object sender, EventArgs e)
+        {
+            eErrorMSG_A.Text = "";
+            eErrorMSG_A.Visible = false;
+            if (vConnStr == "")
+            {
+                vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
+            }
+            Label eSheetNo = (Label)fvConsSheetA_Detail.FindControl("eSheetNo_List");
+            if (eSheetNo != null)
+            {
+                DateTime vToday = DateTime.Today;
+                string vSQLStr_Temp;
+                string vSheetNo = eSheetNo.Text.Trim();
+                string vH_FirstCode = vToday.Year.ToString("D4") + vToday.Month.ToString("D2");
+                string vSheetNoItems;
+                string vMaxIndex;
+                string vNewIndex;
+                //先檢查有沒有已到貨、撥付、簽收的明細 (不能作廢)
+                vSQLStr_Temp = "select count(Items) RCount from ConsSheetB where SheetNo = '" + vSheetNo + "' and ItemStatus in ('101', '102', '103')";
+                string vRCount_Str = PF.GetValue(vConnStr, vSQLStr_Temp, "RCount");
+                int vTempINT = Int32.Parse(vRCount_Str);
+                if (vTempINT == 0)
+                {
+                    //寫入異動記錄
+                    string vOptionString = "異動總務課耗材請購單" + Environment.NewLine +
+                                           "單號： [ " + eSheetNo.Text.Trim() + " ] " + Environment.NewLine +
+                                           "異動日期：" + vToday.ToShortDateString() + Environment.NewLine +
+                                           "異動種類：主檔作廢" + Environment.NewLine +
+                                           "ConsSheet_Order.aspx";
+                    PF.InsertOperateRecord(vConnStr, vLoginID, vComputerName, vOptionString);
+                    //把還沒有作廢的明細設定作廢
+                    vSQLStr_Temp = "select SheetNoItems from ConsSheetB where SheetNo = '" + eSheetNo + "' and ItemStatus != '999' order by Items";
+                    using (SqlConnection connTemp = new SqlConnection(vConnStr))
+                    {
+                        SqlCommand cmdTemp = new SqlCommand(vSQLStr_Temp, connTemp);
+                        connTemp.Open();
+                        SqlDataReader drTemp = cmdTemp.ExecuteReader();
+                        while (drTemp.Read())
+                        {
+                            vSheetNoItems = drTemp["SheetNoItems"].ToString().Trim();
+                            //複製明細舊資料到歷史檔
+                            vSQLStr_Temp = "select max(H_Index) MaxIndex from ConsSheetB_History where H_Index like '" + vH_FirstCode + "%' ";
+                            vMaxIndex = PF.GetValue(vConnStr, vSQLStr_Temp, "MaxIndex");
+                            vNewIndex = Int32.TryParse(vMaxIndex.Replace(vH_FirstCode, ""), out vTempINT) ? (vTempINT + 1).ToString("D4") : "0001";
+                            vSQLStr_Temp = "insert into ConsSheetB_History " + Environment.NewLine +
+                                           "      (H_Indexm, ActionMode, SheetNoItems, SheetNo, Items, ConsNo, Price, Quantity, Amount, " + Environment.NewLine +
+                                           "       RemarkB, QtyMode, ItemStatus, BuMan, BuDate, ModifyMan, ModifyDate, ConsUnit, ActionDate, ActionMan) " + Environment.NewLine +
+                                           "select '" + vH_FirstCode + vNewIndex + "', 'ABR', SheetNoItems, SheetNo, Items, ConsNo, Price, Quantity, Amount, " + Environment.NewLine +
+                                           "       RemarkB, QtyMode, ItemStatus, BuMan, BuDate, ModifyMan, ModifyDate, ConsUnit, GetDate(), '" + vLoginID + "' " + Environment.NewLine +
+                                           "  from ConsSheetB " + Environment.NewLine +
+                                           " where SheetNoItems = '" + vSheetNoItems + "' ";
+                            PF.ExecSQL(vConnStr, vSQLStr_Temp);
+                            //把明細設定為作廢
+                            vSQLStr_Temp = "update ConsSheetB set ItemStatus = '999' where SheetNoItems = '" + vSheetNoItems + "' ";
+                            PF.ExecSQL(vConnStr, vSQLStr_Temp);
+                        }
+                    }
+                    //複製主檔舊資料到歷史檔
+                    vSQLStr_Temp = "select max(H_Index) MaxIndex from ConsSheetA_History where H_Index like '" + vH_FirstCode + "%' ";
+                    vMaxIndex = PF.GetValue(vConnStr, vSQLStr_Temp, "MaxIndex");
+                    vNewIndex = Int32.TryParse(vMaxIndex.Replace(vH_FirstCode, ""), out vTempINT) ? (vTempINT + 1).ToString("D4") : "0001";
+                    vSQLStr_Temp = "insert into ConsSheetA_History " + Environment.NewLine +
+                                   "      (H_Index, ActionMode, SheetNo, SheetMode, SupNo, BuDate, BuMan, Amount, TaxType, TaxRate, TaxAMT, TotalAmount, " + Environment.NewLine +
+                                   "       SheetStatus, StatusDate, PayDate, PayMode, RemarkA, ModifyMan, ModifyDate, DepNo, AssignMan, " + Environment.NewLine +
+                                   "       ActionDate, ActionMan, SheetNo) " + Environment.NewLine +
+                                   "select '" + vH_FirstCode + vNewIndex + "', 'ABR', SheetNo, SheetMode, SupNo, BuDate, BuMan, Amount, TaxType, TaxRate, TaxAMT, TotalAmount, " + Environment.NewLine +
+                                   "       SheetStatus, StatusDate, PayDate, PayMode, RemarkA, ModifyMan, ModifyDate, DepNo, AssignMan, " + Environment.NewLine +
+                                   "       GetDate(), '" + vLoginID + "', SheetNo " + Environment.NewLine +
+                                   "  from ConsSheetA " + Environment.NewLine +
+                                   " where SheetNo = '" + vSheetNo + "' ";
+                    PF.ExecSQL(vConnStr, vSQLStr_Temp);
+                    vSQLStr_Temp = "update ConsSheetA set SheetStatus = '999' and StatusDate = GetDate() where SheetNo = @SheetNo";
+                    sdsConsSheetA_Detail.UpdateCommand = vSQLStr_Temp;
+                    sdsConsSheetA_Detail.UpdateParameters.Clear();
+                    sdsConsSheetA_Detail.UpdateParameters.Add(new Parameter("SheetNo", DbType.String, vSheetNo));
+                    sdsConsSheetA_Detail.Update();
+                    gridConsSheetA_List.DataBind();
+                    fvConsSheetA_Detail.DataBind();
+                }
+                else
+                {
+                    eErrorMSG_A.Text = "明細已有部份完成進出庫，本單不可作廢";
+                    eErrorMSG_A.Visible = true;
+                }
+            }
         }
     }
 }

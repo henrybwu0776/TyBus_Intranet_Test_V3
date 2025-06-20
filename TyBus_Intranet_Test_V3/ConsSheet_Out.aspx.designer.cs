@@ -11,7 +11,7 @@ namespace TyBus_Intranet_Test_V3
 {
 
 
-    public partial class AnecdoteCase
+    public partial class ConsSheet_Out
     {
 
         /// <summary>
@@ -24,22 +24,40 @@ namespace TyBus_Intranet_Test_V3
         protected global::System.Web.UI.WebControls.Panel plSearch;
 
         /// <summary>
-        /// chkHasInsurance 控制項。
+        /// lbBuDate_Search 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkHasInsurance;
+        protected global::System.Web.UI.WebControls.Label lbBuDate_Search;
 
         /// <summary>
-        /// chkCaseClose 控制項。
+        /// eBuDate_S_Search 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkCaseClose;
+        protected global::System.Web.UI.WebControls.TextBox eBuDate_S_Search;
+
+        /// <summary>
+        /// lbSplit_1 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbSplit_1;
+
+        /// <summary>
+        /// eBuDate_E_Search 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox eBuDate_E_Search;
 
         /// <summary>
         /// lbDepNo_Search 控制項。
@@ -51,130 +69,49 @@ namespace TyBus_Intranet_Test_V3
         protected global::System.Web.UI.WebControls.Label lbDepNo_Search;
 
         /// <summary>
-        /// eDepNo_Start_Search 控制項。
+        /// eDepNo_Search 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox eDepNo_Start_Search;
+        protected global::System.Web.UI.WebControls.TextBox eDepNo_Search;
 
         /// <summary>
-        /// eDepNo_Split_Search 控制項。
+        /// eDepName_Search 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label eDepNo_Split_Search;
+        protected global::System.Web.UI.WebControls.Label eDepName_Search;
 
         /// <summary>
-        /// eDepNo_End_Search 控制項。
+        /// lbAssignMan_Search 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox eDepNo_End_Search;
+        protected global::System.Web.UI.WebControls.Label lbAssignMan_Search;
 
         /// <summary>
-        /// lbCaseDate_Search 控制項。
+        /// eAssignMan_Search 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbCaseDate_Search;
+        protected global::System.Web.UI.WebControls.TextBox eAssignMan_Search;
 
         /// <summary>
-        /// eCaseDate_Start_Search 控制項。
+        /// eAssignManName_Search 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox eCaseDate_Start_Search;
-
-        /// <summary>
-        /// eCaseDate_Split_Search 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label eCaseDate_Split_Search;
-
-        /// <summary>
-        /// eCaseDate_End_Search 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox eCaseDate_End_Search;
-
-        /// <summary>
-        /// lbCarID_Search 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbCarID_Search;
-
-        /// <summary>
-        /// eCarID_Search 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox eCarID_Search;
-
-        /// <summary>
-        /// lbDriver_Search 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbDriver_Search;
-
-        /// <summary>
-        /// eDriver_Search 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox eDriver_Search;
-
-        /// <summary>
-        /// eDriverName_Search 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label eDriverName_Search;
-
-        /// <summary>
-        /// fuExcel 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload fuExcel;
-
-        /// <summary>
-        /// bbImportData 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button bbImportData;
+        protected global::System.Web.UI.WebControls.Label eAssignManName_Search;
 
         /// <summary>
         /// bbSearch 控制項。
@@ -186,22 +123,13 @@ namespace TyBus_Intranet_Test_V3
         protected global::System.Web.UI.WebControls.Button bbSearch;
 
         /// <summary>
-        /// bbExcel 控制項。
+        /// bbExit 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button bbExcel;
-
-        /// <summary>
-        /// bbCancel 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button bbCancel;
+        protected global::System.Web.UI.WebControls.Button bbExit;
 
         /// <summary>
         /// smMain 控制項。
@@ -213,76 +141,175 @@ namespace TyBus_Intranet_Test_V3
         protected global::System.Web.UI.ScriptManager smMain;
 
         /// <summary>
-        /// plMainDataShow 控制項。
+        /// eErrorMSG_A 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel plMainDataShow;
+        protected global::System.Web.UI.WebControls.Label eErrorMSG_A;
 
         /// <summary>
-        /// gridAnecdoteCaseA_List 控制項。
+        /// plShowData_A 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gridAnecdoteCaseA_List;
+        protected global::System.Web.UI.WebControls.Panel plShowData_A;
 
         /// <summary>
-        /// fvAnecdoteCaseA_Data 控制項。
+        /// gridConsSheetA_List 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FormView fvAnecdoteCaseA_Data;
+        protected global::System.Web.UI.WebControls.GridView gridConsSheetA_List;
 
         /// <summary>
-        /// sdsAnecdoteCaseA_List 控制項。
+        /// fvConsSheetA_Detail 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource sdsAnecdoteCaseA_List;
+        protected global::System.Web.UI.WebControls.FormView fvConsSheetA_Detail;
 
         /// <summary>
-        /// sdsAnecdoteCaseA_Data 控制項。
+        /// sdsConsSheetA_List 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource sdsAnecdoteCaseA_Data;
+        protected global::System.Web.UI.WebControls.SqlDataSource sdsConsSheetA_List;
 
         /// <summary>
-        /// plDetailDataShow 控制項。
+        /// sdsConsSheetA_Detail 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel plDetailDataShow;
+        protected global::System.Web.UI.WebControls.SqlDataSource sdsConsSheetA_Detail;
 
         /// <summary>
-        /// gridAnecdoteCaseB_List 控制項。
+        /// eErrorMSG_B 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gridAnecdoteCaseB_List;
+        protected global::System.Web.UI.WebControls.Label eErrorMSG_B;
 
         /// <summary>
-        /// fvAnecdoteCaseB_Data 控制項。
+        /// plShowData_B 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FormView fvAnecdoteCaseB_Data;
+        protected global::System.Web.UI.WebControls.Panel plShowData_B;
+
+        /// <summary>
+        /// gridConsSheetB_List 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gridConsSheetB_List;
+
+        /// <summary>
+        /// fvConsSheetB_Detail 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FormView fvConsSheetB_Detail;
+
+        /// <summary>
+        /// sdsConsSheetB_List 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource sdsConsSheetB_List;
+
+        /// <summary>
+        /// sdsConsSheetB_Detail 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource sdsConsSheetB_Detail;
+
+        /// <summary>
+        /// plShowData_C 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel plShowData_C;
+
+        /// <summary>
+        /// bbSelectAll_Order 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button bbSelectAll_Order;
+
+        /// <summary>
+        /// bbUnselAll_Order 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button bbUnselAll_Order;
+
+        /// <summary>
+        /// bbOKC_Order 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button bbOKC_Order;
+
+        /// <summary>
+        /// bbCancelC_Order 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button bbCancelC_Order;
+
+        /// <summary>
+        /// gridOrderItems_List 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gridOrderItems_List;
+
+        /// <summary>
+        /// sdsOrderItems_List 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource sdsOrderItems_List;
 
         /// <summary>
         /// plPrint 控制項。
@@ -310,50 +337,5 @@ namespace TyBus_Intranet_Test_V3
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::Microsoft.Reporting.WebForms.ReportViewer rvPrint;
-
-        /// <summary>
-        /// sdsAnecdoteCaseB_List 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource sdsAnecdoteCaseB_List;
-
-        /// <summary>
-        /// sdsAnecdoteCaseB_Data 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource sdsAnecdoteCaseB_Data;
-
-        /// <summary>
-        /// plSHowDataC 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel plSHowDataC;
-
-        /// <summary>
-        /// gridAnecdoteCaseC_List 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gridAnecdoteCaseC_List;
-
-        /// <summary>
-        /// sdsAnecdoteCaseC_List 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource sdsAnecdoteCaseC_List;
     }
 }
