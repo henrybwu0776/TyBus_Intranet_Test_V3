@@ -648,7 +648,7 @@ namespace Amaterasu_Function
             string vResultStr = "";
             DateTime vToday = DateTime.Today;
             string vFirstCode = (vToday.Year - 1911).ToString("D3") + vToday.Month.ToString("D2") + fSheetMode;
-            string vSQLStr_Temp = "select max(SheetNo) MaxIndex from ConsSheetA where SheetMode like '" + vFirstCode + "%' ";
+            string vSQLStr_Temp = "select max(SheetNo) MaxIndex from ConsSheetA where SheetNo like '" + vFirstCode + "%' ";
             string vOldSheetNo = GetValue(fConnStr, vSQLStr_Temp, "MaxIndex");
             int vTempINT;
             string vNewIndex = Int32.TryParse(vOldSheetNo.Replace(vFirstCode, ""), out vTempINT) ? (vTempINT + 1).ToString("D4") : "0001";

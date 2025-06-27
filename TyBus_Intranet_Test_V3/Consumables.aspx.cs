@@ -1014,7 +1014,144 @@ namespace TyBus_Intranet_Test_V3
 
         protected void bbCloseReport_Click(object sender, EventArgs e)
         {
+            plSearch.Visible = true;
+            plShowData.Visible = true;
+            plShowDataB.Visible = true;
+            plShowDataC.Visible = true;
+            plReport.Visible = false;
+        }
 
+        protected void fvConsSup_Detail_DataBound(object sender, EventArgs e)
+        {
+            Label eConsIndex;
+            TextBox eSupNo;
+            TextBox eSupName;
+            string vSupDataURL;
+            string vSupDataScript;
+            switch (fvConsSup_Detail.CurrentMode)
+            {
+                case FormViewMode.ReadOnly:
+                    break;
+                case FormViewMode.Edit:
+                    eConsIndex = (Label)fvConsSup_Detail.FindControl("eConsIndex_Edit");
+                    if ((eConsIndex != null) && (eConsIndex.Text.Trim() != ""))
+                    {
+                        eSupNo = (TextBox)fvConsSup_Detail.FindControl("eSupNo_Edit");
+                        eSupName = (TextBox)fvConsSup_Detail.FindControl("eSupName_Edit");
+                        vSupDataURL = "SearchSup.aspx?TextBoxID=" + eSupNo.ClientID + "&SupNameID=" + eSupName.ClientID + "&SupKind=C";
+                        vSupDataScript = "window.open('" + vSupDataURL + "','','height=600, width=650,status=no,toolbar=no,menubar=no,location=no','')";
+                        eSupNo.Attributes["onClick"] = vSupDataScript;
+                    }
+                    break;
+                case FormViewMode.Insert:
+                    eConsIndex = (Label)fvConsSup_Detail.FindControl("eConsIndex_INS");
+                    if (eConsIndex != null)
+                    {
+                        Label eConsNoA = (Label)fvShowList.FindControl("eConsNo_List");
+                        Label eConsNameA = (Label)fvShowList.FindControl("eConsName_List");
+                        Label eConsNoB = (Label)fvConsSup_Detail.FindControl("eConsNo_INS");
+                        Label eConsNameB = (Label)fvConsSup_Detail.FindControl("eConsName_INS");
+                        eConsNoB.Text = eConsNoA.Text.Trim();
+                        eConsNameB.Text = eConsNameA.Text.Trim();
+                        eSupNo = (TextBox)fvConsSup_Detail.FindControl("eSupNo_INS");
+                        eSupName = (TextBox)fvConsSup_Detail.FindControl("eSupName_INS");
+                        vSupDataURL = "SearchSup.aspx?TextBoxID=" + eSupNo.ClientID + "&SupNameID=" + eSupName.ClientID + "&SupKind=C";
+                        vSupDataScript = "window.open('" + vSupDataURL + "','','height=600, width=650,status=no,toolbar=no,menubar=no,location=no','')";
+                        eSupNo.Attributes["onClick"] = vSupDataScript;
+                    }
+                    break;
+            }
+        }
+
+        protected void bbOKB_Edit_Click(object sender, EventArgs e)
+        {
+            eErrorMSG_Main.Text = "";
+            eErrorMSG_Main.Visible = false;
+            Label eConsIndex = (Label)fvConsSup_Detail.FindControl("eConsIndex_Edit");
+            if ((eConsIndex != null) && (eConsIndex.Text.Trim() != ""))
+            {
+                string vConsIndex = eConsIndex.Text.Trim();
+                TextBox eSupNo = (TextBox)fvConsSup_Detail.FindControl("eSupNo_Edit");
+                TextBox eRemark = (TextBox)fvConsSup_Detail.FindControl("eRemarkB_Edit");
+                try
+                {
+                    string vSupNo = eSupNo.Text.Trim();
+                    string vRemark = eRemark.Text.Trim();
+                    string vSQLStr_Temp = "update ConsSupList set SupNo = @SupNo, Remark = @Remark where ConsIndex = @ConsIndex ";
+                    sdsConsSup_Detail.UpdateCommand = vSQLStr_Temp;
+                    sdsConsSup_Detail.UpdateParameters.Clear();
+                    sdsConsSup_Detail.UpdateParameters.Add(new Parameter("SupNo", DbType.String, (vSupNo != "") ? vSupNo : String.Empty));
+                    sdsConsSup_Detail.UpdateParameters.Add(new Parameter("Remark", DbType.String, (vRemark != "") ? vRemark : String.Empty));
+                    sdsConsSup_Detail.UpdateParameters.Add(new Parameter("ConsIndex", DbType.String, vConsIndex));
+                    sdsConsSup_Detail.Update();
+                    gridConsSup_List.DataBind();
+                    fvConsSup_Detail.ChangeMode(FormViewMode.ReadOnly);
+                    fvConsSup_Detail.DataBind();
+                }
+                catch (Exception eMessage)
+                {
+                    eErrorMSG_Main.Text = eMessage.Message;
+                    eErrorMSG_Main.Visible = true;
+                }
+            }
+        }
+
+        protected void bbOKB_INS_Click(object sender, EventArgs e)
+        {
+            eErrorMSG_Main.Text = "";
+            eErrorMSG_Main.Visible = false;
+            Label eConsNo = (Label)fvConsSup_Detail.FindControl("eConsNo_INS");
+            if ((eConsNo != null) && (eConsNo.Text.Trim() != ""))
+            {
+                TextBox eSupNo = (TextBox)fvConsSup_Detail.FindControl("eSupNo_INS");
+                if (eSupNo.Text.Trim() != "")
+                {
+                    string vConsNo = eConsNo.Text.Trim();
+                    string vSupNo = eSupNo.Text.Trim();
+                    string vConsIndex = vConsNo + vSupNo;
+                    TextBox eRemark = (TextBox)fvConsSup_Detail.FindControl("eRemarkB_INS");
+                    string vRemark = eRemark.Text.Trim();
+                    string vSQLStr_Temp = "insert into ConsSupList (ConsIndex, ConsNo, SupNo, Remark, IsUsed) " + Environment.NewLine +
+                                          "values (@ConsIndex, @ConsNo, @SupNo, @Remark, 'V') ";
+                    try
+                    {
+                        sdsConsSup_Detail.InsertCommand = vSQLStr_Temp;
+                        sdsConsSup_Detail.InsertParameters.Clear();
+                        sdsConsSup_Detail.InsertParameters.Add(new Parameter("ConsIndex", DbType.String, vConsIndex));
+                        sdsConsSup_Detail.InsertParameters.Add(new Parameter("ConsNo", DbType.String, vConsNo));
+                        sdsConsSup_Detail.InsertParameters.Add(new Parameter("SupNo", DbType.String, vSupNo));
+                        sdsConsSup_Detail.InsertParameters.Add(new Parameter("Remark", DbType.String, (vRemark != "") ? vRemark : string.Empty));
+                        sdsConsSup_Detail.Insert();
+                        gridConsSup_List.DataBind();
+                        fvConsSup_Detail.ChangeMode(FormViewMode.ReadOnly);
+                        fvConsSup_Detail.DataBind();
+                    }
+                    catch (Exception eMessage)
+                    {
+                        eErrorMSG_Main.Text = eMessage.Message;
+                        eErrorMSG_Main.Visible = true;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 刪除廠商資料
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void bbDeleteSup_List_Click(object sender, EventArgs e)
+        {
+            Label eConsIndex = (Label)fvConsSup_Detail.FindControl("eConsIndex_List");
+            if ((eConsIndex != null) && (eConsIndex.Text.Trim() != ""))
+            {
+                sdsConsSup_Detail.DeleteCommand = "delete ConsSupList where ConsIndex = @ConsIndex ";
+                sdsConsSup_Detail.DeleteParameters.Clear();
+                sdsConsSup_Detail.DeleteParameters.Add(new Parameter("ConsIndex", DbType.String, eConsIndex.Text.Trim()));
+                sdsConsSup_Detail.Delete();
+                gridConsSup_List.DataBind();
+                fvConsSup_Detail.DataBind();
+            }
         }
     }
 }

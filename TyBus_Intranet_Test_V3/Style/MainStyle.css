@@ -400,3 +400,7 @@
     font-weight: bold;
     color: black;
 }
+
+.fixedWidth {
+    word-break: break-all;
+}

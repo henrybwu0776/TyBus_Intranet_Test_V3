@@ -554,12 +554,11 @@
                 </table>
             </ItemTemplate>
         </asp:FormView>
-    </asp:Panel>
-    <asp:SqlDataSource ID="sdsShowDataList" runat="server" ConnectionString="<%$ ConnectionStrings:connERPSQL %>" SelectCommand="select c.ConsNo, c.ConsName, d1.ClassTxt ConsType, c.StockQty, d2.ClassTxt ConsUnit, c.AvgPrice, c.StoreLocation, c.Brand
+        <asp:SqlDataSource ID="sdsShowDataList" runat="server" ConnectionString="<%$ ConnectionStrings:connERPSQL %>" SelectCommand="select c.ConsNo, c.ConsName, d1.ClassTxt ConsType, c.StockQty, d2.ClassTxt ConsUnit, c.AvgPrice, c.StoreLocation, c.Brand
 from Consumables c left join DBDICB d1 on d1.ClassNo = c.ConsType and d1.FKey = '耗材庫存        CONSUMABLES     ConsType' 
 left join DBDICB d2 on d2.ClassNo = c.ConsUnit and d2.FKey = '耗材庫存        CONSUMABLES     ConsUnit' 
  where isnull(c.ConsNo, '') = '' "></asp:SqlDataSource>
-    <asp:SqlDataSource ID="sdsShowDetail" runat="server" ConnectionString="<%$ ConnectionStrings:connERPSQL %>" SelectCommand="select c.ConsNo, c.ConsName, c.ConsType, d1.ClassTxt ConsType_C, c.ConsUnit, d2.ClassTxt ConsUnit_C, c.ConsColor, c.ConsSpec, c.ConsSpec2, 
+        <asp:SqlDataSource ID="sdsShowDetail" runat="server" ConnectionString="<%$ ConnectionStrings:connERPSQL %>" SelectCommand="select c.ConsNo, c.ConsName, c.ConsType, d1.ClassTxt ConsType_C, c.ConsUnit, d2.ClassTxt ConsUnit_C, c.ConsColor, c.ConsSpec, c.ConsSpec2, 
        c.Brand, b.BrandName Brand_C, c.StockQty, c.AVGPrice, c.LastInDate, c.LastOutDate, c.StoreLocation, c.IsStopUse, c.IsInorder, c.LastInPrice, 
        c.BuDate, c.BuMan, e1.[Name] as BuManName, c.ModifyDate, c.ModifyMan, e2.[Name] as ModifyManName, c.Remark 
   from Consumables c left join Employee e1 on e1.EmpNo = c.BuMan 
@@ -568,10 +567,195 @@ left join DBDICB d2 on d2.ClassNo = c.ConsUnit and d2.FKey = '耗材庫存      
 					 left join DBDICB d2 on d2.ClassNo = c.ConsUnit and d2.FKey = '耗材庫存        CONSUMABLES     ConsUnit'
 					 left join ConsBrand b on b.BrandCode = c.Brand and b.BelongGroup = '02'
 where c.ConsNo = @ConsNo">
-        <SelectParameters>
-            <asp:ControlParameter ControlID="gridShowList" Name="ConsNo" PropertyName="SelectedValue" />
-        </SelectParameters>
-    </asp:SqlDataSource>
+            <SelectParameters>
+                <asp:ControlParameter ControlID="gridShowList" Name="ConsNo" PropertyName="SelectedValue" />
+            </SelectParameters>
+        </asp:SqlDataSource>
+    </asp:Panel>
+    <asp:Panel ID="plShowDataB" runat="server" CssClass="ShowPanel-Detail_B">
+        <asp:GridView ID="gridConsSup_List" runat="server" AllowPaging="True" AutoGenerateColumns="False" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="3" DataKeyNames="ConsIndex" DataSourceID="sdsConsSup_List" PageSize="5" Width="100%">
+            <Columns>
+                <asp:CommandField ButtonType="Button" ShowSelectButton="True" />
+                <asp:BoundField DataField="ConsIndex" HeaderText="序號" ReadOnly="True" SortExpression="ConsIndex" />
+                <asp:BoundField DataField="ConsNo" HeaderText="料號" SortExpression="ConsNo" Visible="False" />
+                <asp:BoundField DataField="ConsName" HeaderText="品名" SortExpression="ConsName" />
+                <asp:BoundField DataField="SupNo" HeaderText="廠商代碼" SortExpression="SupNo" />
+                <asp:BoundField DataField="SupName" HeaderText="廠商名稱" SortExpression="SupName" />
+                <asp:BoundField DataField="Remark" HeaderText="備註" SortExpression="Remark" />
+            </Columns>
+            <FooterStyle BackColor="White" ForeColor="#000066" />
+            <HeaderStyle BackColor="#006699" Font-Bold="True" ForeColor="White" />
+            <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" />
+            <RowStyle ForeColor="#000066" />
+            <SelectedRowStyle BackColor="#669999" Font-Bold="True" ForeColor="White" />
+            <SortedAscendingCellStyle BackColor="#F1F1F1" />
+            <SortedAscendingHeaderStyle BackColor="#007DBB" />
+            <SortedDescendingCellStyle BackColor="#CAC9C9" />
+            <SortedDescendingHeaderStyle BackColor="#00547E" />
+        </asp:GridView>
+        <asp:SqlDataSource ID="sdsConsSup_List" runat="server" ConnectionString="<%$ ConnectionStrings:connERPSQL %>" SelectCommand="select a.ConsIndex, a.ConsNo, b.ConsName, a.SupNo, c.[Name] SupName, a.Remark
+  from ConsSupList a left join Consumables b on b.ConsNo = a.ConsNo
+                     left join [Custom] c on c.Code = a.SupNo and c.[Types] = 'S'
+ where a.ConsNo = @ConsNo">
+            <SelectParameters>
+                <asp:ControlParameter ControlID="gridShowList" Name="ConsNo" PropertyName="SelectedValue" />
+            </SelectParameters>
+        </asp:SqlDataSource>
+    </asp:Panel>
+    <asp:Panel ID="plShowDataC" runat="server" CssClass="ShowPanel-Detail_C">
+        <asp:FormView ID="fvConsSup_Detail" runat="server" Width="100%" DataKeyNames="ConsIndex" DataSourceID="sdsConsSup_Detail" OnDataBound="fvConsSup_Detail_DataBound">
+            <EditItemTemplate>
+                <asp:Button ID="bbOKB_Edit" runat="server" CausesValidation="True" CssClass="button-Blue" OnClick="bbOKB_Edit_Click" Text="確定" Width="120px" />
+                <asp:Button ID="bbCancelB_Edit" runat="server" CausesValidation="False" CssClass="button-Red" CommandName="Cancel" Text="取消" Width="120px" />
+                <table class="TableSetting">
+                    <tr>
+                        <td class="ColHeight ColBorder ColWidth-4Col">
+                            <asp:Label ID="lbConsIndex_Edit" runat="server" CssClass="text-Right-Blue" Text="序號" Width="95%" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-4Col">
+                            <asp:Label ID="eConsIndex_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ConsIndex") %>' Width="95%" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="ColHeight ColBorder ColWidth-4Col">
+                            <asp:Label ID="lbConsNo_Edit" runat="server" CssClass="text-Right-Blue" Text="料號" Width="95%" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-4Col" colspan="3">
+                            <asp:Label ID="eConsNo_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ConsNo") %>' Width="30%" />
+                            <asp:Label ID="eConsName_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ConsName") %>' Width="65%" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="ColHeight ColBorder ColWidth-4Col">
+                            <asp:Label ID="lbSupNo_Edit" runat="server" CssClass="text-Right-Blue" Text="廠商" Width="95%" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-4Col" colspan="3">
+                            <asp:TextBox ID="eSupNo_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("SupNo") %>' Width="35%" />
+                            <asp:TextBox ID="eSupName_Edit" runat="server" CssClass="text-Left-Black" Enabled="false" Text='<%# Eval("SupName") %>' Width="60%" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="ColBorder ColWidth-4Col MultiLine_High">
+                            <asp:Label ID="lbRemarkB_Edit" runat="server" CssClass="text-Right-Blue" Text="備註" Width="95%" />
+                        </td>
+                        <td class="ColBorder ColWidth-10Col MultiLine_High" colspan="3">
+                            <asp:TextBox ID="eRemarkB_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("Remark") %>' TextMode="MultiLine" Height="97%" Width="97%" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="ColWidth-4Col" />
+                        <td class="ColWidth-4Col" />
+                        <td class="ColWidth-4Col" />
+                        <td class="ColWidth-4Col" />
+                    </tr>
+                </table>
+            </EditItemTemplate>
+            <InsertItemTemplate>
+                <asp:Button ID="bbOKB_INS" runat="server" CausesValidation="True" CssClass="button-Blue" OnClick="bbOKB_INS_Click" Text="確定" Width="120px" />
+                <asp:Button ID="bbCancelB_INS" runat="server" CausesValidation="False" CssClass="button-Red" CommandName="Cancel" Text="取消" Width="120px" />
+                <table class="TableSetting">
+                    <tr>
+                        <td class="ColHeight ColBorder ColWidth-4Col">
+                            <asp:Label ID="lbConsIndex_INS" runat="server" CssClass="text-Right-Blue" Text="序號" Width="95%" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-4Col">
+                            <asp:Label ID="eConsIndex_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ConsIndex") %>' Width="95%" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="ColHeight ColBorder ColWidth-4Col">
+                            <asp:Label ID="lbConsNo_INS" runat="server" CssClass="text-Right-Blue" Text="料號" Width="95%" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-4Col" colspan="3">
+                            <asp:Label ID="eConsNo_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ConsNo") %>' Width="30%" />
+                            <asp:Label ID="eConsName_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ConsName") %>' Width="65%" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="ColHeight ColBorder ColWidth-4Col">
+                            <asp:Label ID="lbSupNo_INS" runat="server" CssClass="text-Right-Blue" Text="廠商" Width="95%" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-4Col" colspan="3">
+                            <asp:TextBox ID="eSupNo_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("SupNo") %>' Width="35%" />
+                            <asp:TextBox ID="eSupName_INS" runat="server" CssClass="text-Left-Black" Enabled="false" Text='<%# Eval("SupName") %>' Width="60%" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="ColBorder ColWidth-4Col MultiLine_High">
+                            <asp:Label ID="lbRemarkB_INS" runat="server" CssClass="text-Right-Blue" Text="備註" Width="95%" />
+                        </td>
+                        <td class="ColBorder ColWidth-10Col MultiLine_High" colspan="3">
+                            <asp:TextBox ID="eRemarkB_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("Remark") %>' TextMode="MultiLine" Height="97%" Width="97%" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="ColWidth-4Col" />
+                        <td class="ColWidth-4Col" />
+                        <td class="ColWidth-4Col" />
+                        <td class="ColWidth-4Col" />
+                    </tr>
+                </table>
+            </InsertItemTemplate>
+            <EmptyDataTemplate>
+                <asp:Button ID="bbNewSup_Empty" runat="server" CssClass="button-Blue" Text="新增廠商" CommandName="New" Width="120px" />
+            </EmptyDataTemplate>
+            <ItemTemplate>
+                <asp:Button ID="bbNewSup_List" runat="server" CssClass="button-Black" Text="新增廠商" CommandName="New" Width="120px" />
+                <asp:Button ID="bbEditSup_List" runat="server" CssClass="button-Blue" Text="修改廠商" CommandName="Edit" Width="120px" />
+                <asp:Button ID="bbDeleteSup_List" runat="server" CssClass="button-Red" Text="刪除廠商" OnClick="bbDeleteSup_List_Click" Width="120px" />
+                <table class="TableSetting">
+                    <tr>
+                        <td class="ColHeight ColBorder ColWidth-4Col">
+                            <asp:Label ID="lbConsIndex_List" runat="server" CssClass="text-Right-Blue" Text="序號" Width="95%" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-4Col">
+                            <asp:Label ID="eConsIndex_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ConsIndex") %>' Width="95%" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="ColHeight ColBorder ColWidth-4Col">
+                            <asp:Label ID="lbConsNo_List" runat="server" CssClass="text-Right-Blue" Text="料號" Width="95%" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-4Col" colspan="3">
+                            <asp:Label ID="eConsNo_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ConsNo") %>' Width="30%" />
+                            <asp:Label ID="eConsName_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ConsName") %>' Width="65%" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="ColHeight ColBorder ColWidth-4Col">
+                            <asp:Label ID="lbSupNo_List" runat="server" CssClass="text-Right-Blue" Text="廠商" Width="95%" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-4Col" colspan="3">
+                            <asp:Label ID="eSupNo_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("SupNo") %>' Width="35%" />
+                            <asp:Label ID="eSupName_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("SupName") %>' Width="60%" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="ColBorder ColWidth-4Col MultiLine_High">
+                            <asp:Label ID="lbRemarkB_List" runat="server" CssClass="text-Right-Blue" Text="備註" Width="95%" />
+                        </td>
+                        <td class="ColBorder ColWidth-10Col MultiLine_High" colspan="3">
+                            <asp:TextBox ID="eRemarkB_List" runat="server" Enabled="false" CssClass="text-Left-Black" Text='<%# Eval("Remark") %>' TextMode="MultiLine" Height="97%" Width="97%" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="ColWidth-4Col" />
+                        <td class="ColWidth-4Col" />
+                        <td class="ColWidth-4Col" />
+                        <td class="ColWidth-4Col" />
+                    </tr>
+                </table>
+            </ItemTemplate>
+        </asp:FormView>
+        <asp:SqlDataSource ID="sdsConsSup_Detail" runat="server" ConnectionString="<%$ ConnectionStrings:connERPSQL %>" SelectCommand="select a.ConsIndex, a.ConsNo, b.ConsName, a.SupNo, c.[Name] SupName, a.Remark
+  from ConsSupList a left join Consumables b on b.ConsNo = a.ConsNo
+                     left join [Custom] c on c.Code = a.SupNo and c.[Types] = 'S'
+ where a.ConsIndex = @ConsIndex">
+            <SelectParameters>
+                <asp:ControlParameter ControlID="gridConsSup_List" Name="ConsIndex" PropertyName="SelectedValue" />
+            </SelectParameters>
+        </asp:SqlDataSource>
+    </asp:Panel>
     <asp:Panel ID="plReport" runat="server" CssClass="PrintPanel">
         <asp:Button ID="bbCloseReport" runat="server" CssClass="button-Red" Text="結束預覽" OnClick="bbCloseReport_Click" Width="120px" />
         <rsweb:ReportViewer ID="rvPrint" runat="server" BackColor="" ClientIDMode="AutoID" HighlightBackgroundColor=""
