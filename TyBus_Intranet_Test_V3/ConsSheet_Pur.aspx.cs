@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Amaterasu_Function;
+using Microsoft.Reporting.WebForms;
+using System;
+using System.Data;
+using System.Data.SqlClient;
+using System.Globalization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Amaterasu_Function;
-using System.Data.SqlClient;
-using System.IO;
-using System.Data;
-using System.Globalization;
-using Microsoft.Reporting.WebForms;
 
 namespace TyBus_Intranet_Test_V3
 {
@@ -103,7 +99,7 @@ namespace TyBus_Intranet_Test_V3
                                   (!DateTime.TryParse(eBuDateS_Search.Text.Trim(), out vTempDateS) && DateTime.TryParse(eBuDateE_Search.Text.Trim(), out vTempDateE)) ?
                                   "   and a.BuDate = '" + PF.GetAD(vTempDateE.ToShortDateString()) + "' " + Environment.NewLine : "";
             string vWStr_SupName = (eSupNo_Search.Text.Trim() != "") ? "   and c.[Name] like '%" + eSupNo_Search + "%' " + Environment.NewLine : "";
-            string vWStr_ConsName = (eConsName_Search.Text.Trim() != "") ? 
+            string vWStr_ConsName = (eConsName_Search.Text.Trim() != "") ?
                                     "   and a.SheetNo in (select SheetNo from ConsSheetB where ConsNo in (select ConsNo from Consumables where ConsName like '%" + eConsName_Search.Text.Trim() + "%' " + Environment.NewLine :
                                     "";
             vResultStr = "select a.SheetNo, a.BuDate, e.[Name] BuMan_C, c.[Name] SupName, a.TotalAmount, d.ClassTxt SheetStatus_C " + Environment.NewLine +
@@ -745,6 +741,7 @@ namespace TyBus_Intranet_Test_V3
                 //產生參數需要的值
                 Label eBuDate = (Label)fvConsSheetA_Detail.FindControl("eBuDateA_List");
                 Label eSupName = (Label)fvConsSheetA_Detail.FindControl("eSupName_List");
+                Label eDepName = (Label)fvConsSheetA_Detail.FindControl("eDepName_List");
                 DateTime vTempDate;
                 DataTable dtPrint;
                 string vSheetNo = eSheetNo.Text.Trim();
@@ -754,7 +751,7 @@ namespace TyBus_Intranet_Test_V3
                                     (vTempDate.Year - 1911).ToString("D3") + "/" + vTempDate.ToString("MM/dd") :
                                     (vToday.Year - 1911).ToString("D4") + "/" + vToday.ToString("MM/dd"); //用民國年顯示訂購日期
                 string vSupplierName = eSupName.Text.Trim(); //廠商名稱
-                string vOrderName = "";
+                string vOrderName = eDepName.Text.Trim(); ;
                 //產生報表資料
                 string vSelectStr = "select b.SheetNoItems, b.ConsNo, c.ConsName, d.ClassTxt ConsUnit_C, b.Quantity, b.Price, b.Amount, b.RemarkB " + Environment.NewLine +
                                     "  from ConsSheetB b left join Consumables c on c.ConsNo = b.ConsNo " + Environment.NewLine +
@@ -1607,6 +1604,54 @@ namespace TyBus_Intranet_Test_V3
             plShowDataA.Visible = true;
             plShowDataB.Visible = true;
             plSearch.Visible = true;
+        }
+
+        protected void eDepNo_Edit_TextChanged(object sender, EventArgs e)
+        {
+            TextBox eDepNo = (TextBox)fvConsSheetA_Detail.FindControl("eDepNo_Edit");
+            if (eDepNo != null)
+            {
+                Label eDepName = (Label)fvConsSheetA_Detail.FindControl("eDepName_Edit");
+                if (vConnStr == "")
+                {
+                    vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
+                }
+                string vDepNo = eDepNo.Text.Trim();
+                string vSQLStr_Temp = "select [Name] from Department where DepNo = '" + vDepNo + "' ";
+                string vDepName = PF.GetValue(vConnStr, vSQLStr_Temp, "Name");
+                if (vDepName == "")
+                {
+                    vDepName = eDepNo.Text.Trim();
+                    vSQLStr_Temp = "select top 1 DepNo from Department where [Name] like '%" + vDepName + "%' order by DepNo ";
+                    vDepNo = PF.GetValue(vConnStr, vSQLStr_Temp, "DepNo");
+                }
+                eDepNo.Text = vDepNo;
+                eDepName.Text = vDepName;
+            }
+        }
+
+        protected void eDepNo_INS_TextChanged(object sender, EventArgs e)
+        {
+            TextBox eDepNo = (TextBox)fvConsSheetA_Detail.FindControl("eDepNo_INS");
+            if (eDepNo != null)
+            {
+                Label eDepName = (Label)fvConsSheetA_Detail.FindControl("eDepName_INS");
+                if (vConnStr == "")
+                {
+                    vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
+                }
+                string vDepNo = eDepNo.Text.Trim();
+                string vSQLStr_Temp = "select [Name] from Department where DepNo = '" + vDepNo + "' ";
+                string vDepName = PF.GetValue(vConnStr, vSQLStr_Temp, "Name");
+                if (vDepName == "")
+                {
+                    vDepName = eDepNo.Text.Trim();
+                    vSQLStr_Temp = "select top 1 DepNo from Department where [Name] like '%" + vDepName + "%' order by DepNo ";
+                    vDepNo = PF.GetValue(vConnStr, vSQLStr_Temp, "DepNo");
+                }
+                eDepNo.Text = vDepNo;
+                eDepName.Text = vDepName;
+            }
         }
     }
 }

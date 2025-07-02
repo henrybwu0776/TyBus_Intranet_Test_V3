@@ -160,9 +160,18 @@
                             <asp:Label ID="ePayDate_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("PayDate","{0:yyyy/MM/dd}") %>' Width="95%" />
                         </td>
                         <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbSheetNote_Edit" runat="server" CssClass="text-Right-Blue" Text="主旨" Width="95%" />
+                            <asp:Label ID="lbDepNo_Edit" runat="server" CssClass="text-Right-Blue" Text="需求單位" Width="95%" />
                         </td>
                         <td class="ColHeight ColBorder ColWidth-10Col" colspan="5">
+                            <asp:TextBox ID="eDepNo_Edit" runat="server" CssClass="text-Left-Black" AutoPostBack="true" OnTextChanged="eDepNo_Edit_TextChanged" Text='<%# Eval("DepNo") %>' Width="35%" />
+                            <asp:Label ID="eDepName_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("DepName") %>' Width="60%" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="ColHeight ColBorder ColWidth-10Col">
+                            <asp:Label ID="lbSheetNote_Edit" runat="server" CssClass="text-Right-Blue" Text="主旨" Width="95%" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-10Col" colspan="9">
                             <asp:TextBox ID="eSheetNote_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("SheetNote") %>' Width="97%" />
                         </td>
                     </tr>
@@ -298,9 +307,18 @@
                             <asp:Label ID="ePayDate_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("PayDate","{0:yyyy/MM/dd}") %>' Width="95%" />
                         </td>
                         <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbSheetNote_INS" runat="server" CssClass="text-Right-Blue" Text="主旨" Width="95%" />
+                            <asp:Label ID="lbDepNo_INS" runat="server" CssClass="text-Right-Blue" Text="需求單位" Width="95%" />
                         </td>
                         <td class="ColHeight ColBorder ColWidth-10Col" colspan="5">
+                            <asp:TextBox ID="eDepNo_INS" runat="server" CssClass="text-Left-Black" AutoPostBack="true" OnTextChanged="eDepNo_INS_TextChanged" Text='<%# Eval("DepNo") %>' Width="35%" />
+                            <asp:Label ID="eDepName_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("DepName") %>' Width="60%" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="ColHeight ColBorder ColWidth-10Col">
+                            <asp:Label ID="lbSheetNote_INS" runat="server" CssClass="text-Right-Blue" Text="主旨" Width="95%" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-10Col" colspan="9">
                             <asp:TextBox ID="eSheetNote_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("SheetNote") %>' Width="97%" />
                         </td>
                     </tr>
@@ -444,9 +462,18 @@
                             <asp:Label ID="ePayDate_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("PayDate","{0:yyyy/MM/dd}") %>' Width="95%" />
                         </td>
                         <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbSheetNote_List" runat="server" CssClass="text-Right-Blue" Text="主旨" Width="95%" />
+                            <asp:Label ID="lbDepNo_List" runat="server" CssClass="text-Right-Blue" Text="需求單位" Width="95%" />
                         </td>
                         <td class="ColHeight ColBorder ColWidth-10Col" colspan="5">
+                            <asp:Label ID="eDepNo_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("DepNo") %>' Width="35%" />
+                            <asp:Label ID="eDepName_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("DepName") %>' Width="60%" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="ColHeight ColBorder ColWidth-10Col">
+                            <asp:Label ID="lbSheetNote_List" runat="server" CssClass="text-Right-Blue" Text="主旨" Width="95%" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-10Col" colspan="9">
                             <asp:Label ID="eSheetNote_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("SheetNote") %>' Width="97%" />
                         </td>
                     </tr>
@@ -511,7 +538,7 @@
         <asp:SqlDataSource ID="sdsConsSheetA_Detail" runat="server" ConnectionString="<%$ ConnectionStrings:connERPSQL %>" SelectCommand="select a.SheetNo, a.SheetMode, d.ClassTxt SheetMode_C, a.SupNo, c.[Name] SupName, a.BuDate, a.BuMan, e2.[Name] BuMan_C, a.Amount, 
        a.TaxRate, a.TaxType, d2.ClassTxt TaxType_C, a.TaxAMT, a.TotalAmount, a.SheetStatus, d3.ClassTxt SheetStatus_C, a.StatusDate, 
 	   a.PayDate, a.PayMode, d4.ClassTxt PayMode_C, a.RemarkA, a.ModifyMan, e3.[Name] ModifyMan_C, a.ModifyDate, 
-	   a.SheetNote 
+	   a.SheetNote, a.DepNo, f.[Name] DepName 
   from ConsSheetA a left  join DBDICB d on d.ClassNo = a.SheetMode and d.FKey = '總務課耗材進出單ConsSheetA      SheetMode'
                     left join DBDICB d2 on d2.ClassNo = a.TaxType and d2.FKey = '總務請購單      ConsSheetA      TAXTYPE'
                     left join DBDICB d3 on d3.ClassNo = a.SheetStatus and d3.FKey = '總務耗材進出單  fmConsSheetA    SheetStatus'
@@ -519,6 +546,7 @@
                     left join Employee e2 on e2.EmpNo = a.BuMan
                     left join Employee e3 on e3.EmpNo = a.ModifyMan
                     left join [Custom] c on c.Code = a.SupNo and c.[Types] = 'S'
+					left join Department f on f.DepNo = a.DepNo
  where SheetNo = @SheetNo">
             <SelectParameters>
                 <asp:ControlParameter ControlID="gridConsSheetA_List" Name="SheetNo" PropertyName="SelectedValue" />
