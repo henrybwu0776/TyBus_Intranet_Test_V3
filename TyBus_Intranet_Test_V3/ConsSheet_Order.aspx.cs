@@ -887,7 +887,7 @@ namespace TyBus_Intranet_Test_V3
                     {
                         eConsNo = (TextBox)fvConsSheetB_Detail.FindControl("eConsNo_Edit");
                         eConsName = (TextBox)fvConsSheetB_Detail.FindControl("eConsName_Edit");
-                        vConsDataURL = "SearchConsData.aspx?ConsNoID=" + eConsNo.ClientID + "&ConsPriceID=" + eConsName.ClientID;
+                        vConsDataURL = "SearchConsData.aspx?ConsNoID=" + eConsNo.ClientID + "&ConsNameID=" + eConsName.ClientID;
                         vConsDataScript = "window.open('" + vConsDataURL + "','','height=600, width=650,status=no,toolbar=no,menubar=no,location=no','')";
                         eConsNo.Attributes["onClick"] = vConsDataScript;
                     }
@@ -900,7 +900,7 @@ namespace TyBus_Intranet_Test_V3
                         eSheetNo.Text = eSheetNoA.Text.Trim();
                         eConsNo = (TextBox)fvConsSheetB_Detail.FindControl("eConsNo_INS");
                         eConsName = (TextBox)fvConsSheetB_Detail.FindControl("eConsName_INS");
-                        vConsDataURL = "SearchConsData.aspx?ConsNoID=" + eConsNo.ClientID + "&ConsPriceID=" + eConsName.ClientID;
+                        vConsDataURL = "SearchConsData.aspx?ConsNoID=" + eConsNo.ClientID + "&ConsNameID=" + eConsName.ClientID;
                         vConsDataScript = "window.open('" + vConsDataURL + "','','height=600, width=650,status=no,toolbar=no,menubar=no,location=no','')";
                         eConsNo.Attributes["onClick"] = vConsDataScript;
                         Label eQtyMode = (Label)fvConsSheetB_Detail.FindControl("eQtyMode_INS");
