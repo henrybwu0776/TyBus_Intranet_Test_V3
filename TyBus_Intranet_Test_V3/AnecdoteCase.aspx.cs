@@ -915,9 +915,11 @@ namespace TyBus_Intranet_Test_V3
                 if (vaResult[0].ToString() != "")
                 {
                     eDriver.Text = vaResult[0].ToString();
-                    eDriverName.Text = vResultStr[1].ToString();
+                    eDriverName.Text = vaResult[1].ToString();
                     vSQLStr_Temp = "select (IDCardNo + ',' + convert(varchar(10), Birthday, 111) + ',' + convert(varchar(10), Assumeday, 111) + ',' + " + Environment.NewLine +
-                                   "       case when isnull(CellPhone, '') <> '' then CellPhone else TelNo1 end + ',' + Addr1) as ResultStr " + Environment.NewLine +
+                                   "       case when isnull(CellPhone, '') <> '' then CellPhone " + Environment.NewLine +
+                                   "            when isnull(TelNo1, '') <> '' then TelNo1 " + Environment.NewLine +
+                                   "            when isnull(TelNo2, '') <> '' then TelNo2 else '  ' end + ',' + Addr1) as ResultStr " + Environment.NewLine +
                                    "  from Employee " + Environment.NewLine +
                                    " where EmpNo = '" + vaResult[0].ToString() + "' ";
                     vResultStr = PF.GetValue(vConnStr, vSQLStr_Temp, "ResultStr");
@@ -998,7 +1000,9 @@ namespace TyBus_Intranet_Test_V3
                 if (eDriver.Text.Trim() != "")
                 {
                     vSQLStr_Temp = "select (IDCardNo + ',' + convert(varchar(10), Birthday, 111) + ',' + convert(varchar(10), Assumeday, 111) + ',' + " + Environment.NewLine +
-                                   "       case when isnull(CellPhone, '') <> '' then CellPhone else TelNo1 end + ',' + Addr1) as ResultStr " + Environment.NewLine +
+                                   "       case when isnull(CellPhone, '') <> '' then CellPhone " + Environment.NewLine +
+                                   "            when isnull(TelNo1, '') <> '' then TelNo1 " + Environment.NewLine +
+                                   "            when isnull(TelNo2, '') <> '' then TelNo2 else '  ' end + ',' + Addr1) as ResultStr " + Environment.NewLine +
                                    "  from Employee " + Environment.NewLine +
                                    " where EmpNo = '" + vDriver.Trim() + "' ";
                     string vResultStr = PF.GetValue(vConnStr, vSQLStr_Temp, "ResultStr");
@@ -1305,9 +1309,11 @@ namespace TyBus_Intranet_Test_V3
                 if (vaResult[0].ToString() != "")
                 {
                     eDriver.Text = vaResult[0].ToString();
-                    eDriverName.Text = vResultStr[1].ToString();
+                    eDriverName.Text = vaResult[1].ToString();
                     vSQLStr_Temp = "select (IDCardNo + ',' + convert(varchar(10), Birthday, 111) + ',' + convert(varchar(10), Assumeday, 111) + ',' + " + Environment.NewLine +
-                                   "       case when isnull(CellPhone, '') <> '' then CellPhone else TelNo1 end + ',' + Addr1) as ResultStr " + Environment.NewLine +
+                                   "       case when isnull(CellPhone, '') <> '' then CellPhone " + Environment.NewLine +
+                                   "            when isnull(TelNo1, '') <> '' then TelNo1 " + Environment.NewLine +
+                                   "            when isnull(TelNo2, '') <> '' then TelNo2 else '  ' end + ',' + Addr1) as ResultStr " + Environment.NewLine +
                                    "  from Employee " + Environment.NewLine +
                                    " where EmpNo = '" + vaResult[0].ToString() + "' ";
                     vResultStr = PF.GetValue(vConnStr, vSQLStr_Temp, "ResultStr");
@@ -1388,7 +1394,9 @@ namespace TyBus_Intranet_Test_V3
                 if (eDriver.Text.Trim() != "")
                 {
                     vSQLStr_Temp = "select (IDCardNo + ',' + convert(varchar(10), Birthday, 111) + ',' + convert(varchar(10), Assumeday, 111) + ',' + " + Environment.NewLine +
-                                   "       case when isnull(CellPhone, '') <> '' then CellPhone else TelNo1 end + ',' + Addr1) as ResultStr " + Environment.NewLine +
+                                   "       case when isnull(CellPhone, '') <> '' then CellPhone " + Environment.NewLine +
+                                   "            when isnull(TelNo1, '') <> '' then TelNo1 " + Environment.NewLine +
+                                   "            when isnull(TelNo2, '') <> '' then TelNo2 else '  ' end + ',' + Addr1) as ResultStr " + Environment.NewLine +
                                    "  from Employee " + Environment.NewLine +
                                    " where EmpNo = '" + vDriver.Trim() + "' ";
                     string vResultStr = PF.GetValue(vConnStr, vSQLStr_Temp, "ResultStr");

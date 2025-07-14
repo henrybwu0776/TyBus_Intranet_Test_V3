@@ -2924,7 +2924,6 @@
                       </Style>
                     </Textbox>
                     <ColSpan>2</ColSpan>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell />
@@ -3140,7 +3139,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>９、車損估價單（如有車損併同附上）　１０、事故現埸照片（如有現場指攝併同附上）</Value>
+                              <Value>９、車損估價單（如有車損併同附上）　１０、事故現埸照片（如有現場照片併同附上）</Value>
                               <Style>
                                 <FontFamily>標楷體</FontFamily>
                                 <FontSize>12pt</FontSize>
