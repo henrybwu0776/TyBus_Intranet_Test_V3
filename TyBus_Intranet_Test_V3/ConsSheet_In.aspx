@@ -1,20 +1,18 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MainPage.Master" AutoEventWireup="true" CodeBehind="ConsSheet_Pur.aspx.cs" Inherits="TyBus_Intranet_Test_V3.ConsSheet_Pur" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MainPage.Master" AutoEventWireup="true" CodeBehind="ConsSheet_In.aspx.cs" Inherits="TyBus_Intranet_Test_V3.ConsSheet_In" %>
 
-<%@ Register Assembly="Microsoft.ReportViewer.WebForms" Namespace="Microsoft.Reporting.WebForms" TagPrefix="rsweb" %>
-
-<asp:Content ID="ConsSheet_PurForm" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<asp:Content ID="ConsSheet_InForm" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div>
-        <a class="titleText-Red">總務耗材採購單</a>
+        <a class="titleText-Red">總務耗材進貨單</a>
     </div>
     <br />
+    <div>
+        <asp:Label ID="eErrorMSG_Main" runat="server" CssClass="errorMessageText" Visible="false" Width="100%" />
+    </div>
     <asp:Panel ID="plSearch" runat="server" CssClass="SearchPanel">
-        <div>
-            <asp:Label ID="eErrorMSG_Main" runat="server" CssClass="errorMessageText" Visible="false" />
-        </div>
         <table class="TableSetting">
             <tr>
                 <td class="ColHeight ColBorder ColWidth-8Col">
-                    <asp:Label ID="lbBuDate_Search" runat="server" CssClass="text-Right-Blue" Text="申請日期" Width="95%" />
+                    <asp:Label ID="lbBuDate_Search" runat="server" CssClass="text-Right-Blue" Text="進貨日期" Width="95%" />
                 </td>
                 <td class="ColHeight ColBorder ColWidth-8Col" colspan="2">
                     <asp:TextBox ID="eBuDateS_Search" runat="server" CssClass="text-Left-Black" Width="40%" />
@@ -55,29 +53,28 @@
     </asp:Panel>
     <asp:ScriptManager ID="smMain" runat="server"></asp:ScriptManager>
     <asp:Panel ID="plShowDataA" runat="server" CssClass="ShowPanel">
-        <asp:GridView ID="gridConsSheetA_List" runat="server" AllowPaging="True" AutoGenerateColumns="False" CellPadding="4" DataKeyNames="SheetNo" DataSourceID="sdsConsSheetA_List" ForeColor="#333333" GridLines="None" PageSize="5" Width="100%">
+        <asp:GridView ID="gridConsSheetA_List" runat="server" Width="100%" AllowPaging="True" AutoGenerateColumns="False" CellPadding="4" DataKeyNames="SheetNo" DataSourceID="sdsConsSheetA_List" ForeColor="#333333" GridLines="None" PageSize="5">
             <AlternatingRowStyle BackColor="White" />
             <Columns>
-                <asp:CommandField ButtonType="Button" ShowSelectButton="True" ItemStyle-Width="60px" ItemStyle-CssClass="fixedWidth" />
-                <asp:BoundField DataField="SheetNo" HeaderText="單號" ReadOnly="True" SortExpression="SheetNo" ItemStyle-Width="80px" ItemStyle-CssClass="fixedWidth" />
-                <asp:BoundField DataField="BuDate" HeaderText="建檔日期" SortExpression="BuDate" DataFormatString="{0:d}" />
+                <asp:CommandField ButtonType="Button" ShowSelectButton="True" />
+                <asp:BoundField DataField="SheetNo" HeaderText="進貨單號" ReadOnly="True" SortExpression="SheetNo" />
+                <asp:BoundField DataField="BuDate" DataFormatString="{0:d}" HeaderText="進貨日期" SortExpression="BuDate" />
                 <asp:BoundField DataField="BuMan_C" HeaderText="建檔人" SortExpression="BuMan_C" />
-                <asp:BoundField DataField="SupName" HeaderText="供應廠商" SortExpression="SupName" />
-                <asp:BoundField DataField="TotalAmount" HeaderText="總金額" SortExpression="TotalAmount" />
-                <asp:BoundField DataField="SheetStatus_C" HeaderText="處理進度" SortExpression="SheetStatus_C" />
+                <asp:BoundField DataField="SupName" HeaderText="供應商" SortExpression="SupName" />
+                <asp:BoundField DataField="SheetStatus_C" HeaderText="單據狀態" SortExpression="SheetStatus_C" />
             </Columns>
-            <EditRowStyle BackColor="#2461BF" />
-            <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-            <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-            <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
-            <RowStyle BackColor="#EFF3FB" />
-            <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
-            <SortedAscendingCellStyle BackColor="#F5F7FB" />
-            <SortedAscendingHeaderStyle BackColor="#6D95E1" />
-            <SortedDescendingCellStyle BackColor="#E9EBEF" />
-            <SortedDescendingHeaderStyle BackColor="#4870BE" />
+            <EditRowStyle BackColor="#7C6F57" />
+            <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
+            <HeaderStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
+            <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
+            <RowStyle BackColor="#E3EAEB" />
+            <SelectedRowStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333" />
+            <SortedAscendingCellStyle BackColor="#F8FAFA" />
+            <SortedAscendingHeaderStyle BackColor="#246B61" />
+            <SortedDescendingCellStyle BackColor="#D4DFE1" />
+            <SortedDescendingHeaderStyle BackColor="#15524A" />
         </asp:GridView>
-        <asp:FormView ID="fvConsSheetA_Detail" runat="server" DataKeyNames="SheetNo" DataSourceID="sdsConsSheetA_Detail" OnDataBound="fvConsSheetA_Detail_DataBound" Width="100%">
+        <asp:FormView ID="fvConsSheetA_Detail" runat="server" Width="100%" DataKeyNames="SheetNo" DataSourceID="sdsConsSheetA_Detail" OnDataBound="fvConsSheetA_Detail_DataBound">
             <EditItemTemplate>
                 <asp:Button ID="bbOKA_Edit" runat="server" CausesValidation="True" CssClass="button-Blue" OnClick="bbOKA_Edit_Click" Text="確定" Width="120px" />
                 <asp:Button ID="bbCancelA_Edit" runat="server" CausesValidation="False" CssClass="button-Red" CommandName="Cancel" Text="取消" Width="120px" />
@@ -114,64 +111,16 @@
                     </tr>
                     <tr>
                         <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbAmountA_Edit" runat="server" CssClass="text-Right-Blue" Text="金額小計" Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="eAmountA_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("Amount") %>' Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbTaxType_Edit" runat="server" CssClass="text-Right-Blue" Text="稅別" Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:DropDownList ID="ddlTaxType_Edit" runat="server" CssClass="text-Left-Black" AutoPostBack="true" OnSelectedIndexChanged="ddlTaxType_Edit_SelectedIndexChanged" Width="95%" />
-                            <asp:Label ID="eTaxType_Edit" runat="server" Text='<%# Eval("TaxType") %>' Visible="false" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbTaxRate_Edit" runat="server" CssClass="text-Right-Blue" Text="稅率" Width="90%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:TextBox ID="eTaxRate_Edit" runat="server" CssClass="text-Left-Black" AutoPostBack="true" OnTextChanged="eTaxRate_Edit_TextChanged" Text='<%# Eval("TaxRate") %>' Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbTaxAMT_Edit" runat="server" CssClass="text-Right-Blue" Text="稅額" Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="eTaxAMT_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("TaxAMT") %>' Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbTotalAmount_Edit" runat="server" CssClass="text-Right-Blue" Text="總金額" Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="eTotalAmount_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("TotalAmount") %>' Width="95%" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbPayMode_Edit" runat="server" CssClass="text-Right-Blue" Text="付款方式" Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:DropDownList ID="ddlPayMode_Edit" runat="server" CssClass="text-Left-Black" AutoPostBack="true" OnSelectedIndexChanged="ddlPayMode_Edit_SelectedIndexChanged" Width="95%" />
-                            <asp:Label ID="ePayMode_Edit" runat="server" Text='<%# Eval("PayMode") %>' Visible="false" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbPayDate_Edit" runat="server" CssClass="text-Right-Blue" Text="付款日期" Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="ePayDate_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("PayDate","{0:yyyy/MM/dd}") %>' Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
                             <asp:Label ID="lbDepNo_Edit" runat="server" CssClass="text-Right-Blue" Text="需求單位" Width="95%" />
                         </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col" colspan="5">
+                        <td class="ColHeight ColBorder ColWidth-10Col" colspan="3">
                             <asp:TextBox ID="eDepNo_Edit" runat="server" CssClass="text-Left-Black" AutoPostBack="true" OnTextChanged="eDepNo_Edit_TextChanged" Text='<%# Eval("DepNo") %>' Width="35%" />
                             <asp:Label ID="eDepName_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("DepName") %>' Width="60%" />
                         </td>
-                    </tr>
-                    <tr>
                         <td class="ColHeight ColBorder ColWidth-10Col">
                             <asp:Label ID="lbSheetNote_Edit" runat="server" CssClass="text-Right-Blue" Text="主旨" Width="95%" />
                         </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col" colspan="9">
+                        <td class="ColHeight ColBorder ColWidth-10Col" colspan="5">
                             <asp:TextBox ID="eSheetNote_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("SheetNote") %>' Width="97%" />
                         </td>
                     </tr>
@@ -261,64 +210,16 @@
                     </tr>
                     <tr>
                         <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbAmountA_INS" runat="server" CssClass="text-Right-Blue" Text="金額小計" Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="eAmountA_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("Amount") %>' Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbTaxType_INS" runat="server" CssClass="text-Right-Blue" Text="稅別" Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:DropDownList ID="ddlTaxType_INS" runat="server" CssClass="text-Left-Black" AutoPostBack="true" OnSelectedIndexChanged="ddlTaxType_INS_SelectedIndexChanged" Width="95%" />
-                            <asp:Label ID="eTaxType_INS" runat="server" Text='<%# Eval("TaxType") %>' Visible="false" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbTaxRate_INS" runat="server" CssClass="text-Right-Blue" Text="稅率" Width="90%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:TextBox ID="eTaxRate_INS" runat="server" CssClass="text-Left-Black" AutoPostBack="true" OnTextChanged="eTaxRate_INS_TextChanged" Text='<%# Eval("TaxRate") %>' Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbTaxAMT_INS" runat="server" CssClass="text-Right-Blue" Text="稅額" Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="eTaxAMT_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("TaxAMT") %>' Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbTotalAmount_INS" runat="server" CssClass="text-Right-Blue" Text="總金額" Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="eTotalAmount_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("TotalAmount") %>' Width="95%" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbPayMode_INS" runat="server" CssClass="text-Right-Blue" Text="付款方式" Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:DropDownList ID="ddlPayMode_INS" runat="server" CssClass="text-Left-Black" AutoPostBack="true" OnSelectedIndexChanged="ddlPayMode_INS_SelectedIndexChanged" Width="95%" />
-                            <asp:Label ID="ePayMode_INS" runat="server" Text='<%# Eval("PayMode") %>' Visible="false" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbPayDate_INS" runat="server" CssClass="text-Right-Blue" Text="付款日期" Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="ePayDate_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("PayDate","{0:yyyy/MM/dd}") %>' Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
                             <asp:Label ID="lbDepNo_INS" runat="server" CssClass="text-Right-Blue" Text="需求單位" Width="95%" />
                         </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col" colspan="5">
+                        <td class="ColHeight ColBorder ColWidth-10Col" colspan="3">
                             <asp:TextBox ID="eDepNo_INS" runat="server" CssClass="text-Left-Black" AutoPostBack="true" OnTextChanged="eDepNo_INS_TextChanged" Text='<%# Eval("DepNo") %>' Width="35%" />
                             <asp:Label ID="eDepName_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("DepName") %>' Width="60%" />
                         </td>
-                    </tr>
-                    <tr>
                         <td class="ColHeight ColBorder ColWidth-10Col">
                             <asp:Label ID="lbSheetNote_INS" runat="server" CssClass="text-Right-Blue" Text="主旨" Width="95%" />
                         </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col" colspan="9">
+                        <td class="ColHeight ColBorder ColWidth-10Col" colspan="5">
                             <asp:TextBox ID="eSheetNote_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("SheetNote") %>' Width="97%" />
                         </td>
                     </tr>
@@ -376,13 +277,11 @@
                 <asp:Button ID="bbNewA_Empty" runat="server" CssClass="button-Blue" CommandName="New" Text="新增" Width="120px" />
             </EmptyDataTemplate>
             <ItemTemplate>
-                <asp:Button ID="bbNewA_List" runat="server" CausesValidation="True" CssClass="button-Black" CommandName="New" Text="新增" Width="120px" />
-                <asp:Button ID="bbEditA_List" runat="server" CausesValidation="false" CssClass="button-Blue" CommandName="Edit" Text="修改" Width="120px" />
-                <asp:Button ID="bbArriveA_List" runat="server" CausesValidation="false" CssClass="button-Black" OnClick="bbArriveA_List_Click" Text="全單到貨" Width="120px" />
-                <asp:Button ID="bbCloseA_List" runat="server" CausesValidation="false" CssClass="button-Blue" OnClick="bbCloseA_List_Click" Text="付款結案" Width="120px" />
-                <asp:Button ID="bbPtint_List" runat="server" CausesValidation="false" CssClass="button-Black" OnClick="bbPtint_List_Click" Text="列印採購單" Width="120px" />
-                <asp:Button ID="bbAbortA_List" runat="server" CausesValidation="false" CssClass="button-Blue" OnClick="bbAbortA_List_Click" Text="採購單作廢" Width="120px" />
-                <asp:Button ID="bbDelA_List" runat="server" CausesValidation="false" CssClass="button-Red" OnClick="bbDelA_List_Click" Text="刪除採購單" Width="120px" />
+                <asp:Button ID="bbNewA_List" runat="server" CssClass="button-Blue" CausesValidation="true" CommandName="New" Text="新增" Width="120px" />
+                <asp:Button ID="bbEditA_List" runat="server" CssClass="button-Black" CausesValidation="false" CommandName="Edit" Text="修改" Width="120px" />
+                <asp:Button ID="bbInStoreA_List" runat="server" CssClass="button-Blue" CausesValidation="false" OnClick="bbInStoreA_List_Click" Text="整單入庫" Width="120px" />
+                <asp:Button ID="bbAbortA_List" runat="server" CssClass="button-Black" CausesValidation="false" OnClick="bbAbortA_List_Click" Text="整單作廢" Width="120px" />
+                <asp:Button ID="bbDeleteA_List" runat="server" CssClass="button-Red" CausesValidation="false" OnClick="bbDeleteA_List_Click" Text="刪除" Width="120px" />
                 <table class="TableSetting">
                     <tr>
                         <td class="ColHeight ColBorder ColWidth-10Col">
@@ -416,64 +315,16 @@
                     </tr>
                     <tr>
                         <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbAmountA_List" runat="server" CssClass="text-Right-Blue" Text="金額小計" Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="eAmountA_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("Amount") %>' Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbTaxType_List" runat="server" CssClass="text-Right-Blue" Text="稅別" Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="eTaxType_C_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("TaxType_C") %>' Width="95%" />
-                            <asp:Label ID="eTaxType_List" runat="server" Text='<%# Eval("TaxType") %>' Visible="false" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbTaxRate_List" runat="server" CssClass="text-Right-Blue" Text="稅率" Width="90%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="eTaxRate_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("TaxRate") %>' Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbTaxAMT_List" runat="server" CssClass="text-Right-Blue" Text="稅額" Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="eTaxAMT_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("TaxAMT") %>' Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbTotalAmount_List" runat="server" CssClass="text-Right-Blue" Text="總金額" Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="eTotalAmount_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("TotalAmount") %>' Width="95%" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbPayMode_List" runat="server" CssClass="text-Right-Blue" Text="付款方式" Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="ePayMode_C_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("PayMode_C") %>' Width="95%" />
-                            <asp:Label ID="ePayMode_List" runat="server" Text='<%# Eval("PayMode") %>' Visible="false" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbPayDate_List" runat="server" CssClass="text-Right-Blue" Text="付款日期" Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="ePayDate_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("PayDate","{0:yyyy/MM/dd}") %>' Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
                             <asp:Label ID="lbDepNo_List" runat="server" CssClass="text-Right-Blue" Text="需求單位" Width="95%" />
                         </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col" colspan="5">
+                        <td class="ColHeight ColBorder ColWidth-10Col" colspan="3">
                             <asp:Label ID="eDepNo_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("DepNo") %>' Width="35%" />
                             <asp:Label ID="eDepName_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("DepName") %>' Width="60%" />
                         </td>
-                    </tr>
-                    <tr>
                         <td class="ColHeight ColBorder ColWidth-10Col">
                             <asp:Label ID="lbSheetNote_List" runat="server" CssClass="text-Right-Blue" Text="主旨" Width="95%" />
                         </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col" colspan="9">
+                        <td class="ColHeight ColBorder ColWidth-10Col" colspan="5">
                             <asp:Label ID="eSheetNote_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("SheetNote") %>' Width="97%" />
                         </td>
                     </tr>
@@ -535,16 +386,13 @@
                     left join DBDICB d on d.ClassNo = a.SheetStatus and d.FKey = '總務耗材進出單  fmConsSheetA    SheetStatus'
                     left join Employee e on e.EmpNo = a.BuMan 
  where isnull(a.SheetMode, '') = ''"></asp:SqlDataSource>
-        <asp:SqlDataSource ID="sdsConsSheetA_Detail" runat="server" ConnectionString="<%$ ConnectionStrings:connERPSQL %>" SelectCommand="select a.SheetNo, a.SheetMode, d.ClassTxt SheetMode_C, a.SupNo, c.[Name] SupName, a.BuDate, a.BuMan, e2.[Name] BuMan_C, a.Amount, 
-       a.TaxRate, a.TaxType, d2.ClassTxt TaxType_C, a.TaxAMT, a.TotalAmount, a.SheetStatus, d3.ClassTxt SheetStatus_C, a.StatusDate, 
-	   a.PayDate, a.PayMode, d4.ClassTxt PayMode_C, a.RemarkA, a.ModifyMan, e3.[Name] ModifyMan_C, a.ModifyDate, 
+        <asp:SqlDataSource ID="sdsConsSheetA_Detail" runat="server" ConnectionString="<%$ ConnectionStrings:connERPSQL %>" SelectCommand="select a.SheetNo, a.SheetMode, d.ClassTxt SheetMode_C, a.SupNo, c.[Name] SupName, a.BuDate, a.BuMan, e.[Name] BuMan_C, 
+       a.SheetStatus, d2.ClassTxt SheetStatus_C, a.StatusDate, a.RemarkA, a.ModifyMan, e2.[Name] ModifyMan_C, a.ModifyDate, 
 	   a.SheetNote, a.DepNo, f.[Name] DepName 
   from ConsSheetA a left  join DBDICB d on d.ClassNo = a.SheetMode and d.FKey = '總務課耗材進出單ConsSheetA      SheetMode'
-                    left join DBDICB d2 on d2.ClassNo = a.TaxType and d2.FKey = '總務請購單      ConsSheetA      TAXTYPE'
-                    left join DBDICB d3 on d3.ClassNo = a.SheetStatus and d3.FKey = '總務耗材進出單  fmConsSheetA    SheetStatus'
-                    left join DBDICB d4 on d4.ClassNo = a.PayMode and d4.FKey = '總務請購單      ConsSheetA      PayMode'
-                    left join Employee e2 on e2.EmpNo = a.BuMan
-                    left join Employee e3 on e3.EmpNo = a.ModifyMan
+                    left join DBDICB d2 on d2.ClassNo = a.SheetStatus and d2.FKey = '總務耗材進出單  fmConsSheetA    SheetStatus'
+                    left join Employee e on e.EmpNo = a.BuMan
+                    left join Employee e2 on e2.EmpNo = a.ModifyMan
                     left join [Custom] c on c.Code = a.SupNo and c.[Types] = 'S'
 					left join Department f on f.DepNo = a.DepNo
  where SheetNo = @SheetNo">
@@ -554,70 +402,61 @@
         </asp:SqlDataSource>
     </asp:Panel>
     <asp:Panel ID="plShowDataB" runat="server" CssClass="ShowPanel-Detail">
-        <asp:GridView ID="gridConsSheetB_List" runat="server" Width="100%" AllowPaging="True" AutoGenerateColumns="False" BorderStyle="None" CellPadding="4" DataKeyNames="SheetNoItems" DataSourceID="sdsConsSheetB_List" ForeColor="#333333" GridLines="None" PageSize="5">
-            <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
+        <asp:GridView ID="gridConsSheetB_List" runat="server" Width="100%" AllowPaging="True" AutoGenerateColumns="False" BackColor="White" BorderColor="#CC9966" BorderStyle="None" BorderWidth="1px" CellPadding="4" DataKeyNames="SheetNoItems" DataSourceID="sdsConsSheetB_List" PageSize="5">
             <Columns>
                 <asp:CommandField ButtonType="Button" ShowSelectButton="True" ItemStyle-Width="60px" ItemStyle-CssClass="fixedWidth" />
                 <asp:BoundField DataField="SheetNoItems" HeaderText="SheetNoItems" ReadOnly="True" SortExpression="SheetNoItems" Visible="False" />
-                <asp:BoundField DataField="Items" HeaderText="項次" SortExpression="Items" ItemStyle-Width="50px" ItemStyle-CssClass="fixedWidth"/>
+                <asp:BoundField DataField="Items" HeaderText="項次" SortExpression="Items" ItemStyle-Width="60px" ItemStyle-CssClass="fixedWidth" />
                 <asp:BoundField DataField="ConsName" HeaderText="品名" SortExpression="ConsName" />
-                <asp:BoundField DataField="Price" HeaderText="單價" SortExpression="Price" ItemStyle-Width="60px" ItemStyle-CssClass="fixedWidth" />
-                <asp:BoundField DataField="Quantity" HeaderText="數量" SortExpression="Quantity" ItemStyle-Width="60px" ItemStyle-CssClass="fixedWidth" />
+                <asp:BoundField DataField="Price" HeaderText="Price" SortExpression="Price" Visible="False" />
+                <asp:BoundField DataField="Quantity" HeaderText="數量" SortExpression="Quantity" ItemStyle-Width="100px" ItemStyle-CssClass="fixedWidth" />
                 <asp:BoundField DataField="ConsUnit_C" HeaderText="單位" SortExpression="ConsUnit_C" ItemStyle-Width="60px" ItemStyle-CssClass="fixedWidth" />
-                <asp:BoundField DataField="ItemStatus_C" HeaderText="進度" SortExpression="ItemStatus_C" ItemStyle-Width="100px" ItemStyle-CssClass="fixedWidth" />
             </Columns>
-            <EditRowStyle BackColor="#999999" />
-            <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
-            <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
-            <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
-            <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
-            <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
-            <SortedAscendingCellStyle BackColor="#E9E7E2" />
-            <SortedAscendingHeaderStyle BackColor="#506C8C" />
-            <SortedDescendingCellStyle BackColor="#FFFDF8" />
-            <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
+            <FooterStyle BackColor="#FFFFCC" ForeColor="#330099" />
+            <HeaderStyle BackColor="#990000" Font-Bold="True" ForeColor="#FFFFCC" />
+            <PagerStyle BackColor="#FFFFCC" ForeColor="#330099" HorizontalAlign="Center" />
+            <RowStyle BackColor="White" ForeColor="#330099" />
+            <SelectedRowStyle BackColor="#FFCC66" Font-Bold="True" ForeColor="#663399" />
+            <SortedAscendingCellStyle BackColor="#FEFCEB" />
+            <SortedAscendingHeaderStyle BackColor="#AF0101" />
+            <SortedDescendingCellStyle BackColor="#F6F0C0" />
+            <SortedDescendingHeaderStyle BackColor="#7E0000" />
         </asp:GridView>
-        <asp:FormView ID="fvConsSheetB_Detail" runat="server" Width="100%" DataKeyNames="SheetNoItems" DataSourceID="sdsConsSheetB_Detail" OnDataBound="fvConsSheetB_Detail_DataBound">
+        <asp:FormView ID="fvConsSheetB_Detail" runat="server" DataKeyNames="SheetNoItems" DataSourceID="sdsConsSheetB_Detail" OnDataBound="fvConsSheetB_Detail_DataBound" Width="100%">
             <EditItemTemplate>
-                <asp:Button ID="bbOKB_Edit" runat="server" CausesValidation="True" CssClass="button-Blue" OnClick="bbOKB_Edit_Click" Text="確定" Width="120px" />
-                <asp:Button ID="bbCancelB_Edit" runat="server" CausesValidation="False" CssClass="button-Red" CommandName="Cancel" Text="取消" Width="120px" />
+                <asp:Button ID="bbOKB_Edit" runat="server" CausesValidation="True" CssClass="button-Blue" OnClick="bbOKB_Edit_Click" Text="確定" />
+                <asp:Button ID="bbCancelB_Edit" runat="server" CausesValidation="False" CommandName="Cancel" Text="取消" />
                 <table class="TableSetting">
                     <tr>
                         <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbItems_Edit" runat="server" CssClass="text-Right-Blue" Text="項次" Width="95%" />
-                            <asp:Label ID="eSheetNoItems_Edit" runat="server" Text='<%# Eval("SheetNoItems") %>' Visible="false" />
+                            <asp:Label ID="lbSheetNoItems_Edit" runat="server" CssClass="text-Right-Blue" Text="項次" Width="95%" />
+                            <asp:Label ID="eSheetNoB_Edit" runat="server" Text='<%# Eval("SheetNo") %>' Visible="false" />
                         </td>
                         <td class="ColHeight ColBorder ColWidth-10Col">
                             <asp:Label ID="eItems_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("Items") %>' Width="95%" />
-                            <asp:Label ID="eSheetNoB_Edit" runat="server" Text='<%# Eval("SheetNo") %>' Visible="false" />
+                            <asp:Label ID="eSheetNoItems_Edit" runat="server" Text='<%# Eval("SheetNoItems") %>' Visible="false" />
                         </td>
                         <td class="ColHeight ColBorder ColWidth-10Col">
                             <asp:Label ID="lbConsNo_Edit" runat="server" CssClass="text-Right-Blue" Text="品名" Width="95%" />
                         </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col" colspan="5">
+                        <td class="ColHeight ColBorder ColWidth-10Col" colspan="7">
                             <asp:TextBox ID="eConsNo_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ConsNo") %>' Width="25%" />
-                            <asp:TextBox ID="eConsName_Edit" runat="server" CssClass="text-Left-Black" Enabled="false" Text='<%# Eval("ConsName") %>' Width="65%" />
+                            <asp:TextBox ID="eConsName_Edit" runat="server" CssClass="text-Left-Black" Enabled="false" Text='<%# Eval("ConsName") %>' Width="70%" />
                         </td>
+                    </tr>
+                    <tr>
                         <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbItemStatus_Edit" runat="server" CssClass="text-Right-Blue" Text="處理進度" Width="95%" />
+                            <asp:Label ID="lbItemStatus_Edit" runat="server" CssClass="text-Right-Blue" Text="處理狀態" Width="95%" />
                         </td>
                         <td class="ColHeight ColBorder ColWidth-10Col">
                             <asp:Label ID="eItemStatus_C_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ItemStatus_C") %>' Width="95%" />
                             <asp:Label ID="eItemStatus_Edit" runat="server" Text='<%# Eval("ItemStatus") %>' Visible="false" />
                         </td>
-                    </tr>
-                    <tr>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbPrice_Edit" runat="server" CssClass="text-Right-Blue" Text="單價" Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:TextBox ID="ePrice_Edit" runat="server" CssClass="text-Left-Black" AutoPostBack="true" OnTextChanged="ePrice_Edit_TextChanged" Text='<%# Eval("Price") %>' Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col" rowspan="4">
+                        <td class="ColHeight ColBorder ColWidth-10Col" rowspan="2">
                             <asp:Label ID="lbRemarkB_Edit" runat="server" CssClass="text-Right-Blue" Text="備註" Width="95%" />
                         </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col" rowspan="4" colspan="7">
-                            <asp:TextBox ID="eRemarkB_Edit" runat="server" CssClass="text-Left-Black" TextMode="MultiLine" Text='<%# Eval("RemarkB") %>' Height="97%" Width="97%" />
+                        <td class="ColHeight ColBorder ColWidth-10Col" rowspan="2" colspan="7">
+                            <asp:TextBox ID="eRemarkB_Edit" runat="server" CssClass="text-Left-Black" TextMode="MultiLine" Text='<%# Eval("RemarkB") %>' Width="97%" Height="97%" />
                         </td>
                     </tr>
                     <tr>
@@ -625,53 +464,37 @@
                             <asp:Label ID="lbQuantity_Edit" runat="server" CssClass="text-Right-Blue" Text="數量" Width="95%" />
                         </td>
                         <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:TextBox ID="eQuantity_Edit" runat="server" CssClass="text-Left-Black" AutoPostBack="true" OnTextChanged="ePrice_Edit_TextChanged" Text='<%# Eval("Quantity") %>' Width="40%" />
-                            <asp:DropDownList ID="ddlConsUnit_Edit" runat="server" CssClass="text-Left-Black" OnSelectedIndexChanged="ddlConsUnit_Edit_SelectedIndexChanged" Width="40%" />
-                            <asp:TextBox ID="eConsUnit_Edit" runat="server" Text='<%# Eval("ConsUnit") %>' Visible="false" />
+                            <asp:TextBox ID="eQuantity_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("Quantity") %>' Width="50%" />
+                            <asp:DropdownList ID="ddlConsUnit_C_Edit" runat="server" CssClass="text-Left-Black" AutoPostBack="true" OnSelectedIndexChanged="ddlConsUnit_C_Edit_SelectedIndexChanged" Width="40%" />
+                            <asp:Label ID="eConsUnit_Edit" runat="server" Text='<%# Eval("ConsUnit") %>' Visible="false" />
                         </td>
                     </tr>
                     <tr>
                         <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbAmountB_Edit" runat="server" CssClass="text-Right-Blue" Text="小計" Width="95%" />
+                            <asp:Label ID="lbBuDateB_Edit" runat="server" CssClass="text-Right-Blue" Text="建檔日期" Width="95%" />
                         </td>
                         <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="eAmountB_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("Amount") %>' Width="95%" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbSourceNo_Edit" runat="server" CssClass="text-Right-Blue" Text="來源單號" Width="95%" />
+                            <asp:Label ID="eBuDateB_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("BuDate","{0:yyyy/MM/dd}") %>' Width="95%" />
                         </td>
                         <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="eSourceNo_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("SourceNo") %>' Width="95%" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbBuManB_Edit" runat="server" CssClass="text-Right-Blue" Text="開單人" Width="95%" />
+                            <asp:Label ID="lbBuManB_Edit" runat="server" CssClass="text-Right-Blue" Text="建檔人員" Width="95%" />
                         </td>
                         <td class="ColHeight ColBorder ColWidth-10Col" colspan="2">
                             <asp:Label ID="eBuManB_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("BuMan") %>' Width="35%" />
                             <asp:Label ID="eBuMan_CB_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("BuMan_C") %>' Width="60%" />
                         </td>
                         <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbBuDateB_Edit" runat="server" CssClass="text-Right-Blue" Text="開單日期" Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="eBuDateB_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("BuDate","{0:yyyy/MM/dd}") %>' Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbModifyManB_Edit" runat="server" CssClass="text-Right-Blue" Text="異動人" Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col" colspan="2">
-                            <asp:Label ID="eModifyManB_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ModifyMan") %>' Width="35%" />
-                            <asp:Label ID="eModifyMan_CB_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ModifyMan_C") %>' Width="60%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
                             <asp:Label ID="lbModifyDateB_Edit" runat="server" CssClass="text-Right-Blue" Text="異動日期" Width="95%" />
                         </td>
                         <td class="ColHeight ColBorder ColWidth-10Col">
                             <asp:Label ID="eModifyDateB_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ModifyDate","{0:yyyy/MM/dd}") %>' Width="95%" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-10Col">
+                            <asp:Label ID="lbModifyManB_Edit" runat="server" CssClass="text-Right-Blue" Text="異動人員" Width="95%" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-10Col" colspan="2">
+                            <asp:Label ID="eModifyManB_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ModifyMan") %>' Width="35%" />
+                            <asp:Label ID="eModifyMan_CB_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ModifyMan_C") %>' Width="60%" />
                         </td>
                     </tr>
                     <tr>
@@ -689,45 +512,39 @@
                 </table>
             </EditItemTemplate>
             <InsertItemTemplate>
-                <asp:Button ID="bbOKB_INS" runat="server" CausesValidation="True" CssClass="button-Blue" OnClick="bbOKB_INS_Click" Text="確定" Width="120px" />
-                <asp:Button ID="bbCancelB_INS" runat="server" CausesValidation="False" CssClass="button-Red" CommandName="Cancel" Text="取消" Width="120px" />
+                <asp:Button ID="bbOKB_INS" runat="server" CausesValidation="True" OnClick="bbOKB_INS_Click" Text="確定" />
+                <asp:Button ID="bbCancelB_INS" runat="server" CausesValidation="False" CommandName="Cancel" Text="取消" />
                 <table class="TableSetting">
                     <tr>
                         <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbItems_INS" runat="server" CssClass="text-Right-Blue" Text="項次" Width="95%" />
-                            <asp:Label ID="eSheetNoItems_INS" runat="server" Text='<%# Eval("SheetNoItems") %>' Visible="false" />
+                            <asp:Label ID="lbSheetNoItems_INS" runat="server" CssClass="text-Right-Blue" Text="項次" Width="95%" />
+                            <asp:Label ID="eSheetNoB_INS" runat="server" Text='<%# Eval("SheetNo") %>' Visible="false" />
                         </td>
                         <td class="ColHeight ColBorder ColWidth-10Col">
                             <asp:Label ID="eItems_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("Items") %>' Width="95%" />
-                            <asp:Label ID="eSheetNoB_INS" runat="server" Text='<%# Eval("SheetNo") %>' Visible="false" />
+                            <asp:Label ID="eSheetNoItems_INS" runat="server" Text='<%# Eval("SheetNoItems") %>' Visible="false" />
                         </td>
                         <td class="ColHeight ColBorder ColWidth-10Col">
                             <asp:Label ID="lbConsNo_INS" runat="server" CssClass="text-Right-Blue" Text="品名" Width="95%" />
                         </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col" colspan="5">
+                        <td class="ColHeight ColBorder ColWidth-10Col" colspan="7">
                             <asp:TextBox ID="eConsNo_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ConsNo") %>' Width="25%" />
-                            <asp:TextBox ID="eConsName_INS" runat="server" CssClass="text-Left-Black" Enabled="false" Text='<%# Eval("ConsName") %>' Width="65%" />
+                            <asp:TextBox ID="eConsName_INS" runat="server" CssClass="text-Left-Black" Enabled="false" Text='<%# Eval("ConsName") %>' Width="70%" />
                         </td>
+                    </tr>
+                    <tr>
                         <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbItemStatus_INS" runat="server" CssClass="text-Right-Blue" Text="處理進度" Width="95%" />
+                            <asp:Label ID="lbItemStatus_INS" runat="server" CssClass="text-Right-Blue" Text="處理狀態" Width="95%" />
                         </td>
                         <td class="ColHeight ColBorder ColWidth-10Col">
                             <asp:Label ID="eItemStatus_C_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ItemStatus_C") %>' Width="95%" />
                             <asp:Label ID="eItemStatus_INS" runat="server" Text='<%# Eval("ItemStatus") %>' Visible="false" />
                         </td>
-                    </tr>
-                    <tr>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbPrice_INS" runat="server" CssClass="text-Right-Blue" Text="單價" Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:TextBox ID="ePrice_INS" runat="server" CssClass="text-Left-Black" AutoPostBack="true" OnTextChanged="ePrice_INS_TextChanged" Text='<%# Eval("Price") %>' Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col" rowspan="4">
+                        <td class="ColHeight ColBorder ColWidth-10Col" rowspan="2">
                             <asp:Label ID="lbRemarkB_INS" runat="server" CssClass="text-Right-Blue" Text="備註" Width="95%" />
                         </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col" rowspan="4" colspan="7">
-                            <asp:TextBox ID="eRemarkB_INS" runat="server" CssClass="text-Left-Black" TextMode="MultiLine" Text='<%# Eval("RemarkB") %>' Height="97%" Width="97%" />
+                        <td class="ColHeight ColBorder ColWidth-10Col" rowspan="2" colspan="7">
+                            <asp:TextBox ID="eRemarkB_INS" runat="server" CssClass="text-Left-Black" TextMode="MultiLine" Text='<%# Eval("RemarkB") %>' Width="97%" Height="97%" />
                         </td>
                     </tr>
                     <tr>
@@ -735,53 +552,37 @@
                             <asp:Label ID="lbQuantity_INS" runat="server" CssClass="text-Right-Blue" Text="數量" Width="95%" />
                         </td>
                         <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:TextBox ID="eQuantity_INS" runat="server" CssClass="text-Left-Black" AutoPostBack="true" OnTextChanged="ePrice_INS_TextChanged" Text='<%# Eval("Quantity") %>' Width="40%" />
-                            <asp:DropDownList ID="ddlConsUnit_INS" runat="server" CssClass="text-Left-Black" OnSelectedIndexChanged="ddlConsUnit_INS_SelectedIndexChanged" Width="40%" />
-                            <asp:TextBox ID="eConsUnit_INS" runat="server" Text='<%# Eval("ConsUnit") %>' Visible="false" />
+                            <asp:TextBox ID="eQuantity_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("Quantity") %>' Width="50%" />
+                            <asp:DropdownList ID="ddlConsUnit_C_INS" runat="server" CssClass="text-Left-Black" AutoPostBack="true" OnSelectedIndexChanged="ddlConsUnit_C_INS_SelectedIndexChanged" Width="40%" />
+                            <asp:Label ID="eConsUnit_INS" runat="server" Text='<%# Eval("ConsUnit") %>' Visible="false" />
                         </td>
                     </tr>
                     <tr>
                         <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbAmountB_INS" runat="server" CssClass="text-Right-Blue" Text="小計" Width="95%" />
+                            <asp:Label ID="lbBuDateB_INS" runat="server" CssClass="text-Right-Blue" Text="建檔日期" Width="95%" />
                         </td>
                         <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="eAmountB_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("Amount") %>' Width="95%" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbSourceNo_INS" runat="server" CssClass="text-Right-Blue" Text="來源單號" Width="95%" />
+                            <asp:Label ID="eBuDateB_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("BuDate","{0:yyyy/MM/dd}") %>' Width="95%" />
                         </td>
                         <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="eSourceNo_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("SourceNo") %>' Width="95%" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbBuManB_INS" runat="server" CssClass="text-Right-Blue" Text="開單人" Width="95%" />
+                            <asp:Label ID="lbBuManB_INS" runat="server" CssClass="text-Right-Blue" Text="建檔人員" Width="95%" />
                         </td>
                         <td class="ColHeight ColBorder ColWidth-10Col" colspan="2">
                             <asp:Label ID="eBuManB_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("BuMan") %>' Width="35%" />
                             <asp:Label ID="eBuMan_CB_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("BuMan_C") %>' Width="60%" />
                         </td>
                         <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbBuDateB_INS" runat="server" CssClass="text-Right-Blue" Text="開單日期" Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="eBuDateB_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("BuDate","{0:yyyy/MM/dd}") %>' Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbModifyManB_INS" runat="server" CssClass="text-Right-Blue" Text="異動人" Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col" colspan="2">
-                            <asp:Label ID="eModifyManB_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ModifyMan") %>' Width="35%" />
-                            <asp:Label ID="eModifyMan_CB_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ModifyMan_C") %>' Width="60%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
                             <asp:Label ID="lbModifyDateB_INS" runat="server" CssClass="text-Right-Blue" Text="異動日期" Width="95%" />
                         </td>
                         <td class="ColHeight ColBorder ColWidth-10Col">
                             <asp:Label ID="eModifyDateB_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ModifyDate","{0:yyyy/MM/dd}") %>' Width="95%" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-10Col">
+                            <asp:Label ID="lbModifyManB_INS" runat="server" CssClass="text-Right-Blue" Text="異動人員" Width="95%" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-10Col" colspan="2">
+                            <asp:Label ID="eModifyManB_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ModifyMan") %>' Width="35%" />
+                            <asp:Label ID="eModifyMan_CB_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ModifyMan_C") %>' Width="60%" />
                         </td>
                     </tr>
                     <tr>
@@ -799,53 +600,47 @@
                 </table>
             </InsertItemTemplate>
             <EmptyDataTemplate>
-                <asp:Button ID="bbNewB_Empty" runat="server" CssClass="button-Black" CausesValidation="true" CommandName="New" Text="單筆新增明細" Width="120px" />
-                <asp:Button ID="bbExportDetail_Empty" runat="server" CssClass="button-Blue" CausesValidation="false" OnClick="bbExportDetail_List_Click" Text="請購匯入明細" Width="120px" />
+                <asp:Button ID="bbNewB_Empty" runat="server" CssClass="button-Blue" CommandName="New" Text="新增明細" Width="120px" />
+                <asp:Button ID="bbPickup_Empty" runat="server" CssClass="button-Black" OnClick="bbPickup_Empty_Click" Text="明細挑單" Width="120px" />
             </EmptyDataTemplate>
             <ItemTemplate>
-                <asp:Button ID="bbNewB_List" runat="server" CssClass="button-Black" CausesValidation="true" CommandName="New" Text="單筆新增明細" Width="120px" />
-                <asp:Button ID="bbExportDetail_List" runat="server" CssClass="button-Blue" CausesValidation="false" OnClick="bbExportDetail_List_Click" Text="請購匯入明細" Width="120px" />
-                <asp:Button ID="bbEditB_List" runat="server" CssClass="button-Black" CausesValidation="false" CommandName="Edit" Text="修改明細" Width="120px" />
-                <asp:Button ID="bbAriveB_List" runat="server" CssClass="button-Blue" CausesValidation="false" OnClick="bbAriveB_List_Click" Text="明細到貨" Width="120px" />
-                <asp:Button ID="bbAbortB_List" runat="server" CssClass="button-Black" CausesValidation="false" OnClick="bbAbortB_List_Click" Text="明細作廢" Width="120px" />
-                <asp:Button ID="bbDeleteB_List" runat="server" CssClass="button-Red" CausesValidation="false" OnClick="bbDeleteB_List_Click" Text="刪除明細" Width="120px" />
+                <asp:Button ID="bbNewB_List" runat="server" CssClass="button-Black" CommandName="New" Text="新增明細" Width="120px" />
+                <asp:Button ID="bbPickup_List" runat="server" CssClass="button-Blue" OnClick="bbPickup_List_Click" Text="明細挑單" Width="120px" />
+                <asp:Button ID="bbEditB_List" runat="server" CssClass="button-Black" CommandName="Edit" Text="修改明細" Width="120px" />
+                <asp:Button ID="bbInstoreB_List" runat="server" CssClass="button-Blue" OnClick="bbInstoreB_List_Click" Text="明細入庫" Width="120px" />
+                <asp:Button ID="bbAbortB_List" runat="server" CssClass="button-Black" OnClick="bbAbortB_List_Click" Text="明細作廢" Width="120px" />
+                <asp:Button ID="bbDeleteB_List" runat="server" CssClass="button-Red" OnClick="bbDeleteB_List_Click" Text="刪除明細" Width="120px" />
                 <table class="TableSetting">
                     <tr>
                         <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbItems_List" runat="server" CssClass="text-Right-Blue" Text="項次" Width="95%" />
-                            <asp:Label ID="eSheetNoItems_List" runat="server" Text='<%# Eval("SheetNoItems") %>' Visible="false" />
+                            <asp:Label ID="lbSheetNoItems_List" runat="server" CssClass="text-Right-Blue" Text="項次" Width="95%" />
+                            <asp:Label ID="eSheetNoB_List" runat="server" Text='<%# Eval("SheetNo") %>' Visible="false" />
                         </td>
                         <td class="ColHeight ColBorder ColWidth-10Col">
                             <asp:Label ID="eItems_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("Items") %>' Width="95%" />
-                            <asp:Label ID="eSheetNoB_List" runat="server" Text='<%# Eval("SheetNo") %>' Visible="false" />
+                            <asp:Label ID="eSheetNoItems_List" runat="server" Text='<%# Eval("SheetNoItems") %>' Visible="false" />
                         </td>
                         <td class="ColHeight ColBorder ColWidth-10Col">
                             <asp:Label ID="lbConsNo_List" runat="server" CssClass="text-Right-Blue" Text="品名" Width="95%" />
                         </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col" colspan="5">
+                        <td class="ColHeight ColBorder ColWidth-10Col" colspan="7">
                             <asp:Label ID="eConsNo_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ConsNo") %>' Width="25%" />
-                            <asp:Label ID="eConsName_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ConsName") %>' Width="65%" />
+                            <asp:Label ID="eConsName_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ConsName") %>' Width="70%" />
                         </td>
+                    </tr>
+                    <tr>
                         <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbItemStatus_List" runat="server" CssClass="text-Right-Blue" Text="處理進度" Width="95%" />
+                            <asp:Label ID="lbItemStatus_List" runat="server" CssClass="text-Right-Blue" Text="處理狀態" Width="95%" />
                         </td>
                         <td class="ColHeight ColBorder ColWidth-10Col">
                             <asp:Label ID="eItemStatus_C_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ItemStatus_C") %>' Width="95%" />
                             <asp:Label ID="eItemStatus_List" runat="server" Text='<%# Eval("ItemStatus") %>' Visible="false" />
                         </td>
-                    </tr>
-                    <tr>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbPrice_List" runat="server" CssClass="text-Right-Blue" Text="單價" Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="ePrice_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("Price") %>' Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col" rowspan="4">
+                        <td class="ColHeight ColBorder ColWidth-10Col" rowspan="2">
                             <asp:Label ID="lbRemarkB_List" runat="server" CssClass="text-Right-Blue" Text="備註" Width="95%" />
                         </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col" rowspan="4" colspan="7">
-                            <asp:TextBox ID="eRemarkB_List" runat="server" CssClass="text-Left-Black" TextMode="MultiLine" Text='<%# Eval("RemarkB") %>' Enabled="false" Height="97%" Width="97%" />
+                        <td class="ColHeight ColBorder ColWidth-10Col" rowspan="2" colspan="7">
+                            <asp:TextBox ID="eRemarkB_List" runat="server" CssClass="text-Left-Black" TextMode="MultiLine" Enabled="false" Text='<%# Eval("RemarkB") %>' Width="97%" Height="97%" />
                         </td>
                     </tr>
                     <tr>
@@ -853,53 +648,37 @@
                             <asp:Label ID="lbQuantity_List" runat="server" CssClass="text-Right-Blue" Text="數量" Width="95%" />
                         </td>
                         <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="eQuantity_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("Quantity") %>' Width="40%" />
+                            <asp:Label ID="eQuantity_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("Quantity") %>' Width="50%" />
                             <asp:Label ID="eConsUnit_C_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ConsUnit_C") %>' Width="40%" />
                             <asp:Label ID="eConsUnit_List" runat="server" Text='<%# Eval("ConsUnit") %>' Visible="false" />
                         </td>
                     </tr>
                     <tr>
                         <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbAmountB_List" runat="server" CssClass="text-Right-Blue" Text="小計" Width="95%" />
+                            <asp:Label ID="lbBuDateB_List" runat="server" CssClass="text-Right-Blue" Text="建檔日期" Width="95%" />
                         </td>
                         <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="eAmountB_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("Amount") %>' Width="95%" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbSourceNo_List" runat="server" CssClass="text-Right-Blue" Text="來源單號" Width="95%" />
+                            <asp:Label ID="eBuDateB_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("BuDate","{0:yyyy/MM/dd}") %>' Width="95%" />
                         </td>
                         <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="eSourceNo_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("SourceNo") %>' Width="95%" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbBuManB_List" runat="server" CssClass="text-Right-Blue" Text="開單人" Width="95%" />
+                            <asp:Label ID="lbBuManB_List" runat="server" CssClass="text-Right-Blue" Text="建檔人員" Width="95%" />
                         </td>
                         <td class="ColHeight ColBorder ColWidth-10Col" colspan="2">
                             <asp:Label ID="eBuManB_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("BuMan") %>' Width="35%" />
                             <asp:Label ID="eBuMan_CB_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("BuMan_C") %>' Width="60%" />
                         </td>
                         <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbBuDateB_List" runat="server" CssClass="text-Right-Blue" Text="開單日期" Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="eBuDateB_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("BuDate","{0:yyyy/MM/dd}") %>' Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
-                            <asp:Label ID="lbModifyManB_List" runat="server" CssClass="text-Right-Blue" Text="異動人" Width="95%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col" colspan="2">
-                            <asp:Label ID="eModifyManB_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ModifyMan") %>' Width="35%" />
-                            <asp:Label ID="eModifyMan_CB_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ModifyMan_C") %>' Width="60%" />
-                        </td>
-                        <td class="ColHeight ColBorder ColWidth-10Col">
                             <asp:Label ID="lbModifyDateB_List" runat="server" CssClass="text-Right-Blue" Text="異動日期" Width="95%" />
                         </td>
                         <td class="ColHeight ColBorder ColWidth-10Col">
                             <asp:Label ID="eModifyDateB_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ModifyDate","{0:yyyy/MM/dd}") %>' Width="95%" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-10Col">
+                            <asp:Label ID="lbModifyManB_List" runat="server" CssClass="text-Right-Blue" Text="異動人員" Width="95%" />
+                        </td>
+                        <td class="ColHeight ColBorder ColWidth-10Col" colspan="2">
+                            <asp:Label ID="eModifyManB_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ModifyMan") %>' Width="35%" />
+                            <asp:Label ID="eModifyMan_CB_List" runat="server" CssClass="text-Left-Black" Text='<%# Eval("ModifyMan_C") %>' Width="60%" />
                         </td>
                     </tr>
                     <tr>
@@ -917,71 +696,60 @@
                 </table>
             </ItemTemplate>
         </asp:FormView>
-        <asp:SqlDataSource ID="sdsConsSheetB_List" runat="server" ConnectionString="<%$ ConnectionStrings:connERPSQL %>" SelectCommand="select b.SheetNoItems, b.Items, c.ConsName, b.Price, b.Quantity, d.ClassTxt ConsUnit_C, d2.ClassTxt ItemStatus_C
-  from ConsSheetB b left join Consumables c on c.ConsNo = b.ConsNo 
-                    left join DBDICB d on d.ClassNo = b.ConsUnit and d.FKey = '耗材庫存        CONSUMABLES     ConsUnit' 
-					left join DBDICB d2 on d2.ClassNo = b.ItemStatus and d2.FKey = '總務課耗材進出單ConsSheetB      ItemStatus'
- where b.SheetNo = @SheetNo ">
-            <SelectParameters>
-                <asp:ControlParameter ControlID="gridConsSheetA_List" Name="SheetNo" PropertyName="SelectedValue" />
-            </SelectParameters>
-        </asp:SqlDataSource>
-        <asp:SqlDataSource ID="sdsConsSheetB_Detail" runat="server" ConnectionString="<%$ ConnectionStrings:connERPSQL %>" SelectCommand="select b.SheetNoItems, b.SheetNo, b.Items, b.ConsNo, c.ConsName, b.Price, b.Quantity, b.Amount, b.RemarkB, b.ItemStatus, d2.ClassTxt ItemStatus_C, 
-       b.BuMan, e.[Name] BuMan_C, b.BuDate, b.ModifyMan, e2.[Name] ModifyMan_C, b.ModifyDate, b.ConsUnit, d.ClassTxt ConsUnit_C, b.SourceNo
+    </asp:Panel>
+    <asp:Panel ID="plShowData" runat="server">
+    </asp:Panel>
+    <asp:SqlDataSource ID="sdsConsSheetB_List" runat="server" ConnectionString="<%$ ConnectionStrings:connERPSQL %>" SelectCommand="select b.SheetNoItems, b.Items, c.ConsName, b.Price, b.Quantity, d.ClassTxt ConsUnit_C from ConsSheetB b left join Consumables c on c.ConsNo = b.ConsNo left join DBDICB d on d.ClassNo = b.ConsUnit and d.FKey = '耗材庫存        CONSUMABLES     ConsUnit' where b.SheetNo = @SheetNo ">
+        <SelectParameters>
+            <asp:ControlParameter ControlID="gridConsSheetA_List" Name="SheetNo" PropertyName="SelectedValue" />
+        </SelectParameters>
+    </asp:SqlDataSource>
+    <asp:SqlDataSource ID="sdsConsSheetB_Detail" runat="server" ConnectionString="<%$ ConnectionStrings:connERPSQL %>" SelectCommand="select b.SheetNoItems, b.SheetNo, b.Items, b.ConsNo, c.ConsName, b.Quantity, b.RemarkB, b.ItemStatus, d2.ClassTxt ItemStatus_C, 
+       b.BuMan, e.[Name] BuMan_C, b.BuDate, b.ModifyMan, e2.[Name] ModifyMan_C, b.ModifyDate, b.ConsUnit, d.ClassTxt ConsUnit_C
   from ConsSheetB b left join Consumables c on c.ConsNo = b.ConsNo
                                        left join DBDICB d on d.ClassNo = b.ConsUnit and d.FKey = '耗材庫存        CONSUMABLES     ConsUnit'
                                        left join DBDICB d2 on d2.ClassNo = b.ItemStatus and d2.FKey = '總務課耗材進出單ConsSheetB      ItemStatus'
                                        left join employee e on e.EmpNo = b.BuMan
                                        left join Employee e2 on e2.EmpNo = b.ModifyMan
  where SheetNoItems = @SheetNoItems">
-            <SelectParameters>
-                <asp:ControlParameter ControlID="gridConsSheetB_List" Name="SheetNoItems" PropertyName="SelectedValue" />
-            </SelectParameters>
-        </asp:SqlDataSource>
-    </asp:Panel>
+        <SelectParameters>
+            <asp:ControlParameter ControlID="gridConsSheetB_List" Name="SheetNoItems" PropertyName="SelectedValue" />
+        </SelectParameters>
+    </asp:SqlDataSource>
     <asp:Panel ID="plPickupDetail" runat="server" CssClass="ShowPanel-Detail">
         <div>
-            <asp:Button ID="bbSelectAll_Order" runat="server" CssClass="button-Blue" Text="全選" OnClick="bbSelectAll_Order_Click" Width="120px" />
-            <asp:Button ID="bbUnselAll_Order" runat="server" CssClass="button-Black" Text="取消全選" OnClick="bbUnselAll_Order_Click" Width="120px" />
-            <asp:Button ID="bbOKC_Order" runat="server" CssClass="button-Blue" Text="確定" OnClick="bbOKC_Order_Click" Width="120px" />
-            <asp:Button ID="bbCancelC_Order" runat="server" CssClass="button-Red" Text="取消" OnClick="bbCancelC_Order_Click" Width="120px" />
+            <asp:Button ID="bbSelectAll_P" runat="server" CssClass="button-Black" OnClick="bbSelectAll_P_Click" Text="全選" Width="120px" />
+            <asp:Button ID="bbUnselectAll_P" runat="server" CssClass="button-Blue" OnClick="bbUnselectAll_P_Click" Text="取消全選" Width="120px" />
+            <asp:Button ID="bbOK_P" runat="server" CssClass="button-Black" OnClick="bbOK_P_Click" Text="確定" Width="120px" />
+            <asp:Button ID="bbCancel_P" runat="server" CssClass="button-Red" OnClick="bbCancel_P_Click" Text="取消" Width="120px" />
         </div>
-        <asp:GridView ID="gridPickup_List" runat="server" AutoGenerateColumns="False" BackColor="White" BorderColor="White" BorderStyle="Ridge" BorderWidth="2px" CellPadding="3" CellSpacing="1" DataKeyNames="SheetNoItems" DataSourceID="sdsPickup_List" GridLines="None" Width="100%">
+        <asp:GridView ID="gridPickup_List" runat="server" Width="100%" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="SheetNoItems" DataSourceID="sdsPickup_List" BackColor="White" BorderColor="#336666" BorderStyle="Double" BorderWidth="3px" CellPadding="4" GridLines="Horizontal">
             <Columns>
-                <asp:TemplateField  ItemStyle-Width="60px" ItemStyle-CssClass="fixedWidth">
+                <asp:TemplateField ItemStyle-Width="60px" ItemStyle-CssClass="fixedWidth">
                     <ItemTemplate>
                         <asp:CheckBox ID="cbChoise" runat="server" />
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:BoundField DataField="SheetNo" HeaderText="請購單號" SortExpression="SheetNo" ItemStyle-Width="100px" ItemStyle-CssClass="fixedWidth" />
-                <asp:BoundField DataField="Items" HeaderText="原項次" SortExpression="Items" ItemStyle-Width="60px" ItemStyle-CssClass="fixedWidth" />
                 <asp:BoundField DataField="SheetNoItems" HeaderText="SheetNoItems" ReadOnly="True" SortExpression="SheetNoItems" Visible="False" />
-                <asp:BoundField DataField="ConsNo" HeaderText="ConsNo" SortExpression="ConsNo" Visible="False" />
+                <asp:BoundField DataField="SheetNo" HeaderText="原單號" SortExpression="SheetNo" ItemStyle-Width="100px" ItemStyle-CssClass="fixedWidth" />
+                <asp:BoundField DataField="Items" HeaderText="原項次" SortExpression="Items" ItemStyle-Width="60px" ItemStyle-CssClass="fixedWidth" />
+                <asp:BoundField DataField="ConsNo" HeaderText="料號" SortExpression="ConsNo" ItemStyle-Width="120px" ItemStyle-CssClass="fixedWidth" />
                 <asp:BoundField DataField="ConsName" HeaderText="品名" SortExpression="ConsName" />
-                <asp:BoundField DataField="Price" HeaderText="單價" SortExpression="Price" Visible="False" ItemStyle-Width="60px" ItemStyle-CssClass="fixedWidth" />
-                <asp:BoundField DataField="Quantity" HeaderText="請購數量" SortExpression="Quantity" ItemStyle-Width="60px" ItemStyle-CssClass="fixedWidth" />
-                <asp:BoundField DataField="StockQty" HeaderText="現有庫存量" SortExpression="StockQty" ItemStyle-Width="60px" ItemStyle-CssClass="fixedWidth" />
+                <asp:BoundField DataField="Quantity" HeaderText="採購量" SortExpression="Quantity" ItemStyle-Width="60px" ItemStyle-CssClass="fixedWidth" />
+                <asp:BoundField DataField="StockQty" HeaderText="庫存量" SortExpression="StockQty" ItemStyle-Width="60px" ItemStyle-CssClass="fixedWidth" />
+                <asp:BoundField DataField="RemarkB" HeaderText="備註" SortExpression="RemarkB" />
             </Columns>
-            <FooterStyle BackColor="#C6C3C6" ForeColor="Black" />
-            <HeaderStyle BackColor="#4A3C8C" Font-Bold="True" ForeColor="#E7E7FF" />
-            <PagerStyle BackColor="#C6C3C6" ForeColor="Black" HorizontalAlign="Right" />
-            <RowStyle BackColor="#DEDFDE" ForeColor="Black" />
-            <SelectedRowStyle BackColor="#9471DE" Font-Bold="True" ForeColor="White" />
-            <SortedAscendingCellStyle BackColor="#F1F1F1" />
-            <SortedAscendingHeaderStyle BackColor="#594B9C" />
-            <SortedDescendingCellStyle BackColor="#CAC9C9" />
-            <SortedDescendingHeaderStyle BackColor="#33276A" />
+            <FooterStyle BackColor="White" ForeColor="#333333" />
+            <HeaderStyle BackColor="#336666" Font-Bold="True" ForeColor="White" />
+            <PagerStyle BackColor="#336666" ForeColor="White" HorizontalAlign="Center" />
+            <RowStyle BackColor="White" ForeColor="#333333" />
+            <SelectedRowStyle BackColor="#339966" Font-Bold="True" ForeColor="White" />
+            <SortedAscendingCellStyle BackColor="#F7F7F7" />
+            <SortedAscendingHeaderStyle BackColor="#487575" />
+            <SortedDescendingCellStyle BackColor="#E5E5E5" />
+            <SortedDescendingHeaderStyle BackColor="#275353" />
         </asp:GridView>
-        <asp:SqlDataSource ID="sdsPickup_List" runat="server" ConnectionString="<%$ ConnectionStrings:connERPSQL %>" SelectCommand="select b.SheetNoItems, b.SheetNo, b.Items, b.ConsNo, c.ConsName, b.Quantity, c.StockQty, b.RemarkB, b.Price
+        <asp:SqlDataSource ID="sdsPickup_List" runat="server" ConnectionString="<%$ ConnectionStrings:connERPSQL %>" SelectCommand="select b.SheetNoItems, b.SheetNo, b.Items, b.ConsNo, c.ConsName, b.Quantity, c.StockQty, b.RemarkB
   from ConsSheetB b left join Consumables c on c.ConsNo = b.ConsNo  where isnull(SheetNoItems, '') = ''"></asp:SqlDataSource>
-    </asp:Panel>
-    <asp:Panel ID="plPrint" runat="server" CssClass="PrintPanel">
-        <div>
-            <asp:Button ID="bbCloseReport" runat="server" CausesValidation="true" CssClass="button-Red" Text="關閉預覽" OnClick="bbCloseReport_Click" Width="120px" />
-        </div>
-        <rsweb:ReportViewer ID="rvPrint" runat="server" Width="100%" BackColor="" ClientIDMode="AutoID" HighlightBackgroundColor="" InternalBorderColor="204, 204, 204" InternalBorderStyle="Solid" InternalBorderWidth="1px" LinkActiveColor="" LinkActiveHoverColor="" LinkDisabledColor="" PrimaryButtonBackgroundColor="" PrimaryButtonForegroundColor="" PrimaryButtonHoverBackgroundColor="" PrimaryButtonHoverForegroundColor="" SecondaryButtonBackgroundColor="" SecondaryButtonForegroundColor="" SecondaryButtonHoverBackgroundColor="" SecondaryButtonHoverForegroundColor="" SplitterBackColor="" ToolbarDividerColor="" ToolbarForegroundColor="" ToolbarForegroundDisabledColor="" ToolbarHoverBackgroundColor="" ToolbarHoverForegroundColor="" ToolBarItemBorderColor="" ToolBarItemBorderStyle="Solid" ToolBarItemBorderWidth="1px" ToolBarItemHoverBackColor="" ToolBarItemPressedBorderColor="51, 102, 153" ToolBarItemPressedBorderStyle="Solid" ToolBarItemPressedBorderWidth="1px" ToolBarItemPressedHoverBackColor="153, 187, 226">
-            <LocalReport ReportPath="Report\ConsSheet_PurP.rdlc">
-            </LocalReport>
-        </rsweb:ReportViewer>
     </asp:Panel>
 </asp:Content>

@@ -438,7 +438,7 @@ namespace TyBus_Intranet_Test_V3
                                             dsTempB.InsertCommand = "insert into ConsSheetB(SheetNoItems, SheetNo, Items, ConsNo, Price, Quantity, Amount, RemarkB, " + Environment.NewLine +
                                                                     "QtyMode, ItemStatus, BuMan, BuDate)" + Environment.NewLine +
                                                                     "values (@SheetNoItems, @SheetNo, @Items, @ConsNo, 0, @Quantity, 0, @RemarkB, " + Environment.NewLine +
-                                                                    "        @QtyMode, '001', @BuMan, GetDate())";
+                                                                    "        @QtyMode, '103', @BuMan, GetDate())";
                                             dsTempB.InsertParameters.Clear();
                                             dsTempB.InsertParameters.Add(new Parameter("SheetNoItems", DbType.String, vSheetNoItems));
                                             dsTempB.InsertParameters.Add(new Parameter("SheetNo", DbType.String, vSheetNo));
@@ -548,7 +548,7 @@ namespace TyBus_Intranet_Test_V3
                                             dsTempB.InsertCommand = "insert into ConsSheetB(SheetNoItems, SheetNo, Items, ConsNo, Price, Quantity, Amount, RemarkB, " + Environment.NewLine +
                                                                     "QtyMode, ItemStatus, BuMan, BuDate)" + Environment.NewLine +
                                                                     "values (@SheetNoItems, @SheetNo, @Items, @ConsNo, 0, @Quantity, 0, @RemarkB, " + Environment.NewLine +
-                                                                    "        @QtyMode, '001', @BuMan, GetDate())";
+                                                                    "        @QtyMode, '103', @BuMan, GetDate())";
                                             dsTempB.InsertParameters.Clear();
                                             dsTempB.InsertParameters.Add(new Parameter("SheetNoItems", DbType.String, vSheetNoItems));
                                             dsTempB.InsertParameters.Add(new Parameter("SheetNo", DbType.String, vSheetNo));

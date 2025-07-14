@@ -325,8 +325,9 @@ namespace TyBus_Intranet_Test_V3
                     TextBox eTaxRate = (TextBox)fvConsSheetA_Detail.FindControl("eTaxRate_Edit");
                     TextBox eRemarkA = (TextBox)fvConsSheetA_Detail.FindControl("eRemarkA_Edit");
                     TextBox eSheetNote = (TextBox)fvConsSheetA_Detail.FindControl("eSheetNote_Edit");
+                    TextBox eDepNo = (TextBox)fvConsSheetA_Detail.FindControl("eDepNo_Edit");
                     vSQLStr_Temp = "update ConsSheetA set SupNo = @SupNo, Amount = @Amount, TaxType = @TaxType, TaxRate = @TaxRate, " + Environment.NewLine +
-                                   "                      TaxAMT = @TaxAMT, TotalAmount = @TotalAmount, PayMode = @PayMode, " + Environment.NewLine +
+                                   "                      TaxAMT = @TaxAMT, TotalAmount = @TotalAmount, PayMode = @PayMode, DepNo = @DepNo, " + Environment.NewLine +
                                    "                      ModifyMan = @ModifyMan, ModifyDate = GetDate() " + Environment.NewLine +
                                    " where SheetNo = @SheetNo ";
                     sdsConsSheetA_Detail.UpdateCommand = vSQLStr_Temp;
@@ -338,6 +339,7 @@ namespace TyBus_Intranet_Test_V3
                     sdsConsSheetA_Detail.UpdateParameters.Add(new Parameter("TaxAMT", DbType.Double, double.TryParse(eTaxAMT.Text.Trim(), out vTempFloat) ? vTempFloat.ToString() : "0.0"));
                     sdsConsSheetA_Detail.UpdateParameters.Add(new Parameter("TotalAmount", DbType.Double, double.TryParse(eTotalAmount.Text.Trim(), out vTempFloat) ? vTempFloat.ToString() : "0.0"));
                     sdsConsSheetA_Detail.UpdateParameters.Add(new Parameter("PayMode", DbType.String, (ePayMode.Text.Trim() != "") ? ePayMode.Text.Trim() : String.Empty));
+                    sdsConsSheetA_Detail.UpdateParameters.Add(new Parameter("DepNo", DbType.String, (eDepNo.Text.Trim() != "") ? eDepNo.Text.Trim() : String.Empty));
                     sdsConsSheetA_Detail.UpdateParameters.Add(new Parameter("ModifyMan", DbType.String, vLoginID));
                     sdsConsSheetA_Detail.UpdateParameters.Add(new Parameter("SheetNo", DbType.String, eSheetNo.Text.Trim()));
                     sdsConsSheetA_Detail.Update();
@@ -492,11 +494,12 @@ namespace TyBus_Intranet_Test_V3
                     TextBox eTaxRate = (TextBox)fvConsSheetA_Detail.FindControl("eTaxRate_INS");
                     TextBox eRemarkA = (TextBox)fvConsSheetA_Detail.FindControl("eRemarkA_INS");
                     TextBox eSheetNote = (TextBox)fvConsSheetA_Detail.FindControl("eSheetNote_INS");
+                    TextBox eDepNo = (TextBox)fvConsSheetA_Detail.FindControl("eDepNo_INS");
                     vSQLStr_Temp = "insert into ConsSheetA " + Environment.NewLine +
                                    "      (SheetNo, SheetMode, SupNo, BuMan, BuDate, TaxType, TaxRate, " + Environment.NewLine +
-                                   "       SheetStatus, StatusDate, PayMode, RemarkA, SheetNote) " + Environment.NewLine +
+                                   "       SheetStatus, StatusDate, PayMode, RemarkA, SheetNote, DepNo) " + Environment.NewLine +
                                    "values(@SheetNo, 'PS', @SupNo, @BuMan, GetDate(), @TaxType, @TaxRate, " + Environment.NewLine +
-                                   "       '000', GetDate(), @PayMode, @RemarkA, @SheetNote) ";
+                                   "       '000', GetDate(), @PayMode, @RemarkA, @SheetNote, @DepNo) ";
                     sdsConsSheetA_Detail.InsertCommand = vSQLStr_Temp;
                     sdsConsSheetA_Detail.InsertParameters.Clear();
                     sdsConsSheetA_Detail.InsertParameters.Add(new Parameter("SheetNo", DbType.String, vSheetNo));
@@ -507,6 +510,7 @@ namespace TyBus_Intranet_Test_V3
                     sdsConsSheetA_Detail.InsertParameters.Add(new Parameter("PayMode", DbType.String, (ePayMode.Text.Trim() != "") ? ePayMode.Text.Trim() : String.Empty));
                     sdsConsSheetA_Detail.InsertParameters.Add(new Parameter("RemarkA", DbType.String, (eRemarkA.Text.Trim() != "") ? eRemarkA.Text.Trim() : String.Empty));
                     sdsConsSheetA_Detail.InsertParameters.Add(new Parameter("SheetNote", DbType.String, (eSheetNote.Text.Trim() != "") ? eSheetNote.Text.Trim() : String.Empty));
+                    sdsConsSheetA_Detail.InsertParameters.Add(new Parameter("DepNo", DbType.String, (eDepNo.Text.Trim() != "") ? eDepNo.Text.Trim() : String.Empty));
                     sdsConsSheetA_Detail.Insert();
                     gridConsSheetA_List.DataBind();
                     fvConsSheetA_Detail.ChangeMode(FormViewMode.ReadOnly);
@@ -1420,6 +1424,8 @@ namespace TyBus_Intranet_Test_V3
                 string vSheetNo = eSheetNo.Text.Trim();
                 Label eItems = (Label)fvConsSheetB_Detail.FindControl("eItems_List");
                 string vItems = eItems.Text.Trim();
+                Label eSourceNo = (Label)fvConsSheetB_Detail.FindControl("eSourceNo_List");
+                string vSourceNo = eSourceNo.Text.Trim();
                 //先寫入異動記錄
                 string vOptionString = "刪除總務耗材採購單明細" + Environment.NewLine +
                                        "單號：[ " + vSheetNo + " ]" + Environment.NewLine +
@@ -1444,6 +1450,12 @@ namespace TyBus_Intranet_Test_V3
                                    "  from ConsSheetB " + Environment.NewLine +
                                    " where SheetNoItems = '" + vSheetNoItems + "' ";
                     PF.ExecSQL(vConnStr, vSQLStr_Temp);
+                    //修改來源狀態
+                    if (vSourceNo!="")
+                    {
+                        vSQLStr_Temp = "update ConsSheetB set ItemStatus = '000' where SheetNoItems = '" + vSourceNo + "' ";
+                        PF.ExecSQL(vConnStr, vSQLStr_Temp);
+                    }
                     //刪除明細
                     vSQLStr_Temp = "delete ConsSheetB where SheetNoItems = @SheetNoItems";
                     sdsConsSheetB_Detail.DeleteCommand = vSQLStr_Temp;
