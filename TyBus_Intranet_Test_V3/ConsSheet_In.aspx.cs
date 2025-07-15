@@ -878,13 +878,29 @@ namespace TyBus_Intranet_Test_V3
             }
         }
 
-        private void PickupPurchase()
+        /// <summary>
+        /// 挑選要入庫的明細
+        /// </summary>
+        private void PickupPurchase(string fSupNo)
         {
-            string vSelectStr = "select b.SheetNoItems, a.SheetNo, b.Items, b.ConsNo, c.ConsName, b.Quantity, c.StockQty, b.RemarkB " + Environment.NewLine +
-                                "  from ConsSheetA a left join ConsSheetB b on b.SheetNo = a.SheetNo " + Environment.NewLine +
-                                "                    left join Consumables c on c.ConsNo = b.ConsNo " + Environment.NewLine +
-                                " where a.SheetMode = 'PS' " + Environment.NewLine +
-                                "   and b.ItemStatus = '000' ";
+            string vSelectStr = "";
+            if (fSupNo.Trim() == "")
+            {
+                vSelectStr = "select b.SheetNoItems, a.SheetNo, b.Items, b.ConsNo, c.ConsName, b.Quantity, c.StockQty, b.RemarkB " + Environment.NewLine +
+                             "  from ConsSheetA a left join ConsSheetB b on b.SheetNo = a.SheetNo " + Environment.NewLine +
+                             "                    left join Consumables c on c.ConsNo = b.ConsNo " + Environment.NewLine +
+                             " where a.SheetMode = 'PS' " + Environment.NewLine +
+                             "   and b.ItemStatus in ('000', '001') ";
+            }
+            else
+            {
+                vSelectStr = "select b.SheetNoItems, a.SheetNo, b.Items, b.ConsNo, c.ConsName, b.Quantity, c.StockQty, b.RemarkB " + Environment.NewLine +
+                             "  from ConsSheetA a left join ConsSheetB b on b.SheetNo = a.SheetNo " + Environment.NewLine +
+                             "                    left join Consumables c on c.ConsNo = b.ConsNo " + Environment.NewLine +
+                             " where a.SheetMode = 'PS' " + Environment.NewLine +
+                             "   and isnull(a.SupNo, '') in ('" + fSupNo.Trim() + "', '') " + Environment.NewLine +
+                             "   and b.ItemStatus in ('000', '001') ";
+            }
             sdsPickup_List.SelectCommand = vSelectStr;
             sdsPickup_List.Select(new DataSourceSelectArguments());
             gridPickup_List.DataBind();
@@ -897,9 +913,13 @@ namespace TyBus_Intranet_Test_V3
         /// <param name="e"></param>
         protected void bbPickup_Empty_Click(object sender, EventArgs e)
         {
-            PickupPurchase();
-            plPickupDetail.Visible = true;
-            plShowDataB.Visible = false;
+            Label eSupNo = (Label)fvConsSheetA_Detail.FindControl("eSupNo_List");
+            if (eSupNo != null)
+            {
+                PickupPurchase(eSupNo.Text.Trim());
+                plPickupDetail.Visible = true;
+                plShowDataB.Visible = false;
+            }
         }
 
         /// <summary>
@@ -909,9 +929,13 @@ namespace TyBus_Intranet_Test_V3
         /// <param name="e"></param>
         protected void bbPickup_List_Click(object sender, EventArgs e)
         {
-            PickupPurchase();
-            plPickupDetail.Visible = true;
-            plShowDataB.Visible = false;
+            Label eSupNo = (Label)fvConsSheetA_Detail.FindControl("eSupNo_List");
+            if (eSupNo != null)
+            {
+                PickupPurchase(eSupNo.Text.Trim());
+                plPickupDetail.Visible = true;
+                plShowDataB.Visible = false;
+            }
         }
 
         /// <summary>
@@ -1146,6 +1170,11 @@ namespace TyBus_Intranet_Test_V3
             }
         }
 
+        /// <summary>
+        /// 整批明細匯入
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void bbOK_P_Click(object sender, EventArgs e)
         {
             eErrorMSG_Main.Text = "";
@@ -1178,12 +1207,12 @@ namespace TyBus_Intranet_Test_V3
                             vSourceNo = gridPickup_List.DataKeys[vCurrentRows.RowIndex].Value.ToString().Trim();
                             vSQLStr_Temp = "insert into ConsSheetB " + Environment.NewLine +
                                            "      (SheetNoItems, SheetNo, Items, ConsNo, ItemStatus, Quantity, ConsUnit, RemarkB, BuDate, BuMan, SourceNo) " + Environment.NewLine +
-                                           "select '" + vSheetNoItems + "', '" + vSheetNo + "', '" + vNewIndex + "', ConsNo, '000', Quantity, ConsUnit, RemarkB, GetDate(), " + Environment.NewLine +
+                                           "select '" + vSheetNoItems + "', '" + vSheetNo + "', '" + vNewIndex + "', ConsNo, '001', Quantity, ConsUnit, RemarkB, GetDate(), " + Environment.NewLine +
                                            "       '" + vLoginID + "', SheetNoItems " + Environment.NewLine +
                                            "  from ConsSheetB " + Environment.NewLine +
                                            " where SheetNoItems = '" + vSourceNo + "' ";
                             PF.ExecSQL(vConnStr, vSQLStr_Temp);
-                            vSQLStr_Temp = "update ConsSheetB set ItemStatus = '103' where SheetNoItems = '" + vSourceNo + "' ";
+                            vSQLStr_Temp = "update ConsSheetB set ItemStatus = '001' where SheetNoItems = '" + vSourceNo + "' ";
                             PF.ExecSQL(vConnStr, vSQLStr_Temp);
                         }
                     }

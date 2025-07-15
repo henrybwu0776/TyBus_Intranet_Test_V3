@@ -921,7 +921,8 @@
   from ConsSheetB b left join Consumables c on c.ConsNo = b.ConsNo 
                     left join DBDICB d on d.ClassNo = b.ConsUnit and d.FKey = '耗材庫存        CONSUMABLES     ConsUnit' 
 					left join DBDICB d2 on d2.ClassNo = b.ItemStatus and d2.FKey = '總務課耗材進出單ConsSheetB      ItemStatus'
- where b.SheetNo = @SheetNo ">
+ where b.SheetNo = @SheetNo 
+ order by Items">
             <SelectParameters>
                 <asp:ControlParameter ControlID="gridConsSheetA_List" Name="SheetNo" PropertyName="SelectedValue" />
             </SelectParameters>

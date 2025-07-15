@@ -591,14 +591,15 @@ where isnull(a.SheetMode, '') = 'BS' "></asp:SqlDataSource>
         <asp:GridView ID="gridConsSheetB_List" runat="server" AllowPaging="True" AutoGenerateColumns="False" CellPadding="4" DataKeyNames="SheetNoItems" DataSourceID="sdsConsSheetB_List" ForeColor="#333333" GridLines="None" PageSize="5" Width="100%" OnPageIndexChanging="gridConsSheetB_List_PageIndexChanging">
             <AlternatingRowStyle BackColor="White" />
             <Columns>
-                <asp:CommandField ButtonType="Button" ShowSelectButton="True" />
+                <asp:CommandField ButtonType="Button" ShowSelectButton="True" ItemStyle-Width="60px" ItemStyle-CssClass="fixedWidth" />
                 <asp:BoundField DataField="SheetNo" HeaderText="單號" SortExpression="SheetNo" Visible="False" />
-                <asp:BoundField DataField="Items" HeaderText="項次" SortExpression="Items" />
+                <asp:BoundField DataField="Items" HeaderText="項次" SortExpression="Items" ItemStyle-Width="60px" ItemStyle-CssClass="fixedWidth" />
                 <asp:BoundField DataField="SheetNoItems" HeaderText="序號" ReadOnly="True" SortExpression="SheetNoItems" Visible="False" />
-                <asp:BoundField DataField="ConsNo" HeaderText="料號" SortExpression="ConsNo" />
+                <asp:BoundField DataField="ConsNo" HeaderText="料號" SortExpression="ConsNo" ItemStyle-Width="120px" ItemStyle-CssClass="fixedWidth" />
                 <asp:BoundField DataField="ConsName" HeaderText="品名" SortExpression="ConsName" />
-                <asp:BoundField DataField="Price" HeaderText="單價" SortExpression="Price" />
-                <asp:BoundField DataField="Quantity" HeaderText="數量" SortExpression="Quantity" />
+                <asp:BoundField DataField="Price" HeaderText="單價" SortExpression="Price" ItemStyle-Width="60px" ItemStyle-CssClass="fixedWidth" />
+                <asp:BoundField DataField="Quantity" HeaderText="數量" SortExpression="Quantity" ItemStyle-Width="60px" ItemStyle-CssClass="fixedWidth" />
+                <asp:BoundField DataField="ItemStatus_C" HeaderText="進度" SortExpression="ItemStatus_C" ItemStyle-Width="100px" ItemStyle-CssClass="fixedWidth" />
             </Columns>
             <EditRowStyle BackColor="#7C6F57" />
             <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
@@ -612,8 +613,11 @@ where isnull(a.SheetMode, '') = 'BS' "></asp:SqlDataSource>
             <SortedDescendingHeaderStyle BackColor="#15524A" />
         </asp:GridView>
     </asp:Panel>
-    <asp:SqlDataSource ID="sdsConsSheetB_List" runat="server" ConnectionString="<%$ ConnectionStrings:connERPSQL %>" SelectCommand="SELECT b.SheetNo, b.Items, b.SheetNoItems, b.ConsNo, c.ConsName, b.Price, b.Quantity FROM ConsSheetB AS b LEFT OUTER JOIN Consumables AS c ON c.ConsNo = b.ConsNo WHERE (b.SheetNo = @SheetNo)
-order by SheetNoItems">
+    <asp:SqlDataSource ID="sdsConsSheetB_List" runat="server" ConnectionString="<%$ ConnectionStrings:connERPSQL %>" SelectCommand="SELECT b.SheetNo, b.Items, b.SheetNoItems, b.ConsNo, c.ConsName, b.Price, b.Quantity, b.ItemStatus, d.ClassTxt ItemStatus_C 
+  FROM ConsSheetB b LEFT JOIN Consumables c ON c.ConsNo = b.ConsNo 
+                    LEFT JOIN DBDICB d on d.ClassNo = b.ItemStatus and d.FKey = '總務課耗材進出單ConsSheetB      ItemStatus'
+ WHERE b.SheetNo = @SheetNo
+ order by SheetNoItems">
         <SelectParameters>
             <asp:ControlParameter ControlID="gridConsSheetA_List" Name="SheetNo" PropertyName="SelectedValue" />
         </SelectParameters>

@@ -411,6 +411,7 @@
                 <asp:BoundField DataField="Price" HeaderText="Price" SortExpression="Price" Visible="False" />
                 <asp:BoundField DataField="Quantity" HeaderText="數量" SortExpression="Quantity" ItemStyle-Width="100px" ItemStyle-CssClass="fixedWidth" />
                 <asp:BoundField DataField="ConsUnit_C" HeaderText="單位" SortExpression="ConsUnit_C" ItemStyle-Width="60px" ItemStyle-CssClass="fixedWidth" />
+                <asp:BoundField DataField="ItemStatus_C" HeaderText="進度" SortExpression="ItemStatus_C" ItemStyle-Width="70px" ItemStyle-CssClass="fixedWidth" />
             </Columns>
             <FooterStyle BackColor="#FFFFCC" ForeColor="#330099" />
             <HeaderStyle BackColor="#990000" Font-Bold="True" ForeColor="#FFFFCC" />
@@ -699,7 +700,12 @@
     </asp:Panel>
     <asp:Panel ID="plShowData" runat="server">
     </asp:Panel>
-    <asp:SqlDataSource ID="sdsConsSheetB_List" runat="server" ConnectionString="<%$ ConnectionStrings:connERPSQL %>" SelectCommand="select b.SheetNoItems, b.Items, c.ConsName, b.Price, b.Quantity, d.ClassTxt ConsUnit_C from ConsSheetB b left join Consumables c on c.ConsNo = b.ConsNo left join DBDICB d on d.ClassNo = b.ConsUnit and d.FKey = '耗材庫存        CONSUMABLES     ConsUnit' where b.SheetNo = @SheetNo ">
+    <asp:SqlDataSource ID="sdsConsSheetB_List" runat="server" ConnectionString="<%$ ConnectionStrings:connERPSQL %>" SelectCommand="select b.SheetNoItems, b.Items, c.ConsName, b.Price, b.Quantity, d.ClassTxt ConsUnit_C, b.ItemStatus, d2.ClassTxt ItemStatus_C 
+  from ConsSheetB b left join Consumables c on c.ConsNo = b.ConsNo 
+                    left join DBDICB d on d.ClassNo = b.ConsUnit and d.FKey = '耗材庫存        CONSUMABLES     ConsUnit' 
+					left join DBDICB d2 on d2.ClassNo = b.ItemStatus and d2.FKey = '總務課耗材進出單ConsSheetB      ItemStatus'
+ where b.SheetNo = @SheetNo
+ order by Items">
         <SelectParameters>
             <asp:ControlParameter ControlID="gridConsSheetA_List" Name="SheetNo" PropertyName="SelectedValue" />
         </SelectParameters>
