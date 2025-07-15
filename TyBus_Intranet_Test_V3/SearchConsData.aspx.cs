@@ -37,13 +37,14 @@ namespace TyBus_Intranet_Test_V3
                     }
                 }
             }
+            OpenData();
         }
 
-        protected void bbSearch_Click(object sender, EventArgs e)
+        private void OpenData()
         {
             string vWStr_ConsType = (eConsType.Text.Trim() != "") ? "   AND ConsType = @ConsType" + Environment.NewLine : "";
             string vConsName = "%" + eConsName.Text.Trim() + "%";
-            string vSelectStr = "SELECT ConsNo, ConsName, StockQty, ConsSpec " + Environment.NewLine +
+            string vSelectStr = "SELECT ConsNo, ConsName, StockQty, ConsSpec, AVGPrice, ConsUnit " + Environment.NewLine +
                                 "  FROM Consumables " + Environment.NewLine +
                                 " WHERE (ISNULL(ConsNo, '') != '') " + Environment.NewLine +
                                 vWStr_ConsType +
@@ -52,7 +53,7 @@ namespace TyBus_Intranet_Test_V3
             {
                 vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
             }
-            using (SqlDataSource sdsConsList=new SqlDataSource(vConnStr,vSelectStr))
+            using (SqlDataSource sdsConsList = new SqlDataSource(vConnStr, vSelectStr))
             {
                 sdsConsList.SelectParameters.Clear();
                 sdsConsList.SelectParameters.Add(new Parameter("ConsName", DbType.String, vConsName));
@@ -64,6 +65,11 @@ namespace TyBus_Intranet_Test_V3
                 gridConsList.DataSource = sdsConsList;
                 gridConsList.DataBind();
             }
+        }
+
+        protected void bbSearch_Click(object sender, EventArgs e)
+        {
+            OpenData();
         }
 
         protected void gridConsList_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -85,13 +91,23 @@ namespace TyBus_Intranet_Test_V3
             int vIndex = gridConsList.SelectedRow.RowIndex;
             string vConsNoID = this.Request.QueryString["ConsNoID"];
             string vConsNameID = this.Request.QueryString["ConsNameID"];
+            string vConsPriceID = this.Request.QueryString["ConsPriceID"];
+            string vConsUnitID = this.Request.QueryString["ConsUnitID"];
 
             string vReturnProductNo = gridConsList.Rows[vIndex].Cells[1].Text.Trim();
             string vReturnProductName = gridConsList.Rows[vIndex].Cells[2].Text.Trim();
+            string vReturnProductPrice = gridConsList.Rows[vIndex].Cells[5].Text.Trim();
+            string vReturnProductUnit = gridConsList.Rows[vIndex].Cells[6].Text.Trim();
 
             vScript += "opener.window.document.getElementById('" + vConsNoID + "').value='" + vReturnProductNo + "', ";
-            vScript = ((vConsNameID != null) && (vConsNameID.Trim() != "")) ?
+            vScript = ((vConsNameID != null) && (vConsNameID.Trim() != "") && (vReturnProductName != "")) ?
                       vScript + "opener.window.document.getElementById('" + vConsNameID + "').value='" + vReturnProductName + "', " :
+                      vScript;
+            vScript = ((vConsPriceID != null) && (vConsPriceID.Trim() != "") && (vReturnProductPrice != "")) ?
+                      vScript + "opener.window.document.getElementById('" + vConsPriceID + "').value='" + vReturnProductPrice + "', " :
+                      vScript;
+            vScript = ((vConsUnitID != null) && (vConsUnitID.Trim() != "") && (vReturnProductUnit != "")) ?
+                      vScript + "opener.window.document.getElementById('" + vConsUnitID + "').value='" + vReturnProductUnit + "', " :
                       vScript;
             vScript += "window.close();";
             this.ClientScript.RegisterStartupScript(GetType(), "_Product", vScript, true);

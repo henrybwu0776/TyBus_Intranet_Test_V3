@@ -104,7 +104,7 @@ namespace TyBus_Intranet_Test_V3
                          vWStr_LoginNo +
                          vWStr_FunctionName +
                          vWStr_OperateDate +
-                         " ORDER BY IndexNo ";
+                         " ORDER BY IndexNo DESC";
             return vResultStr;
         }
 

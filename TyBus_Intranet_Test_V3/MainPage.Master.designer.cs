@@ -195,6 +195,15 @@ namespace TyBus_Intranet_Test_V3
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl ConsSheet_Order;
 
         /// <summary>
+        /// ConsSheet_Fix 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ConsSheet_Fix;
+
+        /// <summary>
         /// PrintReport 控制項。
         /// </summary>
         /// <remarks>
@@ -1302,22 +1311,31 @@ namespace TyBus_Intranet_Test_V3
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Consumables;
 
         /// <summary>
-        /// ConsumablesInstore 控制項。
+        /// ConsSheet_Pur 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ConsumablesInstore;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ConsSheet_Pur;
 
         /// <summary>
-        /// ConsumablesOutStore 控制項。
+        /// ConsSheet_In 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ConsumablesOutStore;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ConsSheet_In;
+
+        /// <summary>
+        /// ConsSheet_Out 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ConsSheet_Out;
 
         /// <summary>
         /// G014 控制項。

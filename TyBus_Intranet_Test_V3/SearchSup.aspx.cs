@@ -25,11 +25,12 @@ namespace TyBus_Intranet_Test_V3
             {
                 bbOK.Enabled = ((gridSupData_Search != null) && (gridSupData_Search.Rows.Count > 0));
             }
+            OpenData();
         }
 
         protected void eSupName_Search_TextChanged(object sender, EventArgs e)
         {
-            
+
         }
 
         protected void bbCancel_Click(object sender, EventArgs e)
@@ -48,16 +49,21 @@ namespace TyBus_Intranet_Test_V3
                 int vIndex = gridSupData_Search.SelectedRow.RowIndex;
 
                 vTextBoxID = this.Request.QueryString["TextBoxID"];
+                string vSupNameID = this.Request.QueryString["SupNameID"];
 
                 string vReturnSupNo = gridSupData_Search.Rows[vIndex].Cells[1].Text.Trim();
+                string vReturnSupName = gridSupData_Search.Rows[vIndex].Cells[2].Text.Trim();
 
                 vScript = "opener.window.document.getElementById('" + vTextBoxID + "').value='" + vReturnSupNo + "', ";
+                vScript = ((vSupNameID != null) && (vSupNameID != "")) ?
+                          vScript + "opener.window.document.getElementById('" + vSupNameID + "').value='" + vReturnSupName + "', " :
+                          vScript;
                 vScript += "window.close();";
-                this.ClientScript.RegisterStartupScript(GetType(), "_SupNo", vScript, true);
+                this.ClientScript.RegisterStartupScript(GetType(), "_Product", vScript, true);
             }
         }
 
-        protected void bbShow_Search_Click(object sender, EventArgs e)
+        private void OpenData()
         {
             if (vConnStr == "")
             {
@@ -87,6 +93,17 @@ namespace TyBus_Intranet_Test_V3
             dsSupData.Select(new DataSourceSelectArguments());
             gridSupData_Search.DataBind();
             */
+        }
+
+        protected void bbShow_Search_Click(object sender, EventArgs e)
+        {
+            OpenData();
+        }
+
+        protected void gridSupData_Search_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gridSupData_Search.PageIndex = e.NewPageIndex;
+            gridSupData_Search.DataBind();
         }
     }
 }

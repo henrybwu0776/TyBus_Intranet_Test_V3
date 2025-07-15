@@ -528,7 +528,8 @@ namespace TyBus_Intranet_Test_V3
                         ddlTaxType_Edit.SelectedIndex = vRCount_Edit;
                     }
                     TextBox eSupNo_Edit = (TextBox)fvIASheetA_Detail.FindControl("eSupNo_Edit");
-                    vSupDataURL = "SearchSup.aspx?TextBoxID=" + eSupNo_Edit.ClientID + "&SupKind=C";
+                    TextBox eSupName_Edit = (TextBox)fvIASheetA_Detail.FindControl("eSupName_Edit");
+                    vSupDataURL = "SearchSup.aspx?TextBoxID=" + eSupNo_Edit.ClientID + "&SupNameID=" + eSupName_Edit.ClientID + "&SupKind=C";
                     vSupDataScript = "window.open('" + vSupDataURL + "','','height=600, width=650,status=no,toolbar=no,menubar=no,location=no','')";
                     eSupNo_Edit.Attributes["onClick"] = vSupDataScript;
                     break;
@@ -572,7 +573,8 @@ namespace TyBus_Intranet_Test_V3
                         ddlTaxType_INS.SelectedIndex = vRCount_INS;
                     }
                     TextBox eSupNo_INS = (TextBox)fvIASheetA_Detail.FindControl("eSupNo_INS");
-                    vSupDataURL = "SearchSup.aspx?TextBoxID=" + eSupNo_INS.ClientID;
+                    TextBox eSupName_INS = (TextBox)fvIASheetA_Detail.FindControl("eSupName_INS");
+                    vSupDataURL = "SearchSup.aspx?TextBoxID=" + eSupNo_INS.ClientID + "&SupNameID=" + eSupName_INS.ClientID + "&SupKind=C";
                     vSupDataScript = "window.open('" + vSupDataURL + "','','height=600, width=650,status=no,toolbar=no,menubar=no,location=no','')";
                     eSupNo_INS.Attributes["onClick"] = vSupDataScript;
                     break;

@@ -1127,7 +1127,7 @@
             <Columns>
                 <asp:BoundField DataField="ServiceNoItem" HeaderText="ServiceNoItem" ReadOnly="True" SortExpression="ServiceNoItem" Visible="False" />
                 <asp:BoundField DataField="ServiceNo" HeaderText="ServiceNo" SortExpression="ServiceNo" Visible="False" />
-                <asp:BoundField DataField="Items" HeaderText="項次" SortExpression="Items" />
+                <asp:BoundField DataField="Items" HeaderText="項次" SortExpression="Items" ItemStyle-Width="60px" ItemStyle-CssClass="fixedWidth" />
                 <asp:BoundField DataField="ContactDate" DataFormatString="{0:d}" HeaderText="連絡日期" SortExpression="ContactDate" />
                 <asp:BoundField DataField="ContactPerson" HeaderText="處理人" SortExpression="ContactPerson" />
                 <asp:BoundField DataField="Excutort" HeaderText="連絡對象" SortExpression="Excutort" />

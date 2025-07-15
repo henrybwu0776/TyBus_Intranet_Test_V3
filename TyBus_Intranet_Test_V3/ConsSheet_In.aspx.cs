@@ -155,6 +155,16 @@ namespace TyBus_Intranet_Test_V3
                         //如果單據已作廢，整個明細都不能操作
                         Label eSheetStatus = (Label)fvConsSheetA_Detail.FindControl("eSheetStatus_List");
                         plShowDataB.Enabled = !((eSheetStatus.Text.Trim() == "999") || (eSheetStatus.Text.Trim() == "998"));
+                        //單據已完成入庫，就不允許整單作廢、入庫及刪除
+                        if (eSheetStatus.Text.Trim()=="030")
+                        {
+                            bbAbortA.Enabled = false;
+                            Button bbDeleteA = (Button)fvConsSheetA_Detail.FindControl("bbDeleteA_List");
+                            bbDeleteA.Enabled = false;
+                            bbInstore.Enabled = false;
+                            Button bbEditA = (Button)fvConsSheetA_Detail.FindControl("bbEditA_List");
+                            bbEditA.Enabled = false;
+                        }
                     }
                     break;
                 case FormViewMode.Edit:
@@ -240,6 +250,7 @@ namespace TyBus_Intranet_Test_V3
                 sdsConsSheetA_Detail.UpdateParameters.Add(new Parameter("SheetNote", DbType.String, (vSheetNote != "") ? vSheetNote : String.Empty));
                 sdsConsSheetA_Detail.UpdateParameters.Add(new Parameter("RemarkA", DbType.String, (vRemarkA != "") ? vRemarkA : String.Empty));
                 sdsConsSheetA_Detail.UpdateParameters.Add(new Parameter("ModifyMan", DbType.String, vLoginID));
+                sdsConsSheetA_Detail.UpdateParameters.Add(new Parameter("SheetNo", DbType.String, vSheetNo));
                 sdsConsSheetA_Detail.Update();
                 gridConsSheetA_List.DataBind();
                 fvConsSheetA_Detail.ChangeMode(FormViewMode.ReadOnly);
@@ -816,7 +827,7 @@ namespace TyBus_Intranet_Test_V3
                     string vSheetNo = eSheetNo.Text.Trim();
                     TextBox eConsNo = (TextBox)fvConsSheetB_Detail.FindControl("eConsNo_INS");
                     string vConsNo = eConsNo.Text.Trim();
-                    Label eConsUnit = (Label)fvConsSheetB_Detail.FindControl("eConsUnit");
+                    Label eConsUnit = (Label)fvConsSheetB_Detail.FindControl("eConsUnit_INS");
                     string vConsUnit = eConsUnit.Text.Trim();
                     TextBox eRemarkB = (TextBox)fvConsSheetB_Detail.FindControl("eRemarkB_INS");
                     string vRemarkB = eRemarkB.Text.Trim();
@@ -827,8 +838,8 @@ namespace TyBus_Intranet_Test_V3
                     vItems = Int32.TryParse(vMaxIndex, out vTempINT) ? (vTempINT + 1).ToString("D4") : "0001";
                     string vSheetNoItems = vSheetNo + vItems;
                     vSQLStr_Temp = "insert into ConsSheetB " + Environment.NewLine +
-                                   "      (SheetNoItems, SheetNo, Items, ConsNo, Quantity, ConsUnit, RemarkB, BuDate, BuMan) " + Environment.NewLine +
-                                   "values(@SheetNoItems, @SheetNo, @Items, @ConsNo, @Quantity, @ConsUnit, @RemarkB, GetDate(), @BuMan) ";
+                                   "      (SheetNoItems, SheetNo, Items, ConsNo, Quantity, ConsUnit, RemarkB, BuDate, BuMan, ItemStatus, QtyMode) " + Environment.NewLine +
+                                   "values(@SheetNoItems, @SheetNo, @Items, @ConsNo, @Quantity, @ConsUnit, @RemarkB, GetDate(), @BuMan, '000', 1) ";
                     sdsConsSheetB_Detail.InsertCommand = vSQLStr_Temp;
                     sdsConsSheetB_Detail.InsertParameters.Clear();
                     sdsConsSheetB_Detail.InsertParameters.Add(new Parameter("SheetNoItems", DbType.String, vSheetNoItems));

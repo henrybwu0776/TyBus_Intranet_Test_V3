@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Amaterasu_Function;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,9 +10,23 @@ namespace TyBus_Intranet_Test_V3
 {
     public partial class SearchProduct : System.Web.UI.Page
     {
+        PublicFunction PF = new PublicFunction(); //加入公用程式碼參考
+        private string vConnStr = "";
+
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (vConnStr == "")
+            {
+                vConnStr = PF.GetConnectionStr(Request.ApplicationPath);
+            }
+            if (!IsPostBack)
+            {
+                bbOK.Enabled = false;
+            }
+            else
+            {
+                bbOK.Enabled = ((gridProductData_Search != null) && (gridProductData_Search.Rows.Count > 0));
+            }
         }
 
         protected void eProductName_Search_TextChanged(object sender, EventArgs e)

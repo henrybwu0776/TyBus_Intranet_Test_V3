@@ -152,7 +152,7 @@
                                 </td>
                                 <td class="ColHeight ColBorder ColWidth-10Col" colspan="3">
                                     <asp:TextBox ID="eSupNo_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("SupNo") %>' AutoPostBack="true" OnTextChanged="eSupNo_Edit_TextChanged" Width="35%" />
-                                    <asp:Label ID="eSupName_Edit" runat="server" CssClass="text-Left-Black" Text='<%# Eval("SupName") %>' Width="60%" />
+                                    <asp:TextBox ID="eSupName_Edit" runat="server" CssClass="text-Left-Black" Enabled="false" Text='<%# Eval("SupName") %>' Width="60%" />
                                 </td>
                                 <td class="ColHeight ColBorder ColWidth-10Col">
                                     <asp:Label ID="lbSheetStatus_Edit" runat="server" CssClass="text-Right-Blue" Text="單據狀態" Width="100%" />
@@ -285,7 +285,7 @@
                                 </td>
                                 <td class="ColHeight ColBorder ColWidth-10Col" colspan="3">
                                     <asp:TextBox ID="eSupNo_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("SupNo") %>' Width="35%" />
-                                    <asp:Label ID="eSupName_INS" runat="server" CssClass="text-Left-Black" Text='<%# Eval("SupName") %>' Width="60%" />
+                                    <asp:TextBox ID="eSupName_INS" runat="server" CssClass="text-Left-Black" Enabled="false" Text='<%# Eval("SupName") %>' Width="60%" />
                                 </td>
                                 <td class="ColHeight ColBorder ColWidth-10Col">
                                     <asp:Label ID="lbSheetStatus_INS" runat="server" CssClass="text-Right-Blue" Text="單據狀態" Width="100%" />

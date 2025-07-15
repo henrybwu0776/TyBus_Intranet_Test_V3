@@ -27,6 +27,8 @@
                     <asp:BoundField DataField="ConsName" HeaderText="品名" SortExpression="ConsName" />
                     <asp:BoundField DataField="StockQty" HeaderText="庫存量" SortExpression="StockQty" />
                     <asp:BoundField DataField="ConsSpec" HeaderText="規格" SortExpression="ConsSpec" />
+                    <asp:BoundField DataField="AVGPrice" HeaderText="平均進價" SortExpression="AVGPrice" />
+                    <asp:BoundField DataField="ConsUnit" HeaderText="單位" SortExpression="ConsUnit" Visible="false" />
                 </Columns>
                 <EditRowStyle BackColor="#2461BF" />
                 <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
